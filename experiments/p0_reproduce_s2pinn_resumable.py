@@ -50,6 +50,8 @@ def main() -> None:
     ap.add_argument("--tag", type=str, default="")
     ap.add_argument("--eval-every", type=int, default=None, help="testing only (changes the RNG stream vs the paper run)")
     ap.add_argument("--stop-after-hours", type=float, default=None, help="exit cleanly at the next checkpoint after this")
+    ap.add_argument("--ckpt-every", type=int, default=100,
+                    help="also checkpoint every N steps between evaluations (saving does not touch the RNG)")
     args = ap.parse_args()
 
     cfg = build_cfg(args.seed, args.steps, None)
@@ -112,7 +114,8 @@ def main() -> None:
                           f"wall_h={(wall_prev + time.perf_counter() - t_seg) / 3600:.3f}\n")
                 log.flush()
 
-            if eval_every > 0 and (step + 1) % eval_every == 0:
+            is_eval = eval_every > 0 and (step + 1) % eval_every == 0
+            if is_eval:
                 m = s2.evaluate(model, pde, cfg["eval"], device, dtype)
                 for k, v in m.items():
                     if k not in best or v < best[k]:
@@ -120,6 +123,7 @@ def main() -> None:
                 log.write(f"EVAL {step + 1} mean_rel_l2={m.get('uq/mean_rel_l2', float('nan')):.4e} "
                           f"var_rel_l2={m.get('uq/var_rel_l2', float('nan')):.4e}\n")
                 log.flush()
+            if is_eval or (args.ckpt_every > 0 and (step + 1) % args.ckpt_every == 0):
                 wall = wall_prev + time.perf_counter() - t_seg
                 tmp = ckpt.with_suffix(".tmp")
                 torch.save({"model": model.state_dict(), "optimizer": optimizer.state_dict(), "rng": torch.get_rng_state(),
