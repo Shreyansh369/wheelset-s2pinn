@@ -71,7 +71,7 @@ def make_forcing(p: Params, spec: dict, r0: float, band_hz: float) -> Forcing:
         w = 2 * math.pi * V / lam
         if w / (2 * math.pi) <= band_hz:
             rms = 1e-6 * 10 ** (spec["rough_level_db"](lam) / 20)
-            om.append(w); var.append(rms**2); grp.append("rough"); order.append(0)
+            om.append(w); var.append(2 * rms**2); grp.append("rough"); order.append(0)  # E|Z|^2 = 2 rms^2
     i = np.argsort(om)
     return Forcing(np.array(om)[i], np.array(var)[i], [grp[j] for j in i], np.array(order)[i])
 

@@ -18,8 +18,10 @@ G2:
   var_rel_l2_max: 3.0e-2
   max_tuning_configs: 12
 G3:
+  # revised 2026-10-11 (user): health target kB0 only (clearance/wear-driven stiffness loss); c_B target dropped;
+  # payload measured per pass (weigh-in-motion). zeta_s (support-mode damping ratio) is reported, not called bearing damping.
   kB0_rel_err_max: 0.05
-  cB_rel_err_max: 0.15
   N_passes: 50
-  snr_db: 40
+  payload: measured_per_pass
   coverage90_range: [0.85, 0.95]
+  superseded_2026-10-11: {kB0_rel_err_max: 0.05, cB_rel_err_max: 0.15, N_passes: 50, snr_db: 40}
