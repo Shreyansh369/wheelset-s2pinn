@@ -1,0 +1,319 @@
+{
+  "name": "p0/repro_diagnostics",
+  "seed": null,
+  "config": {
+    "model": {
+      "spatial": {
+        "n_atoms": 256,
+        "init_sigma": 0.15,
+        "use_warp": true,
+        "warp_hidden": 64,
+        "warp_eps": 0.1
+      },
+      "temporal": {
+        "n_freq": 8
+      },
+      "stochastic": {
+        "R": 5,
+        "p": 3,
+        "dist": "gaussian"
+      },
+      "cp": {
+        "rank": 16,
+        "init": "normal"
+      }
+    },
+    "pde": {
+      "name": "stochastic_diffusion_2d",
+      "domain": {
+        "x_min": -1.0,
+        "x_max": 1.0,
+        "y_min": -1.0,
+        "y_max": 1.0,
+        "t_min": 0.0,
+        "t_max": 1.0
+      },
+      "kl": {
+        "n_terms": 5,
+        "sigma": 1.0,
+        "corr_length": 1.0
+      }
+    },
+    "training": {
+      "steps": 20000,
+      "lr": 0.001,
+      "optimizer": "adam",
+      "amp": "none",
+      "grad_accum": 1,
+      "colloc": 32768,
+      "bc": 32768,
+      "ic": 32768,
+      "gram": 4096,
+      "resample_every": 1,
+      "w_pde": 1.0,
+      "w_proj": 1.0,
+      "w_bc": 1.0,
+      "w_ic": 1.0,
+      "w_orth": 1.0,
+      "w_fac_orth": 0.1,
+      "normalize_cp_every": 1
+    },
+    "eval": {
+      "grid_res": 64,
+      "t_eval": [
+        0.0,
+        0.5,
+        1.0
+      ],
+      "z_eval": [
+        {
+          "name": "Z0",
+          "values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "eval_every": 500,
+      "save_checkpoint": true,
+      "uq": {
+        "enabled": true,
+        "n_probe": 2048,
+        "n_z_moment": 1024,
+        "n_z_interval": 1024,
+        "n_z_test": 1024,
+        "alpha": 0.1,
+        "batch_limit": 262144
+      }
+    },
+    "logging": {
+      "use_wandb": false,
+      "project": "s2pinn",
+      "entity": null,
+      "log_every": 10
+    },
+    "seed": 42
+  },
+  "payload": {
+    "exact_through_eval": {
+      "eval_Z0_t0.0": 0.0,
+      "eval_Z0_t0.5": 0.0,
+      "eval_Z0_t1.0": 0.0,
+      "uq/mean_rel_l2": 0.0,
+      "uq/var_rel_l2": 0.0,
+      "uq/coverage": 0.8984375,
+      "uq/coverage_50": 0.4443359375,
+      "uq/sharpness_50": 0.07035736739635468,
+      "uq/coverage_80": 0.798828125,
+      "uq/sharpness_80": 0.1454218477010727,
+      "uq/coverage_90": 0.8984375,
+      "uq/sharpness_90": 0.18988975882530212,
+      "uq/coverage_95": 0.9541015625,
+      "uq/sharpness_95": 0.22990331053733826,
+      "uq/calibration_error": 0.015625000000000028
+    },
+    "exact_residual": {
+      "max_abs": 1.0658141036401503e-14,
+      "rms": 1.183771068691671e-15,
+      "rms_source": 8.154858941409014,
+      "operator": "u_t - k*laplacian(u) - s (non-divergence; paper text writes div(k grad u))"
+    },
+    "config_vs_appendix_E": {
+      "lr": {
+        "paper": 0.001,
+        "run": 0.001,
+        "match": true
+      },
+      "steps": {
+        "paper": 20000,
+        "run": 20000,
+        "match": true
+      },
+      "M": {
+        "paper": 256,
+        "run": 256,
+        "match": true
+      },
+      "Mt": {
+        "paper": 17,
+        "run": 17,
+        "match": true
+      },
+      "q": {
+        "paper": 16,
+        "run": 16,
+        "match": true
+      },
+      "R": {
+        "paper": 5,
+        "run": 5,
+        "match": true
+      },
+      "p": {
+        "paper": 3,
+        "run": 3,
+        "match": true
+      },
+      "dist": {
+        "paper": "gaussian",
+        "run": "gaussian",
+        "match": true
+      },
+      "w_pde": {
+        "paper": 1.0,
+        "run": 1.0,
+        "match": true
+      },
+      "w_proj": {
+        "paper": 1.0,
+        "run": 1.0,
+        "match": true
+      },
+      "w_bc": {
+        "paper": 1.0,
+        "run": 1.0,
+        "match": true
+      },
+      "w_ic": {
+        "paper": 1.0,
+        "run": 1.0,
+        "match": true
+      },
+      "w_orth": {
+        "paper": 1.0,
+        "run": 1.0,
+        "match": true
+      },
+      "w_fac_orth": {
+        "paper": 0.1,
+        "run": 0.1,
+        "match": true
+      },
+      "normalize_cp_every": {
+        "paper": 1,
+        "run": 1,
+        "match": true
+      },
+      "batch_pde_bc_ic": {
+        "paper": 32768,
+        "run": [
+          4096,
+          32768,
+          32768
+        ],
+        "match": false
+      },
+      "resample_every": {
+        "paper": 1,
+        "run": 1,
+        "match": true
+      },
+      "grad_accum": {
+        "paper": 1,
+        "run": 1,
+        "match": true
+      },
+      "extra_not_in_paper": {
+        "kl_n_terms": 5,
+        "kl_sigma": 1.0,
+        "corr_length": 1.0,
+        "use_warp": true,
+        "init_sigma": 0.15,
+        "amp": "none",
+        "lbfgs_steps": 0
+      }
+    },
+    "checkpoint": {
+      "step": 5400,
+      "mean_field_by_time": {
+        "0.0": {
+          "mean_rel_l2": 0.20330268144607544,
+          "best_scale_alpha": 1.101722240447998,
+          "rel_l2_after_scaling": 0.17602455615997314,
+          "boundary_rms_of_mean": 0.17520076036453247,
+          "interior_peak_pred": 1.0779064893722534,
+          "interior_peak_ref": 1.0
+        },
+        "0.25": {
+          "mean_rel_l2": 0.23564766347408295,
+          "best_scale_alpha": 1.147355318069458,
+          "rel_l2_after_scaling": 0.18389202654361725,
+          "boundary_rms_of_mean": 0.14231906831264496,
+          "interior_peak_pred": 0.8739929795265198,
+          "interior_peak_ref": 0.7788007855415344
+        },
+        "0.5": {
+          "mean_rel_l2": 0.23349252343177795,
+          "best_scale_alpha": 1.144334077835083,
+          "rel_l2_after_scaling": 0.18353846669197083,
+          "boundary_rms_of_mean": 0.11068173497915268,
+          "interior_peak_pred": 0.6780126690864563,
+          "interior_peak_ref": 0.6065306663513184
+        },
+        "0.75": {
+          "mean_rel_l2": 0.2390550673007965,
+          "best_scale_alpha": 1.1489461660385132,
+          "rel_l2_after_scaling": 0.18698200583457947,
+          "boundary_rms_of_mean": 0.08778189867734909,
+          "interior_peak_pred": 0.5292634963989258,
+          "interior_peak_ref": 0.4723665416240692
+        },
+        "1.0": {
+          "mean_rel_l2": 0.24817654490470886,
+          "best_scale_alpha": 1.1612879037857056,
+          "rel_l2_after_scaling": 0.1886209398508072,
+          "boundary_rms_of_mean": 0.06818697601556778,
+          "interior_peak_pred": 0.42161989212036133,
+          "interior_peak_ref": 0.3678794503211975
+        }
+      },
+      "time_freqs": [
+        1.6218299865722656,
+        17.972572326660156,
+        1.9033852815628052,
+        5.975005626678467,
+        10.031514167785645,
+        2.460221767425537,
+        11.765113830566406,
+        0.9960103631019592
+      ],
+      "atom_sigma": {
+        "min": 0.14634598791599274,
+        "median": 0.1598677933216095,
+        "max": 0.19226840138435364
+      },
+      "atom_centres_outside_domain": 10,
+      "cp_w": [
+        0.45677104592323303,
+        0.36039358377456665,
+        0.3448021709918976,
+        0.43474245071411133,
+        0.3572937548160553,
+        0.2671462595462799,
+        0.3702361285686493,
+        0.3090633749961853,
+        1.231515884399414,
+        0.2664076089859009,
+        0.35472190380096436,
+        0.717658519744873,
+        0.4493118226528168,
+        0.30640310049057007,
+        0.5772656202316284,
+        0.4079154133796692
+      ]
+    }
+  },
+  "provenance": {
+    "git_commit": "afac88cb9e48ed620a0b38f2809389eae19e0d7e",
+    "timestamp_utc": "2026-10-11T18:28:51Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 684.62109375,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}
