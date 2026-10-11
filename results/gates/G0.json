@@ -1,0 +1,68 @@
+{
+  "name": "gates/G0",
+  "seed": null,
+  "config": {},
+  "payload": {
+    "a_s2pinn_reproduction": {
+      "status": "PENDING",
+      "why": "needs a GPU run (experiments/colab_p0_reproduce.ipynb); CPU estimate 22.7 h",
+      "threshold": 0.00742
+    },
+    "b_h1_sdof_trend": {
+      "status": "PASS (trend clear)",
+      "criterion": "monotone log-log trend of required degree in Pi with R^2 >= 0.95 for both families",
+      "legendre_slope_vs_logPi": [
+        0.9054439671874855,
+        0.009631786119613859
+      ],
+      "legendre_r2": 0.9939265070136134,
+      "hermite_slope_vs_logPi": [
+        1.592313194408915,
+        0.025180546129566314
+      ],
+      "hermite_r2": 0.9859459572968146,
+      "hermite_local_slopes": {
+        "[0.5,2)": {
+          "median": 1.4122149609240489,
+          "n": 20
+        },
+        "[2,5)": {
+          "median": 1.769151447910738,
+          "n": 15
+        },
+        "[5,10)": {
+          "median": 1.8704731847833602,
+          "n": 8
+        },
+        "[10,40)": {
+          "median": 1.9284681478848498,
+          "n": 6
+        }
+      },
+      "legendre_p_over_Pi": {
+        "[0.5,2)": 4.685446418052841,
+        "[2,5)": 4.164939981755644,
+        "[5,10)": 4.060720228979129,
+        "[10,40)": 3.9811926296193656
+      },
+      "hypothesis_Pi2_holds": "only asymptotically for Hermite; Legendre scales like Pi"
+    },
+    "c_eq41": {
+      "status": "PENDING"
+    },
+    "d_literature_stop_rule": {
+      "status": "NOT TRIGGERED",
+      "source": "docs/lit_review.md"
+    }
+  },
+  "provenance": {
+    "git_commit": "unknown",
+    "timestamp_utc": "2026-10-11T13:52:48Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 28.0859375,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

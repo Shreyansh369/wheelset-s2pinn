@@ -1,0 +1,24 @@
+{
+  "name": "p0/s2pinn_cpu_timing",
+  "seed": 42,
+  "config": {},
+  "payload": {
+    "method": "experiments/p0_reproduce_s2pinn.py --steps 20 and --steps 60 on this container (4 CPU, no GPU); wall times include model build, eval at end; per-step = (w60-w20)/40",
+    "wall_s_20_steps": 94.38683625199997,
+    "wall_s_60_steps": 258.0,
+    "sec_per_step": 4.090329093700001,
+    "projected_hours_20k_steps": 22.72405052055556,
+    "smoke_mean_rel_l2_20_steps": 1.00829,
+    "smoke_mean_rel_l2_60_steps": 0.98562
+  },
+  "provenance": {
+    "git_commit": "unknown",
+    "timestamp_utc": "2026-10-11T13:21:12Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 26.578125,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

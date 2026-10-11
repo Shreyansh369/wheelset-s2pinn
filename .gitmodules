@@ -1,0 +1,3 @@
+[submodule "third_party/s2pinn"]
+	path = third_party/s2pinn
+	url = https://github.com/DMax1314/s2pinn
