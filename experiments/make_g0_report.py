@@ -303,6 +303,23 @@ def main() -> None:
             + ", ".join(f"{c['p_req'][0]}/{c['p_req'][1]}" for c in coll) + " (required degrees).", SMALL))
         story.append(img(RESULTS_DIR / "p0" / "h1_sdof_preq.png", 12.5))
         story.append(img(RESULTS_DIR / "p0" / "h1_sdof_fixed_p.png", 16))
+        th = load("p0/h1_theory_check")
+        if th:
+            t = th["payload"]["summary"]
+            rows = [["Family", "leading-order prediction", "Π bin: measured p/Π (or p/Π²), measured/predicted"]]
+            rows.append(["Legendre (uniform)", f"p ≈ (√3/2) Π ln(1/ε) = {t['sqrt3_over_2_ln_1_over_eps']:.2f} Π",
+                         "<br/>".join(f"{k}: {v['median_p_over_Pi']:.2f}, ratio {v['median_ratio_meas_over_pred']:.2f}"
+                                      for k, v in t["legendre"].items())])
+            rows.append(["Hermite (log-normal)", f"p ≈ Π² ln²(1/ε)/4 = {t['ln2_1_over_eps_over_4']:.2f} Π²",
+                         "<br/>".join(f"{k}: {v['median_p_over_Pi2']:.2f}, ratio {v['median_ratio_meas_over_pred']:.2f}"
+                                      for k, v in t["hermite"].items())])
+            story.append(table(rows, [3.4 * cm, 5.2 * cm, 8.9 * cm]))
+            g2 = t["G2_Pi_le_1.5_uniform"]
+            story.append(Paragraph(
+                "Derivation: docs/derivations/h1_degree.md (Bernstein ellipse for Legendre; strip analyticity with Hille's "
+                "rate for Hermite). Reworded G2, Π ≤ 1.5 with uniform inputs, needs p = "
+                f"{g2['max_measured_p_req_for_Pi_le_1.5']} measured (leading order {g2['predicted_p_at_Pi_1.5_leading_order']:.2f}) "
+                f"for ε = {g2['eps_rel_variance']:g} relative variance error.", SMALL))
         story.append(Paragraph(
             "<b>Reading.</b> The trend is clear, but the exponent depends on the input law. For bounded (uniform/Legendre) inputs, "
             "which is how the paper treats θ and W, the required degree grows like Π, not Π². Π² appears only asymptotically "
@@ -389,7 +406,7 @@ def main() -> None:
     # ---------------- provenance
     story.append(Paragraph("6. Provenance", H2))
     rows = [["Result file", "git commit", "wall time", "timestamp (UTC)"]]
-    for n in ("p0/s2pinn_repro_seed42_nc4096", "p0/s2pinn_cpu_timing", "p0/h1_sdof", "p0/h1_sdof_summary", "p0/eq41", "gates/G0"):
+    for n in ("p0/s2pinn_repro_seed42_nc4096", "p0/s2pinn_cpu_timing", "p0/h1_sdof", "p0/h1_sdof_summary", "p0/h1_theory_check", "p0/eq41", "gates/G0"):
         r = load(n)
         if r:
             w = r["provenance"].get("wall_seconds")

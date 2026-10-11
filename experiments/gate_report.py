@@ -54,7 +54,7 @@ def g0() -> dict:
         leg, her = f["legendre/p_req_at_mean/p>=3"], f["hermite/p_req_at_mean/p>=3"]
         clear = leg["r2"] >= 0.95 and her["r2"] >= 0.95 and leg["slope"] > 0 and her["slope"] > 0
         items["b_h1_sdof_trend"] = {
-            "status": ("FAIL AS STATED: trend clear, but Pi^2 holds only for Gaussian inputs; uniform inputs scale like Pi"
+            "status": ("PASS AS REFRAMED (accepted 2026-10-11): degree ~ Pi for uniform, ~ Pi^2 for Gaussian inputs"
                        if clear and leg["slope"] < 1.5 else ("PASS" if clear else "FAIL")),
             "criterion": "monotone log-log trend of required degree in Pi with R^2 >= 0.95 for both families",
             "legendre_slope_vs_logPi": [leg["slope"], leg["slope_se"]], "legendre_r2": leg["r2"],
@@ -80,7 +80,8 @@ def g0() -> dict:
                                                  "pointwise_ridge_amplitude")}
         all_pass = all(r["pass_eq41_10pct_median"] for r in rows.values() if r["n"])
         items["c_eq41"] = {
-            "status": "PASS (Eq. 41 within 10%)" if all_pass else "FAIL: Eq. 41 misses 10%; measured relation reported (gate fallback)",
+            "status": "PASS (Eq. 41 within 10%)" if all_pass else ("MET VIA FALLBACK: Eq. 41 misses 10%; measured relation "
+                                                                   "reported; correction dropped (agreed 2026-10-11)"),
             "settings": rows, "mlp_forced_trap": pay.get("forced/sdof_mlp_at_resonance"),
         }
     else:
