@@ -1,0 +1,80 @@
+{
+  "name": "p1/sensitivity_kB_scan",
+  "seed": null,
+  "config": {},
+  "payload": {
+    "rows": [
+      {
+        "kB0": 1000000000.0,
+        "sym_axlebox_mode_hz": 581.9852832935503,
+        "axlebox_ke_frac": 0.5750236424378676,
+        "zeta_modal": 0.05652925891900098,
+        "max_abs_dlogP_dlogkB0": 0.0019824089800835054,
+        "max_abs_dlogP_dlogcB": 3.3626372797357362e-06,
+        "crb_rel_std_kB0_snr40_N50": 35.505911573419986,
+        "crb_rel_std_cB_snr40_N50": 37519.826634717116
+      },
+      {
+        "kB0": 300000000.0,
+        "sym_axlebox_mode_hz": 334.5159137997496,
+        "axlebox_ke_frac": 0.8128822928239539,
+        "zeta_modal": 0.05659494151797511,
+        "max_abs_dlogP_dlogkB0": 0.006592929295834438,
+        "max_abs_dlogP_dlogcB": 3.761431704996099e-05,
+        "crb_rel_std_kB0_snr40_N50": 10.674917565797404,
+        "crb_rel_std_cB_snr40_N50": 3356.215994080677
+      },
+      {
+        "kB0": 100000000.0,
+        "sym_axlebox_mode_hz": 212.003207969499,
+        "axlebox_ke_frac": 0.8511934089472492,
+        "zeta_modal": 0.08558696594641936,
+        "max_abs_dlogP_dlogkB0": 0.0196504750862303,
+        "max_abs_dlogP_dlogcB": 0.000344854024392216,
+        "crb_rel_std_kB0_snr40_N50": 3.5804068327164917,
+        "crb_rel_std_cB_snr40_N50": 366.58101668463013
+      },
+      {
+        "kB0": 30000000.0,
+        "sym_axlebox_mode_hz": 127.08371778890738,
+        "axlebox_ke_frac": 0.5893458137097228,
+        "zeta_modal": 0.11325124267952406,
+        "max_abs_dlogP_dlogkB0": 0.06404676715110469,
+        "max_abs_dlogP_dlogcB": 0.004055653335999221,
+        "crb_rel_std_kB0_snr40_N50": 1.0976128248836876,
+        "crb_rel_std_cB_snr40_N50": 31.23879429129455
+      },
+      {
+        "kB0": 10000000.0,
+        "sym_axlebox_mode_hz": 65.75810591912098,
+        "axlebox_ke_frac": 0.9551720279150133,
+        "zeta_modal": 0.2758424559293069,
+        "max_abs_dlogP_dlogkB0": 0.18066301429753295,
+        "max_abs_dlogP_dlogcB": 0.03987772442848314,
+        "crb_rel_std_kB0_snr40_N50": 0.3890317649953895,
+        "crb_rel_std_cB_snr40_N50": 3.223844544219968
+      },
+      {
+        "kB0": 5000000.0,
+        "sym_axlebox_mode_hz": 49.67809709876721,
+        "axlebox_ke_frac": 0.9926593456474835,
+        "zeta_modal": 0.38967988834074063,
+        "max_abs_dlogP_dlogkB0": 0.33156320503380243,
+        "max_abs_dlogP_dlogcB": 0.14680587155885272,
+        "crb_rel_std_kB0_snr40_N50": 0.2130788896370787,
+        "crb_rel_std_cB_snr40_N50": 1.0225310825855736
+      }
+    ],
+    "note": "exploratory; cB, kp, masses at placeholder values; forcing <= 29 Hz as configured"
+  },
+  "provenance": {
+    "git_commit": "48907310cb7e9a3c94cf56276cad38cfb10d89dc",
+    "timestamp_utc": "2026-10-11T18:11:37Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 57.6328125,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}
