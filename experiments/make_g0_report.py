@@ -342,10 +342,30 @@ def main() -> None:
             story.append(Paragraph(
                 f"Time-domain tanh-MLP PINN on forced SDOF at resonance ({mlp['n']} runs): amplitude ratio to exact "
                 f"{min(mlp['amp_ratio']):.4f}–{max(mlp['amp_ratio']):.4f}, i.e. stuck at the trivial solution x = 0.", SMALL))
+        diag = load("p0/eq41_diagnostics")
+        if diag:
+            story.append(Paragraph(
+                "Exploratory breakdown (not pre-registered): transient runs binned by how well the PINN output is "
+                "described by a single damped sinusoid, the shape Eq. (41)'s derivation assumes.", SMALL))
+            rows = [["Setting", "fit error bin", "n", "median |Δ|/λ (Eq. 41)", "within 10%", "median bias / λ₀",
+                     "measured / predicted excess", "c with β = 2"]]
+            for key in ("transient/sdof", "transient/2dof"):
+                for b, v in diag["payload"][key].items():
+                    rel = v.get("relation") or {}
+                    rows.append([key, b.replace("fit_rel_err in ", ""), str(v["n"]), f3(v["median_rel_err_eq41"]),
+                                 f"{100 * v['frac_within_10pct']:.0f}%", f3(v["median_bias_over_lambda0"]),
+                                 f3(v["median_ratio_excess_meas_over_pred"]), f3(rel.get("c_if_beta_2_median"))])
+            story.append(table(rows, [2.5 * cm, 2.2 * cm, 0.8 * cm, 2.3 * cm, 1.5 * cm, 2.2 * cm, 2.7 * cm, 2.0 * cm]))
         fig = eq41_figure(e41)
         if fig:
             story.append(img(fig, 16.5))
-        story.append(Paragraph(f"<b>Verdict.</b> {c['status']}.", BODY))
+        story.append(Paragraph(
+            f"<b>Verdict.</b> {c['status']}. Eq. (41) holds only where the bias is negligible (well-trained transient runs); "
+            "wherever the bias matters, the measured excess decay rate is larger than Eq. (41) predicts from the measured "
+            "residual floor, with roughly the same quadratic dependence on R but a coefficient above 1. In steady state "
+            "neither Eq. (41) nor the ridge law predicts the FRF-fitted damping to 10%. Following the brief, no damping "
+            "correction will be built on Eq. (41); later phases use the measured relation and direct measurement of the "
+            "surrogate's effective damping.", BODY))
     else:
         story.append(Paragraph("<b>Pending.</b>", BODY))
 
