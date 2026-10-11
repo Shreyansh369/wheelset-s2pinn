@@ -259,9 +259,12 @@ def main() -> None:
         story.append(Paragraph(f"<b>Pending.</b> {a.get('why', '')}", BODY))
     if timing:
         story.append(Paragraph(
-            f"CPU cost on this container (4 cores, no GPU): {timing['payload']['sec_per_step']:.2f} s per step, "
-            f"i.e. {timing['payload']['projected_hours_20k_steps']:.1f} h for 20k steps. "
-            "The 1 GB / 90 min cost limit refers to a T4 and cannot be checked on this hardware.", SMALL))
+            f"CPU cost on this container (4 cores, no GPU) at the paper default Nc=32768: "
+            f"{timing['payload']['sec_per_step']:.2f} s per step, "
+            f"i.e. {timing['payload']['projected_hours_20k_steps']:.1f} h for 20k steps (hence the Nc=4096 run, "
+            "whose 5.2 h includes periods sharing the CPU with other jobs). "
+            "The 1 GB / 90 min cost limit refers to a T4 and cannot be checked on this hardware. "
+            "This run is a single seed (42); the paper reports the mean of 5 seeds.", SMALL))
     equiv = load("p0/s2pinn_repro_seed42_equiv_steps20")
     st, rs = load("p0/s2pinn_repro_seed42_straight_steps30"), load("p0/s2pinn_repro_seed42_resume_steps30")
     if equiv or (st and rs):

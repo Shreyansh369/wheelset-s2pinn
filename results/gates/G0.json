@@ -4,10 +4,18 @@
   "config": {},
   "payload": {
     "a_s2pinn_reproduction": {
-      "status": "PENDING",
-      "why": "Nc=4096 CPU run in progress (experiments/p0_reproduce_s2pinn_resumable.py --colloc 4096)",
+      "status": "PASS",
+      "mean_rel_l2": 0.006709401495754719,
+      "var_rel_l2": 0.008783834055066109,
+      "cal_error": 0.018786501884460433,
       "threshold": 0.01268,
-      "reference": "Table 14 (Nc=4096): 6.34e-3"
+      "reference": "Table 14 (Nc=4096): 0.00634",
+      "ratio_to_paper": 1.0582652201505864,
+      "device": "cpu",
+      "full_budget": true,
+      "colloc_Nc": 4096,
+      "deviation": "Nc=4096 instead of the paper default 32768 (PDE batch only, as the released --colloc flag does); compared with the paper's Table 14 row for this Nc",
+      "wall_hours": 5.220621820479168
     },
     "b_h1_sdof_trend": {
       "status": "PASS AS REFRAMED (accepted 2026-10-11): degree ~ Pi for uniform, ~ Pi^2 for Gaussian inputs",
@@ -226,10 +234,10 @@
     }
   },
   "provenance": {
-    "git_commit": "848cee1563cc71d67b082e54eca15e874f43b104-dirty",
-    "timestamp_utc": "2026-10-11T18:01:27Z",
+    "git_commit": "31c07e59cefbce51de80a0641ea834e9fcdf40d5",
+    "timestamp_utc": "2026-10-11T22:31:41Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 28.375,
+    "peak_cpu_memory_mb": 28.42578125,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",
