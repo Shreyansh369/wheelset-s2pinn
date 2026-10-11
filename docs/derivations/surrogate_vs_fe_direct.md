@@ -15,12 +15,13 @@ run at the time, so treat them as upper bounds.
 | one complex eigendecomposition (all modes, exact H via residues) | 7 ms |
 | direct solve, whole 50–700 Hz band (1301 lines) | 0.12 s |
 | H on the estimator grid (25 payload nodes × modal sum) | 0.19–0.29 s per (kB0, cB) |
-| one profile-likelihood evaluation, N = 50 | ≈ 0.5 s (H ≈ 0.25 s + nuisance profiling ≈ 0.25 s) |
-| full fit (Nelder–Mead, ≈ 75 evaluations + Hessian), N = 50 / 200 | see `fe_direct.json` (≈ 40 s / ≈ 90 s) |
+| one profile-likelihood evaluation, N = 50 / 200 (median over 60 fits each) | 0.49–0.50 s / 1.21–1.32 s (H ≈ 0.25 s of it in both cases) |
+| full fit (Nelder–Mead ≈ 78 evaluations + profile Hessian), N = 50 / 200 | median 37–41 s / 93–103 s (max 47 s / 114 s) |
+| synthetic data generation (reference FE, not part of a fit), N = 50 / 200 | 12–13 s / 49–50 s |
 
 A surrogate could replace only the H part. The nuisance profiling (sub-band levels, per-pass payload)
 stays the same whatever produces H. **The best a surrogate can do is roughly halve the cost of one
-likelihood evaluation.** Against that, training costs ≈ 90 min on a T4 (S²-PINN Table 18), which
+likelihood evaluation at N = 50, and save about 20% at N = 200**, where profiling dominates. Against that, training costs ≈ 90 min on a T4 (S²-PINN Table 18), which
 equals ≈ 100+ full FE-direct fits on one CPU core.
 
 ## 2. Is H(f; kB0, W) low-rank separable? (the user's caveat)
