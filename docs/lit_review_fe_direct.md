@@ -162,6 +162,82 @@ modal-force PSD as a nuisance parameter, is the prior art to cite for that struc
 
 ---
 
+## Novelty caveats by method component (overlap, paper by paper)
+
+Each row is one ingredient of our method, the papers that overlap with it, **what exactly overlaps**,
+and what differs. "Snippet" means only an abstract, highlight or search summary was read. Nothing
+here was read in full text.
+
+### C1. Target: bearing-support stiffness k_B0 (support resonance about 450–700 Hz) from in-service ABA
+| Paper | Overlap | Difference | Evidence |
+|---|---|---|---|
+| *MSSP* 2024, "Dynamic response analysis of high-speed train axle box bearing ... time-varying dynamic parameters" (pii S0888327024010173) | Identifies **equivalent bearing stiffness and damping** with an EKF | Test rig, roll vibration, known excitation; no roughness, no in-service ABA, no multi-pass | snippet; authors unverified |
+| *MSSP* 2024, "A load estimation model for axle box bearings ..." (pii S0888327024006265); Li, Chi, Cai, Zhou 2025 (*High-speed Railway*) | Bearing–vehicle model inverted from vehicle response with a Kalman filter | Estimates bearing **loads**; stiffness is tuned beforehand, not identified | snippet |
+| Sci. Rep. 2023 (10.1038/s41598-023-50177-2); Li et al. 2019 (*Adv. Mech. Eng.*); *VSD* 2023 (10.1080/00423114.2023.2235031) | Axlebox bearing in a coupled vehicle model, bearing resonance in the few-hundred-Hz band | Forward simulation only | snippet |
+| Behzad, ICSV 2023 (rotating machinery) | Loose housing fit lowers equivalent stiffness (≈53%) and natural frequency (≈15%): the physical basis for "stiffness loss as health index" | Not railway; no identification method | snippet; unverified |
+| Parziale et al. 2024 (*Sensors* 24, 207) | Support stiffness and damping identified (Jeffcott rotor, PINN) | Known excitation, rig/simulation, no roughness | from `lit_review.md` |
+
+**No paper was found that identifies bearing-support stiffness from in-service ABA.** The blind
+spot is Chinese-language work on axle-box bearings.
+
+### C2. Joint estimation of a structural stiffness and the roughness spectrum from ABA alone
+| Paper | Overlap | Difference | Evidence |
+|---|---|---|---|
+| **Carrigan & Talbot 2023**, *MSSP* 192, 110232; Cambridge LNME chapter; ISMA 2022 #434 | **Same problem structure**: unknown roughness, a stiffness parameter estimated from the ABA spectrum by fitting a model TF to a resonance peak (P2), then the roughness spectrum by deconvolution. Wheel roughness removed with a comb filter | Track/pad stiffness at P2 (≈50–150 Hz), not bearing support. Sequential deterministic peak fit per section, not a joint likelihood. No CRB or coverage seen. Speed not used for identifiability (one snippet: measured FRF largely speed-independent) | snippets of the abstract and repository record; **full text needed to rule out multi-speed use** |
+| **Pieringer & Kropp 2022**, *Appl. Acoust.* 193, 108760 | Model-based roughness from ABA; quantifies that stiffness error (rail pad, 20% gives 3.5 dB) contaminates roughness | Track parameters assumed known; **joint estimation stated as future work** | snippet (abstract) |
+| **Stoura et al. 2023**, *SCHM*, 10.1155/2023/8855542; Dertimanis et al. 2020 (IMAC) | Roughness as an unknown input estimated jointly with the vehicle state; **some vehicle parameters updated (UKF)** | Parameters calibrated from diagnostic-vehicle data. Time-domain profile. Low-frequency vehicle model; no bearing, no speed diversity | snippet (abstract) |
+| Shen, Zhang, Dollevoet, Zoeteman, Li 2023, *MSSP* 204, 110730 | Several track stiffnesses identified from ABA (digital twin) | How roughness is handled, and whether the four simulated speeds help identification: **unverified** | snippet |
+| "Simultaneous identification of the frequencies and track irregularities of high-speed railway bridges from vehicle vibration data", *MSSP* 2020/21 | Joint structural frequencies and track irregularity from vehicle response (Kalman) | Bridge frequencies, not vehicle parameters; single speed | snippet; authors unverified |
+
+### C3. Roughness as a wavenumber-domain spectrum with free per-band levels (nuisance)
+| Paper | Overlap | Difference | Evidence |
+|---|---|---|---|
+| Carrigan, Talbot (Fidler), "On the derivation of rail roughness spectra from axle-box vibration: development of a new technique" | A **stochastic frequency-domain inverse method** for roughness *wavelength* spectra with speed compensation | Roughness is the target and the TF is assumed or modelled; no parameter identification seen | snippet; venue/year unverified |
+| ISO 3095 / EN 15610 practice; Pieringer & Kropp | One-third-octave wavelength band levels as the roughness descriptor | Descriptor only | standard |
+| Au 2011/2012 (Bayesian FFT) | An unknown **flat PSD per frequency band** as a nuisance parameter in an FFT likelihood | Bands in frequency, for ambient forces; no wavenumber mapping | snippet |
+
+### C4. Speed diversity as the identifiability mechanism (roughness fixed in wavenumber, resonance fixed in frequency)
+| Paper | Overlap | Difference | Evidence |
+|---|---|---|---|
+| **Jin, Yang, Dimitrakopoulos, Paraskeva, Katafygiotis 2021**, *Eng. Struct.* 230, 111688 | **Exactly this physical idea**: two traverses at different speeds; a transformed residual cancels road roughness and leaves the bridge frequencies | Road vehicle over a bridge. Subtraction, not likelihood. No roughness estimate, no vehicle parameters, two speeds | snippet |
+| *Dev. Built Environ.* 14 (2023), PSD-based drive-by damage; T&F chapter "Mitigation of unwanted effects in drive-by acceleration data" | Subtract responses at different speeds in the **spatial domain** to remove roughness | Same differences as above | snippets; authors unverified |
+| Yang, Zhang, Qian, Wu 2018 (*IJSSD*), contact-point response | Two axles or vehicles cancel roughness | Axle spacing, not speed | snippet |
+| Wang et al. 2024, *Sensors* 24, 3804; Hoelzl et al. 2022, arXiv:2209.12899; LPV-AR IMAC chapter | Speed-aware ABA processing: order tracking, angular resampling, speed-scheduled models | Speed used to *align* or *schedule*, not to separate roughness from a TF | snippets |
+| Lanzillo 2023 (MSc, PoliMi); Yu et al. 2025 (*Measurement* 249) | Note that ABA-derived roughness disperses with speed near wheel–rail resonances, i.e. speed changes reveal TF error | Treated as an error source, not exploited | snippets |
+
+### C5. Frequency-domain (Whittle) likelihood with unknown input spectrum; profile/Fisher uncertainty
+| Paper | Overlap | Difference | Evidence |
+|---|---|---|---|
+| **Au 2011** (*JEM* 137(3)); **Au 2012** (*MSSP* 26(1), Parts I–II) | Likelihood of FFT ordinates treated as independent, unknown force PSD as a parameter, posterior covariance from the Hessian. **Our likelihood is structurally the same.** | Stationary ambient structures, single setup; no speed-to-wavenumber map, no multi-pass pooling | snippets |
+| Katafygiotis & Yuen 2001 (*EESD* 30(8)); Yuen & Katafygiotis 2001 (*PEM*) | Bayesian spectral-density likelihood for modal updating | Same differences | snippets |
+| Pintelon & Schoukens (frequency-domain ML, errors-in-variables) | Frequency-domain ML with noisy or unknown inputs | Measured-input setting | snippets |
+| — | **Not found**: any Whittle or Bayesian-FFT likelihood applied to ABA or vehicle–track parameter identification | — | — |
+
+### C6. Joint estimation across many passes or vehicles; scale ambiguity between excitation level and TF gain
+| Paper | Overlap | Difference | Evidence |
+|---|---|---|---|
+| **Keenahan, Ren, OBrien 2019** (UCD) | Several vehicles over one profile jointly give the profile; **only relative vehicle properties are identifiable** without prior information (the same gain ambiguity our per-band level nuisance creates; we break it with a known physical parametrisation and speed/payload diversity) | Road, low frequency, time-domain optimisation | snippet |
+| Ren, Feng, OBrien, Li, He (*IJSSD*), fleet concept | Profile and vehicle properties from a fleet | Same differences | snippet; year not seen |
+| **Liu, Guo, Yang, Liu 2024**, *Appl. Sci.* 14, 10310 | Vehicle parameters (including tyre stiffness) and road roughness identified jointly | Uses the front–rear axle time lag, not speed; EKF; half-car | snippet |
+
+### C7. Payload measured per pass (WIM) entering load-dependent bearing and contact stiffness
+No overlapping identification paper was found. Load dependence of Hertzian contact and roller-bearing
+stiffness is textbook. Carrigan & Talbot and Pieringer & Kropp treat axle load as known. **Not
+found** is not the same as absent.
+
+### C8. Physics-informed learning on ABA or bearing supports (matters only if a surrogate is kept)
+| Paper | Overlap | Difference | Evidence |
+|---|---|---|---|
+| PD-SOVNet, arXiv:2604.06620 (2026) | Physics-driven operator network on axle-box vibration | Wheel polygonal roughness, not bearing stiffness | title only |
+| Parziale et al. 2024 | PINN identification of support stiffness | Rotor rig, deterministic | as above |
+
+### C9. Confounds a reviewer will cite (not novelty threats, but they bound the claim)
+- **Wheel polygon orders near the support resonance.** Sci. Rep. 2023 (10.1038/s41598-023-50177-2): 20th order at 576.5 Hz at 300 km/h. Polygon orders scale with speed like roughness but are *periodic per revolution*, so they appear as lines, not as a broadband wavenumber spectrum. Carrigan & Talbot remove them with a comb filter.
+- **Wheelset flexible modes in the band.** Same paper: about 577 Hz. Our FE model contains the axle modes; wheel-web modes are outside L1-lin.
+- **Track and rail-pad stiffness variability.** Pieringer & Kropp: dominant roughness-error source. In our model it enters through k_H and the rail oscillator; the robustness scan covered contact stiffness ±30%, but not rail-pad variation between passes.
+
+---
+
 ## Stop question
 
 **Is there already a published method that jointly estimates rail roughness (or its spectrum) and identifies bearing-support / axlebox bearing stiffness (or the vehicle's high-frequency support resonance) from ABA, using speed variation across passes?**

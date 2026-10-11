@@ -96,10 +96,15 @@ def generate_pass(sm: ScenarioModel, th: dict, rough: Roughness, g_true: np.ndar
     fk = np.arange(C.size) / T
     nb = (fk >= NOISE_BAND[0]) & (fk <= NOISE_BAND[1])
     keep = (fk >= F_LO) & (fk <= F_HI)
+    # Hann-tapered DFT of the same record (no extra random draws), power-normalised so that a smooth
+    # spectrum and white noise have the same expected |C|^2 as the untapered DFT.
+    wt = 0.5 - 0.5 * np.cos(2 * np.pi * np.arange(n) / n)
+    Cw = 2 * np.fft.rfft(wt * y) / math.sqrt(n * np.sum(wt**2))
     # e_noise is the out-of-band floor measured from the record itself (noise + leakage of the
     # rectangular 20-revolution window); the estimator uses it as a known additive floor.
     return {"f": fk[keep], "c": C[keep], "e_noise": float(np.mean(np.abs(C[nb]) ** 2)), "V": V, "T": T,
-            "e_noise_true": 4 * sigma**2 / n}
+            "e_noise_true": 4 * sigma**2 / n, "k": np.arange(C.size)[keep],
+            "c_hann": Cw[keep], "e_noise_hann": float(np.mean(np.abs(Cw[nb]) ** 2))}
 
 
 # --------------------------------------------------------------------------- modal transfer function
@@ -142,7 +147,12 @@ class WhittleFit:
     """
 
     def __init__(self, passes: list[dict], W_meas: np.ndarray, sigma_W: float, rough: Roughness, mh: ModalH,
-                 th_base: dict):
+                 th_base: dict, taper: str = "none"):
+        """taper = "none": rectangular-window DFT bins, all bins. taper = "hann": Hann-tapered DFT
+        (and floor), every second bin only, since adjacent Hann bins are correlated (amplitude
+        correlation -2/3 at lag 1, 1/6 at lag 2); the expected periodogram is taken as the local
+        spectrum (H varies over ~50 Hz, bins are ~0.5 Hz)."""
+        self.taper = taper
         self.P = passes
         self.lw_meas = np.log(np.asarray(W_meas, float))
         self.sW = sigma_W
@@ -154,12 +164,17 @@ class WhittleFit:
             Om = 2 * np.pi * p["f"] / p["V"]
             s = rough.subband(Om)
             ok = s >= 0
+            if taper == "hann":
+                ok &= p["k"] % 2 == 0
+                c, e = p["c_hann"], p["e_noise_hann"]
+            else:
+                c, e = p["c"], p["e_noise"]
             dOm = 2 * np.pi * (1 / p["T"]) / p["V"]
             self.sub.append(s[ok])
             self.f.append(p["f"][ok])
             self.base.append(2 * rough.density(Om[ok]) * dOm)
-            self.c2.append(np.abs(p["c"][ok]) ** 2)
-            self.e.append(p["e_noise"])
+            self.c2.append(np.abs(c[ok]) ** 2)
+            self.e.append(e)
         self.S = rough.n_sub
         self.used = np.unique(np.concatenate(self.sub))
         self.n_eval = 0

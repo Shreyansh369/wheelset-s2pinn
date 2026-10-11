@@ -60,7 +60,7 @@ def setup():
     return sm, thb, rough, ModalH(sm, W_NODES, F_GRID)
 
 
-def one_dataset(sm, thb, rough, mh, N, speed, snr_db, seed_key) -> dict:
+def one_dataset(sm, thb, rough, mh, N, speed, snr_db, seed_key, taper: str = "none") -> dict:
     rng = np.random.default_rng(np.random.SeedSequence(seed_key))
     g_true = 10 ** (rng.normal(0, G_SD_DB, rough.n_sub) / 10)
     lo, hi = SPEEDS[speed]
@@ -71,12 +71,13 @@ def one_dataset(sm, thb, rough, mh, N, speed, snr_db, seed_key) -> dict:
     passes = [generate_pass(sm, th_true, rough, g_true, V, W, snr_db, rng) for V, W in zip(Vs, Ws)]
     t_gen = time.perf_counter() - t0
     Wm = Ws * np.exp(WIM * rng.standard_normal(N))
-    floor_ratio = float(np.mean([q["e_noise"] / q["e_noise_true"] for q in passes]))
-    fit = WhittleFit(passes, Wm, WIM, rough, mh, thb)
+    fkey = "e_noise_hann" if taper == "hann" else "e_noise"
+    floor_ratio = float(np.mean([q[fkey] / q["e_noise_true"] for q in passes]))
+    fit = WhittleFit(passes, Wm, WIM, rough, mh, thb, taper=taper)
     r = fit.fit(np.log([START["kB0"], START["cB"]]))
     crb = fit.expected_fisher(np.log([TRUTH["kB0"], TRUTH["cB"]]), np.log(g_true), np.log(Ws))
     err = [r["phi"][0] - math.log(TRUTH["kB0"]), r["phi"][1] - math.log(TRUTH["cB"])]
-    return {"N": N, "speed": speed, "snr_db": snr_db, "seed_key": list(seed_key), "phi_hat": r["phi"],
+    return {"N": N, "speed": speed, "snr_db": snr_db, "taper": taper, "seed_key": list(seed_key), "phi_hat": r["phi"],
             "err_log": err, "se_log_obs": r["se_log"], "crb_log_truth": crb["crb_log"],
             "corr_kB0_cB_crb": crb["corr_kB0_cB"], "n_params": crb["n_params"],
             "converged": r["converged"], "n_iter": r["n_iter"], "n_eval": r["n_eval"],
@@ -123,7 +124,7 @@ def aggregate() -> None:
         rows = [json.loads(line) for line in fpath.read_text().splitlines() if line.strip()]
         if rows:
             cells.append({"cell": fpath.stem, "N": rows[0]["N"], "speed": rows[0]["speed"],
-                          "snr_db": rows[0]["snr_db"], **summarise(rows)})
+                          "snr_db": rows[0]["snr_db"], "taper": rows[0].get("taper", "none"), **summarise(rows)})
     wall = sum(json.loads(l)["wall_fit_s"] + json.loads(l)["wall_generate_s"]
                for fpath in RUN_DIR.glob("*.jsonl") for l in fpath.read_text().splitlines() if l.strip())
     save_result("p1/fe_direct", {"cells": cells}, cfg={
@@ -143,6 +144,7 @@ def main() -> None:
     ap.add_argument("--snr", type=float, default=40.0)
     ap.add_argument("--n-data", type=int, default=20)
     ap.add_argument("--seed-base", type=int, default=20261011)
+    ap.add_argument("--taper", choices=["none", "hann"], default="none")
     ap.add_argument("--aggregate", action="store_true")
     a = ap.parse_args()
     if a.aggregate:
@@ -154,14 +156,15 @@ def main() -> None:
         for si, speed in enumerate(SPEEDS):
             if speed not in a.speeds:
                 continue
-            fpath = RUN_DIR / f"N{N}_{speed}_snr{int(a.snr)}.jsonl"
+            sfx = "" if a.taper == "none" else f"_{a.taper}"
+            fpath = RUN_DIR / f"N{N}_{speed}_snr{int(a.snr)}{sfx}.jsonl"
             done = {tuple(json.loads(l)["seed_key"]) for l in fpath.read_text().splitlines() if l.strip()} \
                 if fpath.exists() else set()
             for j in range(a.n_data):
                 key = (a.seed_base, N, si, int(a.snr), j)
                 if key in done:
                     continue
-                row = one_dataset(sm, thb, rough, mh, N, speed, a.snr, key)
+                row = one_dataset(sm, thb, rough, mh, N, speed, a.snr, key, a.taper)
                 with fpath.open("a") as fh:
                     fh.write(json.dumps(row) + "\n")
                 print(f"N={N} {speed} j={j} err_kB0={row['err_log'][0]:+.4f} se={row['se_log_obs'][0]:.4f} "
