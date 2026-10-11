@@ -9,3 +9,8 @@ N=200 uniform_95_105 j=7 err_kB0=+0.0019 se=0.0022 crb=0.0022 err_cB=-0.045 fit=
 N=200 uniform_95_105 j=8 err_kB0=+0.0047 se=0.0022 crb=0.0022 err_cB=-0.012 fit=94.6s
 N=200 uniform_95_105 j=9 err_kB0=+0.0029 se=0.0023 crb=0.0023 err_cB=+0.104 fit=86.9s
 N=200 uniform_95_105 j=10 err_kB0=+0.0015 se=0.0023 crb=0.0024 err_cB=-0.071 fit=96.1s
+N=200 uniform_95_105 j=11 err_kB0=-0.0006 se=0.0023 crb=0.0023 err_cB=+0.067 fit=92.1s
+N=200 uniform_95_105 j=12 err_kB0=+0.0016 se=0.0023 crb=0.0023 err_cB=+0.047 fit=96.4s
+N=200 uniform_95_105 j=13 err_kB0=+0.0017 se=0.0021 crb=0.0022 err_cB=-0.075 fit=98.3s
+N=200 uniform_95_105 j=14 err_kB0=-0.0033 se=0.0023 crb=0.0023 err_cB=+0.066 fit=100.4s
+N=200 uniform_95_105 j=15 err_kB0=+0.0006 se=0.0022 crb=0.0021 err_cB=+0.119 fit=87.2s
