@@ -4,3 +4,6 @@ N=200 uniform_95_105 j=2 err_kB0=+0.0006 se=0.0022 crb=0.0022 err_cB=-0.026 fit=
 N=200 uniform_95_105 j=3 err_kB0=-0.0008 se=0.0022 crb=0.0023 err_cB=-0.042 fit=95.7s
 N=200 uniform_95_105 j=4 err_kB0=-0.0012 se=0.0022 crb=0.0022 err_cB=-0.031 fit=83.7s
 N=200 uniform_95_105 j=5 err_kB0=-0.0011 se=0.0022 crb=0.0022 err_cB=+0.121 fit=82.7s
+N=200 uniform_95_105 j=6 err_kB0=+0.0023 se=0.0022 crb=0.0021 err_cB=+0.084 fit=88.1s
+N=200 uniform_95_105 j=7 err_kB0=+0.0019 se=0.0022 crb=0.0022 err_cB=-0.045 fit=101.4s
+N=200 uniform_95_105 j=8 err_kB0=+0.0047 se=0.0022 crb=0.0022 err_cB=-0.012 fit=94.6s
