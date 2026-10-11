@@ -1,0 +1,166 @@
+{
+  "name": "p0/s2pinn_repro_seed42_equiv_steps20",
+  "seed": 42,
+  "config": {
+    "model": {
+      "spatial": {
+        "n_atoms": 256,
+        "init_sigma": 0.15,
+        "use_warp": true,
+        "warp_hidden": 64,
+        "warp_eps": 0.1
+      },
+      "temporal": {
+        "n_freq": 8
+      },
+      "stochastic": {
+        "R": 5,
+        "p": 3,
+        "dist": "gaussian"
+      },
+      "cp": {
+        "rank": 16,
+        "init": "normal"
+      }
+    },
+    "pde": {
+      "name": "stochastic_diffusion_2d",
+      "domain": {
+        "x_min": -1.0,
+        "x_max": 1.0,
+        "y_min": -1.0,
+        "y_max": 1.0,
+        "t_min": 0.0,
+        "t_max": 1.0
+      },
+      "kl": {
+        "n_terms": 5,
+        "sigma": 1.0,
+        "corr_length": 1.0
+      }
+    },
+    "training": {
+      "steps": 20,
+      "lr": 0.001,
+      "optimizer": "adam",
+      "amp": "none",
+      "grad_accum": 1,
+      "colloc": 32768,
+      "bc": 32768,
+      "ic": 32768,
+      "gram": 4096,
+      "resample_every": 1,
+      "w_pde": 1.0,
+      "w_proj": 1.0,
+      "w_bc": 1.0,
+      "w_ic": 1.0,
+      "w_orth": 1.0,
+      "w_fac_orth": 0.1,
+      "normalize_cp_every": 1
+    },
+    "eval": {
+      "grid_res": 64,
+      "t_eval": [
+        0.0,
+        0.5,
+        1.0
+      ],
+      "z_eval": [
+        {
+          "name": "Z0",
+          "values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "name": "Z_e1",
+          "values": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "name": "Z_e2",
+          "values": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "eval_every": 500,
+      "save_checkpoint": true,
+      "uq": {
+        "enabled": true,
+        "n_probe": 2048,
+        "n_z_moment": 1024,
+        "n_z_interval": 1024,
+        "n_z_test": 1024,
+        "alpha": 0.1,
+        "batch_limit": 262144
+      }
+    },
+    "logging": {
+      "use_wandb": false,
+      "project": "s2pinn",
+      "entity": null,
+      "log_every": 10
+    },
+    "seed": 42
+  },
+  "payload": {
+    "full_paper_budget": false,
+    "device": "cpu",
+    "runner": "resumable replay of spinn.train.train loop",
+    "s2pinn_commit": "1cd6fa2973ef012900683b8ef3bb94f23f1ade86",
+    "final_metrics": {
+      "eval_Z0_t0.0": 1.077597737312317,
+      "eval_Z0_t0.5": 1.0246857404708862,
+      "eval_Z0_t1.0": 1.2241852283477783,
+      "eval_Z_e1_t0.0": 1.0436584949493408,
+      "eval_Z_e1_t0.5": 1.0488500595092773,
+      "eval_Z_e1_t1.0": 1.2224229574203491,
+      "eval_Z_e2_t0.0": 1.1249189376831055,
+      "eval_Z_e2_t0.5": 1.0845166444778442,
+      "eval_Z_e2_t1.0": 1.3327828645706177,
+      "uq/mean_rel_l2": 1.0082898139953613,
+      "uq/var_rel_l2": 12.999049186706543,
+      "uq/coverage": 0.7781510353088379,
+      "uq/coverage_50": 0.34960412979125977,
+      "uq/sharpness_50": 0.2717483937740326,
+      "uq/coverage_80": 0.6215968132019043,
+      "uq/sharpness_80": 0.5606486797332764,
+      "uq/coverage_90": 0.7781510353088379,
+      "uq/sharpness_90": 0.8111781477928162,
+      "uq/coverage_95": 0.8928613662719727,
+      "uq/sharpness_95": 1.1440184116363525,
+      "uq/calibration_error": 0.12694666385650635
+    },
+    "best_metrics_during_training": {},
+    "paper_mean_rel_l2": 0.00371,
+    "paper_var_rel_l2": 0.0044,
+    "g0_threshold_mean_rel_l2": 0.00742,
+    "g0_pass": false,
+    "ratio_to_paper": 271.7762301874289,
+    "note": "CPU run: wall time and memory are not comparable with the paper's T4 figures"
+  },
+  "provenance": {
+    "git_commit": "3b0f25f2d7858feaeaa7833f01447a45a558d964-dirty",
+    "timestamp_utc": "2026-10-11T14:15:43Z",
+    "wall_seconds": 314.11122576699927,
+    "peak_cpu_memory_mb": 2427.69921875,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}
