@@ -1,0 +1,13 @@
+N=50 fixed_100 j=0 err_kB0=-0.0052 se=0.0065 crb=0.0067 err_cB=-0.214 fit=44.8s
+N=50 fixed_100 j=1 err_kB0=-0.0005 se=0.0069 crb=0.0072 err_cB=-0.240 fit=37.9s
+N=50 fixed_100 j=2 err_kB0=-0.0013 se=0.0059 crb=0.0061 err_cB=-0.081 fit=41.2s
+N=50 fixed_100 j=3 err_kB0=-0.0011 se=0.0067 crb=0.0064 err_cB=+0.221 fit=34.3s
+N=50 fixed_100 j=4 err_kB0=+0.0084 se=0.0073 crb=0.0070 err_cB=+0.069 fit=46.7s
+N=50 fixed_100 j=5 err_kB0=+0.0076 se=0.0066 crb=0.0067 err_cB=-0.016 fit=36.6s
+N=50 fixed_100 j=6 err_kB0=-0.0100 se=0.0069 crb=0.0070 err_cB=-0.195 fit=42.1s
+N=50 fixed_100 j=7 err_kB0=-0.0012 se=0.0064 crb=0.0064 err_cB=+0.106 fit=42.7s
+N=50 fixed_100 j=8 err_kB0=+0.0015 se=0.0063 crb=0.0061 err_cB=+0.033 fit=44.1s
+N=50 fixed_100 j=9 err_kB0=+0.0112 se=0.0056 crb=0.0061 err_cB=-0.446 fit=43.6s
+N=50 fixed_100 j=10 err_kB0=-0.0094 se=0.0064 crb=0.0064 err_cB=-0.079 fit=36.4s
+N=50 fixed_100 j=11 err_kB0=-0.0010 se=0.0065 crb=0.0069 err_cB=-0.524 fit=42.9s
+N=50 fixed_100 j=12 err_kB0=-0.0010 se=0.0073 crb=0.0074 err_cB=-0.101 fit=40.9s
