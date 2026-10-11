@@ -14,7 +14,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from src.utils.results import RESULTS_DIR, save_result  # noqa: E402
 
-PAPER_DIFFUSION_MEAN = 3.71e-3
 
 
 def _load(name: str):
@@ -25,23 +24,26 @@ def _load(name: str):
 def g0() -> dict:
     items: dict = {}
 
-    # (a) S2-PINN diffusion reproduction within 2x of the paper's mean error
-    rep = _load("p0/s2pinn_repro_seed42")
+    # (a) S2-PINN diffusion reproduction within 2x of the paper's mean error.
+    # The user approved running at Nc=4096 on this CPU container and checking against Table 14.
+    rep = _load("p0/s2pinn_repro_seed42_nc4096") or _load("p0/s2pinn_repro_seed42")
     if rep is None:
-        timing = _load("p0/s2pinn_cpu_timing")
         items["a_s2pinn_reproduction"] = {
             "status": "PENDING",
-            "why": "needs a GPU run (experiments/colab_p0_reproduce.ipynb); CPU estimate "
-                   + (f"{timing['payload']['projected_hours_20k_steps']:.1f} h" if timing else "n/a"),
-            "threshold": 2 * PAPER_DIFFUSION_MEAN,
+            "why": "Nc=4096 CPU run in progress (experiments/p0_reproduce_s2pinn_resumable.py --colloc 4096)",
+            "threshold": 2 * 6.34e-3, "reference": "Table 14 (Nc=4096): 6.34e-3",
         }
     else:
         p = rep["payload"]
         items["a_s2pinn_reproduction"] = {
             "status": "PASS" if p["g0_pass"] else "FAIL",
-            "mean_rel_l2": p["final_metrics"]["uq/mean_rel_l2"], "threshold": 2 * PAPER_DIFFUSION_MEAN,
+            "mean_rel_l2": p["final_metrics"]["uq/mean_rel_l2"], "var_rel_l2": p["final_metrics"]["uq/var_rel_l2"],
+            "cal_error": p["final_metrics"]["uq/calibration_error"],
+            "threshold": p["g0_threshold_mean_rel_l2"], "reference": f"{p.get('paper_reference_source', 'Table 1')}: "
+                                                                       f"{p['paper_mean_rel_l2']:.3g}",
             "ratio_to_paper": p["ratio_to_paper"], "device": p["device"], "full_budget": p["full_paper_budget"],
-            "wall_minutes": rep["provenance"]["wall_seconds"] / 60, "peak_gpu_mb": rep["provenance"]["peak_gpu_memory_mb"],
+            "colloc_Nc": p.get("colloc_Nc", 32768), "deviation": p.get("deviation"),
+            "wall_hours": rep["provenance"]["wall_seconds"] / 3600,
         }
 
     # (b) SDOF H1 trend
@@ -52,7 +54,8 @@ def g0() -> dict:
         leg, her = f["legendre/p_req_at_mean/p>=3"], f["hermite/p_req_at_mean/p>=3"]
         clear = leg["r2"] >= 0.95 and her["r2"] >= 0.95 and leg["slope"] > 0 and her["slope"] > 0
         items["b_h1_sdof_trend"] = {
-            "status": "PASS (trend clear)" if clear else "FAIL",
+            "status": ("FAIL AS STATED: trend clear, but Pi^2 holds only for Gaussian inputs; uniform inputs scale like Pi"
+                       if clear and leg["slope"] < 1.5 else ("PASS" if clear else "FAIL")),
             "criterion": "monotone log-log trend of required degree in Pi with R^2 >= 0.95 for both families",
             "legendre_slope_vs_logPi": [leg["slope"], leg["slope_se"]], "legendre_r2": leg["r2"],
             "hermite_slope_vs_logPi": [her["slope"], her["slope_se"]], "hermite_r2": her["r2"],
@@ -77,7 +80,7 @@ def g0() -> dict:
                                                  "pointwise_ridge_amplitude")}
         all_pass = all(r["pass_eq41_10pct_median"] for r in rows.values() if r["n"])
         items["c_eq41"] = {
-            "status": "PASS (Eq. 41 within 10%)" if all_pass else "Eq. 41 FAILS; measured relation reported",
+            "status": "PASS (Eq. 41 within 10%)" if all_pass else "FAIL: Eq. 41 misses 10%; measured relation reported (gate fallback)",
             "settings": rows, "mlp_forced_trap": pay.get("forced/sdof_mlp_at_resonance"),
         }
     else:

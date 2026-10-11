@@ -1,4 +1,4 @@
-"""P0.1 on CPU: the S2-PINN diffusion reproduction with checkpoint/resume.
+"""P0.1: the S2-PINN diffusion reproduction with checkpoint/resume (CPU or GPU).
 
 The released ``spinn.train.train`` writes nothing until the end, and a full
 20k-step run takes ~23 h on this container's CPU (results/p0/s2pinn_cpu_timing.json).
@@ -32,13 +32,20 @@ sys.path.insert(0, str(REPO / "third_party" / "s2pinn" / "src"))
 
 from spinn import train as s2  # noqa: E402
 
-from experiments.p0_reproduce_s2pinn import (  # noqa: E402
-    PAPER_DIFFUSION_MEAN_REL_L2,
-    PAPER_DIFFUSION_VAR_REL_L2,
-    PINNED_COMMIT,
-    build_cfg,
-)
+from experiments.p0_reproduce_s2pinn import PINNED_COMMIT, build_cfg  # noqa: E402
+from src.utils.device import get_device, rng_state, set_rng_state  # noqa: E402
 from src.utils.results import save_result  # noqa: E402
+
+# Paper reference values (mean rel. L2, var rel. L2, cal. error) by collocation batch Nc.
+# Nc=32768: Table 1/2/3 headline (S2-PINN proj). Other Nc: Table 14 (collocation sweep).
+# Note Table 14's own Nc=32768 row (6.43e-3) differs from Table 1 (3.71e-3).
+PAPER_REF = {
+    32768: {"mean": 3.71e-3, "var": 4.40e-3, "cal": 6e-3, "source": "Tables 1-3"},
+    4096: {"mean": 6.34e-3, "var": 1.30e-2, "cal": 1.85e-2, "source": "Table 14 (Nc=4096)"},
+    8192: {"mean": 5.95e-3, "var": 9.70e-3, "cal": 1.47e-2, "source": "Table 14 (Nc=8192)"},
+    16384: {"mean": 5.72e-3, "var": 9.54e-3, "cal": 1.66e-2, "source": "Table 14 (Nc=16384)"},
+    65536: {"mean": 4.68e-3, "var": 8.49e-3, "cal": 1.94e-2, "source": "Table 14 (Nc=65536)"},
+}
 
 CKPT_DIR = REPO / "results" / "p0" / "ckpt"  # *.pt are gitignored
 
@@ -50,21 +57,33 @@ def main() -> None:
     ap.add_argument("--tag", type=str, default="")
     ap.add_argument("--eval-every", type=int, default=None, help="testing only (changes the RNG stream vs the paper run)")
     ap.add_argument("--stop-after-hours", type=float, default=None, help="exit cleanly at the next checkpoint after this")
+    ap.add_argument("--colloc", type=int, default=None,
+                    help="PDE collocation batch Nc (released --colloc semantics: bc/ic batches unchanged)")
+    ap.add_argument("--device", type=str, default=None, help="cpu | cuda | auto (default auto)")
     ap.add_argument("--ckpt-every", type=int, default=100,
                     help="also checkpoint every N steps between evaluations (saving does not touch the RNG)")
     args = ap.parse_args()
 
     cfg = build_cfg(args.seed, args.steps, None)
     tc = cfg["training"]
+    if args.colloc is not None:
+        tc["colloc"] = args.colloc
+    nc = tc["colloc"]
+    if nc not in PAPER_REF:
+        raise SystemExit(f"no paper reference for Nc={nc}")
+    ref = PAPER_REF[nc]
+    nc_tag = "" if nc == 32768 else f"_nc{nc}"
     steps = tc["steps"]
     full = steps == 20000
     if args.eval_every is not None:
         assert args.tag, "--eval-every is for tests; give a --tag"
         cfg["eval"]["eval_every"] = args.eval_every
     eval_every = cfg["eval"]["eval_every"]
-    device, dtype = torch.device("cpu"), torch.float32
-    ckpt = CKPT_DIR / f"s2pinn_repro_seed{args.seed}{args.tag}_steps{steps}.pt"
-    log_path = REPO / "results" / "p0" / f"s2pinn_repro_seed{args.seed}{args.tag}.log"
+    device, dev_info = get_device(args.device)
+    dtype = torch.float32
+    print(f"device: {dev_info}", flush=True)
+    ckpt = CKPT_DIR / f"s2pinn_repro_seed{args.seed}{nc_tag}{args.tag}_steps{steps}.pt"
+    log_path = REPO / "results" / "p0" / f"s2pinn_repro_seed{args.seed}{nc_tag}{args.tag}.log"
     CKPT_DIR.mkdir(parents=True, exist_ok=True)
 
     # identical construction order to spinn.train.train
@@ -84,7 +103,7 @@ def main() -> None:
         st = torch.load(ckpt, map_location="cpu", weights_only=False)
         model.load_state_dict(st["model"])
         optimizer.load_state_dict(st["optimizer"])
-        torch.set_rng_state(st["rng"])
+        set_rng_state(st["rng"], device)
         best, start, wall_prev = st["best"], st["step"], st["wall"]
         print(f"resumed at step {start} ({wall_prev / 3600:.2f} h so far)", flush=True)
 
@@ -126,7 +145,7 @@ def main() -> None:
             if is_eval or (args.ckpt_every > 0 and (step + 1) % args.ckpt_every == 0):
                 wall = wall_prev + time.perf_counter() - t_seg
                 tmp = ckpt.with_suffix(".tmp")
-                torch.save({"model": model.state_dict(), "optimizer": optimizer.state_dict(), "rng": torch.get_rng_state(),
+                torch.save({"model": model.state_dict(), "optimizer": optimizer.state_dict(), "rng": rng_state(device),
                             "best": best, "step": step + 1, "wall": wall}, tmp)
                 tmp.replace(ckpt)
                 if args.stop_after_hours is not None and (time.perf_counter() - t_seg) / 3600 >= args.stop_after_hours:
@@ -134,22 +153,29 @@ def main() -> None:
                     return
 
     final = s2.evaluate(model, pde, cfg["eval"], device, dtype)
+    if device.type == "cuda":
+        dev_info["peak_gpu_memory_mb"] = torch.cuda.max_memory_allocated() / 2**20
     wall = wall_prev + time.perf_counter() - t_seg
     mean_err = final["uq/mean_rel_l2"]
     payload = {
-        "full_paper_budget": full, "device": "cpu", "runner": "resumable replay of spinn.train.train loop",
+        "full_paper_budget": full, "device": dev_info["device"], "device_info": dev_info,
+        "runner": "resumable replay of spinn.train.train loop", "colloc_Nc": nc, "bc_batch": tc["bc"], "ic_batch": tc["ic"],
+        "paper_reference_source": ref["source"], "paper_cal_error": ref["cal"],
+        "deviation": None if nc == 32768 else (f"Nc={nc} instead of the paper default 32768 (PDE batch only, as the released "
+                                               "--colloc flag does); compared with the paper's Table 14 row for this Nc"),
         "s2pinn_commit": PINNED_COMMIT, "final_metrics": final, "best_metrics_during_training": best,
-        "paper_mean_rel_l2": PAPER_DIFFUSION_MEAN_REL_L2, "paper_var_rel_l2": PAPER_DIFFUSION_VAR_REL_L2,
-        "g0_threshold_mean_rel_l2": 2 * PAPER_DIFFUSION_MEAN_REL_L2,
-        "g0_pass": bool(full and mean_err <= 2 * PAPER_DIFFUSION_MEAN_REL_L2),
-        "ratio_to_paper": mean_err / PAPER_DIFFUSION_MEAN_REL_L2,
-        "note": "CPU run: wall time and memory are not comparable with the paper's T4 figures",
+        "paper_mean_rel_l2": ref["mean"], "paper_var_rel_l2": ref["var"],
+        "g0_threshold_mean_rel_l2": 2 * ref["mean"],
+        "g0_pass": bool(full and mean_err <= 2 * ref["mean"]),
+        "ratio_to_paper": mean_err / ref["mean"],
+        "note": ("CPU run: wall time and memory are not comparable with the paper's T4 figures"
+                 if device.type == "cpu" else f"GPU run on {dev_info['device_name']}"),
     }
-    name = f"p0/s2pinn_repro_seed{args.seed}{args.tag}"
+    name = f"p0/s2pinn_repro_seed{args.seed}{nc_tag}{args.tag}"
     if not full:
         name += f"_steps{steps}"
     path = save_result(name, payload, cfg=cfg, seed=args.seed, wall_seconds=wall)
-    print(f"mean_rel_l2={mean_err:.4e} (paper {PAPER_DIFFUSION_MEAN_REL_L2:.2e}); wrote {path}", flush=True)
+    print(f"mean_rel_l2={mean_err:.4e} (paper {ref["mean"]:.2e}, {ref["source"]}); wrote {path}", flush=True)
 
 
 if __name__ == "__main__":

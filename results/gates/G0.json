@@ -5,11 +5,12 @@
   "payload": {
     "a_s2pinn_reproduction": {
       "status": "PENDING",
-      "why": "needs a GPU run (experiments/colab_p0_reproduce.ipynb); CPU estimate 22.7 h",
-      "threshold": 0.00742
+      "why": "Nc=4096 CPU run in progress (experiments/p0_reproduce_s2pinn_resumable.py --colloc 4096)",
+      "threshold": 0.01268,
+      "reference": "Table 14 (Nc=4096): 6.34e-3"
     },
     "b_h1_sdof_trend": {
-      "status": "PASS (trend clear)",
+      "status": "FAIL AS STATED: trend clear, but Pi^2 holds only for Gaussian inputs; uniform inputs scale like Pi",
       "criterion": "monotone log-log trend of required degree in Pi with R^2 >= 0.95 for both families",
       "legendre_slope_vs_logPi": [
         0.9054439671874855,
@@ -48,7 +49,7 @@
       "hypothesis_Pi2_holds": "only asymptotically for Hermite; Legendre scales like Pi"
     },
     "c_eq41": {
-      "status": "Eq. 41 FAILS; measured relation reported",
+      "status": "FAIL: Eq. 41 misses 10%; measured relation reported (gate fallback)",
       "settings": {
         "transient/sdof": {
           "n": 60,
@@ -225,10 +226,10 @@
     }
   },
   "provenance": {
-    "git_commit": "a3ac030753f8f9cf4e58173cad825796ff71b383-dirty",
-    "timestamp_utc": "2026-10-11T15:14:57Z",
+    "git_commit": "0d5e2ad64b6df6f1363df203677c6a90cb769b0f-dirty",
+    "timestamp_utc": "2026-10-11T17:16:34Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 28.3984375,
+    "peak_cpu_memory_mb": 28.01953125,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

@@ -1,0 +1,22 @@
+0 total=1.9839e+03 pde=1.9340e+03 proj=4.9176e+01 bc=1.2193e-01 ic=5.3973e-01 reg=3.7921e-03 wall_h=0.001
+100 total=1.1095e+02 pde=1.0832e+02 proj=2.3296e+00 bc=1.8746e-02 ic=2.7687e-01 reg=4.1737e-03 wall_h=0.104
+200 total=7.7113e+01 pde=7.6131e+01 proj=7.0801e-01 bc=1.1082e-02 ic=2.5769e-01 reg=4.3384e-03 wall_h=0.201
+300 total=6.2969e+01 pde=6.2168e+01 proj=5.4980e-01 bc=8.6739e-03 ic=2.3776e-01 reg=4.4913e-03 wall_h=0.296
+400 total=4.4882e+01 pde=4.3986e+01 proj=6.7935e-01 bc=8.5174e-03 ic=2.0410e-01 reg=4.8390e-03 wall_h=0.392
+EVAL 500 mean_rel_l2=5.0304e-01 var_rel_l2=4.1975e+00
+500 total=2.7614e+01 pde=2.6731e+01 proj=7.1858e-01 bc=1.0610e-02 ic=1.4850e-01 reg=5.5482e-03 wall_h=0.489
+600 total=1.3027e+01 pde=1.2729e+01 proj=1.8023e-01 bc=1.4759e-02 ic=9.6669e-02 reg=6.3096e-03 wall_h=0.581
+700 total=6.7149e+00 pde=6.5075e+00 proj=1.2478e-01 bc=1.6985e-02 ic=5.8831e-02 reg=6.8785e-03 wall_h=0.673
+800 total=4.0877e+00 pde=3.9404e+00 proj=8.2649e-02 bc=1.8476e-02 ic=3.8889e-02 reg=7.2882e-03 wall_h=0.764
+900 total=2.6389e+00 pde=2.5255e+00 proj=5.7781e-02 bc=1.8963e-02 ic=2.9108e-02 reg=7.5837e-03 wall_h=0.855
+EVAL 1000 mean_rel_l2=2.5347e-01 var_rel_l2=7.5935e-01
+1000 total=1.8432e+00 pde=1.7652e+00 proj=2.7251e-02 bc=1.9331e-02 ic=2.3635e-02 reg=7.8039e-03 wall_h=0.952
+1100 total=1.8012e+00 pde=1.6974e+00 proj=5.5889e-02 bc=1.9336e-02 ic=2.0673e-02 reg=7.9686e-03 wall_h=1.039
+1200 total=1.2500e+00 pde=1.1869e+00 proj=1.6942e-02 bc=1.9383e-02 ic=1.8655e-02 reg=8.1040e-03 wall_h=1.130
+1300 total=9.3161e-01 pde=8.7232e-01 proj=1.4832e-02 bc=1.9463e-02 ic=1.6776e-02 reg=8.2121e-03 wall_h=1.217
+1400 total=8.1014e-01 pde=7.5603e-01 proj=1.1381e-02 bc=1.8880e-02 ic=1.5553e-02 reg=8.3021e-03 wall_h=1.306
+EVAL 1500 mean_rel_l2=2.5770e-01 var_rel_l2=5.4424e-01
+1500 total=7.6314e-01 pde=7.1064e-01 proj=1.0824e-02 bc=1.9132e-02 ic=1.4159e-02 reg=8.3811e-03 wall_h=1.398
+1600 total=6.1808e-01 pde=5.6581e-01 proj=1.1567e-02 bc=1.8819e-02 ic=1.3445e-02 reg=8.4479e-03 wall_h=1.486
+1700 total=5.9324e-01 pde=5.4042e-01 proj=1.3107e-02 bc=1.8675e-02 ic=1.2531e-02 reg=8.5100e-03 wall_h=1.575
+1800 total=5.2805e-01 pde=4.7999e-01 proj=9.3388e-03 bc=1.8483e-02 ic=1.1669e-02 reg=8.5665e-03 wall_h=1.665

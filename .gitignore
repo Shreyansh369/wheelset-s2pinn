@@ -11,3 +11,5 @@ results/**/*.pt
 # live files of the running CPU reproduction (final log is committed when it finishes)
 results/p0/s2pinn_repro_seed42.log
 results/p0/s2pinn_repro_seed42.stdout
+results/p0/s2pinn_repro_seed42_nc4096.log
+results/p0/s2pinn_repro_seed42_nc4096.stdout

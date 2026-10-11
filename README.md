@@ -33,7 +33,20 @@ pytest -q
 
 | Script | Output |
 |---|---|
-| `experiments/p0_reproduce_s2pinn.py --seed 42` (GPU; see `experiments/colab_p0_reproduce.ipynb`) | `results/p0/s2pinn_repro_seed42.json` |
+| `experiments/p0_reproduce_s2pinn_resumable.py --seed 42 --colloc 4096` (CPU, ~5 h; vs Table 14) | `results/p0/s2pinn_repro_seed42_nc4096.json` |
+| `experiments/p0_reproduce_s2pinn_resumable.py --seed 42 --device cuda` (T4, paper default Nc=32768) | `results/p0/s2pinn_repro_seed42.json` |
 | `experiments/p0_h1_sdof.py`, then `experiments/p0_h1_summary.py` | `results/p0/h1_sdof*.json`, figures |
 | `experiments/p0_eq41.py` | `results/p0/eq41.json` |
 | `experiments/gate_report.py G0` | `results/gates/G0.json` |
+
+## Running on a GPU (Colab or Kaggle T4)
+
+This container is CPU-only (no CUDA), so training runs for Phase 2 onward go through
+`notebooks/t4_runner.ipynb`. It clones this repo, runs one `experiments/*.py` command
+with its repo configs, and pushes the new `results/` files back to the branch (with a
+`GITHUB_TOKEN` secret) or zips them for download.
+
+Every training entry point follows the same rules:
+- pick the device with `src.utils.device.get_device()` (the `WSP_DEVICE` env var or a `--device` flag overrides it);
+- write results only through `src.utils.results.save_result`, which records the device;
+- checkpoint under `results/` and resume, so a run can span several sessions.

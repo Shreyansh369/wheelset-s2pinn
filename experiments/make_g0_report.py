@@ -150,8 +150,7 @@ def eq41_figure(e41: dict) -> Path | None:
     return out
 
 
-def repro_curve() -> Path | None:
-    log = RESULTS_DIR / "p0" / "s2pinn_repro_seed42.log"
+def repro_curve(log: Path, ref_mean: float) -> Path | None:
     if not log.exists():
         return None
     steps, mean, var = [], [], []
@@ -169,10 +168,10 @@ def repro_curve() -> Path | None:
     fig, ax = plt.subplots(figsize=(6.4, 3.2), dpi=150)
     ax.plot(steps, mean, "-o", ms=3, lw=2, color="#2a78d6", label="mean rel. L2")
     ax.plot(steps, var, "-o", ms=3, lw=2, color="#eb6834", label="variance rel. L2")
-    ax.axhline(3.71e-3, color="#52514e", lw=1, ls=":")
-    ax.axhline(2 * 3.71e-3, color="#52514e", lw=1, ls="--")
-    ax.text(steps[-1], 2 * 3.71e-3, " G0 threshold (2× paper)", va="bottom", ha="right", fontsize=8, color="#0b0b0b")
-    ax.text(steps[-1], 3.71e-3, " paper (Table 1)", va="top", ha="right", fontsize=8, color="#0b0b0b")
+    ax.axhline(ref_mean, color="#52514e", lw=1, ls=":")
+    ax.axhline(2 * ref_mean, color="#52514e", lw=1, ls="--")
+    ax.text(steps[-1], 2 * ref_mean, " G0 threshold (2× paper)", va="bottom", ha="right", fontsize=8, color="#0b0b0b")
+    ax.text(steps[-1], ref_mean, " paper reference", va="top", ha="right", fontsize=8, color="#0b0b0b")
     ax.set_yscale("log"); ax.set_xlabel("Adam step"); ax.set_ylabel("relative L2 (eval every 500)")
     ax.grid(True, color="#e4e3df", lw=0.7)
     for s in ("top", "right"):
@@ -201,8 +200,8 @@ def main() -> None:
     # ---------------- summary
     story.append(Paragraph("1. Gate summary", H2))
     labels = {
-        "a_s2pinn_reproduction": "(a) S²-PINN reproduces stochastic diffusion within 2× of the paper's mean error",
-        "b_h1_sdof_trend": "(b) SDOF shows a clear trend of required gPC degree with Π",
+        "a_s2pinn_reproduction": "(a) S²-PINN reproduces stochastic diffusion within 2× of the paper's mean error (Nc=4096 vs Table 14)",
+        "b_h1_sdof_trend": "(b) SDOF shows a clear Π² trend in the required gPC degree",
         "c_eq41": "(c) Eq. (41) within 10% of measured effective damping, or measured relation reported",
         "d_literature_stop_rule": "(d) Literature stop rule (method already published?)",
     }
@@ -229,24 +228,31 @@ def main() -> None:
 
     # ---------------- (a)
     story.append(Paragraph("2. (a) S²-PINN stochastic-diffusion reproduction", H2))
-    rep = load("p0/s2pinn_repro_seed42")
+    rep_name = "p0/s2pinn_repro_seed42_nc4096" if load("p0/s2pinn_repro_seed42_nc4096") else "p0/s2pinn_repro_seed42"
+    rep = load(rep_name)
     timing = load("p0/s2pinn_cpu_timing")
     if rep:
         p = rep["payload"]
         fm = p["final_metrics"]
-        rows = [["Quantity", "This run (seed 42)", "Paper (S²-PINN, proj)"],
+        src = p.get("paper_reference_source", "Tables 1-3")
+        nc = p.get("colloc_Nc", 32768)
+        rows = [["Quantity", f"This run (seed 42, Nc={nc})", f"Paper, {src} (5 seeds)"],
                 ["Mean rel. L2", f3(fm["uq/mean_rel_l2"]), f3(p["paper_mean_rel_l2"])],
                 ["Variance rel. L2", f3(fm["uq/var_rel_l2"]), f3(p["paper_var_rel_l2"])],
-                ["Calibration error", f3(fm["uq/calibration_error"]), "0.006 ± 0.003 (Table 3)"],
-                ["Coverage @90%", f3(fm.get("uq/coverage_90")), "0.897 ± 0.004 (Table 3)"],
-                ["Device / budget", f"{p['device']}, {'20k steps' if p['full_paper_budget'] else 'reduced'}", "T4, 20k steps"],
-                ["Wall time", f"{rep['provenance']['wall_seconds'] / 3600:.1f} h", "≈90 min (Table 18)"]]
+                ["Calibration error", f3(fm["uq/calibration_error"]), f3(p.get("paper_cal_error"))],
+                ["G0 threshold (2× paper mean)", f3(p["g0_threshold_mean_rel_l2"]), ""],
+                ["Device / budget", f"{p['device']} ({p.get('device_info', {}).get('device_name', '')}), "
+                                    f"{'20k steps' if p['full_paper_budget'] else 'reduced'}", "T4, 20k steps"],
+                ["Wall time", f"{rep['provenance']['wall_seconds'] / 3600:.1f} h", "≈90 min at Nc=32768 (Table 18)"]]
         story.append(table(rows, [4.5 * cm, 5.5 * cm, 7.5 * cm]))
         story.append(Paragraph(
             "Paper values in the right-hand column are quoted from the S²-PINN paper (Tables 1–3, 18) for comparison. "
             f"Runner: {p.get('runner', 'spinn.train.train')}; s2pinn commit {p['s2pinn_commit'][:7]}. "
             + (p.get("note", "")), SMALL))
-        curve = repro_curve()
+        if p.get("deviation"):
+            story.append(Paragraph(f"<b>Deviation (approved):</b> {p['deviation']}. Table 14's own Nc=32768 row "
+                                   "(6.43e-3) differs from Table 1 (3.71e-3); the paper does not explain the gap.", SMALL))
+        curve = repro_curve(RESULTS_DIR / "p0" / (rep_name.split("/")[1] + ".log"), p["paper_mean_rel_l2"])
         if curve:
             story.append(img(curve, 13))
     else:
@@ -383,7 +389,7 @@ def main() -> None:
     # ---------------- provenance
     story.append(Paragraph("6. Provenance", H2))
     rows = [["Result file", "git commit", "wall time", "timestamp (UTC)"]]
-    for n in ("p0/s2pinn_repro_seed42", "p0/s2pinn_cpu_timing", "p0/h1_sdof", "p0/h1_sdof_summary", "p0/eq41", "gates/G0"):
+    for n in ("p0/s2pinn_repro_seed42_nc4096", "p0/s2pinn_cpu_timing", "p0/h1_sdof", "p0/h1_sdof_summary", "p0/eq41", "gates/G0"):
         r = load(n)
         if r:
             w = r["provenance"].get("wall_seconds")
