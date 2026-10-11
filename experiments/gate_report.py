@@ -96,12 +96,40 @@ def g0() -> dict:
     return items
 
 
+def g1() -> dict:
+    v = _load("p1/verification")
+    s = _load("p1/sensitivity")
+    if v is None:
+        return {"verification": {"status": "PENDING"}}
+    g = v["payload"]["gate"]
+    th = g["thresholds"]
+    items = {
+        "a_freefree_timoshenko": {"status": "PASS" if g["a_pass"] else "FAIL", "max_rel_err": g["a_max_rel_err"],
+                                  "threshold": th["freefree_timoshenko_rel_err_max"]},
+        "b_energy_balance": {"status": "PASS" if g["b_pass"] else "FAIL", "max_rel_residual": g["b_max_rel_residual"],
+                             "threshold": th["energy_balance_rel_residual_max"]},
+        "c_fd_vs_td": {"status": "PASS" if g["c_pass"] else "FAIL", "max_rel_l2": g["c_max_rel_l2"],
+                       "threshold": th["fd_vs_td_rel_l2_max"], "cases": list(v["payload"]["c_fd_vs_td"].keys())},
+    }
+    if s:
+        sp = s["payload"]
+        f = sp["G3_feasibility_snr40_N50_W_known"]
+        items["p1_6_identifiability_warning"] = {
+            "status": "WARNING: G3 infeasible as configured" if (f["crb_rel_std_kB0"] > f["target_kB0"]
+                                                                 or f["crb_rel_std_cB"] > f["target_cB"]) else "OK",
+            "crb_rel_std_kB0": f["crb_rel_std_kB0"], "crb_rel_std_cB": f["crb_rel_std_cB"],
+            "max_dlogP_dlogkB0": sp["max_abs_dlogpower_dlogkB0"], "max_dlogP_dlogcB": sp["max_abs_dlogpower_dlogcB"],
+            "forcing_max_hz": max(sp["freq_hz"]),
+        }
+    return items
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("gate", choices=["G0"])
+    ap.add_argument("gate", choices=["G0", "G1"])
     args = ap.parse_args()
-    items = g0()
-    save_result("gates/G0", items)
+    items = g0() if args.gate == "G0" else g1()
+    save_result(f"gates/{args.gate}", items)
     for k, v in items.items():
         print(f"{k:28s} {v['status']}")
         for kk, vv in v.items():
