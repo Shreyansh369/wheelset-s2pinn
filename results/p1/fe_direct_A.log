@@ -11,3 +11,5 @@ N=50 fixed_100 j=9 err_kB0=+0.0112 se=0.0056 crb=0.0061 err_cB=-0.446 fit=43.6s
 N=50 fixed_100 j=10 err_kB0=-0.0094 se=0.0064 crb=0.0064 err_cB=-0.079 fit=36.4s
 N=50 fixed_100 j=11 err_kB0=-0.0010 se=0.0065 crb=0.0069 err_cB=-0.524 fit=42.9s
 N=50 fixed_100 j=12 err_kB0=-0.0010 se=0.0073 crb=0.0074 err_cB=-0.101 fit=40.9s
+N=50 fixed_100 j=13 err_kB0=+0.0032 se=0.0069 crb=0.0066 err_cB=+0.191 fit=37.3s
+N=50 fixed_100 j=14 err_kB0=+0.0068 se=0.0066 crb=0.0061 err_cB=+0.273 fit=33.6s

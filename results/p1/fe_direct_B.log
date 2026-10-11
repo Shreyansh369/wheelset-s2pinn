@@ -3,3 +3,4 @@ N=200 uniform_95_105 j=1 err_kB0=+0.0025 se=0.0022 crb=0.0021 err_cB=+0.099 fit=
 N=200 uniform_95_105 j=2 err_kB0=+0.0006 se=0.0022 crb=0.0022 err_cB=-0.026 fit=89.8s
 N=200 uniform_95_105 j=3 err_kB0=-0.0008 se=0.0022 crb=0.0023 err_cB=-0.042 fit=95.7s
 N=200 uniform_95_105 j=4 err_kB0=-0.0012 se=0.0022 crb=0.0022 err_cB=-0.031 fit=83.7s
+N=200 uniform_95_105 j=5 err_kB0=-0.0011 se=0.0022 crb=0.0022 err_cB=+0.121 fit=82.7s
