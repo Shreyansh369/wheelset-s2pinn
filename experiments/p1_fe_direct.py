@@ -76,9 +76,13 @@ def one_dataset(sm, thb, rough, mh, N, speed, snr_db, seed_key, taper: str = "no
     fit = WhittleFit(passes, Wm, WIM, rough, mh, thb, taper=taper)
     r = fit.fit(np.log([START["kB0"], START["cB"]]))
     crb = fit.expected_fisher(np.log([TRUTH["kB0"], TRUTH["cB"]]), np.log(g_true), np.log(Ws))
+    # reference CRB common to both tapers: untapered, all bins, true sensor-noise floor (no leakage)
+    ref = WhittleFit([dict(q, e_noise=q["e_noise_true"]) for q in passes], Wm, WIM, rough, mh, thb)
+    crb_ref = ref.expected_fisher(np.log([TRUTH["kB0"], TRUTH["cB"]]), np.log(g_true), np.log(Ws))
     err = [r["phi"][0] - math.log(TRUTH["kB0"]), r["phi"][1] - math.log(TRUTH["cB"])]
     return {"N": N, "speed": speed, "snr_db": snr_db, "taper": taper, "seed_key": list(seed_key), "phi_hat": r["phi"],
             "err_log": err, "se_log_obs": r["se_log"], "crb_log_truth": crb["crb_log"],
+            "crb_log_truth_truefloor_rect": crb_ref["crb_log"],
             "corr_kB0_cB_crb": crb["corr_kB0_cB"], "n_params": crb["n_params"],
             "converged": r["converged"], "n_iter": r["n_iter"], "n_eval": r["n_eval"],
             "s_per_eval": r["s_per_eval"], "wall_fit_s": r["wall_fit_s"], "wall_generate_s": t_gen,
