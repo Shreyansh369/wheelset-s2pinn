@@ -52,6 +52,7 @@ F_LO, F_HI = 20.0, 150.0
 L_SEC = 62.0
 R0_EFF = L_SEC / (20 * 2 * math.pi)  # 20 "revolutions" = one 62 m section (record-length device)
 CORR = (0.33, 0.37, 15.0)            # corrugation sub-bands (m) and level (dB)
+KF_TRUE = 7.7e6                      # CT23 resilient-track value (hysteretic truth)
 DEBIAS = True                        # exact expected periodogram (cross terms with V/d near 1/T)
 
 
@@ -188,17 +189,18 @@ def main(truth_kind: str = "hysteretic"):
                 r = est.fit(np.log([10e6]))
                 pi = est.profile_interval(0)
                 rows.append({"section": sec, "corrugation": corr, "speeds": Vs.tolist(),
-                             "ct23_kf": [c[0] for c in ct], "ct23_peak_hz": [c[1] for c in ct],
+                             "ct23_kf": [c[0] if np.isfinite(c[0]) else None for c in ct],
+                             "ct23_peak_hz": [c[1] if np.isfinite(c[1]) else None for c in ct],
                              "whittle_kf": math.exp(r["phi"][0]), "whittle_se_log": r["se_log"][0],
                              "whittle_profile90": [math.exp(pi["lo"]), math.exp(pi["hi"])], "converged": r["converged"]})
-                print(f"sec={sec} corr={corr} CT23 kf (MN/m2) " + " ".join(f"{x/1e6:.1f}" for x in rows[-1]["ct23_kf"])
+                print(f"sec={sec} corr={corr} CT23 kf (MN/m2) " + " ".join("nan" if x is None else f"{x/1e6:.1f}" for x in rows[-1]["ct23_kf"])
                       + f" | multi-pass {rows[-1]['whittle_kf']/1e6:.2f} (se {r['se_log'][0]:.3f})", flush=True)
     # summary
     summ = {}
     ref = None
     for corr in (False, True):
         R = [r for r in rows if r["corrugation"] == corr]
-        ct = np.array([x for r in R for x in r["ct23_kf"]])
+        ct = np.array([np.nan if x is None else x for r in R for x in r["ct23_kf"]])
         wk = np.array([r["whittle_kf"] for r in R])
         if not corr:
             ref = float(np.median(wk))
@@ -209,7 +211,11 @@ def main(truth_kind: str = "hysteretic"):
             "ct23_nan_frac": float(np.mean(np.isnan(ct))),
             "whittle_median_MN": float(np.median(wk) / 1e6), "whittle_range_MN": [float(wk.min() / 1e6), float(wk.max() / 1e6)],
             "whittle_rel_spread_sd": float(np.std(np.log(wk))),
-            "whittle_profile_covers_clean_ref": float(np.mean([r["whittle_profile90"][0] <= ref <= r["whittle_profile90"][1] for r in R]))}
+            "whittle_profile_covers_clean_ref": float(np.mean([r["whittle_profile90"][0] <= ref <= r["whittle_profile90"][1] for r in R])),
+            "whittle_profile_covers_truth": float(np.mean([r["whittle_profile90"][0] <= KF_TRUE <= r["whittle_profile90"][1] for r in R]))
+            if truth_kind == "hysteretic" else None,
+            "whittle_wald_covers_truth": float(np.mean([abs(math.log(r["whittle_kf"] / KF_TRUE)) <= 1.645 * r["whittle_se_log"] for r in R]))
+            if truth_kind == "hysteretic" else None}
     summ["reference_kf_MN"] = {"whittle_clean_median": ref / 1e6, "ct23_clean_20ms_median": kf_ct_clean / 1e6,
                                "truth_beta_abs_at_35Hz": float(abs(truth_track.beta(2 * np.pi * 35.0)) / 1e6),
                                "truth_kind": truth_kind}

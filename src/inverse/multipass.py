@@ -359,6 +359,10 @@ class MultiPassWhittle:
             phi[a] = x
             phi[others] = z
             return self.profile_nll(phi)
+        if not others:
+            phi = start.copy()
+            phi[a] = x
+            return float(self.profile_nll(phi)), phi
         if len(others) == 1:
             z0 = start[others[0]]
             r = minimize_scalar(lambda z: f(np.array([z])), bracket=(z0 - 0.05, z0 + 0.05), tol=1e-5)
