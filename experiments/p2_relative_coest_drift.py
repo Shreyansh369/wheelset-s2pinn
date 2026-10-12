@@ -236,7 +236,8 @@ def summarise():
             drift_tab.append({"estimator": e, "kf_factor_later": f, "apparent_change_no_true_change_pct": (math.exp(b0) - 1) * 100,
                               "bias_at_5pct_drop_pp": ((math.exp(math.log(0.95) + b5) - 1) + 0.05) * 100,
                               "sd_change_pct": s0 * 100, "false_alarm_rate": float(norm.cdf(-1.645 - b0 / s0)),
-                              "mdc_pct": mdc_under(b0, b5, s0)})
+                              # MDC is only meaningful when the test still holds its 5% false-alarm rate
+                              "mdc_pct": mdc_under(b0, b5, s0) if norm.cdf(-1.645 - b0 / s0) <= 0.06 else None})
     nodrift = {}
     for e in EST:
         if (e, 1.0, 0.0) in dr:

@@ -1,0 +1,11 @@
+{"estimator": "nominal", "rep": 0, "f": 1.2, "D_hat": 0.005380998385657421, "se": 0.002271061922124216, "alarm": false, "converged": true}
+{"estimator": "coest", "rep": 0, "f": 1.2, "D_hat": -0.00298694735911198, "se": 0.0025353039705858895, "alarm": false, "converged": true}
+{"estimator": "nominal", "rep": 1, "f": 1.2, "D_hat": 0.005624917059236623, "se": 0.002209165071905845, "alarm": false, "converged": true}
+{"estimator": "coest", "rep": 1, "f": 1.2, "D_hat": -0.003565317503454679, "se": 0.002439065027044904, "alarm": false, "converged": true}
+{"estimator": "nominal", "rep": 2, "f": 1.2, "D_hat": 0.01124336068158982, "se": 0.002199238286110145, "alarm": false, "converged": true}
+{"estimator": "coest", "rep": 2, "f": 1.2, "D_hat": 0.0026077324794187007, "se": 0.0024421064626359195, "alarm": false, "converged": true}
+{"estimator": "nominal", "rep": 3, "f": 1.2, "D_hat": 0.007510710897186357, "se": 0.002201175909454579, "alarm": false, "converged": true}
+{"estimator": "coest", "rep": 3, "f": 1.2, "D_hat": -0.0006465205698091836, "se": 0.0024308779262235867, "alarm": false, "converged": true}
+{"estimator": "nominal", "rep": 4, "f": 1.2, "D_hat": 0.012844463969067021, "se": 0.002256552724460806, "alarm": false, "converged": true}
+{"estimator": "coest", "rep": 4, "f": 1.2, "D_hat": 0.003531976062571829, "se": 0.0025281064976254188, "alarm": false, "converged": true}
+{"estimator": "nominal", "rep": 5, "f": 1.2, "D_hat": 0.009375673681550012, "se": 0.0022240506863943532, "alarm": false, "converged": true}

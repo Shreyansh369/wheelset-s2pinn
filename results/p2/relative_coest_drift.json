@@ -1,0 +1,214 @@
+{
+  "name": "p2/relative_coest_drift",
+  "seed": 41,
+  "config": {
+    "model": "4-wheel rail-coupled, debiased Whittle",
+    "N_per_period": 50,
+    "speeds_kmh": [
+      60.0,
+      110.0
+    ],
+    "snr_db": 40,
+    "estimators": {
+      "nominal": [
+        "kB0",
+        "cB"
+      ],
+      "coest": [
+        "kB0",
+        "cB",
+        "kf",
+        "kH0"
+      ]
+    },
+    "kappa_nominal": 0.26,
+    "ranges": {
+      "kf": [
+        0.35,
+        "CT23: in-situ ABA-derived kf 1.2-2.6x the lab value (Tables 2, 5 vs Sec. 5.1.1); section-to-section spread"
+      ],
+      "eta_f": [
+        0.2,
+        "CT23 Sec. 5.1.1: literature loss factor 0.2-0.3"
+      ],
+      "kH0": [
+        0.15,
+        "assumption: Hertz constant C_H for freight wheel/60E1 profiles not sourced (CT23 value is metro); wheel load from WIM"
+      ],
+      "unsprung_scale": [
+        0.03,
+        "assumption: design mass known; wear and fittings"
+      ],
+      "axle_damp_scale": [
+        0.5,
+        "assumption: axle damping is a placeholder (1% at 80 Hz); factor ~1.65 either way"
+      ]
+    },
+    "drift_kf_factors": [
+      0.8,
+      0.9,
+      1.1,
+      1.2
+    ],
+    "test": "one-sided decrease, alpha 0.05; detection 90%"
+  },
+  "payload": {
+    "coest_relative": {
+      "gain_per_log": {
+        "unsprung_scale": 1.313314524072972,
+        "axle_damp_scale": -0.018006528085797814,
+        "eta_f": 0.08619986834933964
+      },
+      "gain_ratio_single_cases": {
+        "control": -5.438479854272552e-06,
+        "kf_x1.2": 2.0367690128502038e-05,
+        "kH0_x1.15": 2.4741631832836118e-05
+      },
+      "kappa_terms": {
+        "unsprung_scale": 0.03939943572218916,
+        "axle_damp_scale": 0.009003264042898907,
+        "eta_f": 0.017239973669867927
+      },
+      "kappa_coest": 0.0439384909935561,
+      "note": "kf and kH0 are co-estimated, so their gain terms are taken as the single-case ratios (kf x1.2, kH0 x1.15)"
+    },
+    "drift": {
+      "table": [
+        {
+          "estimator": "nominal",
+          "kf_factor_later": 0.8,
+          "apparent_change_no_true_change_pct": -2.027953571761909,
+          "bias_at_5pct_drop_pp": -2.8977881860563754,
+          "sd_change_pct": 0.24224031226975593,
+          "false_alarm_rate": 0.9999999999952113,
+          "mdc_pct": null
+        },
+        {
+          "estimator": "nominal",
+          "kf_factor_later": 0.9,
+          "apparent_change_no_true_change_pct": -0.6694676778270403,
+          "bias_at_5pct_drop_pp": -1.142244220490922,
+          "sd_change_pct": 0.24224031226975593,
+          "false_alarm_rate": 0.870328079229661,
+          "mdc_pct": null
+        },
+        {
+          "estimator": "nominal",
+          "kf_factor_later": 1.1,
+          "apparent_change_no_true_change_pct": 0.3678898569680955,
+          "bias_at_5pct_drop_pp": 0.8486944584650338,
+          "sd_change_pct": 0.24224031226975593,
+          "false_alarm_rate": 0.0007863822478588516,
+          "mdc_pct": 1.1935807553005007
+        },
+        {
+          "estimator": "nominal",
+          "kf_factor_later": 1.2,
+          "apparent_change_no_true_change_pct": 0.7728876725570544,
+          "bias_at_5pct_drop_pp": 1.678272207987648,
+          "sd_change_pct": 0.24224031226975593,
+          "false_alarm_rate": 7.059560034488011e-07,
+          "mdc_pct": 1.8190557131854912
+        },
+        {
+          "estimator": "coest",
+          "kf_factor_later": 0.8,
+          "apparent_change_no_true_change_pct": -3.727128761177312e-06,
+          "bias_at_5pct_drop_pp": -0.00010349282711236141,
+          "sd_change_pct": 0.24431583676078872,
+          "false_alarm_rate": 0.04998647855257684,
+          "mdc_pct": 0.7123987392189437
+        },
+        {
+          "estimator": "coest",
+          "kf_factor_later": 0.9,
+          "apparent_change_no_true_change_pct": -9.781617306137136e-05,
+          "bias_at_5pct_drop_pp": 0.00012821025959369736,
+          "sd_change_pct": 0.24431583676078872,
+          "false_alarm_rate": 0.050026201395275825,
+          "mdc_pct": 0.7123531315418703
+        },
+        {
+          "estimator": "coest",
+          "kf_factor_later": 1.1,
+          "apparent_change_no_true_change_pct": -0.00014213351871017466,
+          "bias_at_5pct_drop_pp": -8.088351814289352e-05,
+          "sd_change_pct": 0.24431583676078872,
+          "false_alarm_rate": 0.050044920178641344,
+          "mdc_pct": 0.7122842637691611
+        },
+        {
+          "estimator": "coest",
+          "kf_factor_later": 1.2,
+          "apparent_change_no_true_change_pct": -0.00021802894777378512,
+          "bias_at_5pct_drop_pp": 5.770839461433086e-05,
+          "sd_change_pct": 0.24431583676078872,
+          "false_alarm_rate": 0.050076989919847326,
+          "mdc_pct": 0.7122402756474643
+        }
+      ],
+      "no_drift_reference": {
+        "nominal": {
+          "sd_change_pct": 0.24507507920432395,
+          "mdc_pct": 0.7146233213662675
+        },
+        "coest": {
+          "sd_change_pct": 0.24697801869780137,
+          "mdc_pct": 0.7201521436794321
+        }
+      }
+    },
+    "drift_mc": [
+      {
+        "file": "drift_mc_kf1.2.jsonl",
+        "estimator": "nominal",
+        "n": 6,
+        "false_alarms": 0,
+        "rate": 0.0,
+        "rate_ci95": [
+          0.0,
+          0.45925812643990044
+        ],
+        "D_hat_mean_pct": 0.8704855303499404
+      },
+      {
+        "file": "drift_mc_kf1.2.jsonl",
+        "estimator": "coest",
+        "n": 5,
+        "false_alarms": 0,
+        "rate": 0.0,
+        "rate_ci95": [
+          0.0,
+          0.5218237501049814
+        ],
+        "D_hat_mean_pct": -0.0207683076986398
+      }
+    ],
+    "kappa_mc": {
+      "n": 20,
+      "coverage_statistical": 0.35,
+      "coverage_statistical_ci95": [
+        0.15390920478454118,
+        0.5921885345328282
+      ],
+      "coverage_kappa": 0.7,
+      "coverage_kappa_ci95": [
+        0.45721081772371086,
+        0.8810684095942722
+      ],
+      "abs_bias_base_pct_rms": 10.16152031873526,
+      "rel_gain_error_rms": 0.42032025403072415,
+      "all_converged": true
+    }
+  },
+  "provenance": {
+    "git_commit": "85729d2f47b81d5a69db5f774a164f62d0b3822d-dirty",
+    "timestamp_utc": "2026-10-12T21:54:01Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 96.2890625,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}
