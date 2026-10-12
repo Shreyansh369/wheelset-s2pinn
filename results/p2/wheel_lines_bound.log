@@ -1,0 +1,10 @@
+{'speeds': 'fixed_100', 'delta_db': None, 'method': 'no_wheel_roughness', 'crb_kB0': 0.006243665510727671, 'crb_cB': 0.2151272534338325}
+{'speeds': 'fixed_100', 'delta_db': 0.0, 'method': 'notch', 'crb_kB0': 0.006394963168800971, 'crb_cB': 0.22034455278744497}
+{'speeds': 'fixed_100', 'delta_db': 0.0, 'method': 'tacho', 'crb_kB0': 0.004889921704608655, 'crb_cB': 0.1661587739765176, 'n_orders': 66}
+{'speeds': 'fixed_100', 'delta_db': 10.0, 'method': 'notch', 'crb_kB0': 0.006396661467353267, 'crb_cB': 0.22039177511388572}
+{'speeds': 'fixed_100', 'delta_db': 10.0, 'method': 'tacho', 'crb_kB0': 0.0024172714941901206, 'crb_cB': 0.0818463970962295, 'n_orders': 66}
+{'speeds': 'uniform_60_110', 'delta_db': None, 'method': 'no_wheel_roughness', 'crb_kB0': 0.002281527649272115, 'crb_cB': 0.07529555487195945}
+{'speeds': 'uniform_60_110', 'delta_db': 0.0, 'method': 'notch', 'crb_kB0': 0.0023229124680014803, 'crb_cB': 0.07714298492329744}
+{'speeds': 'uniform_60_110', 'delta_db': 0.0, 'method': 'tacho', 'crb_kB0': 0.001790141013829236, 'crb_cB': 0.05163093857691673, 'n_orders': 110}
+{'speeds': 'uniform_60_110', 'delta_db': 10.0, 'method': 'notch', 'crb_kB0': 0.0023245900055226944, 'crb_cB': 0.07722173245750599}
+{'speeds': 'uniform_60_110', 'delta_db': 10.0, 'method': 'tacho', 'crb_kB0': 0.0009610342173797014, 'crb_cB': 0.02262077544508645, 'n_orders': 110}
