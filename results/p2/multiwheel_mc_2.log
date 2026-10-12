@@ -1,0 +1,10 @@
+wheels=2 j=0 correct err=+0.0011 se=0.0017 | single err=-0.1464 fit=256s
+wheels=2 j=1 correct err=+0.0035 se=0.0017 | single err=-0.1424 fit=217s
+wheels=2 j=2 correct err=+0.0043 se=0.0017 | single err=-0.1417 fit=283s
+wheels=2 j=3 correct err=+0.0037 se=0.0017 | single err=-0.1415 fit=312s
+wheels=2 j=4 correct err=-0.0005 se=0.0017 | single err=-0.1471 fit=395s
+wheels=2 j=5 correct err=+0.0033 se=0.0017 | single err=-0.1401 fit=448s
+wheels=2 j=6 correct err=+0.0062 se=0.0016 | single err=-0.1411 fit=345s
+wheels=2 j=7 correct err=+0.0006 se=0.0017 | single err=-0.1458 fit=201s
+wheels=2 j=8 correct err=+0.0024 se=0.0017 | single err=-0.1400 fit=234s
+wheels=2 j=9 correct err=-0.0008 se=0.0017 | single err=-0.1455 fit=155s
