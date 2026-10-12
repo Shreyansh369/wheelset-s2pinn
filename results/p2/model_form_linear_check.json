@@ -1,0 +1,103 @@
+{
+  "name": "p2/model_form_linear_check",
+  "seed": 31,
+  "config": {
+    "model": "scenario (a) rail oscillator",
+    "designs": 3,
+    "compare_with": "results/p2/model_form.json (Monte Carlo)"
+  },
+  "payload": {
+    "rows": [
+      {
+        "case": "control",
+        "estimator": "nominal",
+        "lin_bias_pct": -1.5152662582643381e-07
+      },
+      {
+        "case": "kH0_x0.7",
+        "estimator": "nominal",
+        "lin_bias_pct": -1.8490947298475588
+      },
+      {
+        "case": "kH0_x1.3",
+        "estimator": "nominal",
+        "lin_bias_pct": 37.44861437593881
+      },
+      {
+        "case": "k_r_x0.7",
+        "estimator": "nominal",
+        "lin_bias_pct": -0.35185651995849354
+      },
+      {
+        "case": "k_r_x1.3",
+        "estimator": "nominal",
+        "lin_bias_pct": 0.39416813204692247
+      },
+      {
+        "case": "m_r_x1.3",
+        "estimator": "nominal",
+        "lin_bias_pct": -3.8991062160244923
+      },
+      {
+        "case": "axle_damp_x0.5",
+        "estimator": "nominal",
+        "lin_bias_pct": 0.8469273270649889
+      },
+      {
+        "case": "axle_damp_x2",
+        "estimator": "nominal",
+        "lin_bias_pct": -1.2635439439385034
+      },
+      {
+        "case": "control",
+        "estimator": "coest",
+        "lin_bias_pct": 1.3372032082671681e-11
+      },
+      {
+        "case": "kH0_x0.7",
+        "estimator": "coest",
+        "lin_bias_pct": 9.02320769431864
+      },
+      {
+        "case": "kH0_x1.3",
+        "estimator": "coest",
+        "lin_bias_pct": 13.38915992090535
+      },
+      {
+        "case": "k_r_x0.7",
+        "estimator": "coest",
+        "lin_bias_pct": 0.44711078202226806
+      },
+      {
+        "case": "k_r_x1.3",
+        "estimator": "coest",
+        "lin_bias_pct": 0.5089890064453974
+      },
+      {
+        "case": "m_r_x1.3",
+        "estimator": "coest",
+        "lin_bias_pct": 15.644638668598986
+      },
+      {
+        "case": "axle_damp_x0.5",
+        "estimator": "coest",
+        "lin_bias_pct": 2.0276585016117714
+      },
+      {
+        "case": "axle_damp_x2",
+        "estimator": "coest",
+        "lin_bias_pct": -2.2581707677738807
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "92c5a9ef15d44d0e948dac826d39bb455e85cc6f",
+    "timestamp_utc": "2026-10-12T12:31:26Z",
+    "wall_seconds": 113.69322448000003,
+    "peak_cpu_memory_mb": 316.30078125,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

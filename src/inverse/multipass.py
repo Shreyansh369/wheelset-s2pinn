@@ -448,6 +448,25 @@ class MultiPassWhittle:
         b = Ci @ sc
         return {"bias_log": b[:d].tolist(), "crb_log": [float(math.sqrt(Ci[a, a])) for a in range(d)]}
 
+    def pseudo_true(self, fam_true: Family, theta_true: dict, logg, lw, phi0, steps=None) -> dict:
+        """Asymptotic (KL) limit of the estimate when the data come from fam_true(theta_true).
+
+        Every periodogram value |c|^2 is replaced by its expectation under the true model (same bins,
+        floors, payloads; W measured exactly), and the profile likelihood is maximised: the result is
+        the large-sample limit of the ML estimate, without linearisation. Returns the fit dict.
+        """
+        At = self._A(fam_true.table(theta_true), np.asarray(lw, float), np.asarray(logg, float))
+        saved = [p.c2 for p in self.P], self.lw_meas.copy()
+        for p, a in zip(self.P, At):
+            p.c2 = a + p.e
+        self.lw_meas = np.asarray(lw, float).copy()
+        try:
+            return self.fit(phi0, steps=steps)
+        finally:
+            for p, c2 in zip(self.P, saved[0]):
+                p.c2 = c2
+            self.lw_meas = saved[1]
+
     def expected_fisher(self, phi, logg, lw, h: float = 1e-4) -> dict:
         J, parts, d, n = self._fisher_parts(phi, logg, lw, h)
         sc = 1 / np.sqrt(np.diag(J))
