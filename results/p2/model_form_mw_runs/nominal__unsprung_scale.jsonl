@@ -1,0 +1,4 @@
+{"estimator": "nominal", "param": "unsprung_scale", "factor": 0.9, "bias_pct": 12.871083461260824, "phi_hat": [20.68182303457808, 9.71471957760587], "converged": true, "wall_fit_s": 151.50652856099987}
+{"estimator": "nominal", "param": "unsprung_scale", "factor": 1.1, "bias_pct": -11.328286733217585, "phi_hat": [20.440517656497107, 8.168760269663462], "converged": true, "wall_fit_s": 181.1195419150008}
+{"estimator": "nominal", "param": "unsprung_scale", "factor": 0.9704455335485082, "bias_pct": 3.622578733825721, "phi_hat": [20.596331968986334, 9.00037085940383], "converged": true, "wall_fit_s": 144.57467337399976}
+{"estimator": "nominal", "param": "unsprung_scale", "factor": 1.030454533953517, "bias_pct": -3.6188113301626412, "phi_hat": [20.523887765755397, 8.434960147417147], "converged": true, "wall_fit_s": 159.2909234159997}

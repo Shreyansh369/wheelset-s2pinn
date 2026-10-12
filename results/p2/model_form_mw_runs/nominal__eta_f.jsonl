@@ -1,0 +1,4 @@
+{"estimator": "nominal", "param": "eta_f", "factor": 0.9, "bias_pct": -0.4680928052636646, "phi_hat": [20.556054989543732, 8.63947977900949], "converged": true, "wall_fit_s": 237.9055907840002}
+{"estimator": "nominal", "param": "eta_f", "factor": 1.1, "bias_pct": 0.4507333719669493, "phi_hat": [20.56524411356061, 8.757787046189845], "converged": true, "wall_fit_s": 229.14686566399996}
+{"estimator": "nominal", "param": "eta_f", "factor": 0.8187307530779818, "bias_pct": -0.8618756911889291, "phi_hat": [20.552090794253367, 8.589522161809263], "converged": true, "wall_fit_s": 238.29687536999973}
+{"estimator": "nominal", "param": "eta_f", "factor": 1.2214027581601699, "bias_pct": 0.9740965941654967, "phi_hat": [20.570440736043214, 8.826355750594757], "converged": true, "wall_fit_s": 222.16767652}

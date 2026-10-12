@@ -83,10 +83,37 @@
         "estimator": "coest",
         "param": "eta_f",
         "sens_pct_per_10pct": 0.4714086450108068,
-        "bias_at_minus_1sigma_pct": null,
-        "bias_at_plus_1sigma_pct": null,
+        "bias_at_minus_1sigma_pct": -0.8991785276285302,
+        "bias_at_plus_1sigma_pct": 0.9816155354548828,
         "sigma_log": 0.2,
         "range_source": "CT23 Sec. 5.1.1: literature loss factor 0.2-0.3"
+      },
+      {
+        "estimator": "coest",
+        "param": "kH0",
+        "sens_pct_per_10pct": -5.449284913305874e-05,
+        "bias_at_minus_1sigma_pct": -4.88448902435934e-05,
+        "bias_at_plus_1sigma_pct": -2.2202705474150264e-05,
+        "sigma_log": 0.15,
+        "range_source": "assumption: Hertz constant C_H for freight wheel/60E1 profiles not sourced (CT23 value is metro); wheel load from WIM"
+      },
+      {
+        "estimator": "coest",
+        "param": "unsprung_scale",
+        "sens_pct_per_10pct": -12.336020695663786,
+        "bias_at_minus_1sigma_pct": 3.654183964586233,
+        "bias_at_plus_1sigma_pct": -3.7169062832378197,
+        "sigma_log": 0.03,
+        "range_source": "assumption: design mass known; wear and fittings"
+      },
+      {
+        "estimator": "coest",
+        "param": "axle_damp_scale",
+        "sens_pct_per_10pct": -0.19289967328841584,
+        "bias_at_minus_1sigma_pct": 0.7856898622201403,
+        "bias_at_plus_1sigma_pct": -0.6021415150525788,
+        "sigma_log": 0.5,
+        "range_source": "assumption: axle damping is a placeholder (1% at 80 Hz); factor ~1.65 either way"
       }
     ],
     "budget": {
@@ -103,10 +130,14 @@
       },
       "coest": {
         "terms_pct_1sigma_worst_side": {
-          "kf": 0.000154504271754341
+          "kf": 0.000154504271754341,
+          "eta_f": 0.9816155354548828,
+          "kH0": 4.88448902435934e-05,
+          "unsprung_scale": 3.7169062832378197,
+          "axle_damp_scale": 0.7856898622201403
         },
-        "rss_pct": 0.000154504271754341,
-        "sum_abs_pct": 0.000154504271754341
+        "rss_pct": 3.9238080946539746,
+        "sum_abs_pct": 5.484415030074841
       }
     },
     "ranges": {
@@ -133,10 +164,10 @@
     }
   },
   "provenance": {
-    "git_commit": "625b4636c98173b8dfa6dca5c73c7585b77ace73",
-    "timestamp_utc": "2026-10-12T14:20:27Z",
-    "wall_seconds": 4379.268078929,
-    "peak_cpu_memory_mb": 418.5625,
+    "git_commit": "bdde6f698660e7ee374da4d94db2a8bfb2822759-dirty",
+    "timestamp_utc": "2026-10-12T15:32:55Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 95.54296875,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

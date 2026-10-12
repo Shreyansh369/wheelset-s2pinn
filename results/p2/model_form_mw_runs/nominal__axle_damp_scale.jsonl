@@ -1,0 +1,4 @@
+{"estimator": "nominal", "param": "axle_damp_scale", "factor": 0.9, "bias_pct": 0.1717502220871081, "phi_hat": [20.562462936449165, 8.5784131351737], "converged": true, "wall_fit_s": 155.02991571800158}
+{"estimator": "nominal", "param": "axle_damp_scale", "factor": 1.1, "bias_pct": -0.16029680184649342, "phi_hat": [20.559142653302338, 8.797482298052351], "converged": true, "wall_fit_s": 148.8732240649988}
+{"estimator": "nominal", "param": "axle_damp_scale", "factor": 0.6065306597126334, "bias_pct": 0.5486331015611023, "phi_hat": [20.566218243370603, 7.917677057589869], "converged": true, "wall_fit_s": 174.5185029380009}
+{"estimator": "nominal", "param": "axle_damp_scale", "factor": 1.6487212707001282, "bias_pct": -0.5494351745353954, "phi_hat": [20.555237406236248, 9.154835325286697], "converged": true, "wall_fit_s": 155.0019029340001}

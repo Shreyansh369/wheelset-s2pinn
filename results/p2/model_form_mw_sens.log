@@ -1,0 +1,34 @@
+{'case': 'control', 'estimator': 'nominal', 'lin_bias_pct': -1.5152662582643381e-07}
+{'case': 'kH0_x0.7', 'estimator': 'nominal', 'lin_bias_pct': -1.8490947298475588}
+{'case': 'kH0_x1.3', 'estimator': 'nominal', 'lin_bias_pct': 37.44861437593881}
+{'case': 'k_r_x0.7', 'estimator': 'nominal', 'lin_bias_pct': -0.35185651995849354}
+{'case': 'k_r_x1.3', 'estimator': 'nominal', 'lin_bias_pct': 0.39416813204692247}
+{'case': 'm_r_x1.3', 'estimator': 'nominal', 'lin_bias_pct': -3.8991062160244923}
+{'case': 'axle_damp_x0.5', 'estimator': 'nominal', 'lin_bias_pct': 0.8469273270649889}
+{'case': 'axle_damp_x2', 'estimator': 'nominal', 'lin_bias_pct': -1.2635439439385034}
+{'case': 'control', 'estimator': 'coest', 'lin_bias_pct': 1.3372032082671681e-11}
+{'case': 'kH0_x0.7', 'estimator': 'coest', 'lin_bias_pct': 9.02320769431864}
+{'case': 'kH0_x1.3', 'estimator': 'coest', 'lin_bias_pct': 13.38915992090535}
+{'case': 'k_r_x0.7', 'estimator': 'coest', 'lin_bias_pct': 0.44711078202226806}
+{'case': 'k_r_x1.3', 'estimator': 'coest', 'lin_bias_pct': 0.5089890064453974}
+{'case': 'm_r_x1.3', 'estimator': 'coest', 'lin_bias_pct': 15.644638668598986}
+{'case': 'axle_damp_x0.5', 'estimator': 'coest', 'lin_bias_pct': 2.0276585016117714}
+{'case': 'axle_damp_x2', 'estimator': 'coest', 'lin_bias_pct': -2.2581707677738807}
+nominal kf 0.596 1.103 {0.7: -4.15, 0.9: -0.638, 1.1: 0.554, 1.3: 2.467}
+nominal eta_f 0.455 0.461 {0.7: -1.511, 0.9: -0.469, 1.1: 0.441, 1.3: 1.253}
+nominal kH0 0.348 0.105 {0.7: 1.008, 0.9: -0.249, 1.1: 0.447, 1.3: 1.636}
+nominal unsprung_scale -11.741 -9.499 {0.7: 46.989, 0.9: 13.629, 1.1: -9.853, 1.3: -10.008}
+nominal axle_damp_scale -0.162 -0.143 {0.7: 0.475, 0.9: 0.169, 1.1: -0.154, 1.3: -0.385}
+coest kf 0.064 0.579 {0.7: -2.118, 0.9: -0.053, 1.1: 0.076, 1.3: 1.354}
+coest eta_f 0.467 0.474 {0.7: -1.562, 0.9: -0.483, 1.1: 0.452, 1.3: 1.281}
+coest kH0 -0.024 -0.374 {0.7: 2.969, 0.9: 0.154, 1.1: 0.106, 1.3: 0.727}
+coest unsprung_scale -11.842 -9.653 {0.7: 47.595, 0.9: 13.333, 1.1: -10.352, 1.3: -10.324}
+coest axle_damp_scale -0.188 -0.173 {0.7: 0.604, 0.9: 0.2, 1.1: -0.177, 1.3: -0.434}
+coest_eta kf 0.187 1.473 {0.7: -10.932, 0.9: -0.868, 1.1: -0.494, 1.3: -2.097}
+coest_eta eta_f -0.0 -0.003 {0.7: -0.02, 0.9: -0.004, 1.1: -0.004, 1.3: -0.04}
+coest_eta kH0 -0.023 -0.37 {0.7: 2.881, 0.9: 0.144, 1.1: 0.097, 1.3: 0.663}
+coest_eta unsprung_scale -12.447 -9.238 {0.7: 44.325, 0.9: 13.914, 1.1: -10.979, 1.3: -11.102}
+coest_eta axle_damp_scale -0.131 -0.116 {0.7: 0.401, 0.9: 0.139, 1.1: -0.123, 1.3: -0.294}
+nominal {'terms_pct_1sigma': {'kf': 2.0860719347866064, 'eta_f': 0.9096382784917612, 'kH0': 0.5219008121868658, 'unsprung_scale': -3.522234848294241, 'axle_damp_scale': -0.8086185333032627}, 'rss_pct': 4.302501671295779, 'sum_abs_pct': 7.848464407062737, 'crb_pct': 0.1655528230373184}
+coest {'terms_pct_1sigma': {'kf': 0.2250678725503732, 'eta_f': 0.9349936085797957, 'kH0': -0.03639012688206597, 'unsprung_scale': -3.552715309369289, 'axle_damp_scale': -0.9408743213448167}, 'rss_pct': 3.7991082367664792, 'sum_abs_pct': 5.690041238726341, 'crb_pct': 0.1668323887270052}
+coest_eta {'terms_pct_1sigma': {'kf': 0.6540040538365822, 'eta_f': -0.0006278147661412343, 'kH0': -0.03514904376780375, 'unsprung_scale': -3.7339997291755487, 'axle_damp_scale': -0.6566566872271669}, 'rss_pct': 3.847454890473322, 'sum_abs_pct': 5.080437328773243, 'crb_pct': 0.1714542415540231}
