@@ -1,0 +1,203 @@
+{
+  "name": "p2/headline_noisefit",
+  "seed": 42,
+  "config": {
+    "N": 50,
+    "speeds_kmh": [
+      60,
+      110
+    ],
+    "wim_sigma": 0.03,
+    "seeds": [
+      42,
+      123,
+      456,
+      789,
+      1024
+    ],
+    "datasets_per_seed": 20,
+    "truth": {
+      "kB0": 850000000.0,
+      "cB": 6000.0
+    },
+    "intervals": "Wald (observed profile information) and profile likelihood, 90%",
+    "noise_floor": "profiled jointly (in-band + out-of-band bins)"
+  },
+  "payload": {
+    "cells": [
+      {
+        "snr_db": 20,
+        "kB0_per_seed": [
+          {
+            "seed": 42,
+            "n": 10,
+            "bias_rel": 4.3714013477780254e-05,
+            "bias_rel_se": 0.0005567074895172657,
+            "rmse_rel": 0.0016710156352667262,
+            "crb_rel": 0.002340024406226142,
+            "rmse_over_crb": 0.7141017977507529,
+            "coverage90_wald": 1.0,
+            "coverage90_wald_ci95": [
+              0.6915028921812392,
+              1.0
+            ],
+            "coverage90_profile": 1.0,
+            "coverage90_profile_ci95": [
+              0.6915028921812392,
+              1.0
+            ]
+          },
+          {
+            "seed": 123,
+            "n": 10,
+            "bias_rel": 0.00010457472393142764,
+            "bias_rel_se": 0.0005937592507018586,
+            "rmse_rel": 0.0017830652506254732,
+            "crb_rel": 0.0023157622774042648,
+            "rmse_over_crb": 0.7699690369877296,
+            "coverage90_wald": 1.0,
+            "coverage90_wald_ci95": [
+              0.6915028921812392,
+              1.0
+            ],
+            "coverage90_profile": 1.0,
+            "coverage90_profile_ci95": [
+              0.6915028921812392,
+              1.0
+            ]
+          },
+          {
+            "seed": 456,
+            "n": 10,
+            "bias_rel": 0.0019451345340703696,
+            "bias_rel_se": 0.0003398299586677096,
+            "rmse_rel": 0.0021934075994855867,
+            "crb_rel": 0.0023037238327200237,
+            "rmse_over_crb": 0.9521139506100496,
+            "coverage90_wald": 1.0,
+            "coverage90_wald_ci95": [
+              0.6915028921812392,
+              1.0
+            ],
+            "coverage90_profile": 1.0,
+            "coverage90_profile_ci95": [
+              0.6915028921812392,
+              1.0
+            ]
+          },
+          {
+            "seed": 789,
+            "n": 10,
+            "bias_rel": 0.00113233320276368,
+            "bias_rel_se": 0.0005390982684344077,
+            "rmse_rel": 0.0019710388867813016,
+            "crb_rel": 0.0023189212821941967,
+            "rmse_over_crb": 0.849980938083537,
+            "coverage90_wald": 0.9,
+            "coverage90_wald_ci95": [
+              0.5549838829718047,
+              0.9974714214555382
+            ],
+            "coverage90_profile": 0.9,
+            "coverage90_profile_ci95": [
+              0.5549838829718047,
+              0.9974714214555382
+            ]
+          },
+          {
+            "seed": 1024,
+            "n": 10,
+            "bias_rel": 0.00026425147308465344,
+            "bias_rel_se": 0.0004300020844834494,
+            "rmse_rel": 0.001316700563314027,
+            "crb_rel": 0.002335127614673369,
+            "rmse_over_crb": 0.5638666405382746,
+            "coverage90_wald": 1.0,
+            "coverage90_wald_ci95": [
+              0.6915028921812392,
+              1.0
+            ],
+            "coverage90_profile": 1.0,
+            "coverage90_profile_ci95": [
+              0.6915028921812392,
+              1.0
+            ]
+          }
+        ],
+        "kB0_across_seeds": {
+          "bias_rel": {
+            "mean": 0.0006980015894655822,
+            "sd": 0.0008234639294041499
+          },
+          "rmse_rel": {
+            "mean": 0.0017870455870946228,
+            "sd": 0.00032927452590459635
+          },
+          "crb_rel": {
+            "mean": 0.002322711882643599,
+            "sd": 1.4807815329083349e-05
+          },
+          "rmse_over_crb": {
+            "mean": 0.7700064727940686,
+            "sd": 0.14592636251755506
+          },
+          "coverage90_wald": {
+            "mean": 0.9800000000000001,
+            "sd": 0.04472135954999579
+          },
+          "coverage90_profile": {
+            "mean": 0.9800000000000001,
+            "sd": 0.04472135954999579
+          }
+        },
+        "kB0_pooled": {
+          "n": 50,
+          "bias_rel": 0.0006980015894655822,
+          "bias_rel_se": 0.00023899234972557737,
+          "rmse_rel": 0.0018111513744251536,
+          "crb_rel": 0.002322749643609838,
+          "rmse_over_crb": 0.7797445494859283,
+          "coverage90_wald": 0.98,
+          "coverage90_wald_ci95": [
+            0.8935304542885001,
+            0.9994937720169592
+          ],
+          "coverage90_profile": 0.98,
+          "coverage90_profile_ci95": [
+            0.8935304542885001,
+            0.9994937720169592
+          ]
+        },
+        "cB_pooled": {
+          "n": 50,
+          "bias_rel": 0.011049820813227805,
+          "bias_rel_se": 0.010225505308932138,
+          "rmse_rel": 0.0720268081835219,
+          "crb_rel": 0.07584340922805087,
+          "rmse_over_crb": 0.9496778812638424,
+          "coverage90_wald": 0.92,
+          "coverage90_wald_ci95": [
+            0.8076572164040372,
+            0.9777720363450703
+          ]
+        },
+        "timing": {
+          "s_per_eval_median": 0.5797078304566503,
+          "fit_s_median": 46.885697245999836,
+          "profile_s_median": 14.990426691999346
+        },
+        "all_converged": true
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "e6b61adc89eba1262c7f7d18b49073eaaff002d6",
+    "timestamp_utc": "2026-10-12T15:49:48Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 95.625,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}
