@@ -88,7 +88,7 @@ class SingleWheelsetFamily(Family):
 # --------------------------------------------------------------------------- data generation
 def generate_pass(H_fn, rough: Roughness, g_true: np.ndarray, V: float, r0: float, snr_db: float,
                   rng: np.random.Generator, Z_shared: dict | None = None, wheel_lines: dict | None = None,
-                  df_fine_factor: int = 4) -> dict:
+                  df_fine_factor: int = 4, f_lo: float = F_LO, f_hi: float = F_HI, return_y: bool = False) -> dict:
     """One synthetic pass from a reference transfer function.
 
     H_fn(f) -> complex H at frequencies f (Hz) for this pass (reference model: direct solves, any
@@ -108,7 +108,7 @@ def generate_pass(H_fn, rough: Roughness, g_true: np.ndarray, V: float, r0: floa
     T = n / FS
     nf = df_fine_factor * n
     f_fine = np.arange(nf // 2 + 1) * FS / nf
-    band = (f_fine >= F_LO - 5) & (f_fine <= F_HI)
+    band = (f_fine >= max(f_lo - 5, 0.1)) & (f_fine <= f_hi)
     kb = np.nonzero(band)[0]
     fb = f_fine[band]
     Om = 2 * np.pi * fb / V
@@ -128,7 +128,7 @@ def generate_pass(H_fn, rough: Roughness, g_true: np.ndarray, V: float, r0: floa
     if wheel_lines is not None:
         for nn, w in zip(wheel_lines["orders"], wheel_lines["w"]):
             kk = df_fine_factor * N_REVS * int(nn)  # exact bin of order n on the fine grid
-            if kk < f_fine.size and F_LO - 5 <= f_fine[kk] <= F_HI:
+            if kk < f_fine.size and f_lo - 5 <= f_fine[kk] <= f_hi:
                 # periodic profile: its 4T synthesis repeats 4 times, so it stays a pure line in T
                 X[kk] += (nf / 2) * H_fn(np.array([f_fine[kk]]))[0] * w
     x = np.fft.irfft(X, n=nf)[:n]
@@ -137,9 +137,12 @@ def generate_pass(H_fn, rough: Roughness, g_true: np.ndarray, V: float, r0: floa
     C = 2 * np.fft.rfft(y) / n
     fk = np.arange(C.size) / T
     nb = (fk >= NOISE_BAND[0]) & (fk <= NOISE_BAND[1])
-    keep = (fk >= F_LO) & (fk <= F_HI)
-    return {"f": fk[keep], "c": C[keep], "k": np.arange(C.size)[keep], "V": V, "T": T,
-            "e_noise": float(np.mean(np.abs(C[nb]) ** 2)), "e_noise_true": 4 * sigma**2 / n}
+    keep = (fk >= f_lo) & (fk <= f_hi)
+    out = {"f": fk[keep], "c": C[keep], "k": np.arange(C.size)[keep], "V": V, "T": T,
+           "e_noise": float(np.mean(np.abs(C[nb]) ** 2)), "e_noise_true": 4 * sigma**2 / n}
+    if return_y:
+        out["y"] = y
+    return out
 
 
 def shared_section(rng: np.random.Generator, n_coeff: int = 40000) -> dict:
