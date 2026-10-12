@@ -1,0 +1,12 @@
+{'case': 'axle_damp_x2', 'set': 'base', 'x': 0.0, 'kB0_true': 850000000.0, 'log_k_hat': 20.560390732404507, 'abs_bias_pct': -0.03561116213276483, 'crb_log': 0.0017329425040520769, 'converged': True}
+{'case': 'axle_damp_x2', 'set': 'later', 'x': 0.02, 'kB0_true': 833000000.0, 'log_k_hat': 20.53682246893038, 'abs_bias_pct': -0.3714814142972922, 'crb_log': 0.0016914938526208854, 'converged': True}
+{'case': 'axle_damp_x2', 'set': 'later', 'x': 0.05, 'kB0_true': 807500000.0, 'log_k_hat': 20.509235407381894, 'abs_bias_pct': -0.02181818740653041, 'crb_log': 0.0016934269212068689, 'converged': True}
+{'case': 'axle_damp_x2', 'set': 'later', 'x': 0.1, 'kB0_true': 765000000.0, 'log_k_hat': 20.462540439400634, 'abs_bias_pct': 0.7179698942224366, 'crb_log': 0.0017068901657034572, 'converged': True}
+{'case': 'kf_x0.8', 'set': 'base', 'x': 0.0, 'kB0_true': 850000000.0, 'log_k_hat': 20.53785918378017, 'abs_bias_pct': -2.2627786620194157, 'crb_log': 0.0017329425040520769, 'converged': True}
+{'case': 'kf_x0.8', 'set': 'later', 'x': 0.02, 'kB0_true': 833000000.0, 'log_k_hat': 20.516424543044128, 'abs_bias_pct': -2.383110275732647, 'crb_log': 0.0016914938526208854, 'converged': True}
+{'case': 'kf_x0.8', 'set': 'later', 'x': 0.05, 'kB0_true': 807500000.0, 'log_k_hat': 20.478476341021825, 'abs_bias_pct': -3.0502392470814876, 'crb_log': 0.0016934269212068689, 'converged': True}
+{'case': 'kf_x0.8', 'set': 'later', 'x': 0.1, 'kB0_true': 765000000.0, 'log_k_hat': 20.40947064005375, 'abs_bias_pct': -4.487757379350599, 'crb_log': 0.0017068901657034572, 'converged': True}
+{'case': 'kf_x1.2', 'set': 'base', 'x': 0.0, 'kB0_true': 850000000.0, 'log_k_hat': 20.570819672273593, 'abs_bias_pct': 1.012366588180602, 'crb_log': 0.0017329425040520769, 'converged': True}
+{'case': 'kf_x1.2', 'set': 'later', 'x': 0.02, 'kB0_true': 833000000.0, 'log_k_hat': 20.551843279265945, 'abs_bias_pct': 1.1363154834202804, 'crb_log': 0.0016914938526208854, 'converged': True}
+{'case': 'kf_x1.2', 'set': 'later', 'x': 0.05, 'kB0_true': 807500000.0, 'log_k_hat': 20.52696606712678, 'abs_bias_pct': 1.7666696159726492, 'crb_log': 0.0016934269212068689, 'converged': True}
+{'case': 'kf_x1.2', 'set': 'later', 'x': 0.1, 'kB0_true': 765000000.0, 'log_k_hat': 20.485410770925572, 'abs_bias_pct': 3.0479655849689813, 'crb_log': 0.0017068901657034572, 'converged': True}

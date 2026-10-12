@@ -1,0 +1,4 @@
+{"case": "kH0_x0.85", "set": "base", "x": 0.0, "kB0_true": 850000000.0, "log_k_hat": 20.55748602385031, "abs_bias_pct": -0.3255572691722941, "crb_log": 0.0017329425040520769, "converged": true}
+{"case": "kH0_x0.85", "set": "later", "x": 0.02, "kB0_true": 833000000.0, "log_k_hat": 20.534605254623493, "abs_bias_pct": -0.5921344831141928, "crb_log": 0.0016914938526208854, "converged": true}
+{"case": "kH0_x0.85", "set": "later", "x": 0.05, "kB0_true": 807500000.0, "log_k_hat": 20.500756621716427, "abs_bias_pct": -0.8659281914149219, "crb_log": 0.0016934269212068689, "converged": true}
+{"case": "kH0_x0.85", "set": "later", "x": 0.1, "kB0_true": 765000000.0, "log_k_hat": 20.441694915519943, "abs_bias_pct": -1.35981743088871, "crb_log": 0.0017068901657034572, "converged": true}

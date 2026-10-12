@@ -1,0 +1,378 @@
+{
+  "name": "p2/relative_intervals",
+  "seed": 51,
+  "config": {
+    "alpha": 0.05,
+    "power": 0.9,
+    "test": "one-sided, decrease",
+    "ranges": {
+      "kf": [
+        0.35,
+        "CT23: in-situ ABA-derived kf 1.2-2.6x the lab value (Tables 2, 5 vs Sec. 5.1.1); section-to-section spread"
+      ],
+      "eta_f": [
+        0.2,
+        "CT23 Sec. 5.1.1: literature loss factor 0.2-0.3"
+      ],
+      "kH0": [
+        0.15,
+        "assumption: Hertz constant C_H for freight wheel/60E1 profiles not sourced (CT23 value is metro); wheel load from WIM"
+      ],
+      "unsprung_scale": [
+        0.03,
+        "assumption: design mass known; wear and fittings"
+      ],
+      "axle_damp_scale": [
+        0.5,
+        "assumption: axle damping is a placeholder (1% at 80 Hz); factor ~1.65 either way"
+      ]
+    },
+    "unsprung_mass_sigma": {
+      "0.03": "assumption (see docs/paper1_outline.md)",
+      "0.01": "drawings / weighed wheelsets"
+    }
+  },
+  "payload": {
+    "gains": {
+      "unsprung_scale": {
+        "gamma_per_log": 1.781748942586596,
+        "gamma_by_x": [
+          1.9397073874401183,
+          1.7932527474926505,
+          1.6122866928270196
+        ]
+      },
+      "kH0": {
+        "gamma_per_log": 0.531555688882858,
+        "gamma_by_x": [
+          0.5767408363948777,
+          0.5131818279150251,
+          0.5047444023386712
+        ]
+      },
+      "axle_damp_scale": {
+        "gamma_per_log": -0.019955253100358825,
+        "gamma_by_x": [
+          -0.16195732943002025,
+          0.009861177487568287,
+          0.09223039264137549
+        ]
+      },
+      "kf": {
+        "gamma_per_log": 0.6842859176971542,
+        "gamma_by_x": [
+          0.30009764476773804,
+          0.7466826404248582,
+          1.0060774678988662
+        ]
+      },
+      "eta_f": {
+        "gamma_per_log": 0.04565040057111208,
+        "gamma_by_x": [
+          0.04383484230822596,
+          0.054085610469537575,
+          0.03903074893557271
+        ]
+      }
+    },
+    "kappa_mass3": {
+      "kappa": 0.2583752493854654,
+      "terms": {
+        "unsprung_scale": 0.05345246827759788,
+        "kH0": 0.07973335333242869,
+        "axle_damp_scale": 0.009977626550179412,
+        "kf": 0.23950007119400396,
+        "eta_f": 0.009130080114222417
+      }
+    },
+    "kappa_mass1": {
+      "kappa": 0.25341283720339564,
+      "terms": {
+        "unsprung_scale": 0.01781748942586596,
+        "kH0": 0.07973335333242869,
+        "axle_damp_scale": 0.009977626550179412,
+        "kf": 0.23950007119400396,
+        "eta_f": 0.009130080114222417
+      }
+    },
+    "coverage_mass3": {
+      "control": {
+        "n": 6,
+        "x": 0.05,
+        "bias_pp": 0.18233755534793156,
+        "coverage_statistical": 0.6666666666666666,
+        "coverage_statistical_ci95": [
+          0.22277809550351213,
+          0.9567281317072583
+        ],
+        "coverage_combined": 1.0,
+        "coverage_combined_ci95": [
+          0.5407418735600995,
+          1.0
+        ],
+        "half_width_combined_pp_median": 2.1576258604658647
+      },
+      "kf_x1.2": {
+        "n": 6,
+        "x": 0.05,
+        "bias_pp": 1.0813449151631072,
+        "coverage_statistical": 0.0,
+        "coverage_statistical_ci95": [
+          0.0,
+          0.45925812643990044
+        ],
+        "coverage_combined": 1.0,
+        "coverage_combined_ci95": [
+          0.5407418735600995,
+          1.0
+        ],
+        "half_width_combined_pp_median": 1.7550488604745993
+      },
+      "unsprung_x1.05": {
+        "n": 6,
+        "x": 0.05,
+        "bias_pp": 0.4775281002086962,
+        "coverage_statistical": 0.3333333333333333,
+        "coverage_statistical_ci95": [
+          0.043271868292741676,
+          0.7772219044964879
+        ],
+        "coverage_combined": 1.0,
+        "coverage_combined_ci95": [
+          0.5407418735600995,
+          1.0
+        ],
+        "half_width_combined_pp_median": 2.0239357340475657
+      }
+    },
+    "coverage_mass1": {
+      "control": {
+        "n": 6,
+        "x": 0.05,
+        "bias_pp": 0.18233755534793156,
+        "coverage_statistical": 0.6666666666666666,
+        "coverage_statistical_ci95": [
+          0.22277809550351213,
+          0.9567281317072583
+        ],
+        "coverage_combined": 1.0,
+        "coverage_combined_ci95": [
+          0.5407418735600995,
+          1.0
+        ],
+        "half_width_combined_pp_median": 2.117584422283539
+      },
+      "kf_x1.2": {
+        "n": 6,
+        "x": 0.05,
+        "bias_pp": 1.0813449151631072,
+        "coverage_statistical": 0.0,
+        "coverage_statistical_ci95": [
+          0.0,
+          0.45925812643990044
+        ],
+        "coverage_combined": 1.0,
+        "coverage_combined_ci95": [
+          0.5407418735600995,
+          1.0
+        ],
+        "half_width_combined_pp_median": 1.7225821245595618
+      },
+      "unsprung_x1.05": {
+        "n": 6,
+        "x": 0.05,
+        "bias_pp": 0.4775281002086962,
+        "coverage_statistical": 0.3333333333333333,
+        "coverage_statistical_ci95": [
+          0.043271868292741676,
+          0.7772219044964879
+        ],
+        "coverage_combined": 1.0,
+        "coverage_combined_ci95": [
+          0.5407418735600995,
+          1.0
+        ],
+        "half_width_combined_pp_median": 1.986448156404031
+      }
+    },
+    "crb_rail_coupled": {
+      "N50_snr20": 0.0017254534893262456,
+      "N50_snr40": 0.0016986627029286598,
+      "N200_snr20": 0.000871484048328309,
+      "N200_snr40": 0.0008294751361119436
+    },
+    "mdc": [
+      {
+        "N": 50,
+        "snr_db": 20,
+        "kappa": "mass3pct",
+        "sd_D0_pct": 0.24401597258491572,
+        "mdc_pct_crb": 0.8109688788477287,
+        "mdc_pct_inflated": 0.8109688788477287,
+        "inflation": 1.0
+      },
+      {
+        "N": 50,
+        "snr_db": 20,
+        "kappa": "mass1pct",
+        "sd_D0_pct": 0.24401597258491572,
+        "mdc_pct_crb": 0.8067500103197789,
+        "mdc_pct_inflated": 0.8067500103197789,
+        "inflation": 1.0
+      },
+      {
+        "N": 50,
+        "snr_db": 20,
+        "kappa": "no_model_form",
+        "sd_D0_pct": 0.24401597258491572,
+        "mdc_pct_crb": 0.7115460474098612,
+        "mdc_pct_inflated": 0.7115460474098612,
+        "inflation": 1.0
+      },
+      {
+        "N": 50,
+        "snr_db": 40,
+        "kappa": "mass3pct",
+        "sd_D0_pct": 0.24022718323790507,
+        "mdc_pct_crb": 0.7984275235486615,
+        "mdc_pct_inflated": 0.9427817447198783,
+        "inflation": 1.1816569628397728
+      },
+      {
+        "N": 50,
+        "snr_db": 40,
+        "kappa": "mass1pct",
+        "sd_D0_pct": 0.24022718323790507,
+        "mdc_pct_crb": 0.7942736368105496,
+        "mdc_pct_inflated": 0.9378803995030771,
+        "inflation": 1.1816569628397728
+      },
+      {
+        "N": 50,
+        "snr_db": 40,
+        "kappa": "no_model_form",
+        "sd_D0_pct": 0.24022718323790507,
+        "mdc_pct_crb": 0.7005367971746335,
+        "mdc_pct_inflated": 0.8272664597586576,
+        "inflation": 1.1816569628397728
+      },
+      {
+        "N": 200,
+        "snr_db": 20,
+        "kappa": "mass3pct",
+        "sd_D0_pct": 0.12324645605377045,
+        "mdc_pct_crb": 0.4104257434375591,
+        "mdc_pct_inflated": 0.4104257434375591,
+        "inflation": 1.0
+      },
+      {
+        "N": 200,
+        "snr_db": 20,
+        "kappa": "mass1pct",
+        "sd_D0_pct": 0.12324645605377045,
+        "mdc_pct_crb": 0.4082863146590232,
+        "mdc_pct_inflated": 0.4082863146590232,
+        "inflation": 1.0
+      },
+      {
+        "N": 200,
+        "snr_db": 20,
+        "kappa": "no_model_form",
+        "sd_D0_pct": 0.12324645605377045,
+        "mdc_pct_crb": 0.36001943930424884,
+        "mdc_pct_inflated": 0.36001943930424884,
+        "inflation": 1.0
+      },
+      {
+        "N": 200,
+        "snr_db": 40,
+        "kappa": "mass3pct",
+        "sd_D0_pct": 0.11730549871407797,
+        "mdc_pct_crb": 0.390680328298032,
+        "mdc_pct_inflated": 0.4614861392013503,
+        "inflation": 1.1816569628397728
+      },
+      {
+        "N": 200,
+        "snr_db": 40,
+        "kappa": "mass1pct",
+        "sd_D0_pct": 0.11730549871407797,
+        "mdc_pct_crb": 0.3886436256126058,
+        "mdc_pct_inflated": 0.45908116157648005,
+        "inflation": 1.1816569628397728
+      },
+      {
+        "N": 200,
+        "snr_db": 40,
+        "kappa": "no_model_form",
+        "sd_D0_pct": 0.11730549871407797,
+        "mdc_pct_crb": 0.34269487665486986,
+        "mdc_pct_inflated": 0.4048216232821811,
+        "inflation": 1.1816569628397728
+      }
+    ],
+    "abs_budget_mass": {
+      "nominal_mass3pct": {
+        "terms_pct": {
+          "kf": 4.751516835037495,
+          "eta_f": 0.9740965941654967,
+          "kH0": 0.6709036160308157,
+          "unsprung_scale": 3.622578733825721,
+          "axle_damp_scale": 0.5494351745353954
+        },
+        "rss_pct": 6.115622925278821,
+        "complete": true
+      },
+      "nominal_mass1pct": {
+        "terms_pct": {
+          "kf": 4.751516835037495,
+          "eta_f": 0.9740965941654967,
+          "kH0": 0.6709036160308157,
+          "unsprung_scale": 1.207226718338017,
+          "axle_damp_scale": 0.5494351745353954
+        },
+        "rss_pct": 5.072983681316026,
+        "complete": true
+      },
+      "coest_mass3pct": {
+        "terms_pct": {
+          "kf": 0.000154504271754341,
+          "eta_f": 0.9816155354548828,
+          "kH0": 4.88448902435934e-05,
+          "unsprung_scale": 3.7169062832378197,
+          "axle_damp_scale": 0.7856898622201403
+        },
+        "rss_pct": 3.9238080946539746,
+        "complete": true
+      },
+      "coest_mass1pct": {
+        "terms_pct": {
+          "kf": 0.000154504271754341,
+          "eta_f": 0.9816155354548828,
+          "kH0": 4.88448902435934e-05,
+          "unsprung_scale": 1.230845368402278,
+          "axle_damp_scale": 0.7856898622201403
+        },
+        "rss_pct": 1.759505034439121,
+        "complete": true
+      }
+    },
+    "headline_rmse_over_crb": {
+      "headline_20": 0.781690997877653,
+      "headline_40": 1.1816569628397728,
+      "headline_noisefit_20": 0.7797445494859283,
+      "headline_noisefit_40": 1.181483377728396,
+      "headline_debias_40": 1.2098704310906305
+    }
+  },
+  "provenance": {
+    "git_commit": "2081a7d6e29d88428d76533181cbe526a6cd225f-dirty",
+    "timestamp_utc": "2026-10-12T17:25:18Z",
+    "wall_seconds": 210.27438012399944,
+    "peak_cpu_memory_mb": 2438.1796875,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

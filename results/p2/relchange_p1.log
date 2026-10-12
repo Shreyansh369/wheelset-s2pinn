@@ -1,0 +1,12 @@
+{'case': 'control', 'set': 'base', 'x': 0.0, 'kB0_true': 850000000.0, 'log_k_hat': 20.560747568684754, 'abs_bias_pct': 6.612363370184227e-05, 'crb_log': 0.0017329425040520769, 'converged': True}
+{'case': 'control', 'set': 'later', 'x': 0.02, 'kB0_true': 833000000.0, 'log_k_hat': 20.540543932970863, 'abs_bias_pct': -2.6716021739314755e-05, 'crb_log': 0.0016914938526208854, 'converged': True}
+{'case': 'control', 'set': 'later', 'x': 0.05, 'kB0_true': 807500000.0, 'log_k_hat': 20.50945466053568, 'abs_bias_pct': 0.00010474751428457552, 'crb_log': 0.0016934269212068689, 'converged': True}
+{'case': 'control', 'set': 'later', 'x': 0.1, 'kB0_true': 765000000.0, 'log_k_hat': 20.455387665272585, 'abs_bias_pct': 0.0001273482586050534, 'crb_log': 0.0017068901657034572, 'converged': True}
+{'case': 'unsprung_x0.95', 'set': 'base', 'x': 0.0, 'kB0_true': 850000000.0, 'log_k_hat': 20.623285630157262, 'abs_bias_pct': 6.453567982471475, 'crb_log': 0.0017329425040520769, 'converged': True}
+{'case': 'unsprung_x0.95', 'set': 'later', 'x': 0.02, 'kB0_true': 833000000.0, 'log_k_hat': 20.600589716897737, 'abs_bias_pct': 6.188487901159911, 'crb_log': 0.0016914938526208854, 'converged': True}
+{'case': 'unsprung_x0.95', 'set': 'later', 'x': 0.05, 'kB0_true': 807500000.0, 'log_k_hat': 20.5663974386947, 'abs_bias_pct': 5.8596342746424, 'crb_log': 0.0016934269212068689, 'converged': True}
+{'case': 'unsprung_x0.95', 'set': 'later', 'x': 0.1, 'kB0_true': 765000000.0, 'log_k_hat': 20.507745592223564, 'abs_bias_pct': 5.375418349994221, 'crb_log': 0.0017068901657034572, 'converged': True}
+{'case': 'unsprung_x1.05', 'set': 'base', 'x': 0.0, 'kB0_true': 850000000.0, 'log_k_hat': 20.498903621880416, 'abs_bias_pct': -5.996980845427835, 'crb_log': 0.0017329425040520769, 'converged': True}
+{'case': 'unsprung_x1.05', 'set': 'later', 'x': 0.02, 'kB0_true': 833000000.0, 'log_k_hat': 20.4801297132028, 'abs_bias_pct': -5.862573461835208, 'crb_log': 0.0016914938526208854, 'converged': True}
+{'case': 'unsprung_x1.05', 'set': 'later', 'x': 0.05, 'kB0_true': 807500000.0, 'log_k_hat': 20.451221291198422, 'abs_bias_pct': -5.656925761264486, 'crb_log': 0.0016934269212068689, 'converged': True}
+{'case': 'unsprung_x1.05', 'set': 'later', 'x': 0.1, 'kB0_true': 765000000.0, 'log_k_hat': 20.400364896899525, 'abs_bias_pct': -5.353519642322368, 'crb_log': 0.0017068901657034572, 'converged': True}

@@ -1,0 +1,4 @@
+{"case": "axle_damp_x2", "set": "base", "x": 0.0, "kB0_true": 850000000.0, "log_k_hat": 20.560390732404507, "abs_bias_pct": -0.03561116213276483, "crb_log": 0.0017329425040520769, "converged": true}
+{"case": "axle_damp_x2", "set": "later", "x": 0.02, "kB0_true": 833000000.0, "log_k_hat": 20.53682246893038, "abs_bias_pct": -0.3714814142972922, "crb_log": 0.0016914938526208854, "converged": true}
+{"case": "axle_damp_x2", "set": "later", "x": 0.05, "kB0_true": 807500000.0, "log_k_hat": 20.509235407381894, "abs_bias_pct": -0.02181818740653041, "crb_log": 0.0016934269212068689, "converged": true}
+{"case": "axle_damp_x2", "set": "later", "x": 0.1, "kB0_true": 765000000.0, "log_k_hat": 20.462540439400634, "abs_bias_pct": 0.7179698942224366, "crb_log": 0.0017068901657034572, "converged": true}
