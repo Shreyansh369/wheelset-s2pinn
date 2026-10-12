@@ -111,7 +111,7 @@ single-line roughness model), and the `*_binsampled` result files (kept for tran
 8. **Foundation frequency dependence at 450–700 Hz.** In the P2 scope check, the fractional vs
    hysteretic foundation mismatch gave about 7% bias in k_f. Not tested for k_B0.
 9. **Literature.** Full-text checks of Shen et al. 2023 (MSSP 204) and the Chinese axle-box bearing
-   papers; the Sykulski et al. citation (cited from memory: verify).
+   papers.
 
 ## Open items (results that need an explanation)
 

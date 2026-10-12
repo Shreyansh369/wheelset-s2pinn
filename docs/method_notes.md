@@ -43,7 +43,7 @@ the truth while the SE was 0.15%. Profile intervals never covered the truth.
 The fix is the debiased Whittle likelihood:
 
 > Sykulski, A.M., Olhede, S.C., Guillaumin, A.P., Lilly, J.M., Early, J.J. (2019). The debiased
-> Whittle likelihood. *Biometrika* 106(2), 251–266. doi:10.1093/biomet/asy071 (cited from memory: verify volume/pages/DOI before submission)
+> Whittle likelihood. *Biometrika* 106(2), 251–266. doi:10.1093/biomet/asy071 (verified 2026-10-12: author PDF header and RePEc listing, Biometrika 106(2):251-266; arXiv:1605.06718; open access CC BY 4.0)
 
 It keeps the Whittle form but replaces v_ik by the exact expected periodogram:
 
