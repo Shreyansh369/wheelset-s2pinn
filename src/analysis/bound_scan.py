@@ -87,21 +87,35 @@ class ScenarioModel:
         self.wheels = [2 * j for j in self.base.mesh.wheel_nodes]
         self.ibL = self.base.ib[0]
 
-    def system(self, th: dict):
-        """Full (M, C, K) and the unit-input force pattern; th: kB0, cB, W, k_r, r0."""
+    def wheelset_matrices(self, th: dict):
+        """Wheelset-only (M, C, K) (no contact, no rail). Optional th["axle_damp_scale"] scales the
+        axle's stiffness-proportional damping (model-form tests)."""
         m = self.base.matrices(th["kB0"], th["cB"], th["W"])
+        M, C, K = m.M, m.C.copy(), m.K
+        s = th.get("axle_damp_scale", 1.0)
+        if s != 1.0:
+            nb = self.base.ib[0]
+            C[:nb, :nb] += (s - 1.0) * self.base.C0[:nb, :nb]
+        return M, C, K
+
+    def system(self, th: dict):
+        """Full (M, C, K) and the unit-input force pattern; th: kB0, cB, W, k_r, r0.
+
+        Optional th keys (default: the Scenario's values): kH0, m_r, c_r, axle_damp_scale.
+        """
         if self.sc.contact == "rigid":
-            return m, None
+            return self.base.matrices(th["kB0"], th["cB"], th["W"]), None
+        Mw, Cw, Kw = self.wheelset_matrices(th)
         n0 = self.base.n
         n = n0 + 2
         M, C, K = (np.zeros((n, n)) for _ in range(3))
-        M[:n0, :n0], C[:n0, :n0], K[:n0, :n0] = m.M, m.C, m.K
-        kH = self.sc.kH0 * (th["W"] / self.p.v["payload"]["W0"]) ** (1 / 3)
+        M[:n0, :n0], C[:n0, :n0], K[:n0, :n0] = Mw, Cw, Kw
+        kH = th.get("kH0", self.sc.kH0) * (th["W"] / self.p.v["payload"]["W0"]) ** (1 / 3)
         f = np.zeros(n)
         for i, (wdof, rdof) in enumerate(zip(self.wheels, (n0, n0 + 1))):
-            M[rdof, rdof] += self.sc.m_r
+            M[rdof, rdof] += th.get("m_r", self.sc.m_r)
             K[rdof, rdof] += th["k_r"]
-            C[rdof, rdof] += self.sc.c_r
+            C[rdof, rdof] += th.get("c_r", self.sc.c_r)
             for (a, b), s in (((wdof, wdof), 1), ((rdof, rdof), 1), ((wdof, rdof), -1), ((rdof, wdof), -1)):
                 K[a, b] += s * kH
             # contact force kH (u_rail + z - w): +kH z on the wheel, -kH z on the rail

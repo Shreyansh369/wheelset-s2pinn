@@ -1,0 +1,349 @@
+{
+  "name": "p2/multiwheel_bound",
+  "seed": 20261012,
+  "config": {
+    "layout": "CT23 Fig. 5 subsets",
+    "foundation": "kf 154 MN/m^2, eta_f 0.2 (CT23 Sec. 5.1.1)",
+    "neighbour_bearing": "kB0 1e9, cB 5e3",
+    "truth": {
+      "kB0": 850000000.0,
+      "cB": 6000.0
+    },
+    "wim_sigma": 0.03,
+    "roughness": "ISO 3095 shape, K=16 levels free"
+  },
+  "payload": {
+    "rows": [
+      {
+        "rail": "BS113A",
+        "wheels": 1,
+        "speeds": "fixed_100",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.008223983233250009,
+        "crb_rel_cB": 0.3105624036310872,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00717,
+          "I": 2.35e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_BS113A"
+        }
+      },
+      {
+        "rail": "BS113A",
+        "wheels": 1,
+        "speeds": "uniform_95_105",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.003804815887856558,
+        "crb_rel_cB": 0.1444932597275331,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00717,
+          "I": 2.35e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_BS113A"
+        }
+      },
+      {
+        "rail": "BS113A",
+        "wheels": 1,
+        "speeds": "uniform_60_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.0016944319167536517,
+        "crb_rel_cB": 0.0676674875558693,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00717,
+          "I": 2.35e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_BS113A"
+        }
+      },
+      {
+        "rail": "BS113A",
+        "wheels": 2,
+        "speeds": "fixed_100",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.007974228834048145,
+        "crb_rel_cB": 0.2966979456276305,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00717,
+          "I": 2.35e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_BS113A"
+        }
+      },
+      {
+        "rail": "BS113A",
+        "wheels": 2,
+        "speeds": "uniform_95_105",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.0037774368742747883,
+        "crb_rel_cB": 0.14276109415486282,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00717,
+          "I": 2.35e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_BS113A"
+        }
+      },
+      {
+        "rail": "BS113A",
+        "wheels": 2,
+        "speeds": "uniform_60_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.0016359014936174815,
+        "crb_rel_cB": 0.06431656683639841,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00717,
+          "I": 2.35e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_BS113A"
+        }
+      },
+      {
+        "rail": "BS113A",
+        "wheels": 4,
+        "speeds": "fixed_100",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.008754013466658548,
+        "crb_rel_cB": 0.3265920976526918,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00717,
+          "I": 2.35e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_BS113A"
+        }
+      },
+      {
+        "rail": "BS113A",
+        "wheels": 4,
+        "speeds": "uniform_95_105",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.0036647147383610888,
+        "crb_rel_cB": 0.13838342457426767,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00717,
+          "I": 2.35e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_BS113A"
+        }
+      },
+      {
+        "rail": "BS113A",
+        "wheels": 4,
+        "speeds": "uniform_60_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.0016589127384353923,
+        "crb_rel_cB": 0.06528378694511795,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00717,
+          "I": 2.35e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_BS113A"
+        }
+      },
+      {
+        "rail": "BS113A",
+        "wheels": 8,
+        "speeds": "fixed_100",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.007536115082850027,
+        "crb_rel_cB": 0.2821575874721308,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00717,
+          "I": 2.35e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_BS113A"
+        }
+      },
+      {
+        "rail": "BS113A",
+        "wheels": 8,
+        "speeds": "uniform_95_105",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.0039686400770349425,
+        "crb_rel_cB": 0.15099157530541854,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00717,
+          "I": 2.35e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_BS113A"
+        }
+      },
+      {
+        "rail": "BS113A",
+        "wheels": 8,
+        "speeds": "uniform_60_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.001667150076834521,
+        "crb_rel_cB": 0.06548718833758545,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00717,
+          "I": 2.35e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_BS113A"
+        }
+      },
+      {
+        "rail": "60E1",
+        "wheels": 1,
+        "speeds": "uniform_60_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.0017041499211373553,
+        "crb_rel_cB": 0.06800255808413684,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00767,
+          "I": 3.0383e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_60E1"
+        }
+      },
+      {
+        "rail": "60E1",
+        "wheels": 2,
+        "speeds": "uniform_60_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.0016771119437910512,
+        "crb_rel_cB": 0.06508858232412087,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00767,
+          "I": 3.0383e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_60E1"
+        }
+      },
+      {
+        "rail": "60E1",
+        "wheels": 4,
+        "speeds": "uniform_60_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.0016923043445607486,
+        "crb_rel_cB": 0.06601665738681756,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00767,
+          "I": 3.0383e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_60E1"
+        }
+      },
+      {
+        "rail": "60E1",
+        "wheels": 8,
+        "speeds": "uniform_60_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "crb_rel_kB0": 0.0016788232372482287,
+        "crb_rel_cB": 0.06602705219823214,
+        "track": {
+          "E": 207000000000.0,
+          "G": 81000000000.0,
+          "kappa": 0.34,
+          "rho": 7850.0,
+          "A": 0.00767,
+          "I": 3.0383e-05,
+          "kf": 154000000.0,
+          "eta_f": 0.2,
+          "source": "config/track.yaml rail_60E1"
+        }
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "0349447b9e2241dcfcc96d6d89c485f572d77b90-dirty",
+    "timestamp_utc": "2026-10-12T11:59:28Z",
+    "wall_seconds": 284.75184873299986,
+    "peak_cpu_memory_mb": 266.46484375,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}
