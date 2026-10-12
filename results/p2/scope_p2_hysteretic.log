@@ -1,0 +1,84 @@
+sec=0 corr=False CT23 kf (MN/m2) nan 7.5 6.4 nan 9.7 604.5 8.0 7.5 | multi-pass 7.72 (se 0.005)
+sec=0 corr=True CT23 kf (MN/m2) nan 15.5 6.3 4.6 nan 5.1 10.3 7.2 | multi-pass 7.68 (se 0.006)
+sec=1 corr=False CT23 kf (MN/m2) 8.7 6.7 8.7 7.0 6.5 8.5 6.7 8.4 | multi-pass 7.69 (se 0.005)
+sec=1 corr=True CT23 kf (MN/m2) 10.6 8.6 11.0 7.3 595.7 19.0 11.9 9.3 | multi-pass 7.89 (se 0.006)
+sec=2 corr=False CT23 kf (MN/m2) 7.9 7.0 8.6 8.5 6.6 8.9 7.2 6.5 | multi-pass 7.71 (se 0.005)
+sec=2 corr=True CT23 kf (MN/m2) 8.5 7.1 18.3 9.2 13.8 11.3 8.1 nan | multi-pass 7.81 (se 0.006)
+sec=3 corr=False CT23 kf (MN/m2) 6.8 6.4 9.2 7.0 6.3 6.7 9.3 6.2 | multi-pass 7.70 (se 0.005)
+sec=3 corr=True CT23 kf (MN/m2) 12.1 10.1 9.9 6.8 8.2 15.1 22.5 9.4 | multi-pass 7.79 (se 0.006)
+sec=4 corr=False CT23 kf (MN/m2) 7.5 nan 6.9 6.9 6.7 nan 6.8 7.3 | multi-pass 7.78 (se 0.005)
+sec=4 corr=True CT23 kf (MN/m2) 8.0 7.3 12.0 12.4 11.3 4.3 nan 9.4 | multi-pass 7.69 (se 0.005)
+sec=5 corr=False CT23 kf (MN/m2) 7.6 7.8 567.7 7.4 7.9 5.4 7.6 6.7 | multi-pass 7.69 (se 0.005)
+sec=5 corr=True CT23 kf (MN/m2) 13.4 9.4 21.8 8.4 16.9 5.6 14.1 nan | multi-pass 7.71 (se 0.005)
+sec=6 corr=False CT23 kf (MN/m2) 7.6 9.5 7.2 6.4 7.0 7.0 8.2 6.8 | multi-pass 7.79 (se 0.006)
+sec=6 corr=True CT23 kf (MN/m2) 17.1 9.2 576.6 6.4 12.3 7.0 9.6 4.6 | multi-pass 7.77 (se 0.006)
+sec=7 corr=False CT23 kf (MN/m2) 8.3 nan 8.8 7.3 6.4 6.9 7.0 7.2 | multi-pass 7.69 (se 0.005)
+sec=7 corr=True CT23 kf (MN/m2) 9.6 6.8 18.3 11.9 14.4 6.9 nan 7.5 | multi-pass 7.74 (se 0.006)
+sec=8 corr=False CT23 kf (MN/m2) 5.7 7.5 8.5 7.8 8.1 8.0 7.6 7.9 | multi-pass 7.79 (se 0.005)
+sec=8 corr=True CT23 kf (MN/m2) 14.2 8.4 10.3 17.3 16.7 9.2 8.6 9.0 | multi-pass 7.89 (se 0.006)
+sec=9 corr=False CT23 kf (MN/m2) 5.9 8.0 6.6 8.9 7.1 7.3 7.1 6.5 | multi-pass 7.74 (se 0.006)
+sec=9 corr=True CT23 kf (MN/m2) nan 9.3 6.8 10.5 7.1 17.2 4.8 6.7 | multi-pass 7.68 (se 0.006)
+sec=10 corr=False CT23 kf (MN/m2) nan 6.8 8.3 5.6 7.0 8.9 6.8 nan | multi-pass 7.67 (se 0.005)
+sec=10 corr=True CT23 kf (MN/m2) 5.2 6.8 10.3 13.4 14.9 9.4 11.9 9.3 | multi-pass 7.79 (se 0.006)
+sec=11 corr=False CT23 kf (MN/m2) 5.1 7.7 6.5 7.0 5.6 8.7 4.9 8.9 | multi-pass 7.68 (se 0.006)
+sec=11 corr=True CT23 kf (MN/m2) 13.4 14.8 6.7 12.8 13.3 9.1 12.4 9.1 | multi-pass 7.70 (se 0.006)
+sec=12 corr=False CT23 kf (MN/m2) 7.9 7.0 8.2 8.7 6.6 9.6 5.8 5.6 | multi-pass 7.71 (se 0.005)
+sec=12 corr=True CT23 kf (MN/m2) 6.0 12.4 9.1 16.7 10.9 6.6 13.6 7.5 | multi-pass 7.79 (se 0.005)
+sec=13 corr=False CT23 kf (MN/m2) 7.6 7.9 6.8 6.9 4.8 9.1 7.4 7.6 | multi-pass 7.69 (se 0.005)
+sec=13 corr=True CT23 kf (MN/m2) 14.4 9.2 6.9 609.7 7.0 10.7 6.6 14.7 | multi-pass 7.61 (se 0.006)
+sec=14 corr=False CT23 kf (MN/m2) nan 6.6 5.6 7.2 6.9 7.4 nan 6.6 | multi-pass 7.64 (se 0.005)
+sec=14 corr=True CT23 kf (MN/m2) 5.3 11.3 5.9 8.2 6.9 7.6 9.2 12.2 | multi-pass 7.75 (se 0.005)
+sec=15 corr=False CT23 kf (MN/m2) 5.5 6.4 nan 7.0 6.6 6.2 9.4 5.2 | multi-pass 7.74 (se 0.006)
+sec=15 corr=True CT23 kf (MN/m2) 5.3 13.1 6.8 558.0 6.6 9.8 9.6 613.2 | multi-pass 7.62 (se 0.006)
+sec=16 corr=False CT23 kf (MN/m2) 9.3 7.2 7.1 7.4 8.6 6.5 7.1 6.7 | multi-pass 7.75 (se 0.006)
+sec=16 corr=True CT23 kf (MN/m2) 6.3 7.7 7.1 16.1 9.6 6.4 6.9 7.1 | multi-pass 7.58 (se 0.006)
+sec=17 corr=False CT23 kf (MN/m2) 8.8 7.2 8.5 7.9 6.5 7.6 9.4 7.0 | multi-pass 7.77 (se 0.006)
+sec=17 corr=True CT23 kf (MN/m2) 10.5 13.1 9.3 7.6 nan 9.0 9.2 8.5 | multi-pass 7.73 (se 0.006)
+sec=18 corr=False CT23 kf (MN/m2) 5.2 7.8 8.4 6.7 6.4 9.7 8.3 8.5 | multi-pass 7.73 (se 0.006)
+sec=18 corr=True CT23 kf (MN/m2) 12.7 10.2 8.7 6.7 14.0 nan 8.4 11.8 | multi-pass 7.79 (se 0.006)
+sec=19 corr=False CT23 kf (MN/m2) 7.4 7.2 7.5 9.1 6.4 6.9 6.5 7.2 | multi-pass 7.66 (se 0.006)
+sec=19 corr=True CT23 kf (MN/m2) 7.3 4.8 6.9 11.3 14.3 7.5 11.6 12.0 | multi-pass 7.78 (se 0.006)
+{
+ "clean": {
+  "ct23_median_MN": 7.1763711086447906,
+  "ct23_frac_outside_x0.7_x1.43_of_ref": 0.10625,
+  "ct23_range_MN": [
+   4.843401473999543,
+   604.5099869464136
+  ],
+  "ct23_nan_frac": 0.0625,
+  "whittle_median_MN": 7.710723183685519,
+  "whittle_range_MN": [
+   7.641850458751827,
+   7.794475169478515
+  ],
+  "whittle_rel_spread_sd": 0.005664632176657177,
+  "whittle_profile_covers_clean_ref": 0.8,
+  "whittle_profile_covers_truth": 0.8,
+  "whittle_wald_covers_truth": 0.8
+ },
+ "corrugation": {
+  "ct23_median_MN": 9.35803122825377,
+  "ct23_frac_outside_x0.7_x1.43_of_ref": 0.45625,
+  "ct23_range_MN": [
+   4.346676893189106,
+   613.2012708293396
+  ],
+  "ct23_nan_frac": 0.05625,
+  "whittle_median_MN": 7.744972134283023,
+  "whittle_range_MN": [
+   7.58219599220932,
+   7.889820420801287
+  ],
+  "whittle_rel_spread_sd": 0.010384326832992367,
+  "whittle_profile_covers_clean_ref": 0.5,
+  "whittle_profile_covers_truth": 0.45,
+  "whittle_wald_covers_truth": 0.45
+ },
+ "reference_kf_MN": {
+  "whittle_clean_median": 7.710723183685519,
+  "ct23_clean_20ms_median": 6.164010140819716,
+  "truth_beta_abs_at_35Hz": 7.8524900509328885,
+  "truth_kind": "hysteretic"
+ }
+}
