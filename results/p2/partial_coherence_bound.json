@@ -1,0 +1,86 @@
+{
+  "name": "p2/partial_coherence_bound",
+  "seed": 89,
+  "config": {
+    "N": 50,
+    "speeds_kmh": [
+      60,
+      110
+    ],
+    "snr_db": 40,
+    "wim_sigma": 0.03,
+    "truth": {
+      "kB0": 850000000.0,
+      "cB": 6000.0
+    },
+    "coherence": "Gaussian lateral correlation, random lateral offsets; rho = mean pairwise coherence (assumption)"
+  },
+  "payload": {
+    "rows": [
+      {
+        "rho": 0.5,
+        "C_offdiag_mean": 0.4840393531896881,
+        "C_offdiag_min": 3.953587381384218e-12,
+        "oracle_crb": [
+          5.104482137457343e-05,
+          0.001033380412884953
+        ],
+        "exchangeable_rho_estimated_crb": [
+          0.0018193006823409557,
+          0.051112164848600226,
+          0.02269418893089748
+        ],
+        "independent_crb": [
+          0.0022460678840282066,
+          0.07184180717353604
+        ]
+      },
+      {
+        "rho": 0.7,
+        "C_offdiag_mean": 0.68980540236456,
+        "C_offdiag_min": 0.0016356985254894773,
+        "oracle_crb": [
+          3.686552780604604e-05,
+          0.00072888041633971
+        ],
+        "exchangeable_rho_estimated_crb": [
+          0.001556993496120363,
+          0.040141787964251364,
+          0.02217588043585863
+        ],
+        "independent_crb": [
+          0.002248759741700062,
+          0.07296659791103738
+        ]
+      },
+      {
+        "rho": 0.9,
+        "C_offdiag_mean": 0.9133326711147769,
+        "C_offdiag_min": 0.49336921532777034,
+        "oracle_crb": [
+          4.8723859068272926e-05,
+          0.0010011641012812776
+        ],
+        "exchangeable_rho_estimated_crb": [
+          0.0012021591058012644,
+          0.02520294931372006,
+          0.022562491615739397
+        ],
+        "independent_crb": [
+          0.002411815792504441,
+          0.0777949605922904
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "944ad1cebb547b089a648923d2872ee24f339264",
+    "timestamp_utc": "2026-10-12T13:07:35Z",
+    "wall_seconds": 74.3252713110005,
+    "peak_cpu_memory_mb": 293.62109375,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

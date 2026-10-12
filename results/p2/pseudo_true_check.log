@@ -1,0 +1,10 @@
+{'case': 'kH0_x0.7', 'estimator': 'nominal', 'pseudo_true_bias_pct': -20.901099493580954, 'mc_bias_pct': -21.098975909985395, 'mc_bias_se_pct': 1.1038330288780343, 'mc_n': 3}
+{'case': 'kH0_x0.7', 'estimator': 'coest', 'pseudo_true_bias_pct': -0.0001698520126214298, 'mc_bias_pct': 0.07541916619168143, 'mc_bias_se_pct': 0.01359568240856257, 'mc_n': 2}
+{'case': 'm_r_x1.3', 'estimator': 'nominal', 'pseudo_true_bias_pct': -8.86650592972087, 'mc_bias_pct': -9.15056763746013, 'mc_bias_se_pct': 0.3248759365865551, 'mc_n': 10}
+{'case': 'm_r_x1.3', 'estimator': 'coest', 'pseudo_true_bias_pct': 1.8327383130480435, 'mc_bias_pct': 1.9233099008626884, 'mc_bias_se_pct': 0.06558750105695416, 'mc_n': 9}
+{'case': 'axle_damp_x2', 'estimator': 'nominal', 'pseudo_true_bias_pct': -1.851076466068291, 'mc_bias_pct': -1.8606005749280663, 'mc_bias_se_pct': 0.14434743025050184, 'mc_n': 10}
+{'case': 'axle_damp_x2', 'estimator': 'coest', 'pseudo_true_bias_pct': -5.187083825933769, 'mc_bias_pct': -6.114468823135791, 'mc_bias_se_pct': 0.5957832315609637, 'mc_n': 10}
+{'case': 'k_r_x0.7', 'estimator': 'nominal', 'pseudo_true_bias_pct': -0.36989466326273757, 'mc_bias_pct': -0.2982020487356829, 'mc_bias_se_pct': 0.06320051127518621, 'mc_n': 10}
+{'case': 'k_r_x0.7', 'estimator': 'coest', 'pseudo_true_bias_pct': -2.08904562426504e-05, 'mc_bias_pct': 0.17917352129379616, 'mc_bias_se_pct': 0.09752912731960887, 'mc_n': 10}
+{'case': 'k_r_x1.3', 'estimator': 'nominal', 'pseudo_true_bias_pct': 0.36399986347201985, 'mc_bias_pct': 0.5350680452479883, 'mc_bias_se_pct': 0.0975911259179396, 'mc_n': 2}
+{'case': 'k_r_x1.3', 'estimator': 'coest', 'pseudo_true_bias_pct': 0.000155439182614181, 'mc_bias_pct': 0.46329625506288385, 'mc_bias_se_pct': 0.2511166832021128, 'mc_n': 2}

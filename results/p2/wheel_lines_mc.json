@@ -1,0 +1,122 @@
+{
+  "name": "p2/wheel_lines_mc",
+  "seed": 20261012,
+  "config": {
+    "N": 50,
+    "speeds_kmh": [
+      60,
+      110
+    ],
+    "snr_db": 40,
+    "truth": {
+      "kB0": 850000000.0,
+      "cB": 6000.0
+    }
+  },
+  "payload": {
+    "cells": [
+      {
+        "file": "delta0_uniform_60_110.jsonl",
+        "delta_db": 0.0,
+        "ignore": {
+          "n": 10,
+          "bias_rel": -6.953446320830947e-05,
+          "bias_rel_se": 0.0006793755766947952,
+          "rmse_rel": 0.00204023673790416,
+          "crb_rel": 0.0022979595577146666,
+          "rmse_over_crb": 0.8878471037728735,
+          "coverage90_wald": 0.9,
+          "coverage90_wald_ci95": [
+            0.5549838829718047,
+            0.9974714214555382
+          ],
+          "all_converged": true
+        },
+        "notch": {
+          "n": 10,
+          "bias_rel": 0.00020906702318889135,
+          "bias_rel_se": 0.0009383932723533179,
+          "rmse_rel": 0.0028215830268121236,
+          "crb_rel": 0.0023376263808065818,
+          "rmse_over_crb": 1.2070290829959558,
+          "coverage90_wald": 0.8,
+          "coverage90_wald_ci95": [
+            0.4439045376923585,
+            0.9747892736731666
+          ],
+          "all_converged": true
+        },
+        "tacho": {
+          "n": 10,
+          "bias_rel": -0.0002099162385491682,
+          "bias_rel_se": 0.000584935381649451,
+          "rmse_rel": 0.001767950346251217,
+          "crb_rel": 0.0017946628711052012,
+          "rmse_over_crb": 0.9851155750285657,
+          "coverage90_wald": 0.8,
+          "coverage90_wald_ci95": [
+            0.4439045376923585,
+            0.9747892736731666
+          ],
+          "all_converged": true
+        }
+      },
+      {
+        "file": "delta10_uniform_60_110.jsonl",
+        "delta_db": 10.0,
+        "ignore": {
+          "n": 10,
+          "bias_rel": -0.0011447616640976044,
+          "bias_rel_se": 0.0006312099590067712,
+          "rmse_rel": 0.002215187855814713,
+          "crb_rel": 0.0023101447897872227,
+          "rmse_over_crb": 0.958895678577248,
+          "coverage90_wald": 0.9,
+          "coverage90_wald_ci95": [
+            0.5549838829718047,
+            0.9974714214555382
+          ],
+          "all_converged": true
+        },
+        "notch": {
+          "n": 10,
+          "bias_rel": 0.0005799317193224907,
+          "bias_rel_se": 0.0006578175350483758,
+          "rmse_rel": 0.0020550544751728244,
+          "crb_rel": 0.002349938869793254,
+          "rmse_over_crb": 0.8745140146363155,
+          "coverage90_wald": 0.9,
+          "coverage90_wald_ci95": [
+            0.5549838829718047,
+            0.9974714214555382
+          ],
+          "all_converged": true
+        },
+        "tacho": {
+          "n": 10,
+          "bias_rel": 0.00018041851562761169,
+          "bias_rel_se": 0.00039385620461303186,
+          "rmse_rel": 0.0011946481764105931,
+          "crb_rel": 0.0010014699397849361,
+          "rmse_over_crb": 1.1928946930420514,
+          "coverage90_wald": 0.8,
+          "coverage90_wald_ci95": [
+            0.4439045376923585,
+            0.9747892736731666
+          ],
+          "all_converged": true
+        }
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "ab03fc22ffda701f093dc8f1cf3462801d3f9cc0",
+    "timestamp_utc": "2026-10-12T13:57:07Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 95.1640625,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}
