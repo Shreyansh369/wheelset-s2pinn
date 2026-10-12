@@ -1,0 +1,39 @@
+{'rho': 0.5, 'C_offdiag_mean': 0.4840393531896881, 'C_offdiag_min': 3.953587381384218e-12, 'oracle_crb': [5.104482137457343e-05, 0.001033380412884953], 'exchangeable_rho_estimated_crb': [0.0018193006823409557, 0.051112164848600226, 0.02269418893089748], 'independent_crb': [0.0022460678840282066, 0.07184180717353604]}
+{'rho': 0.7, 'C_offdiag_mean': 0.68980540236456, 'C_offdiag_min': 0.0016356985254894773, 'oracle_crb': [3.686552780604604e-05, 0.00072888041633971], 'exchangeable_rho_estimated_crb': [0.001556993496120363, 0.040141787964251364, 0.02217588043585863], 'independent_crb': [0.002248759741700062, 0.07296659791103738]}
+{'rho': 0.9, 'C_offdiag_mean': 0.9133326711147769, 'C_offdiag_min': 0.49336921532777034, 'oracle_crb': [4.8723859068272926e-05, 0.0010011641012812776], 'exchangeable_rho_estimated_crb': [0.0012021591058012644, 0.02520294931372006, 0.022562491615739397], 'independent_crb': [0.002411815792504441, 0.0777949605922904]}
+rho=0.5 j=0 err=+0.00298 se=0.00189 oracle=0.00005 rho_hat=0.485 fit=163s
+rho=0.5 j=1 err=-0.00309 se=0.00194 oracle=0.00004 rho_hat=0.487 fit=153s
+rho=0.5 j=2 err=-0.00112 se=0.00178 oracle=0.00005 rho_hat=0.537 fit=174s
+rho=0.5 j=3 err=+0.00051 se=0.00186 oracle=0.00006 rho_hat=0.437 fit=142s
+rho=0.5 j=4 err=+0.00061 se=0.00178 oracle=0.00005 rho_hat=0.528 fit=149s
+rho=0.5 j=5 err=+0.00398 se=0.00181 oracle=0.00006 rho_hat=0.593 fit=192s
+rho=0.5 j=6 err=-0.00537 se=0.00193 oracle=0.00005 rho_hat=0.509 fit=171s
+rho=0.5 j=7 err=+0.00621 se=0.00189 oracle=0.00004 rho_hat=0.522 fit=191s
+rho=0.5 j=8 err=+0.00155 se=0.00192 oracle=0.00004 rho_hat=0.487 fit=136s
+rho=0.5 j=9 err=+0.00718 se=0.00167 oracle=0.00004 rho_hat=0.553 fit=172s
+rho=0.5 j=10 err=-0.00180 se=0.00198 oracle=0.00005 rho_hat=0.406 fit=180s
+rho=0.5 j=11 err=-0.00230 se=0.00180 oracle=0.00004 rho_hat=0.557 fit=186s
+rho=0.7 j=0 err=+0.00000 se=0.00148 oracle=0.00003 rho_hat=0.701 fit=203s
+rho=0.7 j=1 err=+0.00245 se=0.00159 oracle=0.00005 rho_hat=0.674 fit=181s
+rho=0.7 j=2 err=+0.00329 se=0.00165 oracle=0.00005 rho_hat=0.704 fit=224s
+rho=0.7 j=3 err=-0.00234 se=0.00161 oracle=0.00003 rho_hat=0.680 fit=151s
+rho=0.7 j=4 err=+0.00273 se=0.00158 oracle=0.00004 rho_hat=0.728 fit=197s
+rho=0.7 j=5 err=+0.00286 se=0.00142 oracle=0.00004 rho_hat=0.808 fit=289s
+rho=0.7 j=6 err=-0.00045 se=0.00153 oracle=0.00003 rho_hat=0.702 fit=162s
+rho=0.7 j=7 err=-0.00237 se=0.00159 oracle=0.00004 rho_hat=0.727 fit=220s
+rho=0.7 j=8 err=+0.00139 se=0.00151 oracle=0.00004 rho_hat=0.736 fit=192s
+rho=0.7 j=9 err=+0.00215 se=0.00163 oracle=0.00005 rho_hat=0.690 fit=222s
+rho=0.7 j=10 err=+0.00104 se=0.00164 oracle=0.00005 rho_hat=0.644 fit=181s
+rho=0.7 j=11 err=-0.00028 se=0.00154 oracle=0.00003 rho_hat=0.732 fit=212s
+rho=0.9 j=0 err=-0.00251 se=0.00126 oracle=0.00004 rho_hat=0.904 fit=324s
+rho=0.9 j=1 err=+0.00037 se=0.00122 oracle=0.00003 rho_hat=0.894 fit=256s
+rho=0.9 j=2 err=-0.00053 se=0.00115 oracle=0.00003 rho_hat=0.914 fit=389s
+rho=0.9 j=3 err=+0.00151 se=0.00105 oracle=0.00003 rho_hat=0.917 fit=364s
+rho=0.9 j=4 err=+0.00250 se=0.00120 oracle=0.00004 rho_hat=0.859 fit=303s
+rho=0.9 j=5 err=+0.00187 se=0.00106 oracle=0.00003 rho_hat=0.916 fit=352s
+rho=0.9 j=6 err=-0.00060 se=0.00107 oracle=0.00005 rho_hat=0.904 fit=364s
+rho=0.9 j=7 err=+0.00221 se=0.00107 oracle=0.00004 rho_hat=0.919 fit=382s
+rho=0.9 j=8 err=+0.00379 se=0.00098 oracle=0.00004 rho_hat=0.925 fit=328s
+rho=0.9 j=9 err=+0.00199 se=0.00108 oracle=0.00005 rho_hat=0.926 fit=326s
+rho=0.9 j=10 err=+0.00153 se=0.00104 oracle=0.00004 rho_hat=0.912 fit=286s
+rho=0.9 j=11 err=+0.00009 se=0.00110 oracle=0.00004 rho_hat=0.915 fit=301s
