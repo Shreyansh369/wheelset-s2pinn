@@ -1,0 +1,202 @@
+{
+  "name": "p0/s2pinn_repro_seed42_nc4096",
+  "seed": 42,
+  "config": {
+    "model": {
+      "spatial": {
+        "n_atoms": 256,
+        "init_sigma": 0.15,
+        "use_warp": true,
+        "warp_hidden": 64,
+        "warp_eps": 0.1
+      },
+      "temporal": {
+        "n_freq": 8
+      },
+      "stochastic": {
+        "R": 5,
+        "p": 3,
+        "dist": "gaussian"
+      },
+      "cp": {
+        "rank": 16,
+        "init": "normal"
+      }
+    },
+    "pde": {
+      "name": "stochastic_diffusion_2d",
+      "domain": {
+        "x_min": -1.0,
+        "x_max": 1.0,
+        "y_min": -1.0,
+        "y_max": 1.0,
+        "t_min": 0.0,
+        "t_max": 1.0
+      },
+      "kl": {
+        "n_terms": 5,
+        "sigma": 1.0,
+        "corr_length": 1.0
+      }
+    },
+    "training": {
+      "steps": 20000,
+      "lr": 0.001,
+      "optimizer": "adam",
+      "amp": "none",
+      "grad_accum": 1,
+      "colloc": 4096,
+      "bc": 32768,
+      "ic": 32768,
+      "gram": 4096,
+      "resample_every": 1,
+      "w_pde": 1.0,
+      "w_proj": 1.0,
+      "w_bc": 1.0,
+      "w_ic": 1.0,
+      "w_orth": 1.0,
+      "w_fac_orth": 0.1,
+      "normalize_cp_every": 1
+    },
+    "eval": {
+      "grid_res": 64,
+      "t_eval": [
+        0.0,
+        0.5,
+        1.0
+      ],
+      "z_eval": [
+        {
+          "name": "Z0",
+          "values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "name": "Z_e1",
+          "values": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "name": "Z_e2",
+          "values": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "eval_every": 500,
+      "save_checkpoint": true,
+      "uq": {
+        "enabled": true,
+        "n_probe": 2048,
+        "n_z_moment": 1024,
+        "n_z_interval": 1024,
+        "n_z_test": 1024,
+        "alpha": 0.1,
+        "batch_limit": 262144
+      }
+    },
+    "logging": {
+      "use_wandb": false,
+      "project": "s2pinn",
+      "entity": null,
+      "log_every": 10
+    },
+    "seed": 42
+  },
+  "payload": {
+    "full_paper_budget": true,
+    "device": "cpu",
+    "device_info": {
+      "device": "cpu",
+      "cuda_available": false,
+      "device_name": "x86_64",
+      "torch": "2.14.1+cu130",
+      "cpu_threads": 3,
+      "host_kind": "other"
+    },
+    "runner": "resumable replay of spinn.train.train loop",
+    "colloc_Nc": 4096,
+    "bc_batch": 32768,
+    "ic_batch": 32768,
+    "paper_reference_source": "Table 14 (Nc=4096)",
+    "paper_cal_error": 0.0185,
+    "deviation": "Nc=4096 instead of the paper default 32768 (PDE batch only, as the released --colloc flag does); compared with the paper's Table 14 row for this Nc",
+    "s2pinn_commit": "1cd6fa2973ef012900683b8ef3bb94f23f1ade86",
+    "final_metrics": {
+      "eval_Z0_t0.0": 0.008690109476447105,
+      "eval_Z0_t0.5": 0.007184603717178106,
+      "eval_Z0_t1.0": 0.008490370586514473,
+      "eval_Z_e1_t0.0": 0.008912144228816032,
+      "eval_Z_e1_t0.5": 0.007022380363196135,
+      "eval_Z_e1_t1.0": 0.008136535994708538,
+      "eval_Z_e2_t0.0": 0.008428831584751606,
+      "eval_Z_e2_t0.5": 0.007435500156134367,
+      "eval_Z_e2_t1.0": 0.008463995531201363,
+      "uq/mean_rel_l2": 0.006709401495754719,
+      "uq/var_rel_l2": 0.008783834055066109,
+      "uq/coverage": 0.8789658546447754,
+      "uq/coverage_50": 0.5312356948852539,
+      "uq/sharpness_50": 0.07906676828861237,
+      "uq/coverage_80": 0.8005557060241699,
+      "uq/sharpness_80": 0.1454210877418518,
+      "uq/coverage_90": 0.8789658546447754,
+      "uq/sharpness_90": 0.17982620000839233,
+      "uq/coverage_95": 0.9276795387268066,
+      "uq/sharpness_95": 0.2163599282503128,
+      "uq/calibration_error": 0.018786501884460433
+    },
+    "best_metrics_during_training": {
+      "eval_Z0_t0.0": 0.00741584924980998,
+      "eval_Z0_t0.5": 0.005442482884973288,
+      "eval_Z0_t1.0": 0.0069118645042181015,
+      "eval_Z_e1_t0.0": 0.0069000618532299995,
+      "eval_Z_e1_t0.5": 0.005683041177690029,
+      "eval_Z_e1_t1.0": 0.0071097081527113914,
+      "eval_Z_e2_t0.0": 0.008428831584751606,
+      "eval_Z_e2_t0.5": 0.005208199843764305,
+      "eval_Z_e2_t1.0": 0.006679759826511145,
+      "uq/mean_rel_l2": 0.00549143273383379,
+      "uq/var_rel_l2": 0.007483618799597025,
+      "uq/coverage": 0.37366676330566406,
+      "uq/coverage_50": 0.1541910171508789,
+      "uq/sharpness_50": 0.07449357211589813,
+      "uq/coverage_80": 0.2698688507080078,
+      "uq/sharpness_80": 0.14172527194023132,
+      "uq/coverage_90": 0.37366676330566406,
+      "uq/sharpness_90": 0.18188704550266266,
+      "uq/coverage_95": 0.4985475540161133,
+      "uq/sharpness_95": 0.2183603197336197,
+      "uq/calibration_error": 0.003537893295288058
+    },
+    "paper_mean_rel_l2": 0.00634,
+    "paper_var_rel_l2": 0.013,
+    "g0_threshold_mean_rel_l2": 0.01268,
+    "g0_pass": true,
+    "ratio_to_paper": 1.0582652201505864,
+    "note": "CPU run: wall time and memory are not comparable with the paper's T4 figures"
+  },
+  "provenance": {
+    "git_commit": "31c07e59cefbce51de80a0641ea834e9fcdf40d5",
+    "timestamp_utc": "2026-10-11T22:31:22Z",
+    "wall_seconds": 18794.238553725005,
+    "peak_cpu_memory_mb": 2257.89453125,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

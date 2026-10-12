@@ -1,0 +1,27 @@
+# Gate definitions. Thresholds come from the brief. Changes agreed with the user are dated.
+G0:
+  a_reproduction: "S2-PINN stochastic diffusion mean rel. L2 <= 2x paper"
+  a_deviation_2026-10-11: "CPU only: Nc=4096 (PDE batch), compared with Table 14 row 6.34e-3 -> threshold 1.268e-2"
+  b_h1: "SDOF shows a clear trend of required gPC degree with Pi"
+  b_reframing_2026-10-11: "accepted: degree ~ Pi ln(1/eps) for uniform/Legendre, ~ Pi^2 for Gaussian/Hermite (docs/derivations/h1_degree.md)"
+  c_eq41: "Eq. (41) within 10% of measured effective damping, or report the measured relation"
+  c_decision_2026-10-11: "Eq. (41) correction dropped; measured relation kept as a reported finding; H2 measures the surrogate's effective damping directly"
+  d_literature: "stop if the method is already published"
+G1:
+  freefree_timoshenko_rel_err_max: 0.005
+  energy_balance_rel_residual_max: 1.0e-6
+  fd_vs_td_rel_l2_max: 1.0e-3
+  fd_vs_td_cases: 3
+G2:
+  condition_2026-10-11: "Pi <= 1.5 (uniform inputs); SDOF needs p = 6 for 1% variance error"
+  mean_rel_l2_max: 1.0e-2
+  var_rel_l2_max: 3.0e-2
+  max_tuning_configs: 12
+G3:
+  # revised 2026-10-11 (user): health target kB0 only (clearance/wear-driven stiffness loss); c_B target dropped;
+  # payload measured per pass (weigh-in-motion). zeta_s (support-mode damping ratio) is reported, not called bearing damping.
+  kB0_rel_err_max: 0.05
+  N_passes: 50
+  payload: measured_per_pass
+  coverage90_range: [0.85, 0.95]
+  superseded_2026-10-11: {kB0_rel_err_max: 0.05, cB_rel_err_max: 0.15, N_passes: 50, snr_db: 40}

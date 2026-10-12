@@ -4,12 +4,21 @@
   "config": {},
   "payload": {
     "a_s2pinn_reproduction": {
-      "status": "PENDING",
-      "why": "needs a GPU run (experiments/colab_p0_reproduce.ipynb); CPU estimate 22.7 h",
-      "threshold": 0.00742
+      "status": "PASS",
+      "mean_rel_l2": 0.006709401495754719,
+      "var_rel_l2": 0.008783834055066109,
+      "cal_error": 0.018786501884460433,
+      "threshold": 0.01268,
+      "reference": "Table 14 (Nc=4096): 0.00634",
+      "ratio_to_paper": 1.0582652201505864,
+      "device": "cpu",
+      "full_budget": true,
+      "colloc_Nc": 4096,
+      "deviation": "Nc=4096 instead of the paper default 32768 (PDE batch only, as the released --colloc flag does); compared with the paper's Table 14 row for this Nc",
+      "wall_hours": 5.220621820479168
     },
     "b_h1_sdof_trend": {
-      "status": "PASS (trend clear)",
+      "status": "PASS AS REFRAMED (accepted 2026-10-11): degree ~ Pi for uniform, ~ Pi^2 for Gaussian inputs",
       "criterion": "monotone log-log trend of required degree in Pi with R^2 >= 0.95 for both families",
       "legendre_slope_vs_logPi": [
         0.9054439671874855,
@@ -48,7 +57,176 @@
       "hypothesis_Pi2_holds": "only asymptotically for Hermite; Legendre scales like Pi"
     },
     "c_eq41": {
-      "status": "PENDING"
+      "status": "MET VIA FALLBACK: Eq. 41 misses 10%; measured relation reported; correction dropped (agreed 2026-10-11)",
+      "settings": {
+        "transient/sdof": {
+          "n": 60,
+          "median_rel_err_eq41": 0.2480658447128648,
+          "frac_within_10pct_eq41": 0.31666666666666665,
+          "n_informative": 43,
+          "median_rel_err_eq41_informative": 0.3683719927099066,
+          "median_measured_bias_over_lambda0": 0.9731609998792293,
+          "pass_eq41_10pct_median": false,
+          "measured_relation": {
+            "c": 4.07473153405059,
+            "beta": 2.3986919040852013,
+            "beta_se": 0.07941533963902524,
+            "n": 58,
+            "eq41_means": "c=1, beta=2"
+          },
+          "median_rel_err_lambda_pred_window": 0.3465463576574218,
+          "median_rel_err_lambda_pred_ridge": null,
+          "pointwise_ridge_amplitude": null
+        },
+        "transient/2dof": {
+          "n": 120,
+          "median_rel_err_eq41": 0.3563947991035708,
+          "frac_within_10pct_eq41": 0.058333333333333334,
+          "n_informative": 120,
+          "median_rel_err_eq41_informative": 0.3563947991035708,
+          "median_measured_bias_over_lambda0": 4.841155725642825,
+          "pass_eq41_10pct_median": false,
+          "measured_relation": {
+            "c": 2.724773402527862,
+            "beta": 1.8782178196621464,
+            "beta_se": 0.07184885069731888,
+            "n": 120,
+            "eq41_means": "c=1, beta=2"
+          },
+          "median_rel_err_lambda_pred_window": 0.39612220766016826,
+          "median_rel_err_lambda_pred_ridge": null,
+          "pointwise_ridge_amplitude": null
+        },
+        "forced/sdof": {
+          "n": 15,
+          "median_rel_err_eq41": 0.8314580110850593,
+          "frac_within_10pct_eq41": 0.13333333333333333,
+          "n_informative": 10,
+          "median_rel_err_eq41_informative": 0.6668964079586259,
+          "median_measured_bias_over_lambda0": 0.3893104132530172,
+          "pass_eq41_10pct_median": false,
+          "measured_relation": {
+            "c": 0.3559050402094732,
+            "beta": 1.0524085656868842,
+            "beta_se": 0.13578708214584878,
+            "n": 12,
+            "eq41_means": "c=1, beta=2"
+          },
+          "median_rel_err_lambda_pred_window": null,
+          "median_rel_err_lambda_pred_ridge": 0.6267101102945222,
+          "pointwise_ridge_amplitude": {
+            "n_points": 135,
+            "n_non_collapsed": 66,
+            "median_rel_err_non_collapsed": 0.03975746721490541,
+            "frac_within_10pct_non_collapsed": 0.5606060606060606
+          }
+        },
+        "forced/2dof": {
+          "n": 15,
+          "median_rel_err_eq41": 3.2557245585305283,
+          "frac_within_10pct_eq41": 0.06666666666666667,
+          "n_informative": 10,
+          "median_rel_err_eq41_informative": 0.7731391994544321,
+          "median_measured_bias_over_lambda0": 6.246207133969311,
+          "pass_eq41_10pct_median": false,
+          "measured_relation": {
+            "c": 2.09805700086592,
+            "beta": 0.7438635187567126,
+            "beta_se": 0.2147125840795601,
+            "n": 10,
+            "eq41_means": "c=1, beta=2"
+          },
+          "median_rel_err_lambda_pred_window": null,
+          "median_rel_err_lambda_pred_ridge": 0.9349200907151797,
+          "pointwise_ridge_amplitude": {
+            "n_points": 135,
+            "n_non_collapsed": 58,
+            "median_rel_err_non_collapsed": 0.6965167293394412,
+            "frac_within_10pct_non_collapsed": 0.10344827586206896
+          }
+        }
+      },
+      "mlp_forced_trap": {
+        "n": 10,
+        "amp_ratio": [
+          0.0030133054916190384,
+          0.0029163667856536837,
+          0.0025506613138671923,
+          0.0027833385524989366,
+          0.002139876175919495,
+          0.0034603502272940755,
+          0.005296409668784934,
+          0.01610417239698887,
+          0.007021793828382522,
+          0.002380674741078098
+        ],
+        "caps": [
+          [
+            32,
+            6000
+          ],
+          [
+            32,
+            6000
+          ],
+          [
+            32,
+            6000
+          ],
+          [
+            32,
+            6000
+          ],
+          [
+            32,
+            6000
+          ],
+          [
+            64,
+            10000
+          ],
+          [
+            64,
+            10000
+          ],
+          [
+            64,
+            10000
+          ],
+          [
+            64,
+            10000
+          ],
+          [
+            64,
+            10000
+          ]
+        ],
+        "seeds": [
+          42,
+          123,
+          456,
+          789,
+          1024,
+          123,
+          42,
+          456,
+          789,
+          1024
+        ],
+        "R_floor": [
+          36.866817751058576,
+          46.17998680056382,
+          42.798945464537304,
+          56.65960503195698,
+          146.3738500570981,
+          68.63591797171193,
+          18.375945801761222,
+          14.26516955930791,
+          31.483294727208218,
+          47.73799133602689
+        ]
+      }
     },
     "d_literature_stop_rule": {
       "status": "NOT TRIGGERED",
@@ -56,10 +234,10 @@
     }
   },
   "provenance": {
-    "git_commit": "unknown",
-    "timestamp_utc": "2026-10-11T13:52:48Z",
+    "git_commit": "31c07e59cefbce51de80a0641ea834e9fcdf40d5",
+    "timestamp_utc": "2026-10-11T22:31:41Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 28.0859375,
+    "peak_cpu_memory_mb": 28.42578125,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

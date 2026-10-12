@@ -1,0 +1,45 @@
+{
+  "name": "gates/G1",
+  "seed": null,
+  "config": {},
+  "payload": {
+    "a_freefree_timoshenko": {
+      "status": "PASS",
+      "max_rel_err": 0.003621521698618646,
+      "threshold": 0.005
+    },
+    "b_energy_balance": {
+      "status": "PASS",
+      "max_rel_residual": 6.706419387351358e-11,
+      "threshold": 1e-06
+    },
+    "c_fd_vs_td": {
+      "status": "PASS",
+      "max_rel_l2": 1.7537853685282764e-06,
+      "threshold": 0.001,
+      "cases": [
+        "nominal_loaded",
+        "soft_damped_empty",
+        "stiff_light_mid"
+      ]
+    },
+    "p1_6_identifiability_warning": {
+      "status": "WARNING: G3 infeasible as configured",
+      "crb_rel_std_kB0": 35.505911573419986,
+      "crb_rel_std_cB": 37519.826634717116,
+      "max_dlogP_dlogkB0": 0.0019824089800835054,
+      "max_dlogP_dlogcB": 3.3626372797357362e-06,
+      "forcing_max_hz": 28.989971419315612
+    }
+  },
+  "provenance": {
+    "git_commit": "48907310cb7e9a3c94cf56276cad38cfb10d89dc",
+    "timestamp_utc": "2026-10-11T18:11:39Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 28.03515625,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

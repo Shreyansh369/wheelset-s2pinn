@@ -1,0 +1,641 @@
+{
+  "name": "p1/bound_speed",
+  "seed": null,
+  "config": {
+    "band_hz": [
+      50.0,
+      700.0
+    ],
+    "fs": 2000.0,
+    "n_revs": 20,
+    "wim_sigma": 0.03,
+    "W_grid_t": [
+      5.5,
+      8.9,
+      12.3,
+      15.7,
+      19.1,
+      22.5
+    ],
+    "roughness_source": "ISO 3095:2013, 6.2.5, Figure 2 (reference-track rail roughness limit, dB re 1 um, one-third octave); values as transcribed in jmrplens/phonometry af9d770 (src/phonometry/environment/sources/rolling_stock_noise.py, REFERENCE_TRACK_ROUGHNESS_LIMIT_DB), equal to the 2007 TSI limit in EN 15610:2009 Annex B.9.2",
+    "kH0": 1400000000.0,
+    "kB0": 1000000000.0,
+    "cB": 5000.0,
+    "freq_grid_step_hz": 0.25,
+    "speed_sampling": "stratified quantiles of uniform distribution"
+  },
+  "payload": {
+    "rows": [
+      {
+        "mode": "discrete",
+        "speed_dist": "fixed_100",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.22018807197907928,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 0.0
+      },
+      {
+        "mode": "discrete",
+        "speed_dist": "fixed_100",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.13435456881266614,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 0.0
+      },
+      {
+        "mode": "discrete",
+        "speed_dist": "fixed_100",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.08181208032668084,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 0.0
+      },
+      {
+        "mode": "discrete",
+        "speed_dist": "fixed_100",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.22017302280095247,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 0.0
+      },
+      {
+        "mode": "discrete",
+        "speed_dist": "fixed_100",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.1343520520674494,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 0.0
+      },
+      {
+        "mode": "discrete",
+        "speed_dist": "fixed_100",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.08181140141813477,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 0.0
+      },
+      {
+        "mode": "discrete",
+        "speed_dist": "fixed_100",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.11057710267040706,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 1.2789769243681802e-14
+      },
+      {
+        "mode": "discrete",
+        "speed_dist": "fixed_100",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.09230128773597226,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 1.2789769243681802e-14
+      },
+      {
+        "mode": "discrete",
+        "speed_dist": "fixed_100",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.06727268025052208,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 1.2789769243681802e-14
+      },
+      {
+        "mode": "discrete",
+        "speed_dist": "fixed_100",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.11056973422590709,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 1.2789769243681802e-14
+      },
+      {
+        "mode": "discrete",
+        "speed_dist": "fixed_100",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.09229737469007851,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 1.2789769243681802e-14
+      },
+      {
+        "mode": "discrete",
+        "speed_dist": "fixed_100",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.06727145744364803,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 1.2789769243681802e-14
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "fixed_100",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.0035851055511918143,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 0.0
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "fixed_100",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.0035844383697034216,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 0.0
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "fixed_100",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.003582440486730544,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 0.0
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "fixed_100",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.0035733604260344744,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 0.0
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "fixed_100",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.0035727014050751897,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 0.0
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "fixed_100",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.003570727904169009,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 0.0
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "fixed_100",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.0018075715383933557,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 1.2789769243681802e-14
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "fixed_100",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.0018074856307905567,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 1.2789769243681802e-14
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "fixed_100",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.0018072280275902965,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 1.2789769243681802e-14
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "fixed_100",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.0018016814878682552,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 1.2789769243681802e-14
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "fixed_100",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.0018015966270547806,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 1.2789769243681802e-14
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "fixed_100",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.0018013421609905202,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 1.2789769243681802e-14
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_95_105",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.0031534734557477984,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 2.886173937932363
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_95_105",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.003153098331105657,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 2.886173937932363
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_95_105",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.003151974542923816,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 2.886173937932363
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_95_105",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.0031425541914066497,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 2.886173937932363
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_95_105",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.003142183580945772,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 2.886173937932363
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_95_105",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.0031410732892860624,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 2.886173937932363
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_95_105",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.00158346635551187,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 2.886715261330774
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_95_105",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.0015834187565727552,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 2.886715261330774
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_95_105",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.001583276010432779,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 2.886715261330774
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_95_105",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.0015780577357689752,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 2.886715261330774
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_95_105",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.0015780107027893765,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 2.886715261330774
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_95_105",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.0015778696530688423,
+        "n_bands_seen": 11,
+        "speed_std_kmh": 2.886715261330774
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_80_110",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.002297467511320709,
+        "n_bands_seen": 12,
+        "speed_std_kmh": 8.658521813797085
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_80_110",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.002297326776205854,
+        "n_bands_seen": 12,
+        "speed_std_kmh": 8.658521813797085
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_80_110",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.002296906309754656,
+        "n_bands_seen": 12,
+        "speed_std_kmh": 8.658521813797085
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_80_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.0022872901567469483,
+        "n_bands_seen": 12,
+        "speed_std_kmh": 8.658521813797085
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_80_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.0022871515886887977,
+        "n_bands_seen": 12,
+        "speed_std_kmh": 8.658521813797085
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_80_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.0022867375362284957,
+        "n_bands_seen": 12,
+        "speed_std_kmh": 8.658521813797085
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_80_110",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.0011507470277044777,
+        "n_bands_seen": 12,
+        "speed_std_kmh": 8.660145783992322
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_80_110",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.0011507291423443647,
+        "n_bands_seen": 12,
+        "speed_std_kmh": 8.660145783992322
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_80_110",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.0011506755419867986,
+        "n_bands_seen": 12,
+        "speed_std_kmh": 8.660145783992322
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_80_110",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.001145703599753318,
+        "n_bands_seen": 12,
+        "speed_std_kmh": 8.660145783992322
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_80_110",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.0011456859924327421,
+        "n_bands_seen": 12,
+        "speed_std_kmh": 8.660145783992322
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_80_110",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.0011456332234253987,
+        "n_bands_seen": 12,
+        "speed_std_kmh": 8.660145783992322
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_60_110",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.002041091567197733,
+        "n_bands_seen": 13,
+        "speed_std_kmh": 14.43086968966181
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_60_110",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.0020410112768464383,
+        "n_bands_seen": 13,
+        "speed_std_kmh": 14.43086968966181
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_60_110",
+        "N": 50,
+        "snr_db": 20.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.0020407713023193248,
+        "n_bands_seen": 13,
+        "speed_std_kmh": 14.43086968966181
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_60_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.002028820541097086,
+        "n_bands_seen": 13,
+        "speed_std_kmh": 14.43086968966181
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_60_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.002028741998600862,
+        "n_bands_seen": 13,
+        "speed_std_kmh": 14.43086968966181
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_60_110",
+        "N": 50,
+        "snr_db": 40.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.0020285072361645503,
+        "n_bands_seen": 13,
+        "speed_std_kmh": 14.43086968966181
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_60_110",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.0010213707518313703,
+        "n_bands_seen": 13,
+        "speed_std_kmh": 14.433576306653872
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_60_110",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.001021360716203272,
+        "n_bands_seen": 13,
+        "speed_std_kmh": 14.433576306653872
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_60_110",
+        "N": 200,
+        "snr_db": 20.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.0010213306376858197,
+        "n_bands_seen": 13,
+        "speed_std_kmh": 14.433576306653872
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_60_110",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": null,
+        "crb_rel_kB0": 0.001015299589242136,
+        "n_bands_seen": 13,
+        "speed_std_kmh": 14.433576306653872
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_60_110",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": 4.0,
+        "crb_rel_kB0": 0.001015289773761168,
+        "n_bands_seen": 13,
+        "speed_std_kmh": 14.433576306653872
+      },
+      {
+        "mode": "narrowband",
+        "speed_dist": "uniform_60_110",
+        "N": 200,
+        "snr_db": 40.0,
+        "band_prior_db": 2.0,
+        "crb_rel_kB0": 0.0010152603546723972,
+        "n_bands_seen": 13,
+        "speed_std_kmh": 14.433576306653872
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "3080f438d7e317c48edd84d7cb28b44723653bc5",
+    "timestamp_utc": "2026-10-11T19:11:48Z",
+    "wall_seconds": 13.217683352000677,
+    "peak_cpu_memory_mb": 58.72265625,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

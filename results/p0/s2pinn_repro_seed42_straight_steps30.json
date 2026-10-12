@@ -1,0 +1,188 @@
+{
+  "name": "p0/s2pinn_repro_seed42_straight_steps30",
+  "seed": 42,
+  "config": {
+    "model": {
+      "spatial": {
+        "n_atoms": 256,
+        "init_sigma": 0.15,
+        "use_warp": true,
+        "warp_hidden": 64,
+        "warp_eps": 0.1
+      },
+      "temporal": {
+        "n_freq": 8
+      },
+      "stochastic": {
+        "R": 5,
+        "p": 3,
+        "dist": "gaussian"
+      },
+      "cp": {
+        "rank": 16,
+        "init": "normal"
+      }
+    },
+    "pde": {
+      "name": "stochastic_diffusion_2d",
+      "domain": {
+        "x_min": -1.0,
+        "x_max": 1.0,
+        "y_min": -1.0,
+        "y_max": 1.0,
+        "t_min": 0.0,
+        "t_max": 1.0
+      },
+      "kl": {
+        "n_terms": 5,
+        "sigma": 1.0,
+        "corr_length": 1.0
+      }
+    },
+    "training": {
+      "steps": 30,
+      "lr": 0.001,
+      "optimizer": "adam",
+      "amp": "none",
+      "grad_accum": 1,
+      "colloc": 32768,
+      "bc": 32768,
+      "ic": 32768,
+      "gram": 4096,
+      "resample_every": 1,
+      "w_pde": 1.0,
+      "w_proj": 1.0,
+      "w_bc": 1.0,
+      "w_ic": 1.0,
+      "w_orth": 1.0,
+      "w_fac_orth": 0.1,
+      "normalize_cp_every": 1
+    },
+    "eval": {
+      "grid_res": 64,
+      "t_eval": [
+        0.0,
+        0.5,
+        1.0
+      ],
+      "z_eval": [
+        {
+          "name": "Z0",
+          "values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "name": "Z_e1",
+          "values": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "name": "Z_e2",
+          "values": [
+            0.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "eval_every": 10,
+      "save_checkpoint": true,
+      "uq": {
+        "enabled": true,
+        "n_probe": 2048,
+        "n_z_moment": 1024,
+        "n_z_interval": 1024,
+        "n_z_test": 1024,
+        "alpha": 0.1,
+        "batch_limit": 262144
+      }
+    },
+    "logging": {
+      "use_wandb": false,
+      "project": "s2pinn",
+      "entity": null,
+      "log_every": 10
+    },
+    "seed": 42
+  },
+  "payload": {
+    "full_paper_budget": false,
+    "device": "cpu",
+    "runner": "resumable replay of spinn.train.train loop",
+    "s2pinn_commit": "1cd6fa2973ef012900683b8ef3bb94f23f1ade86",
+    "final_metrics": {
+      "eval_Z0_t0.0": 1.0662308931350708,
+      "eval_Z0_t0.5": 1.0019198656082153,
+      "eval_Z0_t1.0": 1.1772435903549194,
+      "eval_Z_e1_t0.0": 1.0321154594421387,
+      "eval_Z_e1_t0.5": 1.0185273885726929,
+      "eval_Z_e1_t1.0": 1.1535307168960571,
+      "eval_Z_e2_t0.0": 1.100379228591919,
+      "eval_Z_e2_t0.5": 1.0428837537765503,
+      "eval_Z_e2_t1.0": 1.2596838474273682,
+      "uq/mean_rel_l2": 0.9955707788467407,
+      "uq/var_rel_l2": 8.737553596496582,
+      "uq/coverage": 0.7406764030456543,
+      "uq/coverage_50": 0.3444533348083496,
+      "uq/sharpness_50": 0.2470717430114746,
+      "uq/coverage_80": 0.5894145965576172,
+      "uq/sharpness_80": 0.5149091482162476,
+      "uq/coverage_90": 0.7406764030456543,
+      "uq/sharpness_90": 0.7476555109024048,
+      "uq/coverage_95": 0.8683791160583496,
+      "uq/sharpness_95": 1.0503119230270386,
+      "uq/calibration_error": 0.15176913738250733
+    },
+    "best_metrics_during_training": {
+      "eval_Z0_t0.0": 1.0662308931350708,
+      "eval_Z0_t0.5": 1.0019198656082153,
+      "eval_Z0_t1.0": 1.1772435903549194,
+      "eval_Z_e1_t0.0": 1.0321154594421387,
+      "eval_Z_e1_t0.5": 1.0185273885726929,
+      "eval_Z_e1_t1.0": 1.1535307168960571,
+      "eval_Z_e2_t0.0": 1.100379228591919,
+      "eval_Z_e2_t0.5": 1.0428837537765503,
+      "eval_Z_e2_t1.0": 1.2596838474273682,
+      "uq/mean_rel_l2": 0.9996480345726013,
+      "uq/var_rel_l2": 8.20069408416748,
+      "uq/coverage": 0.7383794784545898,
+      "uq/coverage_50": 0.32960939407348633,
+      "uq/sharpness_50": 0.23857948184013367,
+      "uq/coverage_80": 0.5798707008361816,
+      "uq/sharpness_80": 0.49430808424949646,
+      "uq/coverage_90": 0.7383794784545898,
+      "uq/sharpness_90": 0.7134982347488403,
+      "uq/coverage_95": 0.8546314239501953,
+      "uq/sharpness_95": 0.9829524159431458,
+      "uq/calibration_error": 0.0559086561203003
+    },
+    "paper_mean_rel_l2": 0.00371,
+    "paper_var_rel_l2": 0.0044,
+    "g0_threshold_mean_rel_l2": 0.00742,
+    "g0_pass": false,
+    "ratio_to_paper": 268.3479188266147,
+    "note": "CPU run: wall time and memory are not comparable with the paper's T4 figures"
+  },
+  "provenance": {
+    "git_commit": "3b0f25f2d7858feaeaa7833f01447a45a558d964-dirty",
+    "timestamp_utc": "2026-10-11T14:24:58Z",
+    "wall_seconds": 543.9118510210001,
+    "peak_cpu_memory_mb": 2540.11328125,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

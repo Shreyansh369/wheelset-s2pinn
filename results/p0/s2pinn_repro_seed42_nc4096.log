@@ -1,0 +1,241 @@
+0 total=2.1758e+03 pde=2.0136e+03 proj=1.6155e+02 bc=1.2361e-01 ic=5.3046e-01 reg=3.7922e-03 wall_h=0.000
+100 total=2.8529e+02 pde=2.3885e+02 proj=4.6081e+01 bc=3.7142e-02 ic=3.2217e-01 reg=4.0372e-03 wall_h=0.025
+200 total=1.5160e+02 pde=1.3332e+02 proj=1.7957e+01 bc=2.1686e-02 ic=2.9342e-01 reg=4.2168e-03 wall_h=0.048
+300 total=1.2481e+02 pde=1.0983e+02 proj=1.4682e+01 bc=1.6469e-02 ic=2.7621e-01 reg=4.3410e-03 wall_h=0.070
+400 total=1.0515e+02 pde=9.5629e+01 proj=9.2375e+00 bc=1.2158e-02 ic=2.6544e-01 reg=4.4282e-03 wall_h=0.092
+EVAL 500 mean_rel_l2=9.5065e-01 var_rel_l2=1.9635e+00
+500 total=7.6764e+01 pde=7.1546e+01 proj=4.9397e+00 bc=9.7277e-03 ic=2.6463e-01 reg=4.5102e-03 wall_h=0.118
+600 total=8.2211e+01 pde=7.6364e+01 proj=5.5785e+00 bc=7.8057e-03 ic=2.5589e-01 reg=4.5945e-03 wall_h=0.138
+700 total=6.7063e+01 pde=6.4259e+01 proj=2.5428e+00 bc=7.2835e-03 ic=2.4943e-01 reg=4.7016e-03 wall_h=0.160
+800 total=5.8671e+01 pde=5.4232e+01 proj=4.1900e+00 bc=6.9244e-03 ic=2.3646e-01 reg=4.8688e-03 wall_h=0.181
+900 total=5.5223e+01 pde=5.1231e+01 proj=3.7569e+00 bc=6.7102e-03 ic=2.2251e-01 reg=5.1278e-03 wall_h=0.203
+EVAL 1000 mean_rel_l2=6.6930e-01 var_rel_l2=2.4510e+00
+1000 total=4.3944e+01 pde=4.0275e+01 proj=3.4602e+00 bc=8.8400e-03 ic=1.9397e-01 reg=5.4883e-03 wall_h=0.229
+1100 total=2.6021e+01 pde=2.4399e+01 proj=1.4544e+00 bc=8.5432e-03 ic=1.5300e-01 reg=5.9185e-03 wall_h=0.251
+1200 total=2.3171e+01 pde=2.0664e+01 proj=2.3703e+00 bc=1.1108e-02 ic=1.1881e-01 reg=6.2944e-03 wall_h=0.272
+1300 total=1.3772e+01 pde=1.2415e+01 proj=1.2547e+00 bc=1.3953e-02 ic=8.1940e-02 reg=6.5986e-03 wall_h=0.293
+1400 total=1.0677e+01 pde=9.3575e+00 proj=1.2382e+00 bc=1.5941e-02 ic=5.8250e-02 reg=6.8216e-03 wall_h=0.315
+EVAL 1500 mean_rel_l2=2.3575e-01 var_rel_l2=1.3509e+00
+1500 total=7.9497e+00 pde=6.9764e+00 proj=9.0778e-01 bc=1.7250e-02 ic=4.1280e-02 reg=6.9866e-03 wall_h=0.342
+1600 total=8.0885e+00 pde=6.1539e+00 proj=1.8782e+00 bc=1.8135e-02 ic=3.1125e-02 reg=7.1285e-03 wall_h=0.366
+1700 total=5.1874e+00 pde=3.9678e+00 proj=1.1701e+00 bc=1.9244e-02 ic=2.3085e-02 reg=7.2497e-03 wall_h=0.388
+1800 total=3.6096e+00 pde=3.2133e+00 proj=3.5107e-01 bc=1.9834e-02 ic=1.8069e-02 reg=7.3489e-03 wall_h=0.410
+1900 total=3.8509e+00 pde=2.9690e+00 proj=8.3883e-01 bc=2.0194e-02 ic=1.5479e-02 reg=7.4217e-03 wall_h=0.430
+EVAL 2000 mean_rel_l2=2.5704e-01 var_rel_l2=5.1909e-01
+2000 total=2.3374e+00 pde=2.0111e+00 proj=2.8469e-01 bc=2.0762e-02 ic=1.3320e-02 reg=7.4930e-03 wall_h=0.456
+2100 total=3.2389e+00 pde=2.8121e+00 proj=3.8454e-01 bc=2.1382e-02 ic=1.3257e-02 reg=7.5609e-03 wall_h=0.477
+2200 total=2.3381e+00 pde=2.0511e+00 proj=2.4679e-01 bc=2.1300e-02 ic=1.1344e-02 reg=7.6337e-03 wall_h=0.498
+2300 total=1.4551e+00 pde=1.3464e+00 proj=6.8872e-02 bc=2.1537e-02 ic=1.0600e-02 reg=7.6860e-03 wall_h=0.519
+2400 total=2.5055e+00 pde=1.8755e+00 proj=5.9058e-01 bc=2.1373e-02 ic=1.0293e-02 reg=7.7360e-03 wall_h=0.538
+EVAL 2500 mean_rel_l2=2.6821e-01 var_rel_l2=4.7925e-01
+2500 total=1.2864e+00 pde=1.1493e+00 proj=9.7405e-02 bc=2.1877e-02 ic=1.0104e-02 reg=7.7798e-03 wall_h=0.563
+2600 total=1.6771e+00 pde=1.3511e+00 proj=2.8598e-01 bc=2.1867e-02 ic=1.0328e-02 reg=7.8274e-03 wall_h=0.582
+2700 total=1.0337e+00 pde=8.9557e-01 proj=9.8182e-02 bc=2.2038e-02 ic=1.0020e-02 reg=7.8657e-03 wall_h=0.602
+2800 total=1.1069e+00 pde=9.4576e-01 proj=1.2180e-01 bc=2.1611e-02 ic=9.8783e-03 reg=7.8975e-03 wall_h=0.622
+2900 total=1.1644e+00 pde=9.4181e-01 proj=1.8295e-01 bc=2.1840e-02 ic=9.8332e-03 reg=7.9376e-03 wall_h=0.642
+EVAL 3000 mean_rel_l2=2.7545e-01 var_rel_l2=4.5458e-01
+3000 total=8.6936e-01 pde=7.2702e-01 proj=1.0197e-01 bc=2.2165e-02 ic=1.0239e-02 reg=7.9711e-03 wall_h=0.666
+3100 total=8.7704e-01 pde=7.0223e-01 proj=1.3498e-01 bc=2.1583e-02 ic=1.0241e-02 reg=7.9975e-03 wall_h=0.685
+3200 total=6.6841e-01 pde=5.3214e-01 proj=9.5917e-02 bc=2.1639e-02 ic=1.0691e-02 reg=8.0229e-03 wall_h=0.706
+3300 total=6.8211e-01 pde=5.6094e-01 proj=8.0409e-02 bc=2.1704e-02 ic=1.1009e-02 reg=8.0447e-03 wall_h=0.726
+3400 total=8.7071e-01 pde=6.9458e-01 proj=1.3486e-01 bc=2.1901e-02 ic=1.1303e-02 reg=8.0726e-03 wall_h=0.748
+EVAL 3500 mean_rel_l2=2.7925e-01 var_rel_l2=4.3907e-01
+3500 total=3.5782e+00 pde=1.7477e+00 proj=1.7884e+00 bc=2.2086e-02 ic=1.1925e-02 reg=8.0909e-03 wall_h=0.777
+3600 total=5.0950e-01 pde=3.9043e-01 proj=7.7336e-02 bc=2.1774e-02 ic=1.1835e-02 reg=8.1260e-03 wall_h=0.797
+3700 total=5.0672e-01 pde=3.9687e-01 proj=6.8159e-02 bc=2.1577e-02 ic=1.1973e-02 reg=8.1468e-03 wall_h=0.818
+3800 total=4.2244e-01 pde=3.3560e-01 proj=4.4982e-02 bc=2.1246e-02 ic=1.2445e-02 reg=8.1665e-03 wall_h=0.840
+3900 total=3.7549e-01 pde=3.0517e-01 proj=2.8896e-02 bc=2.0799e-02 ic=1.2442e-02 reg=8.1855e-03 wall_h=0.870
+EVAL 4000 mean_rel_l2=2.7582e-01 var_rel_l2=4.1332e-01
+4000 total=3.3346e-01 pde=2.5451e-01 proj=3.7216e-02 bc=2.0909e-02 ic=1.2622e-02 reg=8.2034e-03 wall_h=0.902
+4100 total=3.5900e-01 pde=2.7413e-01 proj=4.3243e-02 bc=2.0632e-02 ic=1.2769e-02 reg=8.2233e-03 wall_h=0.940
+4200 total=5.1573e-01 pde=3.5109e-01 proj=1.2342e-01 bc=1.9985e-02 ic=1.2997e-02 reg=8.2434e-03 wall_h=0.960
+4300 total=2.9326e-01 pde=2.1914e-01 proj=3.2983e-02 bc=2.0019e-02 ic=1.2864e-02 reg=8.2584e-03 wall_h=0.980
+4400 total=2.4259e-01 pde=1.8641e-01 proj=1.5150e-02 bc=1.9793e-02 ic=1.2957e-02 reg=8.2757e-03 wall_h=1.000
+EVAL 4500 mean_rel_l2=2.6647e-01 var_rel_l2=3.9263e-01
+4500 total=2.5804e-01 pde=1.9846e-01 proj=1.8670e-02 bc=1.9475e-02 ic=1.3134e-02 reg=8.2965e-03 wall_h=1.024
+4600 total=2.4133e-01 pde=1.8486e-01 proj=1.6209e-02 bc=1.9051e-02 ic=1.2898e-02 reg=8.3083e-03 wall_h=1.045
+4700 total=1.7604e+00 pde=1.5245e+00 proj=1.9356e-01 bc=1.9729e-02 ic=1.4188e-02 reg=8.4345e-03 wall_h=1.065
+4800 total=4.6003e-01 pde=3.8354e-01 proj=3.6063e-02 bc=1.8667e-02 ic=1.3220e-02 reg=8.5417e-03 wall_h=1.085
+4900 total=3.1911e-01 pde=2.3929e-01 proj=4.1087e-02 bc=1.7764e-02 ic=1.2398e-02 reg=8.5748e-03 wall_h=1.105
+EVAL 5000 mean_rel_l2=2.4319e-01 var_rel_l2=3.5926e-01
+5000 total=2.8764e-01 pde=2.2305e-01 proj=2.6343e-02 bc=1.7402e-02 ic=1.2231e-02 reg=8.6124e-03 wall_h=1.128
+5100 total=1.8817e-01 pde=1.3652e-01 proj=1.4061e-02 bc=1.7235e-02 ic=1.1706e-02 reg=8.6443e-03 wall_h=1.147
+5200 total=2.8370e-01 pde=2.1771e-01 proj=2.9586e-02 bc=1.6403e-02 ic=1.1336e-02 reg=8.6702e-03 wall_h=1.166
+5300 total=1.7689e-01 pde=1.1947e-01 proj=2.2067e-02 bc=1.5971e-02 ic=1.0694e-02 reg=8.6841e-03 wall_h=1.186
+5400 total=1.5373e-01 pde=1.0571e-01 proj=1.3701e-02 bc=1.5393e-02 ic=1.0224e-02 reg=8.6955e-03 wall_h=1.206
+EVAL 5500 mean_rel_l2=2.1552e-01 var_rel_l2=3.1424e-01
+5500 total=2.1535e-01 pde=1.6699e-01 proj=1.4967e-02 bc=1.4680e-02 ic=1.0006e-02 reg=8.7059e-03 wall_h=1.237
+5600 total=1.5156e-01 pde=9.6001e-02 proj=2.3280e-02 bc=1.4196e-02 ic=9.3710e-03 reg=8.7144e-03 wall_h=1.305
+5700 total=1.5437e-01 pde=9.2481e-02 proj=3.0575e-02 bc=1.3805e-02 ic=8.7933e-03 reg=8.7206e-03 wall_h=1.325
+5800 total=1.3718e-01 pde=9.1523e-02 proj=1.4712e-02 bc=1.3345e-02 ic=8.8676e-03 reg=8.7302e-03 wall_h=1.344
+5900 total=1.4516e-01 pde=8.7398e-02 proj=2.8177e-02 bc=1.2531e-02 ic=8.3159e-03 reg=8.7375e-03 wall_h=1.366
+EVAL 6000 mean_rel_l2=2.0032e-01 var_rel_l2=2.8497e-01
+6000 total=1.1500e-01 pde=7.3896e-02 proj=1.1892e-02 bc=1.2485e-02 ic=7.9863e-03 reg=8.7441e-03 wall_h=1.389
+6100 total=1.2739e-01 pde=8.3802e-02 proj=1.5239e-02 bc=1.1939e-02 ic=7.6575e-03 reg=8.7511e-03 wall_h=1.407
+6200 total=9.5136e-02 pde=6.1719e-02 proj=5.7495e-03 bc=1.1501e-02 ic=7.4137e-03 reg=8.7531e-03 wall_h=1.427
+6300 total=2.1000e+00 pde=8.2685e-01 proj=1.2461e+00 bc=1.1085e-02 ic=7.1566e-03 reg=8.7594e-03 wall_h=1.446
+6400 total=2.1099e-01 pde=1.5547e-01 proj=2.9383e-02 bc=1.0708e-02 ic=6.6473e-03 reg=8.7801e-03 wall_h=1.465
+EVAL 6500 mean_rel_l2=1.8269e-01 var_rel_l2=4.2611e-01
+6500 total=9.2559e-01 pde=7.5229e-01 proj=1.4440e-01 bc=1.1171e-02 ic=8.8707e-03 reg=8.8500e-03 wall_h=1.489
+6600 total=2.4472e-01 pde=1.9969e-01 proj=1.9469e-02 bc=9.7993e-03 ic=6.8863e-03 reg=8.8760e-03 wall_h=1.508
+6700 total=1.1985e-01 pde=8.7542e-02 proj=8.4391e-03 bc=9.0532e-03 ic=5.9250e-03 reg=8.8911e-03 wall_h=1.528
+6800 total=9.9985e-02 pde=7.1983e-02 proj=4.9977e-03 bc=8.6219e-03 ic=5.4843e-03 reg=8.8984e-03 wall_h=1.547
+6900 total=7.8098e-02 pde=5.0358e-02 proj=6.1009e-03 bc=7.9653e-03 ic=4.7691e-03 reg=8.9050e-03 wall_h=1.566
+EVAL 7000 mean_rel_l2=1.4578e-01 var_rel_l2=1.9537e-01
+7000 total=9.2709e-02 pde=6.1291e-02 proj=9.6025e-03 bc=8.2126e-03 ic=4.6940e-03 reg=8.9096e-03 wall_h=1.589
+7100 total=9.0438e-02 pde=5.1768e-02 proj=1.8193e-02 bc=7.4338e-03 ic=4.1359e-03 reg=8.9068e-03 wall_h=1.608
+7200 total=6.1023e-02 pde=3.6600e-02 proj=4.6474e-03 bc=7.0351e-03 ic=3.8313e-03 reg=8.9100e-03 wall_h=1.627
+7300 total=8.2775e-02 pde=5.7964e-02 proj=5.7389e-03 bc=6.6990e-03 ic=3.4588e-03 reg=8.9135e-03 wall_h=1.646
+7400 total=1.5250e-01 pde=1.1350e-01 proj=2.0191e-02 bc=6.4518e-03 ic=3.4298e-03 reg=8.9211e-03 wall_h=1.666
+EVAL 7500 mean_rel_l2=1.1757e-01 var_rel_l2=1.4480e-01
+7500 total=5.0568e-02 pde=2.9605e-02 proj=2.6900e-03 bc=6.2499e-03 ic=3.0994e-03 reg=8.9234e-03 wall_h=1.690
+7600 total=6.8298e-02 pde=4.0329e-02 proj=1.0435e-02 bc=5.7843e-03 ic=2.8343e-03 reg=8.9165e-03 wall_h=1.711
+7700 total=4.9143e-02 pde=2.8770e-02 proj=3.0496e-03 bc=5.7074e-03 ic=2.7068e-03 reg=8.9094e-03 wall_h=1.731
+7800 total=5.4468e-02 pde=3.2736e-02 proj=4.9581e-03 bc=5.3391e-03 ic=2.5331e-03 reg=8.9013e-03 wall_h=1.764
+7900 total=4.9839e-02 pde=2.8819e-02 proj=4.6277e-03 bc=5.1842e-03 ic=2.3096e-03 reg=8.8979e-03 wall_h=1.796
+EVAL 8000 mean_rel_l2=1.0604e-01 var_rel_l2=1.3256e-01
+8000 total=4.1729e-02 pde=2.4147e-02 proj=1.7060e-03 bc=4.8218e-03 ic=2.1627e-03 reg=8.8914e-03 wall_h=1.823
+8100 total=9.6194e-02 pde=4.5920e-02 proj=3.4811e-02 bc=4.5641e-03 ic=2.0097e-03 reg=8.8899e-03 wall_h=1.843
+8200 total=1.2515e-01 pde=9.5263e-02 proj=1.4594e-02 bc=4.4892e-03 ic=1.9249e-03 reg=8.8819e-03 wall_h=1.863
+8300 total=3.9200e-02 pde=2.0756e-02 proj=3.3653e-03 bc=4.3409e-03 ic=1.8650e-03 reg=8.8731e-03 wall_h=1.882
+8400 total=3.1100e-02 pde=1.5492e-02 proj=1.0234e-03 bc=4.0522e-03 ic=1.6667e-03 reg=8.8652e-03 wall_h=1.900
+EVAL 8500 mean_rel_l2=8.9460e-02 var_rel_l2=1.0495e-01
+8500 total=3.3091e-02 pde=1.7451e-02 proj=1.4073e-03 bc=3.8323e-03 ic=1.5440e-03 reg=8.8567e-03 wall_h=1.928
+8600 total=3.1549e-02 pde=1.6274e-02 proj=1.4020e-03 bc=3.6104e-03 ic=1.4140e-03 reg=8.8483e-03 wall_h=1.959
+8700 total=3.3016e-02 pde=1.7899e-02 proj=1.4753e-03 bc=3.4578e-03 ic=1.3462e-03 reg=8.8377e-03 wall_h=1.990
+8800 total=2.9651e-02 pde=1.3975e-02 proj=2.2571e-03 bc=3.3266e-03 ic=1.2657e-03 reg=8.8267e-03 wall_h=2.009
+8900 total=3.1188e-02 pde=1.6511e-02 proj=1.5275e-03 bc=3.1334e-03 ic=1.1985e-03 reg=8.8176e-03 wall_h=2.029
+EVAL 9000 mean_rel_l2=7.3317e-02 var_rel_l2=8.2268e-02
+9000 total=4.6568e-02 pde=2.7043e-02 proj=6.5547e-03 bc=3.0033e-03 ic=1.1669e-03 reg=8.8003e-03 wall_h=2.055
+9100 total=2.9519e-02 pde=1.4958e-02 proj=2.0662e-03 bc=2.7129e-03 ic=9.9013e-04 reg=8.7920e-03 wall_h=2.074
+9200 total=4.5720e-02 pde=3.0349e-02 proj=2.8945e-03 bc=2.6304e-03 ic=1.0692e-03 reg=8.7778e-03 wall_h=2.093
+9300 total=3.1113e-02 pde=1.7593e-02 proj=1.3854e-03 bc=2.4618e-03 ic=9.0309e-04 reg=8.7698e-03 wall_h=2.111
+9400 total=3.1093e-02 pde=1.7691e-02 proj=1.5355e-03 bc=2.2848e-03 ic=8.2347e-04 reg=8.7589e-03 wall_h=2.128
+EVAL 9500 mean_rel_l2=6.0942e-02 var_rel_l2=6.3547e-02
+9500 total=3.0427e-02 pde=1.6038e-02 proj=2.7387e-03 bc=2.1301e-03 ic=7.7658e-04 reg=8.7436e-03 wall_h=2.151
+9600 total=2.3877e-02 pde=1.1600e-02 proj=8.8508e-04 bc=1.9559e-03 ic=7.0811e-04 reg=8.7280e-03 wall_h=2.169
+9700 total=2.8088e-02 pde=1.4078e-02 proj=2.7973e-03 bc=1.8509e-03 ic=6.4880e-04 reg=8.7126e-03 wall_h=2.191
+9800 total=2.1011e-02 pde=9.3043e-03 proj=6.5807e-04 bc=1.7338e-03 ic=6.2001e-04 reg=8.6948e-03 wall_h=2.210
+9900 total=3.9120e-02 pde=2.4499e-02 proj=3.7614e-03 bc=1.5966e-03 ic=5.9164e-04 reg=8.6708e-03 wall_h=2.227
+EVAL 10000 mean_rel_l2=4.9431e-02 var_rel_l2=4.6744e-02
+10000 total=4.1994e-02 pde=2.3503e-02 proj=7.8168e-03 bc=1.4796e-03 ic=5.3339e-04 reg=8.6614e-03 wall_h=2.253
+10100 total=2.1973e-02 pde=1.0498e-02 proj=1.0125e-03 bc=1.3540e-03 ic=4.7059e-04 reg=8.6386e-03 wall_h=2.286
+10200 total=2.5313e-02 pde=1.1770e-02 proj=3.2954e-03 bc=1.2088e-03 ic=4.1511e-04 reg=8.6230e-03 wall_h=2.318
+10300 total=2.1100e-02 pde=1.0034e-02 proj=9.4896e-04 bc=1.1239e-03 ic=3.9448e-04 reg=8.5992e-03 wall_h=2.502
+10400 total=2.0767e-02 pde=9.8696e-03 proj=8.8470e-04 bc=1.0651e-03 ic=3.6867e-04 reg=8.5789e-03 wall_h=2.532
+EVAL 10500 mean_rel_l2=3.8962e-02 var_rel_l2=4.3551e-02
+10500 total=1.7248e-02 pde=6.9966e-03 proj=4.0967e-04 bc=9.4928e-04 ic=3.3763e-04 reg=8.5544e-03 wall_h=2.571
+10600 total=2.7981e-02 pde=1.6835e-02 proj=1.4790e-03 bc=8.3958e-04 ic=3.0098e-04 reg=8.5268e-03 wall_h=2.601
+10700 total=3.1469e-02 pde=1.9553e-02 proj=2.3362e-03 bc=7.6412e-04 ic=3.0889e-04 reg=8.5070e-03 wall_h=2.632
+10800 total=2.6665e-02 pde=1.5021e-02 proj=2.1833e-03 bc=6.9982e-04 ic=2.8079e-04 reg=8.4809e-03 wall_h=2.676
+10900 total=2.0852e-02 pde=1.0530e-02 proj=9.1923e-04 bc=6.8192e-04 ic=2.6344e-04 reg=8.4577e-03 wall_h=2.706
+EVAL 11000 mean_rel_l2=3.3429e-02 var_rel_l2=3.5737e-02
+11000 total=3.4370e-02 pde=2.4304e-02 proj=7.8380e-04 bc=6.0878e-04 ic=2.4321e-04 reg=8.4305e-03 wall_h=2.745
+11100 total=1.9123e-01 pde=8.6031e-02 proj=9.5839e-02 bc=6.2365e-04 ic=2.5435e-04 reg=8.4777e-03 wall_h=2.775
+11200 total=1.1984e+01 pde=6.2268e+00 proj=5.7245e+00 bc=1.0518e-02 ic=1.3466e-02 reg=8.6599e-03 wall_h=2.806
+11300 total=3.0899e-01 pde=2.3618e-01 proj=3.6175e-02 bc=7.6962e-03 ic=2.0045e-02 reg=8.8965e-03 wall_h=2.836
+11400 total=1.1107e-01 pde=8.0747e-02 proj=9.5015e-03 bc=4.0449e-03 ic=7.8553e-03 reg=8.9175e-03 wall_h=2.866
+EVAL 11500 mean_rel_l2=1.0767e-01 var_rel_l2=1.5395e-01
+11500 total=6.3138e-02 pde=4.3226e-02 proj=5.4108e-03 bc=2.3547e-03 ic=3.2229e-03 reg=8.9234e-03 wall_h=2.906
+11600 total=4.1010e-02 pde=2.6103e-02 proj=3.1440e-03 bc=1.5270e-03 ic=1.3175e-03 reg=8.9181e-03 wall_h=2.937
+11700 total=3.2329e-02 pde=1.8176e-02 proj=3.3987e-03 bc=1.1687e-03 ic=6.8359e-04 reg=8.9027e-03 wall_h=2.967
+11800 total=2.7799e-02 pde=1.5964e-02 proj=1.5953e-03 bc=9.1127e-04 ic=4.3913e-04 reg=8.8893e-03 wall_h=2.997
+11900 total=2.2703e-02 pde=9.9807e-03 proj=2.7428e-03 bc=8.1452e-04 ic=2.9202e-04 reg=8.8725e-03 wall_h=3.027
+EVAL 12000 mean_rel_l2=3.1065e-02 var_rel_l2=3.5797e-02
+12000 total=1.8590e-02 pde=8.0530e-03 proj=7.4201e-04 bc=6.9547e-04 ic=2.4811e-04 reg=8.8514e-03 wall_h=3.067
+12100 total=1.6724e-02 pde=6.5725e-03 proj=4.7545e-04 bc=6.3373e-04 ic=2.1330e-04 reg=8.8289e-03 wall_h=3.097
+12200 total=1.8131e-02 pde=7.5809e-03 proj=9.9349e-04 bc=5.6276e-04 ic=1.9062e-04 reg=8.8032e-03 wall_h=3.126
+12300 total=1.5093e-02 pde=5.1858e-03 proj=4.7395e-04 bc=4.8402e-04 ic=1.6682e-04 reg=8.7821e-03 wall_h=3.155
+12400 total=1.6216e-02 pde=6.0112e-03 proj=8.7605e-04 bc=4.1767e-04 ic=1.5803e-04 reg=8.7531e-03 wall_h=3.184
+EVAL 12500 mean_rel_l2=2.5235e-02 var_rel_l2=2.8090e-02
+12500 total=1.6811e-02 pde=5.8940e-03 proj=1.6529e-03 bc=3.9517e-04 ic=1.4490e-04 reg=8.7245e-03 wall_h=3.222
+12600 total=1.3605e-02 pde=4.0912e-03 proj=3.3522e-04 bc=3.4870e-04 ic=1.3316e-04 reg=8.6963e-03 wall_h=3.251
+12700 total=1.4559e-01 pde=1.0620e-01 proj=3.0012e-02 bc=3.8553e-04 ic=3.1465e-04 reg=8.6759e-03 wall_h=3.281
+12800 total=3.5833e-02 pde=2.4063e-02 proj=2.6695e-03 bc=2.9006e-04 ic=1.5413e-04 reg=8.6557e-03 wall_h=3.310
+12900 total=1.5201e-02 pde=5.8386e-03 proj=3.4538e-04 bc=2.8237e-04 ic=1.1069e-04 reg=8.6238e-03 wall_h=3.339
+EVAL 13000 mean_rel_l2=2.1265e-02 var_rel_l2=2.3834e-02
+13000 total=1.3931e-02 pde=4.4230e-03 proj=5.4829e-04 bc=2.6311e-04 ic=1.0535e-04 reg=8.5916e-03 wall_h=3.378
+13100 total=1.1757e-02 pde=2.6952e-03 proj=1.7581e-04 bc=2.3137e-04 ic=9.6884e-05 reg=8.5572e-03 wall_h=3.407
+13200 total=1.4159e-02 pde=4.6456e-03 proj=6.7947e-04 bc=2.1173e-04 ic=1.0155e-04 reg=8.5208e-03 wall_h=3.437
+13300 total=1.1931e-02 pde=2.6575e-03 proj=5.0784e-04 bc=1.8803e-04 ic=9.3514e-05 reg=8.4843e-03 wall_h=3.466
+13400 total=1.1172e-02 pde=2.3084e-03 proj=1.4206e-04 bc=1.7763e-04 ic=9.6088e-05 reg=8.4480e-03 wall_h=3.496
+EVAL 13500 mean_rel_l2=1.6574e-02 var_rel_l2=1.9327e-02
+13500 total=1.3551e-02 pde=3.8603e-03 proj=1.0217e-03 bc=1.6203e-04 ic=9.8197e-05 reg=8.4089e-03 wall_h=3.535
+13600 total=1.1281e-02 pde=2.3859e-03 proj=2.8210e-04 bc=1.4382e-04 ic=9.4863e-05 reg=8.3739e-03 wall_h=3.563
+13700 total=1.0802e-02 pde=2.0859e-03 proj=1.4885e-04 bc=1.4083e-04 ic=8.9881e-05 reg=8.3370e-03 wall_h=3.591
+13800 total=1.1434e-02 pde=2.5104e-03 proj=4.2079e-04 bc=1.2768e-04 ic=7.8791e-05 reg=8.2968e-03 wall_h=3.620
+13900 total=1.0330e-02 pde=1.7258e-03 proj=1.4517e-04 bc=1.1815e-04 ic=8.3158e-05 reg=8.2575e-03 wall_h=3.648
+EVAL 14000 mean_rel_l2=1.3585e-02 var_rel_l2=1.6202e-02
+14000 total=1.0404e-02 pde=1.8906e-03 proj=1.0961e-04 bc=1.0741e-04 ic=7.8627e-05 reg=8.2173e-03 wall_h=3.687
+14100 total=1.0324e-02 pde=1.8373e-03 proj=1.2670e-04 bc=1.0231e-04 ic=8.0894e-05 reg=8.1766e-03 wall_h=3.715
+14200 total=9.7306e-03 pde=1.3006e-03 proj=1.1647e-04 bc=9.5848e-05 ic=8.1649e-05 reg=8.1360e-03 wall_h=3.744
+14300 total=1.0556e-02 pde=2.1322e-03 proj=1.6120e-04 bc=8.8602e-05 ic=7.8806e-05 reg=8.0954e-03 wall_h=3.773
+14400 total=1.1185e-02 pde=2.7211e-03 proj=2.4958e-04 bc=8.4595e-05 ic=7.7462e-05 reg=8.0518e-03 wall_h=3.803
+EVAL 14500 mean_rel_l2=1.0054e-02 var_rel_l2=1.3445e-02
+14500 total=1.0987e-02 pde=2.4126e-03 proj=4.0787e-04 bc=7.3882e-05 ic=8.2686e-05 reg=8.0102e-03 wall_h=3.841
+14600 total=9.5002e-03 pde=1.2942e-03 proj=9.1581e-05 bc=7.6438e-05 ic=7.1425e-05 reg=7.9666e-03 wall_h=3.869
+14700 total=9.7337e-03 pde=1.4430e-03 proj=2.1954e-04 bc=7.4754e-05 ic=7.2577e-05 reg=7.9239e-03 wall_h=3.898
+14800 total=9.5771e-03 pde=1.4694e-03 proj=7.9222e-05 bc=7.0715e-05 ic=7.6183e-05 reg=7.8815e-03 wall_h=3.926
+14900 total=9.2877e-03 pde=1.2190e-03 proj=9.0568e-05 bc=6.4428e-05 ic=7.6598e-05 reg=7.8372e-03 wall_h=3.954
+EVAL 15000 mean_rel_l2=1.1627e-02 var_rel_l2=1.5674e-02
+15000 total=9.8100e-03 pde=1.7538e-03 proj=1.2314e-04 bc=6.8953e-05 ic=6.9287e-05 reg=7.7948e-03 wall_h=3.990
+15100 total=9.0784e-03 pde=1.1068e-03 proj=9.1700e-05 bc=5.9725e-05 ic=6.9546e-05 reg=7.7506e-03 wall_h=4.019
+15200 total=1.8782e-02 pde=1.0051e-02 proj=8.1376e-04 bc=8.0426e-05 ic=9.5889e-05 reg=7.7414e-03 wall_h=4.048
+15300 total=1.0272e-02 pde=2.0166e-03 proj=4.3487e-04 bc=6.1945e-05 ic=5.6786e-05 reg=7.7016e-03 wall_h=4.077
+15400 total=1.1611e-02 pde=3.5500e-03 proj=2.7783e-04 bc=5.9677e-05 ic=6.5326e-05 reg=7.6585e-03 wall_h=4.105
+EVAL 15500 mean_rel_l2=8.7836e-03 var_rel_l2=9.6439e-03
+15500 total=9.2560e-03 pde=1.4744e-03 proj=5.1084e-05 bc=4.9871e-05 ic=6.2783e-05 reg=7.6179e-03 wall_h=4.139
+15600 total=1.0393e-02 pde=2.3157e-03 proj=3.8943e-04 bc=4.9533e-05 ic=6.3472e-05 reg=7.5747e-03 wall_h=4.168
+15700 total=8.5740e-03 pde=8.7375e-04 proj=5.7336e-05 bc=4.7852e-05 ic=6.1272e-05 reg=7.5338e-03 wall_h=4.195
+15800 total=8.6947e-03 pde=1.0110e-03 proj=9.2191e-05 bc=4.3261e-05 ic=5.7329e-05 reg=7.4909e-03 wall_h=4.222
+15900 total=8.5962e-03 pde=9.8219e-04 proj=5.8675e-05 bc=4.7122e-05 ic=5.9121e-05 reg=7.4491e-03 wall_h=4.249
+EVAL 16000 mean_rel_l2=8.3474e-03 var_rel_l2=1.2219e-02
+16000 total=8.6989e-03 pde=1.1267e-03 proj=6.8056e-05 bc=3.9109e-05 ic=5.7863e-05 reg=7.4071e-03 wall_h=4.283
+16100 total=8.9016e-03 pde=1.2915e-03 proj=1.5208e-04 bc=3.9154e-05 ic=5.4296e-05 reg=7.3645e-03 wall_h=4.311
+16200 total=1.1992e-02 pde=4.3451e-03 proj=2.2685e-04 bc=3.5743e-05 ic=5.8986e-05 reg=7.3251e-03 wall_h=4.339
+16300 total=8.3690e-03 pde=9.3312e-04 proj=5.9859e-05 bc=3.5662e-05 ic=5.6484e-05 reg=7.2839e-03 wall_h=4.366
+16400 total=8.3973e-03 pde=9.2611e-04 proj=1.3873e-04 bc=3.4232e-05 ic=5.6495e-05 reg=7.2418e-03 wall_h=4.393
+EVAL 16500 mean_rel_l2=1.0873e-02 var_rel_l2=1.1033e-02
+16500 total=1.4209e-02 pde=6.3105e-03 proj=6.0297e-04 bc=4.4108e-05 ic=4.7713e-05 reg=7.2035e-03 wall_h=4.428
+16600 total=8.6352e-03 pde=1.3266e-03 proj=5.8096e-05 bc=3.4423e-05 ic=5.0808e-05 reg=7.1653e-03 wall_h=4.456
+16700 total=7.9501e-03 pde=7.0657e-04 proj=4.3216e-05 bc=3.0842e-05 ic=4.4676e-05 reg=7.1248e-03 wall_h=4.484
+16700 total=7.9501e-03 pde=7.0657e-04 proj=4.3216e-05 bc=3.0842e-05 ic=4.4676e-05 reg=7.1248e-03 wall_h=4.484
+16800 total=7.9111e-03 pde=6.9729e-04 proj=5.1404e-05 bc=2.9129e-05 ic=4.9064e-05 reg=7.0842e-03 wall_h=4.506
+16900 total=7.8078e-03 pde=6.5744e-04 proj=3.0605e-05 bc=2.7449e-05 ic=4.7850e-05 reg=7.0445e-03 wall_h=4.527
+EVAL 17000 mean_rel_l2=7.5307e-03 var_rel_l2=9.8372e-03
+17000 total=7.9177e-03 pde=7.9613e-04 proj=3.9184e-05 bc=2.8469e-05 ic=4.9070e-05 reg=7.0049e-03 wall_h=4.554
+17100 total=7.7637e-03 pde=6.8487e-04 proj=4.6652e-05 bc=2.6497e-05 ic=4.0286e-05 reg=6.9654e-03 wall_h=4.575
+17200 total=9.4385e-03 pde=2.2079e-03 proj=2.3077e-04 bc=2.5112e-05 ic=4.9394e-05 reg=6.9253e-03 wall_h=4.596
+17300 total=1.9529e-02 pde=1.1801e-02 proj=7.2455e-04 bc=2.8095e-05 ic=7.6481e-05 reg=6.8985e-03 wall_h=4.617
+17400 total=8.4568e-03 pde=1.4078e-03 proj=1.1700e-04 bc=2.7295e-05 ic=4.1388e-05 reg=6.8633e-03 wall_h=4.638
+EVAL 17500 mean_rel_l2=7.3895e-03 var_rel_l2=7.6172e-03
+17500 total=1.1307e-02 pde=4.0187e-03 proj=3.9125e-04 bc=3.4255e-05 ic=3.9596e-05 reg=6.8230e-03 wall_h=4.665
+17600 total=8.1986e-03 pde=1.2740e-03 proj=7.0413e-05 bc=2.1283e-05 ic=4.6797e-05 reg=6.7861e-03 wall_h=4.686
+17700 total=1.3878e-02 pde=6.5647e-03 proj=4.7935e-04 bc=3.3327e-05 ic=5.3081e-05 reg=6.7477e-03 wall_h=4.706
+17800 total=8.1317e-03 pde=1.2867e-03 proj=7.1159e-05 bc=2.0661e-05 ic=4.1083e-05 reg=6.7122e-03 wall_h=4.726
+17900 total=7.4383e-03 pde=6.2686e-04 proj=7.9822e-05 bc=2.0607e-05 ic=3.7820e-05 reg=6.6732e-03 wall_h=4.747
+EVAL 18000 mean_rel_l2=6.6910e-03 var_rel_l2=8.7169e-03
+18000 total=7.3293e-03 pde=6.1078e-04 proj=2.9054e-05 bc=2.0616e-05 ic=3.5640e-05 reg=6.6332e-03 wall_h=4.774
+18100 total=7.8097e-03 pde=9.9478e-04 proj=1.5944e-04 bc=2.0811e-05 ic=3.8873e-05 reg=6.5958e-03 wall_h=4.795
+18200 total=7.3384e-03 pde=6.9891e-04 proj=2.9506e-05 bc=1.9647e-05 ic=3.4444e-05 reg=6.5558e-03 wall_h=4.815
+18300 total=7.4314e-03 pde=8.0575e-04 proj=5.6790e-05 bc=1.6256e-05 ic=3.8273e-05 reg=6.5144e-03 wall_h=4.836
+18400 total=1.4023e-02 pde=6.3354e-03 proj=1.1522e-03 bc=1.7092e-05 ic=4.3026e-05 reg=6.4749e-03 wall_h=4.857
+EVAL 18500 mean_rel_l2=6.0014e-03 var_rel_l2=9.1541e-03
+18500 total=8.7217e-03 pde=2.0023e-03 proj=2.3359e-04 bc=1.6903e-05 ic=3.2338e-05 reg=6.4366e-03 wall_h=4.884
+18600 total=4.6313e-02 pde=3.4569e-02 proj=5.2011e-03 bc=2.8332e-05 ic=1.1102e-04 reg=6.4037e-03 wall_h=4.906
+18700 total=1.0243e-02 pde=3.3571e-03 proj=4.3434e-04 bc=2.6232e-05 ic=3.9930e-05 reg=6.3855e-03 wall_h=4.927
+18800 total=7.4682e-03 pde=9.6412e-04 proj=1.0795e-04 bc=1.8583e-05 ic=3.0150e-05 reg=6.3474e-03 wall_h=4.948
+18900 total=7.3016e-03 pde=9.0706e-04 proj=3.9048e-05 bc=1.8204e-05 ic=2.9382e-05 reg=6.3079e-03 wall_h=4.968
+EVAL 19000 mean_rel_l2=7.2474e-03 var_rel_l2=1.0547e-02
+19000 total=1.6759e-02 pde=9.7099e-03 proj=7.3130e-04 bc=1.0953e-05 ic=4.0537e-05 reg=6.2662e-03 wall_h=4.994
+19100 total=1.2763e-02 pde=5.8536e-03 proj=5.9820e-04 bc=2.6026e-05 ic=4.6894e-05 reg=6.2384e-03 wall_h=5.015
+19200 total=3.9491e-02 pde=2.7050e-02 proj=6.1270e-03 bc=2.0234e-05 ic=9.3797e-05 reg=6.2006e-03 wall_h=5.037
+19300 total=1.4215e-02 pde=7.4166e-03 proj=5.7765e-04 bc=2.0476e-05 ic=2.9933e-05 reg=6.1707e-03 wall_h=5.058
+19400 total=8.4607e-03 pde=2.0427e-03 proj=2.5105e-04 bc=1.7024e-05 ic=2.1942e-05 reg=6.1281e-03 wall_h=5.079
+EVAL 19500 mean_rel_l2=5.4914e-03 var_rel_l2=7.4836e-03
+19500 total=6.9709e-03 pde=7.7419e-04 proj=7.2937e-05 bc=1.5081e-05 ic=2.2408e-05 reg=6.0863e-03 wall_h=5.105
+19600 total=6.6721e-03 pde=5.2735e-04 proj=6.3626e-05 bc=1.3375e-05 ic=2.5434e-05 reg=6.0423e-03 wall_h=5.126
+19700 total=6.3323e-03 pde=2.7311e-04 proj=2.7757e-05 bc=1.2042e-05 ic=2.2652e-05 reg=5.9968e-03 wall_h=5.147
+19800 total=4.9164e-01 pde=4.2771e-01 proj=5.6975e-02 bc=1.2438e-04 ic=8.8848e-04 reg=5.9503e-03 wall_h=5.168
+19900 total=7.5933e-03 pde=1.4163e-03 proj=1.4135e-04 bc=3.9469e-05 ic=2.0606e-05 reg=5.9756e-03 wall_h=5.189
+EVAL 20000 mean_rel_l2=6.6537e-03 var_rel_l2=8.2394e-03

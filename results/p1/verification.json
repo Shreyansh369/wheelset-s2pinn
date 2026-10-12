@@ -1,0 +1,545 @@
+{
+  "name": "p1/verification",
+  "seed": null,
+  "config": {
+    "params": {
+      "material": {
+        "E": {
+          "value": "2.10e11",
+          "unit": "Pa",
+          "source": "doc \u00a716 (standard steel)"
+        },
+        "nu": {
+          "value": 0.3,
+          "unit": "-",
+          "source": "doc \u00a716"
+        },
+        "rho": {
+          "value": 7850.0,
+          "unit": "kg/m^3",
+          "source": "doc \u00a716"
+        },
+        "kappa": {
+          "value": null,
+          "unit": "-",
+          "source": "Cowper circular section 6(1+nu)/(7+6nu), computed"
+        }
+      },
+      "axle": {
+        "length": {
+          "value": 2.18,
+          "unit": "m",
+          "source": "placeholder: typical standard-gauge freight axle"
+        },
+        "sections": {
+          "value": [
+            [
+              0.64,
+              0.175
+            ],
+            [
+              0.86,
+              0.2
+            ],
+            [
+              0.9,
+              0.16
+            ],
+            [
+              1.09,
+              0.13
+            ]
+          ],
+          "unit": [
+            "m",
+            "m"
+          ],
+          "source": "placeholder: body / wheel seat / dust-guard collar / journal, typical EN 13103-type proportions"
+        },
+        "wheel_xi": {
+          "value": 0.75,
+          "unit": "m",
+          "source": "placeholder: contact plane ~ half of 1.5 m contact-point spacing"
+        },
+        "journal_xi": {
+          "value": 0.995,
+          "unit": "m",
+          "source": "placeholder: mid-journal bearing centre"
+        },
+        "n_elements": {
+          "value": 32,
+          "unit": "-",
+          "source": "brief: 20-40 elements; convergence checked at 20/30/40"
+        },
+        "damping_zeta": {
+          "value": 0.01,
+          "unit": "-",
+          "source": "placeholder: 1% stiffness-proportional at f_ref"
+        },
+        "damping_fref": {
+          "value": 80.0,
+          "unit": "Hz",
+          "source": "placeholder: typical first wheelset bending frequency"
+        }
+      },
+      "wheel": {
+        "mass": {
+          "value": 350.0,
+          "unit": "kg",
+          "source": "placeholder: 920 mm freight wheel"
+        },
+        "diametral_inertia": {
+          "value": 20.0,
+          "unit": "kg m^2",
+          "source": "placeholder: disc estimate m r^2/4 with rim correction"
+        },
+        "r0": {
+          "value": 0.4575,
+          "unit": "m",
+          "source": "doc \u00a713 (new 915 mm wheel)"
+        }
+      },
+      "bearing": {
+        "kB0": {
+          "value": "1.0e9",
+          "unit": "N/m",
+          "source": "placeholder: tapered roller unit radial stiffness, order 1e8-1e9"
+        },
+        "cB": {
+          "value": "5.0e3",
+          "unit": "N s/m",
+          "source": "placeholder: EHL/structural damping"
+        },
+        "prior_log_halfwidth": {
+          "value": 0.6931471805599453,
+          "unit": "-",
+          "source": "placeholder: factor-2 prior on kB0 and cB (log-uniform)"
+        },
+        "load_exponent": {
+          "value": 0.1,
+          "unit": "-",
+          "source": "doc Eq. (12): Q ~ delta^(10/9) gives k ~ Q^(1/10)"
+        },
+        "support_law": {
+          "value": "linear",
+          "unit": "-",
+          "source": "switch: linear | clearance | roller_contact (non-smooth laws: time domain only, not yet implemented)"
+        }
+      },
+      "axlebox": {
+        "mass": {
+          "value": 60.0,
+          "unit": "kg",
+          "source": "placeholder: housing + outer ring + adapter"
+        }
+      },
+      "primary": {
+        "kp": {
+          "value": "1.0e6",
+          "unit": "N/m",
+          "source": "placeholder: freight primary vertical stiffness per axlebox"
+        },
+        "cp": {
+          "value": "1.0e4",
+          "unit": "N s/m",
+          "source": "placeholder: equivalent linear damping per axlebox"
+        }
+      },
+      "payload": {
+        "W_min": {
+          "value": 5.5,
+          "unit": "t",
+          "source": "placeholder: empty freight wagon axle load"
+        },
+        "W_max": {
+          "value": 22.5,
+          "unit": "t",
+          "source": "placeholder: loaded (22.5 t axle load class)"
+        },
+        "W0": {
+          "value": 22.5,
+          "unit": "t",
+          "source": "reference load for kB0 (loaded)"
+        }
+      },
+      "operation": {
+        "V": {
+          "value": 27.7777777778,
+          "unit": "m/s",
+          "source": "doc \u00a713: 100 km/h, constant and known for all passes (assumption A5)"
+        }
+      },
+      "forcing": {
+        "oor_orders": {
+          "value": [
+            1,
+            2,
+            3
+          ],
+          "unit": "-",
+          "source": "brief: wheel out-of-roundness orders 1-3 (doc Eq. 7)"
+        },
+        "oor_std": {
+          "value": [
+            0.0001,
+            5e-05,
+            3e-05
+          ],
+          "unit": "m",
+          "source": "placeholder: std of a_n, b_n (eccentricity ~0.1 mm)"
+        },
+        "oor_same_both_wheels": {
+          "value": true,
+          "unit": "-",
+          "source": "decision D9: one shared set, same phase"
+        },
+        "track_spectrum": {
+          "A_v": {
+            "value": 4.032e-07,
+            "unit": "m rad",
+            "source": "published German low-irregularity coefficients (e.g. Zhai 2020, doc ref 9); verify; route fit recommended"
+          },
+          "Omega_c": {
+            "value": 0.8246,
+            "unit": "rad/m",
+            "source": "as A_v"
+          },
+          "Omega_r": {
+            "value": 0.0206,
+            "unit": "rad/m",
+            "source": "as A_v"
+          }
+        },
+        "track_wavelengths": {
+          "value": [
+            25.0,
+            10.0,
+            4.0,
+            1.5
+          ],
+          "unit": "m",
+          "source": "placeholder: 4 wavelengths in band, away from wheel orders at 100 km/h"
+        },
+        "track_form": {
+          "value": "gaussian",
+          "unit": "-",
+          "source": "brief: sqrt(S dOmega)(A cos + B sin), A,B ~ N(0,1); dOmega = log-bin width"
+        },
+        "same_profile_both_rails": {
+          "value": true,
+          "unit": "-",
+          "source": "assumption A8: no cross-level"
+        }
+      },
+      "rail_sdof": {
+        "enabled": {
+          "value": false,
+          "unit": "-",
+          "source": "brief: rigid track default"
+        },
+        "m_r": {
+          "value": 150.0,
+          "unit": "kg",
+          "source": "placeholder: effective rail+sleeper mass per wheel"
+        },
+        "k_r": {
+          "value": "1.0e8",
+          "unit": "N/m",
+          "source": "placeholder: track support stiffness per wheel"
+        },
+        "c_r": {
+          "value": "1.0e5",
+          "unit": "N s/m",
+          "source": "placeholder"
+        }
+      },
+      "sensor": {
+        "location": {
+          "value": "axlebox_left",
+          "unit": "-",
+          "source": "assumption A10"
+        },
+        "h_s": {
+          "value": "identity",
+          "unit": "-",
+          "source": "brief"
+        },
+        "snr_db": {
+          "value": [
+            20,
+            40
+          ],
+          "unit": "dB",
+          "source": "brief"
+        },
+        "n_revs": {
+          "value": 20,
+          "unit": "-",
+          "source": "placeholder: record length in wheel revolutions"
+        },
+        "fs": {
+          "value": 1000.0,
+          "unit": "Hz",
+          "source": "placeholder: sampling rate (band <= 150 Hz)"
+        },
+        "band_max": {
+          "value": 150.0,
+          "unit": "Hz",
+          "source": "brief"
+        }
+      },
+      "inverse": {
+        "targets": {
+          "value": [
+            "log_kB0",
+            "log_cB"
+          ],
+          "unit": "-",
+          "source": "brief; configurable (Child A hook)"
+        }
+      }
+    },
+    "threads": 1
+  },
+  "payload": {
+    "a_freefree": {
+      "d": 0.175,
+      "L": 2.18,
+      "exact_hz": [
+        166.7203500984306,
+        446.2896680752106,
+        841.2009071616696,
+        1326.8167502259985
+      ],
+      "fe": {
+        "20": {
+          "hz": [
+            166.73043379243384,
+            446.47952599109533,
+            842.4481409080036,
+            1331.6218458770325
+          ],
+          "rel_err": [
+            6.048268251174463e-05,
+            0.00042541409641753307,
+            0.0014826823600823057,
+            0.003621521698618646
+          ],
+          "max_rel_err": 0.003621521698618646
+        },
+        "30": {
+          "hz": [
+            166.72476349019593,
+            446.3730176012748,
+            841.750116783505,
+            1328.9389969490833
+          ],
+          "rel_err": [
+            2.647182400170891e-05,
+            0.00018676104787199307,
+            0.0006528875767483009,
+            0.0015995025105941811
+          ],
+          "max_rel_err": 0.0015995025105941811
+        },
+        "32": {
+          "hz": [
+            166.72422321347395,
+            446.36283552803053,
+            841.6831632211448,
+            1328.6807932410413
+          ],
+          "rel_err": [
+            2.3231207474493344e-05,
+            0.00016394610508338505,
+            0.0005732947448931678,
+            0.0014048986152197396
+          ],
+          "max_rel_err": 0.0014048986152197396
+        },
+        "40": {
+          "hz": [
+            166.72281910549177,
+            446.3363458828167,
+            841.5087960435656,
+            1328.007669997765
+          ],
+          "rel_err": [
+            1.4809272291687727e-05,
+            0.00010459083179628167,
+            0.00036601111491280737,
+            0.0008975766785909003
+          ],
+          "max_rel_err": 0.0008975766785909003
+        }
+      },
+      "max_rel_err_all": 0.003621521698618646
+    },
+    "b_energy": {
+      "nominal_loaded": {
+        "dE": 5.947584142488267,
+        "int_power": 5.947584143072625,
+        "E_max": 8.713404539217922,
+        "rel_residual": 6.706419387351358e-11,
+        "int_P_in": 13.47775440074791,
+        "int_P_diss": 7.530170257675284
+      },
+      "soft_damped_empty": {
+        "dE": 0.1347589230635831,
+        "int_power": 0.1347589230873466,
+        "E_max": 1.8019389346514982,
+        "rel_residual": 1.3187733900332729e-11,
+        "int_P_in": 2.5635694269109837,
+        "int_P_diss": 2.4288105038236374
+      },
+      "stiff_light_mid": {
+        "dE": 1.2419866506908495,
+        "int_power": 1.2419866508189008,
+        "E_max": 2.8462159149136954,
+        "rel_residual": 4.499003277736538e-11,
+        "int_P_in": 7.227593685381223,
+        "int_P_diss": 5.985607034562322
+      }
+    },
+    "c_fd_vs_td": {
+      "nominal_loaded": {
+        "rel_l2_displacement_free_dofs": 1.532819031669165e-09,
+        "rel_l2_axlebox_accel_left": 1.0720362566469132e-06,
+        "fd_vs_td_rel_l2": 1.0720362566469132e-06,
+        "T": 1.0,
+        "dt": 2e-05,
+        "kB0": 1000000000.0,
+        "cB": 5000.0,
+        "W": 22.5
+      },
+      "soft_damped_empty": {
+        "rel_l2_displacement_free_dofs": 3.91761058025082e-09,
+        "rel_l2_axlebox_accel_left": 1.5245786662763482e-06,
+        "fd_vs_td_rel_l2": 1.5245786662763482e-06,
+        "T": 1.0,
+        "dt": 2e-05,
+        "kB0": 500000000.0,
+        "cB": 10000.0,
+        "W": 5.5
+      },
+      "stiff_light_mid": {
+        "rel_l2_displacement_free_dofs": 6.805750545800096e-09,
+        "rel_l2_axlebox_accel_left": 1.7537853685282764e-06,
+        "fd_vs_td_rel_l2": 1.7537853685282764e-06,
+        "T": 1.0,
+        "dt": 2e-05,
+        "kB0": 2000000000.0,
+        "cB": 2500.0,
+        "W": 14.0
+      }
+    },
+    "extra_rail_sdof_case": {
+      "energy": {
+        "dE": 589.4325036673218,
+        "int_power": 589.4325036678035,
+        "E_max": 880.3641877747594,
+        "rel_residual": 5.471498478874148e-13,
+        "int_P_in": 678.7263822568325,
+        "int_P_diss": 89.29387858902888
+      },
+      "fd_vs_td_rel_l2": 1.3302416839045595e-06
+    },
+    "mesh_convergence": {
+      "20": {
+        "n_elements_actual": 20,
+        "modes_hz": [
+          95.76617648639065,
+          200.18110897584262,
+          423.48468939954637,
+          553.712881224964,
+          582.0245679266444,
+          970.1139437492903
+        ],
+        "axlebox_accel_per_unit_contact_abs": [
+          48.448903504691046,
+          302.79115600300514,
+          1891.8735767861367,
+          3662.0273747144142,
+          13421.819397821788,
+          14615.023584005248,
+          32740.91373185733
+        ],
+        "max_rel_diff_modes_vs_finest": 0.0020430480993259103,
+        "max_rel_diff_response_vs_finest": 9.456781594263329e-08
+      },
+      "32": {
+        "n_elements_actual": 32,
+        "modes_hz": [
+          95.76551475772608,
+          200.17984359158837,
+          423.38835755667236,
+          553.6989700584829,
+          581.9852832935394,
+          968.3853391953145
+        ],
+        "axlebox_accel_per_unit_contact_abs": [
+          48.44890350469572,
+          302.791156000987,
+          1891.8735762931847,
+          3662.0273711129744,
+          13421.819212976727,
+          14615.023344107793,
+          32740.910801440878
+        ],
+        "max_rel_diff_modes_vs_finest": 0.00025755043960771937,
+        "max_rel_diff_response_vs_finest": 5.064610447202538e-09
+      },
+      "40": {
+        "n_elements_actual": 40,
+        "modes_hz": [
+          95.76538440167097,
+          200.1791502047093,
+          423.3716086739889,
+          553.6925310765049,
+          581.9775797970915,
+          968.1359953441136
+        ],
+        "axlebox_accel_per_unit_contact_abs": [
+          48.44890350468272,
+          302.7911560008922,
+          1891.8735762678343,
+          3662.0273709229173,
+          13421.819202951068,
+          14615.023331055329,
+          32740.91063562092
+        ],
+        "max_rel_diff_modes_vs_finest": 0.0,
+        "max_rel_diff_response_vs_finest": 0.0
+      }
+    },
+    "gyroscopic_neglect": {
+      "Omega_rad_s": 60.71645415912568,
+      "omega1_constrained_rad_s": 601.7124752602343,
+      "ratio": 0.10090609162269147
+    },
+    "gate": {
+      "a_pass": true,
+      "b_pass": true,
+      "c_pass": true,
+      "a_max_rel_err": 0.003621521698618646,
+      "b_max_rel_residual": 6.706419387351358e-11,
+      "c_max_rel_l2": 1.7537853685282764e-06,
+      "thresholds": {
+        "freefree_timoshenko_rel_err_max": 0.005,
+        "energy_balance_rel_residual_max": 1e-06,
+        "fd_vs_td_rel_l2_max": 0.001,
+        "fd_vs_td_cases": 3
+      }
+    }
+  },
+  "provenance": {
+    "git_commit": "48907310cb7e9a3c94cf56276cad38cfb10d89dc",
+    "timestamp_utc": "2026-10-11T18:11:19Z",
+    "wall_seconds": 13.864880798999366,
+    "peak_cpu_memory_mb": 107.7578125,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

@@ -1,0 +1,11 @@
+device: {'device': 'cpu', 'cuda_available': False, 'device_name': 'x86_64', 'torch': '2.14.1+cu130', 'cpu_threads': 4, 'host_kind': 'other'}
+stopping at checkpoint step 8200
+device: {'device': 'cpu', 'cuda_available': False, 'device_name': 'x86_64', 'torch': '2.14.1+cu130', 'cpu_threads': 4, 'host_kind': 'other'}
+resumed at step 8200 (1.86 h so far)
+--- relaunch 19:46:45 with OMP_NUM_THREADS=2 (CPU shared with FE-direct MC)
+device: {'device': 'cpu', 'cuda_available': False, 'device_name': 'x86_64', 'torch': '2.14.1+cu130', 'cpu_threads': 2, 'host_kind': 'other'}
+resumed at step 10300 (2.50 h so far)
+--- segment 21:47:07 OMP_NUM_THREADS=3
+device: {'device': 'cpu', 'cuda_available': False, 'device_name': 'x86_64', 'torch': '2.14.1+cu130', 'cpu_threads': 3, 'host_kind': 'other'}
+resumed at step 16700 (4.48 h so far)
+mean_rel_l2=6.7094e-03 (paper 6.34e-03, Table 14 (Nc=4096)); wrote /home/user/wheelset-s2pinn/results/p0/s2pinn_repro_seed42_nc4096.json
