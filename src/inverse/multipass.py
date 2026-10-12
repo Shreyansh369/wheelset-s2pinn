@@ -167,16 +167,25 @@ class PassPrep:
 
 
 class MultiPassWhittle:
-    """Independent-section Whittle likelihood across passes; nuisances profiled by Fisher scoring."""
+    """Independent-section Whittle likelihood across passes; nuisances profiled by Fisher scoring.
+
+    debias=True replaces the bin-sampled signal variance |H(f_k)|^2 S(f_k) by the exact expected
+    periodogram of the rectangular-window record, i.e. |H|^2 S convolved with the Fejer kernel
+    T sinc^2((f - f_k) T) (the debiased Whittle likelihood, Sykulski et al., Biometrika 2019). This
+    matters when H has structure on the bin scale (e.g. multi-wheel cross terms with ripple period
+    V/d close to 1/T). The kernel is evaluated on a grid M times finer than the bins, truncated at
+    +-Kb bins, over the analysis support (the band the record was filtered to).
+    """
 
     def __init__(self, passes: list[dict], W_meas, sigma_W: float, rough: Roughness, family: Family,
-                 mask=None):
+                 mask=None, debias: bool = False, M: int = 4, Kb: int = 30, support=(F_LO - 5, F_HI)):
         """mask(pass dict) -> boolean array over the pass's bins (True = keep); None keeps all."""
         self.fam = family
         self.rough = rough
         self.lw_meas = np.log(np.asarray(W_meas, float))
         self.sW = sigma_W
         self.S = rough.n_sub
+        self.debias = debias
         self.P: list[PassPrep] = []
         for p in passes:
             Om = 2 * np.pi * p["f"] / p["V"]
@@ -187,46 +196,90 @@ class MultiPassWhittle:
             dOm = 2 * np.pi * (1 / p["T"]) / p["V"]
             pp = PassPrep(p["f"][ok], p["k"][ok], s[ok], 2 * rough.density(Om[ok]) * dOm, p["c"][ok],
                           np.abs(p["c"][ok]) ** 2, p["e_noise"], p["V"])
+            if debias:
+                T = p["T"]
+                m0 = int(math.ceil(max(support[0], pp.f.min() - Kb / T) * M * T))
+                m1 = int(math.floor(min(support[1], pp.f.max() + Kb / T) * M * T))
+                fm = np.arange(m0, m1 + 1) / (M * T)
+                Omm = 2 * np.pi * fm / p["V"]
+                sm_ = rough.subband(Omm)
+                inb = sm_ >= 0
+                basem = np.zeros(fm.size)
+                basem[inb] = 2 * rough.density(Omm[inb]) * dOm
+                from scipy.sparse import csr_matrix
+                rows, cols, vals = [], [], []
+                for r, fk in enumerate(pp.f):
+                    lo = np.searchsorted(fm, fk - Kb / T)
+                    hi = np.searchsorted(fm, fk + Kb / T, side="right")
+                    rows.append(np.full(hi - lo, r))
+                    cols.append(np.arange(lo, hi))
+                    vals.append(np.sinc((fm[lo:hi] - fk) * T) ** 2 / M)
+                pp.fm, pp.subm, pp.basem = fm, np.where(inb, sm_, 0), basem
+                pp.K = csr_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))),
+                                  shape=(pp.f.size, fm.size))
             self.P.append(pp)
         self.used = np.unique(np.concatenate([p.sub for p in self.P]))
         self._grid_ready = False
         self.n_eval, self.t_eval, self._warm = 0, 0.0, None
 
-    # -- H at the bins of every pass
+    # -- H at the bins (or on the fine grid, debias) of every pass
     def _prep_grid(self, tab: Table):
         for p in self.P:
             j = np.clip(np.searchsorted(tab.f, p.f) - 1, 0, tab.f.size - 2)
             p.i0, p.wt = j, (p.f - tab.f[j]) / (tab.f[j + 1] - tab.f[j])
             p.ph = np.exp(1j * 2 * np.pi * p.f[:, None] * tab.d[None, :] / p.V)
+            if self.debias:
+                j = np.clip(np.searchsorted(tab.f, p.fm) - 1, 0, tab.f.size - 2)
+                p.i0m, p.wtm = j, (p.fm - tab.f[j]) / (tab.f[j + 1] - tab.f[j])
+                p.phm = np.exp(1j * 2 * np.pi * p.fm[:, None] * tab.d[None, :] / p.V)
         self._grid_ready = True
 
-    def _H(self, tab: Table, lw: np.ndarray, deriv: bool = False):
+    def _H(self, tab: Table, lw: np.ndarray, deriv: bool = False, fine: bool = False):
         if not self._grid_ready:
             self._prep_grid(tab)
         Gs = tab.spl(lw)
         dGs = tab.spl(lw, 1) if deriv else None
         H, dH = [], []
         for i, p in enumerate(self.P):
-            g = (1 - p.wt)[:, None] * Gs[i, p.i0] + p.wt[:, None] * Gs[i, p.i0 + 1]
-            H.append((g * p.ph).sum(1))
+            i0, wt, ph = (p.i0m, p.wtm, p.phm) if fine else (p.i0, p.wt, p.ph)
+            g = (1 - wt)[:, None] * Gs[i, i0] + wt[:, None] * Gs[i, i0 + 1]
+            H.append((g * ph).sum(1))
             if deriv:
-                dg = (1 - p.wt)[:, None] * dGs[i, p.i0] + p.wt[:, None] * dGs[i, p.i0 + 1]
-                dH.append((dg * p.ph).sum(1))
+                dg = (1 - wt)[:, None] * dGs[i, i0] + wt[:, None] * dGs[i, i0 + 1]
+                dH.append((dg * ph).sum(1))
         return (H, dH) if deriv else H
 
+    def _A(self, tab: Table, lw: np.ndarray, logg: np.ndarray, deriv: bool = False):
+        """Signal part of the bin variance, a_k, and d a_k / d log W, for every pass."""
+        out = self._H(tab, lw, deriv=deriv, fine=self.debias)
+        H, dH = out if deriv else (out, None)
+        A, dA = [], []
+        for i, p in enumerate(self.P):
+            if self.debias:
+                q = p.basem * np.exp(logg[p.subm])
+                A.append(p.K @ (np.abs(H[i]) ** 2 * q))
+                if deriv:
+                    dA.append(p.K @ (2 * np.real(np.conj(H[i]) * dH[i]) * q))
+            else:
+                q = p.base * np.exp(logg[p.sub])
+                A.append(np.abs(H[i]) ** 2 * q)
+                if deriv:
+                    dA.append(2 * np.real(np.conj(H[i]) * dH[i]) * q)
+        return (A, dA) if deriv else A
+
     def _nuisance_solve(self, tab: Table, logg, lw, tol=1e-7, max_it=80):
+        """Fisher scoring; with debias each bin's signal variance is attributed to its own sub-band."""
         N = len(self.P)
         for it in range(max_it):
-            H, dH = self._H(tab, lw, deriv=True)
+            A, dA = self._A(tab, lw, logg, deriv=True)
             gnum, gden, wstep = np.zeros(self.S), np.zeros(self.S), np.zeros(N)
             for i, p in enumerate(self.P):
-                g = np.exp(logg[p.sub])
-                a = np.abs(H[i]) ** 2 * p.base * g
+                a = A[i]
                 v = a + p.e
                 r = p.c2 / v - 1
                 gnum += np.bincount(p.sub, a / v * r, minlength=self.S)
                 gden += np.bincount(p.sub, (a / v) ** 2, minlength=self.S)
-                da = 2 * np.real(np.conj(H[i]) * dH[i]) * p.base * g / v
+                da = dA[i] / v
                 wstep[i] = (da @ r - (lw[i] - self.lw_meas[i]) / self.sW**2) / (da @ da + 1 / self.sW**2)
             gstep = np.where(gden > 0, gnum / np.maximum(gden, 1e-300), 0.0)
             logg = logg + np.clip(gstep, -2, 2)
@@ -236,10 +289,10 @@ class MultiPassWhittle:
         return logg, lw, it + 1
 
     def _nll(self, tab, logg, lw):
-        H = self._H(tab, lw)
+        A = self._A(tab, lw, logg)
         out = 0.0
         for i, p in enumerate(self.P):
-            v = np.abs(H[i]) ** 2 * p.base * np.exp(logg[p.sub]) + p.e
+            v = A[i] + p.e
             out += np.sum(np.log(v) + p.c2 / v)
         return float(out + 0.5 * np.sum(((lw - self.lw_meas) / self.sW) ** 2))
 
@@ -348,26 +401,25 @@ class MultiPassWhittle:
         phi = np.asarray(phi, float)
         d = phi.size
         tab0 = self.fam.table(self.theta(phi))
-        tabs = [(self.fam.table(self.theta(phi + np.eye(d)[a] * h)), self.fam.table(self.theta(phi - np.eye(d)[a] * h)))
-                for a in range(d)]
-        H, dHw = self._H(tab0, lw, deriv=True)
-        dHt = [[None] * len(self.P) for _ in range(d)]
-        for a, (tp, tm) in enumerate(tabs):
-            Hp, Hm = self._H(tp, lw), self._H(tm, lw)
-            dHt[a] = [(x - y) / (2 * h) for x, y in zip(Hp, Hm)]
+        A, dAw = self._A(tab0, lw, logg, deriv=True)
+        dAt = []
+        for a in range(d):
+            e = np.eye(d)[a] * h
+            Ap = self._A(self.fam.table(self.theta(phi + e)), lw, logg)
+            Am = self._A(self.fam.table(self.theta(phi - e)), lw, logg)
+            dAt.append([(x - y) / (2 * h) for x, y in zip(Ap, Am)])
         N, used = len(self.P), self.used
         smap = -np.ones(self.S, int)
         smap[used] = np.arange(used.size)
         n = d + used.size + N
         J = np.zeros((n, n))
         for i, p in enumerate(self.P):
-            g = np.exp(logg[p.sub])
-            v = np.abs(H[i]) ** 2 * p.base * g + p.e
+            v = A[i] + p.e
             D = np.zeros((p.f.size, n))
             for a in range(d):
-                D[:, a] = 2 * np.real(np.conj(H[i]) * dHt[a][i]) * p.base * g / v
-            D[np.arange(p.f.size), d + smap[p.sub]] = np.abs(H[i]) ** 2 * p.base * g / v
-            D[:, d + used.size + i] = 2 * np.real(np.conj(H[i]) * dHw[i]) * p.base * g / v
+                D[:, a] = dAt[a][i] / v
+            D[np.arange(p.f.size), d + smap[p.sub]] = A[i] / v
+            D[:, d + used.size + i] = dAw[i] / v
             J += D.T @ D
         J[d + used.size:, d + used.size:] += np.eye(N) / self.sW**2
         sc = 1 / np.sqrt(np.diag(J))

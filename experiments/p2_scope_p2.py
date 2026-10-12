@@ -21,7 +21,7 @@ CT23 method (Sec. 3.2): Welch PSD (4 m Hann segments, 50% overlap), first PSD pe
 sum (sqrt(S_aa) - a w |H|)^2 over (a, kf) (b = -1), |H|^2 = sum_k |A_jk|^2 (CT23 Eq. 7), start from Eq. 13.
 Multi-pass: the Whittle likelihood of src/inverse/multipass.py over all 8 passes of a section, kf
 the only global parameter, one free roughness level per sub-band (K = 4 per one-third octave), cross
-terms kept, band 20-150 Hz.
+terms kept, band 20-150 Hz, debiased (exact expected periodogram; see MultiPassWhittle).
 """
 
 from __future__ import annotations
@@ -52,6 +52,7 @@ F_LO, F_HI = 20.0, 150.0
 L_SEC = 62.0
 R0_EFF = L_SEC / (20 * 2 * math.pi)  # 20 "revolutions" = one 62 m section (record-length device)
 CORR = (0.33, 0.37, 15.0)            # corrugation sub-bands (m) and level (dB)
+DEBIAS = True                        # exact expected periodogram (cross terms with V/d near 1/T)
 
 
 class FractionalTrack(RailTrack):
@@ -182,7 +183,8 @@ def main(truth_kind: str = "hysteretic"):
                 P = [generate_pass(truth.H_fn(V, fgrid), rough, g, V, R0_EFF, 40.0, rng, f_lo=F_LO, f_hi=F_HI,
                                    return_y=True) for V in Vs]
                 ct = [ct23_fit(p["y"], p["V"], fam) for p in P]
-                est = MultiPassWhittle([{k: v for k, v in p.items() if k != "y"} for p in P], np.ones(8), 0.03, rough, fam)
+                est = MultiPassWhittle([{k: v for k, v in p.items() if k != "y"} for p in P], np.ones(8), 0.03, rough, fam,
+                                       debias=DEBIAS, support=(F_LO - 5, F_HI))
                 r = est.fit(np.log([10e6]))
                 pi = est.profile_interval(0)
                 rows.append({"section": sec, "corrugation": corr, "speeds": Vs.tolist(),
@@ -212,9 +214,9 @@ def main(truth_kind: str = "hysteretic"):
                                "truth_beta_abs_at_35Hz": float(abs(truth_track.beta(2 * np.pi * 35.0)) / 1e6),
                                "truth_kind": truth_kind}
     print(json.dumps(summ, indent=1))
-    save_result(f"p2/scope_p2_{truth_kind}", {"rows": rows, "summary": summ}, cfg={
+    save_result(f"p2/scope_p2_{truth_kind}" + ("" if DEBIAS else "_binsampled"), {"rows": rows, "summary": summ}, cfg={
         "vehicle": veh, "rail": rail, "layout": pos.tolist(), "truth_foundation": truth_kind + " (hysteretic: kf 7.7 MN/m^2, eta 0.2; fractional: nu 3.9e6, alpha 1/8; CT23)",
-        "fit_model": "hysteretic kf, eta 0.2, Timoshenko rail", "corrugation": CORR, "speeds_ms": [13, 21],
+        "fit_model": "hysteretic kf, eta 0.2, Timoshenko rail", "debiased_whittle": DEBIAS, "corrugation": CORR, "speeds_ms": [13, 21],
         "passes_per_section": 8, "sections": 20, "section_m": L_SEC, "band_hz": [F_LO, F_HI], "snr_db": 40},
         seed=20261012, wall_seconds=tm.seconds)
 
