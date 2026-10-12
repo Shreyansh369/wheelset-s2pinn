@@ -164,10 +164,10 @@
     }
   },
   "provenance": {
-    "git_commit": "bdde6f698660e7ee374da4d94db2a8bfb2822759-dirty",
-    "timestamp_utc": "2026-10-12T15:32:55Z",
-    "wall_seconds": null,
-    "peak_cpu_memory_mb": 95.54296875,
+    "git_commit": "fb4e67306304939c83011dd9a9340b0198685ab5-dirty",
+    "timestamp_utc": "2026-10-12T17:00:47Z",
+    "wall_seconds": 2656.636223761001,
+    "peak_cpu_memory_mb": 659.67578125,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

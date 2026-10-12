@@ -2,3 +2,5 @@
 {"estimator": "nominal", "param": "unsprung_scale", "factor": 1.1, "bias_pct": -11.328286733217585, "phi_hat": [20.440517656497107, 8.168760269663462], "converged": true, "wall_fit_s": 181.1195419150008}
 {"estimator": "nominal", "param": "unsprung_scale", "factor": 0.9704455335485082, "bias_pct": 3.622578733825721, "phi_hat": [20.596331968986334, 9.00037085940383], "converged": true, "wall_fit_s": 144.57467337399976}
 {"estimator": "nominal", "param": "unsprung_scale", "factor": 1.030454533953517, "bias_pct": -3.6188113301626412, "phi_hat": [20.523887765755397, 8.434960147417147], "converged": true, "wall_fit_s": 159.2909234159997}
+{"estimator": "nominal", "param": "unsprung_scale", "factor": 0.9900498337491681, "bias_pct": 1.207226718338017, "phi_hat": [20.572746886024575, 8.797927070911374], "converged": true, "wall_fit_s": 365.7335543420013}
+{"estimator": "nominal", "param": "unsprung_scale", "factor": 1.010050167084168, "bias_pct": -1.2068945986878021, "phi_hat": [20.548604540391864, 8.605061930047277], "converged": true, "wall_fit_s": 382.572852567002}
