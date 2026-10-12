@@ -139,7 +139,7 @@ def generate_pass(H_fn, rough: Roughness, g_true: np.ndarray, V: float, r0: floa
     nb = (fk >= NOISE_BAND[0]) & (fk <= NOISE_BAND[1])
     keep = (fk >= f_lo) & (fk <= f_hi)
     out = {"f": fk[keep], "c": C[keep], "k": np.arange(C.size)[keep], "V": V, "T": T,
-           "e_noise": float(np.mean(np.abs(C[nb]) ** 2)), "e_noise_true": 4 * sigma**2 / n}
+           "e_noise": float(np.mean(np.abs(C[nb]) ** 2)), "e_noise_true": 4 * sigma**2 / n, "c_noise": C[nb]}
     if return_y:
         out["y"] = y
     return out
@@ -164,6 +164,7 @@ class PassPrep:
     i0: np.ndarray = field(default=None)
     wt: np.ndarray = field(default=None)
     ph: np.ndarray = field(default=None)
+    c2n: np.ndarray = field(default=None)   # out-of-band (noise-only) bins, used when the floor is profiled
 
 
 class MultiPassWhittle:
@@ -178,8 +179,15 @@ class MultiPassWhittle:
     """
 
     def __init__(self, passes: list[dict], W_meas, sigma_W: float, rough: Roughness, family: Family,
-                 mask=None, debias: bool = False, M: int = 4, Kb: int = 30, support=(F_LO - 5, F_HI)):
-        """mask(pass dict) -> boolean array over the pass's bins (True = keep); None keeps all."""
+                 mask=None, debias: bool = False, M: int = 4, Kb: int = 30, support=(F_LO - 5, F_HI),
+                 fit_noise: bool = False):
+        """mask(pass dict) -> boolean array over the pass's bins (True = keep); None keeps all.
+
+        fit_noise: the per-pass noise floor e_i is a profiled nuisance, estimated jointly from the
+        in-band bins and the record's out-of-band (noise-only) bins, instead of being plugged in
+        from the out-of-band mean.
+        """
+        self.fit_noise = fit_noise
         self.fam = family
         self.rough = rough
         self.lw_meas = np.log(np.asarray(W_meas, float))
@@ -196,6 +204,8 @@ class MultiPassWhittle:
             dOm = 2 * np.pi * (1 / p["T"]) / p["V"]
             pp = PassPrep(p["f"][ok], p["k"][ok], s[ok], 2 * rough.density(Om[ok]) * dOm, p["c"][ok],
                           np.abs(p["c"][ok]) ** 2, p["e_noise"], p["V"])
+            if fit_noise:
+                pp.c2n = np.abs(p["c_noise"]) ** 2
             if debias:
                 T = p["T"]
                 m0 = int(math.ceil(max(support[0], pp.f.min() - Kb / T) * M * T))
@@ -284,7 +294,15 @@ class MultiPassWhittle:
             gstep = np.where(gden > 0, gnum / np.maximum(gden, 1e-300), 0.0)
             logg = logg + np.clip(gstep, -2, 2)
             lw = lw + np.clip(wstep, -0.1, 0.1)
-            if max(np.abs(gstep).max(), np.abs(wstep).max()) < tol:
+            estep = np.zeros(N)
+            if self.fit_noise:  # Fisher scoring on log e_i (in-band bins + noise-only bins)
+                for i, p in enumerate(self.P):
+                    v = A[i] + p.e
+                    q = p.e / v
+                    sc = q @ (p.c2 / v - 1) + np.sum(p.c2n / p.e - 1)
+                    estep[i] = np.clip(sc / (q @ q + p.c2n.size), -1, 1)
+                    p.e = p.e * math.exp(estep[i])
+            if max(np.abs(gstep).max(), np.abs(wstep).max(), np.abs(estep).max()) < tol:
                 break
         return logg, lw, it + 1
 
@@ -294,6 +312,8 @@ class MultiPassWhittle:
         for i, p in enumerate(self.P):
             v = A[i] + p.e
             out += np.sum(np.log(v) + p.c2 / v)
+            if self.fit_noise:
+                out += np.sum(math.log(p.e) + p.c2n / p.e)
         return float(out + 0.5 * np.sum(((lw - self.lw_meas) / self.sW) ** 2))
 
     def theta(self, phi) -> dict:
@@ -416,7 +436,8 @@ class MultiPassWhittle:
         N, used = len(self.P), self.used
         smap = -np.ones(self.S, int)
         smap[used] = np.arange(used.size)
-        n = d + used.size + N
+        ne = N if self.fit_noise else 0
+        n = d + used.size + N + ne
         J = np.zeros((n, n))
         parts = []
         for i, p in enumerate(self.P):
@@ -426,9 +447,12 @@ class MultiPassWhittle:
                 D[:, a] = dAt[a][i] / v
             D[np.arange(p.f.size), d + smap[p.sub]] = A[i] / v
             D[:, d + used.size + i] = dAw[i] / v
+            if self.fit_noise:
+                D[:, d + used.size + N + i] = p.e / v
+                J[d + used.size + N + i, d + used.size + N + i] += p.c2n.size
             J += D.T @ D
             parts.append((D, v))
-        J[d + used.size:, d + used.size:] += np.eye(N) / self.sW**2
+        J[d + used.size:d + used.size + N, d + used.size:d + used.size + N] += np.eye(N) / self.sW**2
         return J, parts, d, n
 
     def misspec_bias(self, phi, logg, lw, fam_true: Family, theta_true: dict, h: float = 1e-4) -> dict:

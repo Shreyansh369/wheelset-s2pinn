@@ -32,7 +32,10 @@ from src.utils.results import RESULTS_DIR, save_result  # noqa: E402
 RUN_DIR = RESULTS_DIR / "p2" / "headline_runs"
 
 
-def run(snrs, seeds, n_data):
+def run(snrs, seeds, n_data, fit_noise=False):
+    global RUN_DIR
+    if fit_noise:
+        RUN_DIR = RESULTS_DIR / "p2" / "headline_runs_noisefit"
     sm, thb, rough, _ = setup()
     fam = SingleWheelsetFamily(sm, thb)
     RUN_DIR.mkdir(parents=True, exist_ok=True)
@@ -47,7 +50,7 @@ def run(snrs, seeds, n_data):
                 t0 = time.perf_counter()
                 ds = make_dataset(sm, thb, rough, key, snr=snr)
                 t_gen = time.perf_counter() - t0
-                est = MultiPassWhittle(ds["passes"], ds["Wm"], WIM, rough, fam)
+                est = MultiPassWhittle(ds["passes"], ds["Wm"], WIM, rough, fam, fit_noise=fit_noise)
                 r = est.fit(phi_start())
                 t1 = time.perf_counter()
                 pi = est.profile_interval(0)
@@ -66,7 +69,10 @@ def run(snrs, seeds, n_data):
                       f"prof={t_pi:.0f}s", flush=True)
 
 
-def aggregate():
+def aggregate(fit_noise=False):
+    global RUN_DIR
+    if fit_noise:
+        RUN_DIR = RESULTS_DIR / "p2" / "headline_runs_noisefit"
     out = []
     for snr in (20, 40):
         per_seed = []
@@ -94,9 +100,10 @@ def aggregate():
         out.append({"snr_db": snr, "kB0_per_seed": per_seed, "kB0_across_seeds": across, "kB0_pooled": pooled,
                     "cB_pooled": cB, "timing": timing, "all_converged": all(r["converged"] for r in allrows)})
         print(json.dumps(out[-1]["kB0_across_seeds"]), json.dumps(pooled), flush=True)
-    save_result("p2/headline", {"cells": out}, cfg={"N": 50, "speeds_kmh": [60, 110], "wim_sigma": WIM, "seeds": SEEDS,
+    save_result("p2/headline" + ("_noisefit" if fit_noise else ""), {"cells": out}, cfg={"N": 50, "speeds_kmh": [60, 110], "wim_sigma": WIM, "seeds": SEEDS,
                                                     "datasets_per_seed": 20, "truth": TRUTH,
-                                                    "intervals": "Wald (observed profile information) and profile likelihood, 90%"},
+                                                    "intervals": "Wald (observed profile information) and profile likelihood, 90%",
+                                                    "noise_floor": "profiled jointly (in-band + out-of-band bins)" if fit_noise else "plug-in out-of-band mean"},
                 seed=SEEDS[0])
 
 
@@ -106,5 +113,6 @@ if __name__ == "__main__":
     ap.add_argument("--seeds", type=int, nargs="+", default=list(SEEDS))
     ap.add_argument("--n-data", type=int, default=20)
     ap.add_argument("--aggregate", action="store_true")
+    ap.add_argument("--fit-noise", action="store_true")
     a = ap.parse_args()
-    aggregate() if a.aggregate else run(a.snr, a.seeds, a.n_data)
+    aggregate(a.fit_noise) if a.aggregate else run(a.snr, a.seeds, a.n_data, a.fit_noise)
