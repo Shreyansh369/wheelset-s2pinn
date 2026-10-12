@@ -122,11 +122,11 @@ def drift(estimators):
                 print(row, flush=True)
 
 
-def drift_mc(n_rep, estimators, f=1.2):
+def drift_mc(n_rep, estimators, f=1.2, rep_start=0):
     sm, thb, rough, mw, fams, designs = setup_all()
     fp = RUN_DIR / f"drift_mc_kf{f}.jsonl"
     done = {(json.loads(l)["estimator"], json.loads(l)["rep"]) for l in fp.read_text().splitlines()} if fp.exists() else set()
-    for j in range(n_rep):
+    for j in range(rep_start, n_rep):
         data = None
         for e in estimators:
             if (e, j) in done:
@@ -149,11 +149,11 @@ def drift_mc(n_rep, estimators, f=1.2):
             print(row, flush=True)
 
 
-def kappa_mc(n_rep):
+def kappa_mc(n_rep, rep_start=0):
     sm, thb, rough, mw, fams, designs = setup_all()
     fp = RUN_DIR / "kappa_mc.jsonl"
     done = {json.loads(l)["rep"] for l in fp.read_text().splitlines()} if fp.exists() else set()
-    for j in range(n_rep):
+    for j in range(rep_start, n_rep):
         if j in done:
             continue
         rng = np.random.default_rng(np.random.SeedSequence([44, j]))
@@ -280,14 +280,15 @@ if __name__ == "__main__":
     ap.add_argument("--cases", nargs="+", default=list(COEST_CASES))
     ap.add_argument("--estimators", nargs="+", default=list(EST))
     ap.add_argument("--n-rep", type=int, default=6)
+    ap.add_argument("--rep-start", type=int, default=0, help="first replicate (to split replicates across processes)")
     a = ap.parse_args()
     if a.coest_rel:
         coest_rel(a.cases)
     if a.drift:
         drift(a.estimators)
     if a.drift_mc:
-        drift_mc(a.n_rep, a.estimators)
+        drift_mc(a.n_rep, a.estimators, rep_start=a.rep_start)
     if a.kappa_mc:
-        kappa_mc(a.n_rep)
+        kappa_mc(a.n_rep, rep_start=a.rep_start)
     if a.summarise:
         summarise()
