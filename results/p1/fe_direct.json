@@ -205,6 +205,116 @@
         "floor_meas_over_noise_median": 5.375040373995873
       },
       {
+        "cell": "N50_fixed_100_snr20",
+        "N": 50,
+        "speed": "fixed_100",
+        "snr_db": 20.0,
+        "taper": "none",
+        "n_datasets": 20,
+        "kB0": {
+          "bias_rel": -0.0009845943645669596,
+          "bias_rel_se": 0.0018242110782319208,
+          "rmse_rel": 0.008015812394708331,
+          "crb_rel_mean": 0.006562203709956085,
+          "rmse_over_crb": 1.2186960579890236,
+          "max_abs_rel_err": 0.015458680072836684,
+          "se_obs_over_crb_median": 1.0078307496009338,
+          "coverage90_wald_observed": 0.8,
+          "coverage90_wald_observed_ci95": [
+            0.5633859970033317,
+            0.9426660029499672
+          ],
+          "coverage90_wald_crb": 0.8,
+          "coverage90_wald_crb_ci95": [
+            0.5633859970033317,
+            0.9426660029499672
+          ]
+        },
+        "cB": {
+          "bias_rel": 0.03784733962096584,
+          "bias_rel_se": 0.05570752396744412,
+          "rmse_rel": 0.25159332375340737,
+          "crb_rel_mean": 0.22452161468263765,
+          "rmse_over_crb": 1.1179474266066718,
+          "max_abs_rel_err": 0.4715107622107606,
+          "se_obs_over_crb_median": 0.9498210748180778,
+          "coverage90_wald_observed": 0.85,
+          "coverage90_wald_observed_ci95": [
+            0.621073173454686,
+            0.9679290628145363
+          ],
+          "coverage90_wald_crb": 0.85,
+          "coverage90_wald_crb_ci95": [
+            0.621073173454686,
+            0.9679290628145363
+          ]
+        },
+        "timing": {
+          "s_per_eval_median": 1.1444848387144093,
+          "wall_fit_s_median": 89.24581818149998,
+          "wall_fit_s_max": 98.48890126899983,
+          "n_eval_median": 78.5,
+          "wall_generate_s_median": 26.20210608800005
+        },
+        "all_converged": true,
+        "floor_meas_over_noise_median": 1.0416521441583797
+      },
+      {
+        "cell": "N50_fixed_100_snr20_hann",
+        "N": 50,
+        "speed": "fixed_100",
+        "snr_db": 20.0,
+        "taper": "hann",
+        "n_datasets": 20,
+        "kB0": {
+          "bias_rel": -0.0011614786889111938,
+          "bias_rel_se": 0.0025515313803608393,
+          "rmse_rel": 0.011202689338919275,
+          "crb_rel_mean": 0.009049233669754995,
+          "rmse_over_crb": 1.2350816537370557,
+          "max_abs_rel_err": 0.019181850678331003,
+          "se_obs_over_crb_median": 1.0159735882538294,
+          "coverage90_wald_observed": 0.9,
+          "coverage90_wald_observed_ci95": [
+            0.6830172859809177,
+            0.9876514728297052
+          ],
+          "coverage90_wald_crb": 0.8,
+          "coverage90_wald_crb_ci95": [
+            0.5633859970033317,
+            0.9426660029499672
+          ]
+        },
+        "cB": {
+          "bias_rel": -0.024059787116267505,
+          "bias_rel_se": 0.05903218043283826,
+          "rmse_rel": 0.3033979004062386,
+          "crb_rel_mean": 0.3119303074107684,
+          "rmse_over_crb": 0.9703147989093831,
+          "max_abs_rel_err": 0.505857321414894,
+          "se_obs_over_crb_median": 0.9479179848853609,
+          "coverage90_wald_observed": 1.0,
+          "coverage90_wald_observed_ci95": [
+            0.8315665290169146,
+            1.0
+          ],
+          "coverage90_wald_crb": 0.85,
+          "coverage90_wald_crb_ci95": [
+            0.621073173454686,
+            0.9679290628145363
+          ]
+        },
+        "timing": {
+          "s_per_eval_median": 0.8633990489171303,
+          "wall_fit_s_median": 64.03634171550016,
+          "wall_fit_s_max": 82.69110228,
+          "n_eval_median": 79.0,
+          "wall_generate_s_median": 25.436072011500016
+        },
+        "all_converged": true,
+        "floor_meas_over_noise_median": 0.9995744929717315
+      },
+      {
         "cell": "N50_fixed_100_snr40",
         "N": 50,
         "speed": "fixed_100",
@@ -315,6 +425,116 @@
         "floor_meas_over_noise_median": 0.9974813268414124
       },
       {
+        "cell": "N50_uniform_60_110_snr20",
+        "N": 50,
+        "speed": "uniform_60_110",
+        "snr_db": 20.0,
+        "taper": "none",
+        "n_datasets": 20,
+        "kB0": {
+          "bias_rel": 0.0008553767953881463,
+          "bias_rel_se": 0.000560682809579296,
+          "rmse_rel": 0.002584095067744874,
+          "crb_rel_mean": 0.0023087490217982088,
+          "rmse_over_crb": 1.1188428770400571,
+          "max_abs_rel_err": 0.007007914927386061,
+          "se_obs_over_crb_median": 1.003646878570437,
+          "coverage90_wald_observed": 0.85,
+          "coverage90_wald_observed_ci95": [
+            0.621073173454686,
+            0.9679290628145363
+          ],
+          "coverage90_wald_crb": 0.85,
+          "coverage90_wald_crb_ci95": [
+            0.621073173454686,
+            0.9679290628145363
+          ]
+        },
+        "cB": {
+          "bias_rel": 0.04920356387555408,
+          "bias_rel_se": 0.015957688222158827,
+          "rmse_rel": 0.0794382343166358,
+          "crb_rel_mean": 0.07504789589009143,
+          "rmse_over_crb": 1.0581078874137142,
+          "max_abs_rel_err": 0.2240530005505319,
+          "se_obs_over_crb_median": 0.9726904373123619,
+          "coverage90_wald_observed": 0.8,
+          "coverage90_wald_observed_ci95": [
+            0.5633859970033317,
+            0.9426660029499672
+          ],
+          "coverage90_wald_crb": 0.85,
+          "coverage90_wald_crb_ci95": [
+            0.621073173454686,
+            0.9679290628145363
+          ]
+        },
+        "timing": {
+          "s_per_eval_median": 1.0905746522731516,
+          "wall_fit_s_median": 81.88060060849998,
+          "wall_fit_s_max": 97.85309584999999,
+          "n_eval_median": 76.0,
+          "wall_generate_s_median": 27.01979357799985
+        },
+        "all_converged": true,
+        "floor_meas_over_noise_median": 1.0396528835278256
+      },
+      {
+        "cell": "N50_uniform_60_110_snr20_hann",
+        "N": 50,
+        "speed": "uniform_60_110",
+        "snr_db": 20.0,
+        "taper": "hann",
+        "n_datasets": 20,
+        "kB0": {
+          "bias_rel": 0.0007306787262751802,
+          "bias_rel_se": 0.0007826000673065177,
+          "rmse_rel": 0.003480981027902624,
+          "crb_rel_mean": 0.0029622372566492556,
+          "rmse_over_crb": 1.1747578209813507,
+          "max_abs_rel_err": 0.008579958050711767,
+          "se_obs_over_crb_median": 1.001946624848208,
+          "coverage90_wald_observed": 0.9,
+          "coverage90_wald_observed_ci95": [
+            0.6830172859809177,
+            0.9876514728297052
+          ],
+          "coverage90_wald_crb": 0.9,
+          "coverage90_wald_crb_ci95": [
+            0.6830172859809177,
+            0.9876514728297052
+          ]
+        },
+        "cB": {
+          "bias_rel": 0.023054485388057766,
+          "bias_rel_se": 0.025275393923650958,
+          "rmse_rel": 0.11067344221398373,
+          "crb_rel_mean": 0.10485503987312199,
+          "rmse_over_crb": 1.0550799646273346,
+          "max_abs_rel_err": 0.20873401353476817,
+          "se_obs_over_crb_median": 0.9779473417748701,
+          "coverage90_wald_observed": 0.85,
+          "coverage90_wald_observed_ci95": [
+            0.621073173454686,
+            0.9679290628145363
+          ],
+          "coverage90_wald_crb": 0.9,
+          "coverage90_wald_crb_ci95": [
+            0.6830172859809177,
+            0.9876514728297052
+          ]
+        },
+        "timing": {
+          "s_per_eval_median": 0.9034637252562225,
+          "wall_fit_s_median": 71.45548628850008,
+          "wall_fit_s_max": 84.71666722999998,
+          "n_eval_median": 79.0,
+          "wall_generate_s_median": 27.75653924949995
+        },
+        "all_converged": true,
+        "floor_meas_over_noise_median": 0.9987126655846915
+      },
+      {
         "cell": "N50_uniform_60_110_snr40",
         "N": 50,
         "speed": "uniform_60_110",
@@ -423,6 +643,116 @@
         },
         "all_converged": true,
         "floor_meas_over_noise_median": 1.0019774559729662
+      },
+      {
+        "cell": "N50_uniform_95_105_snr20",
+        "N": 50,
+        "speed": "uniform_95_105",
+        "snr_db": 20.0,
+        "taper": "none",
+        "n_datasets": 20,
+        "kB0": {
+          "bias_rel": -0.0006055155881908747,
+          "bias_rel_se": 0.0010596647250180912,
+          "rmse_rel": 0.004654932050145301,
+          "crb_rel_mean": 0.004410400809397593,
+          "rmse_over_crb": 1.0540058530798462,
+          "max_abs_rel_err": 0.010935113769154015,
+          "se_obs_over_crb_median": 1.0130389208591122,
+          "coverage90_wald_observed": 0.95,
+          "coverage90_wald_observed_ci95": [
+            0.7512672372279722,
+            0.9987349105020502
+          ],
+          "coverage90_wald_crb": 0.9,
+          "coverage90_wald_crb_ci95": [
+            0.6830172859809177,
+            0.9876514728297052
+          ]
+        },
+        "cB": {
+          "bias_rel": 0.06388458153986135,
+          "bias_rel_se": 0.03323500201927709,
+          "rmse_rel": 0.14411559417479117,
+          "crb_rel_mean": 0.15726766182577503,
+          "rmse_over_crb": 0.9146979765559153,
+          "max_abs_rel_err": 0.4058346861437512,
+          "se_obs_over_crb_median": 0.9793307269068976,
+          "coverage90_wald_observed": 0.85,
+          "coverage90_wald_observed_ci95": [
+            0.621073173454686,
+            0.9679290628145363
+          ],
+          "coverage90_wald_crb": 0.95,
+          "coverage90_wald_crb_ci95": [
+            0.7512672372279722,
+            0.9987349105020502
+          ]
+        },
+        "timing": {
+          "s_per_eval_median": 1.085502548791331,
+          "wall_fit_s_median": 85.45194086250001,
+          "wall_fit_s_max": 100.54038152100003,
+          "n_eval_median": 77.0,
+          "wall_generate_s_median": 27.16334579499994
+        },
+        "all_converged": true,
+        "floor_meas_over_noise_median": 1.045824315923292
+      },
+      {
+        "cell": "N50_uniform_95_105_snr20_hann",
+        "N": 50,
+        "speed": "uniform_95_105",
+        "snr_db": 20.0,
+        "taper": "hann",
+        "n_datasets": 20,
+        "kB0": {
+          "bias_rel": -0.00032943371188802196,
+          "bias_rel_se": 0.0013044977251905072,
+          "rmse_rel": 0.005691212577901683,
+          "crb_rel_mean": 0.006037083346239604,
+          "rmse_over_crb": 0.9413483380103331,
+          "max_abs_rel_err": 0.011434428155238763,
+          "se_obs_over_crb_median": 1.0006617869011611,
+          "coverage90_wald_observed": 0.9,
+          "coverage90_wald_observed_ci95": [
+            0.6830172859809177,
+            0.9876514728297052
+          ],
+          "coverage90_wald_crb": 0.95,
+          "coverage90_wald_crb_ci95": [
+            0.7512672372279722,
+            0.9987349105020502
+          ]
+        },
+        "cB": {
+          "bias_rel": -0.04076739916222173,
+          "bias_rel_se": 0.04458055739064506,
+          "rmse_rel": 0.2258800549662731,
+          "crb_rel_mean": 0.21632470282725175,
+          "rmse_over_crb": 1.0423415900587802,
+          "max_abs_rel_err": 0.4254120648916955,
+          "se_obs_over_crb_median": 1.0410590432915403,
+          "coverage90_wald_observed": 0.95,
+          "coverage90_wald_observed_ci95": [
+            0.7512672372279722,
+            0.9987349105020502
+          ],
+          "coverage90_wald_crb": 0.85,
+          "coverage90_wald_crb_ci95": [
+            0.621073173454686,
+            0.9679290628145363
+          ]
+        },
+        "timing": {
+          "s_per_eval_median": 0.901794849185813,
+          "wall_fit_s_median": 72.58482759449998,
+          "wall_fit_s_max": 83.95554773500021,
+          "n_eval_median": 79.5,
+          "wall_generate_s_median": 28.081892242499862
+        },
+        "all_converged": true,
+        "floor_meas_over_noise_median": 1.0020038760060421
       },
       {
         "cell": "N50_uniform_95_105_snr40",
@@ -537,10 +867,10 @@
     ]
   },
   "provenance": {
-    "git_commit": "97ae3cd6eee72e68280058c823e19be5f0b57083",
-    "timestamp_utc": "2026-10-11T22:01:17Z",
-    "wall_seconds": 14389.369319402012,
-    "peak_cpu_memory_mb": 95.8203125,
+    "git_commit": "c18d4dd8ecaad5e0e87d6fd240bbda7fac94d08c",
+    "timestamp_utc": "2026-10-12T08:38:00Z",
+    "wall_seconds": 26705.698726469014,
+    "peak_cpu_memory_mb": 95.51953125,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

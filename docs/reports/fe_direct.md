@@ -54,3 +54,21 @@ Hann taper in both the floor estimate and the likelihood; every second bin, beca
 3. **No sign that leakage breaks the independent-bin assumption at this level.** For the rectangular estimator, RMSE/CRB is 0.70–0.97 and coverage 0.90–1.00, within the ±16% / ±0.07 sampling error of 20 datasets. A real violation would show RMSE above the CRB and coverage below nominal.
 4. **The tapered estimator is worse.** Its own CRB is 1.28–1.38× the reference, from decimation plus taper loss. Its RMSE is 1.24–1.43× the reference CRB for kB0 and 1.56–1.74× for cB. Coverage with its own observed SE is 0.85–0.95. Its RMSE exceeds its own nominal CRB by up to 1.11× (kB0) and 1.25× (cB), probably from the residual lag-2 bin correlation (|ρ|² ≈ 0.03) and the local-spectrum approximation.
 5. **Recommendation.** Keep the rectangular estimator at this SNR, and flag the floor as "noise plus leakage" in the paper. Rerun the paired check at 20 dB before claiming robustness to the floor. If tapering becomes necessary, a multitaper or full-bin Hann likelihood with the bin covariance would recover most of the lost efficiency.
+
+## Taper check at 20 dB SNR (N = 50, paired, 20 datasets per speed case)
+Source: `results/p1/fe_direct_taper_compare_snr20.json`. The datasets are new (the seed key includes the SNR), so they are not paired with the 40 dB runs. All 120 fits converged.
+
+| speeds | taper | floor / noise | kB0 bias | kB0 RMSE / CRB_ref | cov90 kB0 | cB bias | cB RMSE / CRB_ref | cov90 cB |
+|---|---|---|---|---|---|---|---|---|
+| fixed 100 | rect | 1.04 | −0.10 ± 0.18% | 1.22 | 0.80 | +3.8 ± 5.6% | 1.12 | 0.85 |
+| fixed 100 | Hann | 1.00 | −0.12 ± 0.26% | 1.70 | 0.90 | −2.4 ± 5.9% | 1.35 | 1.00 |
+| 95–105 | rect | 1.05 | −0.06 ± 0.11% | 1.05 | 0.95 | +6.4 ± 3.3% | 0.91 | 0.85 |
+| 95–105 | Hann | 1.00 | −0.03 ± 0.13% | 1.29 | 0.90 | −4.1 ± 4.5% | 1.43 | 0.95 |
+| 60–110 | rect | 1.04 | +0.09 ± 0.06% | 1.12 | 0.85 | +4.9 ± 1.6% | 1.06 | 0.80 |
+| 60–110 | Hann | 1.00 | +0.07 ± 0.08% | 1.51 | 0.90 | +2.3 ± 2.5% | 1.47 | 0.85 |
+
+1. At 20 dB, leakage is negligible next to the sensor noise: the measured rectangular floor is only 1.04–1.05× the true noise. The CRB barely changes from 40 dB (kB0: 0.66% / 0.44% / 0.23%).
+2. **kB0, rectangular window.** Bias is within 1.5 SE, and RMSE/CRB is 1.05–1.22. Pooled coverage is 52/60 = 0.87.
+3. **kB0, Hann.** RMSE/CRB_ref is 1.29–1.70, about 1.3× its own CRB inflation. Pooled coverage is 54/60 = 0.90, slightly closer to nominal.
+4. **cB, rectangular window.** At 60–110 km/h the bias is +4.9 ± 1.6% (3 SE). cB is a secondary output, but this bias is real at N = 50 and 20 dB.
+5. **Verdict.** Unchanged: keep the rectangular estimator, since Hann costs 1.3–1.7× in RMSE. Rectangular kB0 coverage at 20 dB sits at the low edge of [0.85, 0.95]. A profile-likelihood interval should replace Wald before any coverage claim.
