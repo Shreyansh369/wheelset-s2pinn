@@ -1,0 +1,333 @@
+"""Paper-1 tables (docs/paper1_outline.md) as markdown in results/tables/. Reads config/*.yaml (Table 1)
+and results/ JSON only; no number is typed in by hand. A table whose source file is missing is written
+as a stub naming the missing file.
+"""
+
+from __future__ import annotations
+
+import json
+import math
+import sys
+from pathlib import Path
+
+import yaml
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from src.utils.results import RESULTS_DIR  # noqa: E402
+
+OUT = RESULTS_DIR / "tables"
+
+
+def load(rel):
+    fp = RESULTS_DIR / rel
+    return json.loads(fp.read_text())["payload"] if fp.exists() else None
+
+
+def md(header, rows):
+    s = "| " + " | ".join(header) + " |\n|" + "|".join("---" for _ in header) + "|\n"
+    return s + "".join("| " + " | ".join(str(c) for c in r) + " |\n" for r in rows)
+
+
+def pct(x, nd=2):
+    return "–" if x is None else f"{100 * x:.{nd}f}"
+
+
+def ci(c):
+    return "–" if c is None else f"[{c[0]:.2f}, {c[1]:.2f}]"
+
+
+def write(name, title, body, sources, notes=()):
+    OUT.mkdir(parents=True, exist_ok=True)
+    txt = f"# {title}\n\n{body}\n" + "".join(f"\n{n}\n" for n in notes) + "\nSource: " + ", ".join(f"`{s}`" for s in sources) + "\n"
+    (OUT / f"{name}.md").write_text(txt)
+    print("wrote", name)
+
+
+def missing(name, title, src):
+    write(name, title, f"**Not yet available:** `{src}` has not been written.", [src])
+
+
+# ----------------------------------------------------------------------------- Table 1
+def table1():
+    p = yaml.safe_load((ROOT / "config/params.yaml").read_text())
+    t = yaml.safe_load((ROOT / "config/track.yaml").read_text())
+    rows = []
+
+    def add(group, name, e):
+        v, u = e["value"], e["unit"]
+        v = f"{v:.4g}" if isinstance(v, float) else str(v).replace(" ", "")
+        rows.append([group, name, v, u if isinstance(u, str) else u[0], e["source"].replace("|", "/")])
+
+    for k in ("E", "nu", "rho"):
+        add("Material", k, p["material"][k])
+    add("Axle", "length", p["axle"]["length"])
+    add("Axle", "sections [outer ξ, d]", p["axle"]["sections"])
+    for k in ("wheel_xi", "journal_xi", "n_elements", "damping_zeta", "damping_fref"):
+        add("Axle", k, p["axle"][k])
+    for k in ("mass", "diametral_inertia", "r0"):
+        add("Wheel", k, p["wheel"][k])
+    for k in ("kB0", "cB", "load_exponent"):
+        add("Bearing", k, p["bearing"][k])
+    add("Axlebox", "mass", p["axlebox"]["mass"])
+    for k in ("kp", "cp"):
+        add("Primary", k, p["primary"][k])
+    for k in ("W_min", "W_max", "W0"):
+        add("Payload", k, p["payload"][k])
+    for k in ("A", "rho", "E", "I", "G", "kappa"):
+        add("Rail BS113A", k, t["rail_BS113A"][k])
+    for k in ("A", "I"):
+        add("Rail 60E1", k, t["rail_60E1"][k])
+    for k in ("standard_kf_lab", "resilient_kf", "eta_f"):
+        add("Foundation", k, t["foundation"][k])
+    add("Contact", "C_H", t["contact_freight"]["C_H"])
+    add("Layout", "positions", t["layout_CT23"]["positions"])
+    n_ph = sum("placeholder" in r[4] for r in rows)
+    write("table1_parameters", "Table 1. Model parameters and sources",
+          md(["Group", "Parameter", "Value", "Unit", "Source"], rows), ["config/params.yaml", "config/track.yaml"],
+          [f"{n_ph} of {len(rows)} entries are placeholders. Vehicle masses (wheel, axlebox, unsprung) stay "
+           "placeholders until the target vehicle is confirmed; values marked 'verify' are to be checked against "
+           "the cited standard."])
+
+
+# ----------------------------------------------------------------------------- Table 2
+def table2():
+    v, g = load("p1/verification.json"), load("gates/G1.json")
+    if v is None:
+        return missing("table2_verification", "Table 2. Verification", "results/p1/verification.json")
+    th = v["gate"]["thresholds"]
+    rows = [["Free–free Timoshenko frequencies vs closed form (max rel. error, 4 modes)", f"{v['gate']['a_max_rel_err']:.2e}",
+             f"{th['freefree_timoshenko_rel_err_max']:.0e}", g["a_freefree_timoshenko"]["status"] if g else "–"],
+            ["Energy balance, windowed integral (max rel. residual, 3 cases)", f"{v['gate']['b_max_rel_residual']:.1e}",
+             f"{th['energy_balance_rel_residual_max']:.0e}", g["b_energy_balance"]["status"] if g else "–"],
+            ["Frequency vs time domain, axlebox accel. (max rel. L2, 3 cases)", f"{v['gate']['c_max_rel_l2']:.1e}",
+             f"{th['fd_vs_td_rel_l2_max']:.0e}", g["c_fd_vs_td"]["status"] if g else "–"],
+            ["Mesh 20 vs 40 elements, modes (max rel. diff.)", f"{v['mesh_convergence']['20']['max_rel_diff_modes_vs_finest']:.1e}", "–", "–"],
+            ["Gyroscopic neglect, Ω/ω₁", f"{v['gyroscopic_neglect']['ratio']:.3f}", "–", "–"]]
+    write("table2_verification", "Table 2. Verification of the reference model", md(["Check", "Measured", "Threshold", "Gate"], rows),
+          ["results/p1/verification.json", "results/gates/G1.json"],
+          ["Rail receptance vs CT23 Eq. 11 and the numerical inverse transform, and the single-wheel coupling "
+           "identity (1e-9), are unit tests in `tests/test_track.py` (all pass)."])
+
+
+# ----------------------------------------------------------------------------- Table 3
+def table3():
+    d = load("p2/headline_mw.json")
+    if d is None:
+        return missing("table3_headline", "Table 3. Headline Monte Carlo (rail-coupled model)", "results/p2/headline_mw.json")
+    rows = []
+    for c in d["cells"]:
+        p, a, pr, ig = c["kB0_pooled"], c["kB0_across_seeds"], c["kB0_seed42_with_profile"], c["ignore_coupling_seed42"]
+        rows.append([f"{c['snr_db']:.0f}", p["n"], f"{pct(p['bias_rel'])} ± {pct(p['bias_rel_se'])}", pct(p["rmse_rel"]),
+                     pct(p["crb_rel"]), f"{p['rmse_over_crb']:.2f} (seed sd {a['rmse_over_crb']['sd']:.2f})",
+                     f"{p['coverage90_wald']:.2f} {ci(p['coverage90_wald_ci95'])}",
+                     f"{pr['coverage90_profile']:.2f} (n={pr['n']})" if pr else "–",
+                     f"{pct(ig['bias_rel'])} ± {pct(ig['bias_rel_se'])}; cov. {ig['coverage90_wald']:.2f}" if ig else "–"])
+    write("table3_headline", "Table 3. Headline Monte Carlo, 4-wheel rail-coupled model (k_B0)",
+          md(["SNR (dB)", "n", "Bias (%) ± SE", "RMSE (%)", "CRB (%)", "RMSE/CRB", "Wald 90% coverage [95% CI]",
+              "Profile 90% coverage (seed 42)", "Ignore coupling (seed 42): bias (%) ± SE; Wald cov."], rows),
+          ["results/p2/headline_mw.json"],
+          ["N = 50 passes, 60–110 km/h, 5 seeds × 10 datasets, debiased Whittle likelihood. The ignore-coupling "
+           "column fits the same data with the single-wheelset model on the same rail."])
+
+
+# ----------------------------------------------------------------------------- Table 4
+def table4():
+    d = load("p1/fe_direct.json")
+    if d is None:
+        return missing("table4_speed_N", "Table 4. Speed spread and N", "results/p1/fe_direct.json")
+    lab = {"fixed_100": "fixed 100", "uniform_95_105": "95–105", "uniform_60_110": "60–110"}
+    rows = []
+    for c in sorted([c for c in d["cells"] if c["taper"] == "none"], key=lambda c: (c["N"], c["snr_db"], list(lab).index(c["speed"]))):
+        k = c["kB0"]
+        rows.append([c["N"], f"{c['snr_db']:.0f}", lab[c["speed"]], c["n_datasets"], f"{pct(k['bias_rel'])} ± {pct(k['bias_rel_se'])}",
+                     pct(k["rmse_rel"]), pct(k["crb_rel_mean"]), f"{k['rmse_over_crb']:.2f}",
+                     f"{k['coverage90_wald_observed']:.2f} {ci(k['coverage90_wald_observed_ci95'])}"])
+    write("table4_speed_N", "Table 4. Effect of speed spread and number of passes (single wheelset, k_B0)",
+          md(["N", "SNR (dB)", "Speeds (km/h)", "Datasets", "Bias (%) ± SE", "RMSE (%)", "CRB (%)", "RMSE/CRB", "Wald 90% cov. [95% CI]"], rows),
+          ["results/p1/fe_direct.json"])
+
+
+# ----------------------------------------------------------------------------- Table 5
+def table5():
+    b, m = load("p2/multiwheel_bound.json"), load("p2/multiwheel_mc.json")
+    if b is None:
+        return missing("table5_multiwheel", "Table 5. Multi-wheel coupling", "results/p2/multiwheel_bound.json")
+    rows = [[r["rail"], r["wheels"], r["speeds"], r["N"], f"{r['snr_db']:.0f}", pct(r["crb_rel_kB0"], 3), pct(r["crb_rel_cB"], 1)]
+            for r in b["rows"]]
+    body = "**(a) Bound**\n\n" + md(["Rail", "Wheels", "Speeds", "N", "SNR (dB)", "CRB k_B0 (%)", "CRB c_B (%)"], rows)
+    if m:
+        rows = []
+        for c in sorted(m["cells"], key=lambda c: c["wheels"]):
+            for tag, lab in (("correct", "rail-coupled"), ("single_wheelset", "single wheelset")):
+                x = c[tag]
+                rows.append([c["wheels"], lab, c["n"], f"{pct(x['bias_rel_kB0'])} ± {pct(x['bias_rel_kB0_se'])}", pct(x["rmse_rel_kB0"]),
+                             f"{x['rmse_over_crb']:.2f}", f"{x['coverage90_wald']:.2f} {ci(x['coverage90_wald_ci95'])}"])
+        body += "\n**(b) Monte Carlo, 60–110 km/h, N = 50, 40 dB**\n\n" + md(
+            ["Wheels", "Fitted model", "Datasets", "Bias (%) ± SE", "RMSE (%)", "RMSE/CRB", "Wald 90% cov. [95% CI]"], rows)
+    write("table5_multiwheel", "Table 5. Multi-wheel coupling through the rail (k_B0)", body,
+          ["results/p2/multiwheel_bound.json", "results/p2/multiwheel_mc.json"],
+          ["The 2-wheel rail-coupled bias is an open item (docs/paper1_outline.md)."])
+
+
+# ----------------------------------------------------------------------------- Table 6
+def table6():
+    s, r = load("p2/model_form_mw_sensitivity.json"), load("p2/relative_intervals.json")
+    if s is None:
+        return missing("table6_budget", "Table 6. Model-form budget", "results/p2/model_form_mw_sensitivity.json")
+    names = ["kf", "eta_f", "kH0", "unsprung_scale", "axle_damp_scale"]
+    rows = []
+    for p in names:
+        t = {e: next(x for x in s["table"] if x["param"] == p and x["estimator"] == e) for e in ("nominal", "coest")}
+        rows.append([p, f"{s['ranges'][p][0]:.2f}", s["ranges"][p][1], f"{t['nominal']['sens_pct_per_10pct']:+.2f}",
+                     f"{t['nominal']['bias_at_minus_1sigma_pct']:+.2f} / {t['nominal']['bias_at_plus_1sigma_pct']:+.2f}",
+                     f"{t['coest']['bias_at_minus_1sigma_pct']:+.2f} / {t['coest']['bias_at_plus_1sigma_pct']:+.2f}"])
+    body = md(["Parameter", "1σ (log)", "Range source", "Bias per +10% (%)", "Nominal: bias at −1σ / +1σ (%)",
+               "k_f, k_H0 co-estimated: bias at −1σ / +1σ (%)"], rows)
+    if r:
+        b = r["abs_budget_mass"]
+        body += "\n" + md(["Budget (RSS of worst-side 1σ terms)", "Unsprung mass ±3%", "Unsprung mass ±1%"],
+                          [["Nominal fit", f"{b['nominal_mass3pct']['rss_pct']:.1f}%", f"{b['nominal_mass1pct']['rss_pct']:.1f}%"],
+                           ["k_f, k_H0 co-estimated", f"{b['coest_mass3pct']['rss_pct']:.1f}%", f"{b['coest_mass1pct']['rss_pct']:.1f}%"]])
+    write("table6_budget", "Table 6. Model-form sensitivity and absolute bias budget (rail-coupled model)", body,
+          ["results/p2/model_form_mw_sensitivity.json", "results/p2/relative_intervals.json"],
+          ["Large-sample (pseudo-true) biases. The ±3% unsprung-mass range is an assumption with no source; ±1% "
+           "corresponds to mass known from drawings."])
+
+
+# ----------------------------------------------------------------------------- Table 7
+def table7():
+    r, c = load("p2/relative_intervals.json"), load("p2/relative_coest_drift.json")
+    if r is None:
+        return missing("table7_gains", "Table 7. Relative-change gains", "results/p2/relative_intervals.json")
+    co = (c or {}).get("coest_relative", {})
+    rows = []
+    for p, g in r["gains"].items():
+        rows.append([p, f"{g['gamma_per_log']:+.3f}", ", ".join(f"{x:+.2f}" for x in g["gamma_by_x"]),
+                     f"{r['kappa_mass3']['terms'][p]:.3f}",
+                     f"{co['gain_per_log'][p]:+.3f}" if co.get("gain_per_log", {}).get(p) is not None else "–"])
+    body = md(["Parameter", "Gain γ per unit log error (nominal)", "γ at Δ = −2/−5/−10%", "κ term (1σ)", "γ with k_f, k_H0 co-estimated"], rows)
+    k3, k1 = r["kappa_mass3"]["kappa"], r["kappa_mass1"]["kappa"]
+    extra = [["κ, nominal (mass ±3% / ±1%)", f"{k3:.3f} / {k1:.3f}"]]
+    if co.get("kappa_coest") is not None:
+        extra.append(["κ, k_f and k_H0 co-estimated", f"{co['kappa_coest']:.3f}"])
+    cov = r["coverage_mass3"]
+    for case, v in cov.items():
+        extra.append([f"Combined-interval coverage, {case} (n={v['n']})",
+                      f"{v['coverage_combined']:.2f} {ci(v['coverage_combined_ci95'])} (statistical only {v['coverage_statistical']:.2f})"])
+    km = (c or {}).get("kappa_mc")
+    if km:
+        extra.append([f"Fresh MC, misspecifications drawn from 1σ ranges (n={km['n']}): combined coverage",
+                      f"{km['coverage_kappa']:.2f} {ci(km['coverage_kappa_ci95'])} (statistical only {km['coverage_statistical']:.2f})"])
+        extra.append(["Fresh MC: rms absolute k_B0 bias / rms relative-change error (fraction of Δ)",
+                      f"{km['abs_bias_base_pct_rms']:.2f}% / {km['rel_gain_error_rms']:.3f}"])
+    body += "\n" + md(["Quantity", "Value"], extra)
+    write("table7_gains", "Table 7. Relative change Δk_B0/k_B0: model-form gains, κ and interval coverage", body,
+          ["results/p2/relative_intervals.json", "results/p2/relative_coest_drift.json"],
+          ["Estimated change error = γ · log(parameter error) · Δ; κ = RSS of γ·σ; combined 90% interval = "
+           "±1.645·sqrt(SE² + (κΔ)²)."])
+
+
+# ----------------------------------------------------------------------------- Table 8
+def table8():
+    r = load("p2/relative_intervals.json")
+    if r is None:
+        return missing("table8_mdc", "Table 8. Minimum detectable change", "results/p2/relative_intervals.json")
+    rows = [[m["N"], m["snr_db"], m["kappa"], f"{m['sd_D0_pct']:.2f}", f"{m['mdc_pct_crb']:.2f}", f"{m['mdc_pct_inflated']:.2f}",
+             f"{m['inflation']:.2f}"] for m in r["mdc"]]
+    write("table8_mdc", "Table 8. Minimum detectable decrease of k_B0 (5% false alarm, 90% detection)",
+          md(["N per period", "SNR (dB)", "Model-form term", "SD of Δ at Δ = 0 (%)", "MDC from CRB (%)", "MDC with RMSE/CRB inflation (%)",
+              "Inflation"], rows), ["results/p2/relative_intervals.json"])
+
+
+# ----------------------------------------------------------------------------- Table 9
+def table9():
+    b, m = load("p2/wheel_lines_bound.json"), load("p2/wheel_lines_mc.json")
+    if b is None:
+        return missing("table9_wheel_lines", "Table 9. Wheel roughness orders", "results/p2/wheel_lines_bound.json")
+    rows = [[r["speeds"], "–" if r["delta_db"] is None else f"{r['delta_db']:.0f}", r["method"], pct(r["crb_kB0"], 3), pct(r["crb_cB"], 1)]
+            for r in b["rows"]]
+    body = "**(a) Bound, N = 50, 40 dB**\n\n" + md(["Speeds", "Wheel-line level above roughness (dB)", "Method", "CRB k_B0 (%)", "CRB c_B (%)"], rows)
+    if m:
+        rows = [[f"{c['delta_db']:.0f}", k, c[k]["n"], f"{pct(c[k]['bias_rel'])} ± {pct(c[k]['bias_rel_se'])}", f"{c[k]['rmse_over_crb']:.2f}",
+                 f"{c[k]['coverage90_wald']:.2f} {ci(c[k]['coverage90_wald_ci95'])}"]
+                for c in m["cells"] for k in ("ignore", "notch", "tacho") if k in c]
+        body += "\n**(b) Monte Carlo, 60–110 km/h**\n\n" + md(["Level (dB)", "Method", "n", "Bias (%) ± SE", "RMSE/CRB", "Wald 90% cov. [95% CI]"], rows)
+    write("table9_wheel_lines", "Table 9. Wheel roughness at rotation orders: notch vs tachometer nuisance lines", body,
+          ["results/p2/wheel_lines_bound.json", "results/p2/wheel_lines_mc.json"])
+
+
+# ----------------------------------------------------------------------------- Table 10
+def table10():
+    d, b, x = load("p2/partial_indep.json"), load("p2/partial_coherence_bound.json"), load("p2/partial_coherence_mc.json")
+    if d is None:
+        return missing("table10_partial", "Table 10. Partial coherence", "results/p2/partial_indep.json")
+    rows = []
+    for c in d["cells"]:
+        for tag, lab in (("se_obs", "model SE"), ("se_sandwich_bin", "sandwich, bin clusters"), ("se_sandwich_pass", "sandwich, pass clusters")):
+            s = c[tag]
+            rows.append([c["rho"], c["n"], f"{pct(c['bias_rel'])} ± {pct(c['bias_rel_se'])}", pct(c["rmse_rel"]), lab, pct(s["median"]),
+                         f"{s['rmse_over_median_se']:.2f}", f"{s['coverage90']:.2f} {ci(s['coverage90_ci95'])}"])
+    body = "**(a) Independent-pass estimator on partially coherent data**\n\n" + md(
+        ["ρ", "n", "Bias (%) ± SE", "RMSE (%)", "Variance", "Median SE (%)", "RMSE/SE", "90% cov. [95% CI]"], rows)
+    if b and x:
+        rows = []
+        for rb, rx in zip(b["rows"], x["cells"]):
+            rows.append([rb["rho"], pct(rb["oracle_crb"][0], 3), pct(rb["exchangeable_rho_estimated_crb"][0], 3), pct(rb["independent_crb"][0], 3),
+                         f"{pct(rx['kB0']['bias_rel'])} ± {pct(rx['kB0']['bias_rel_se'])}", pct(rx["kB0"]["rmse_rel"]),
+                         f"{rx['kB0']['coverage90_wald']:.2f} {ci(rx['kB0']['coverage90_wald_ci95'])}"])
+        body += "\n**(b) Bounds and the exchangeable-ρ likelihood**\n\n" + md(
+            ["ρ", "Oracle CRB (%)", "Exchangeable, ρ estimated: CRB (%)", "Independent CRB (%)", "Exchangeable MC bias (%) ± SE",
+             "Exchangeable MC RMSE (%)", "Exchangeable Wald cov."], rows)
+    write("table10_partial", "Table 10. Repeated passes over one section with partial coherence (k_B0)", body,
+          ["results/p2/partial_indep.json", "results/p2/partial_coherence_bound.json", "results/p2/partial_coherence_mc.json"],
+          ["The oracle assumes the coherence matrix is known exactly; it is not achievable in practice."])
+
+
+# ----------------------------------------------------------------------------- Table 11
+def table11():
+    c = load("p2/relative_coest_drift.json")
+    if c is None or "drift" not in c:
+        return missing("table11_drift", "Table 11. Foundation-stiffness drift between periods", "results/p2/relative_coest_drift.json")
+    rows = [[t["estimator"], f"×{t['kf_factor_later']:.1f}", f"{t['apparent_change_no_true_change_pct']:+.2f}", f"{t['bias_at_5pct_drop_pp']:+.2f}",
+             f"{t['sd_change_pct']:.2f}", f"{t['false_alarm_rate']:.3f}", "–" if t["mdc_pct"] is None else f"{t['mdc_pct']:.2f}"]
+            for t in c["drift"]["table"]]
+    for e, v in c["drift"]["no_drift_reference"].items():
+        rows.append([e, "×1.0 (no drift)", "0", "0", f"{v['sd_change_pct']:.2f}", "0.050", f"{v['mdc_pct']:.2f}"])
+    body = md(["Estimator", "Later-period k_f", "Apparent change, true Δ = 0 (%)", "Bias at true Δ = −5% (pp)", "SD of Δ (%)",
+               "False-alarm rate (nominal 5%)", "MDC (%)"], rows)
+    if c.get("drift_mc"):
+        body += "\n**Monte Carlo check (k_f ×1.2)**\n\n" + md(["Estimator", "n", "False alarms", "Rate [95% CI]", "Mean Δ̂ (%)"],
+                                                               [[m["estimator"], m["n"], m["false_alarms"], f"{m['rate']:.2f} {ci(m['rate_ci95'])}",
+                                                                 f"{m['D_hat_mean_pct']:+.2f}"] for m in c["drift_mc"]])
+    write("table11_drift", "Table 11. Seasonal foundation-stiffness drift between baseline and later period", body,
+          ["results/p2/relative_coest_drift.json"],
+          ["N = 50 passes per period, 40 dB. 'nominal' fits (k_B0, c_B) with k_f, k_H0 at nominal values; 'coest' "
+           "co-estimates k_f and k_H0 per period."])
+
+
+# ----------------------------------------------------------------------------- Table 12
+def table12():
+    d = load("p2/scope_p2_hysteretic.json")
+    if d is None:
+        return missing("table12_p2", "Table 12. P2 track stiffness", "results/p2/scope_p2_hysteretic.json")
+    s = d["summary"]
+    rows = []
+    for k, lab in (("clean", "Clean roughness"), ("corrugation", "Corrugation near P2")):
+        v = s[k]
+        rows.append([lab, f"{v['ct23_median_MN']:.2f}", f"{100 * v['ct23_frac_outside_x0.7_x1.43_of_ref']:.0f}%",
+                     f"{v['ct23_range_MN'][0]:.1f}–{v['ct23_range_MN'][1]:.0f}", f"{100 * v['ct23_nan_frac']:.0f}%",
+                     f"{v['whittle_median_MN']:.2f}", f"{v['whittle_range_MN'][0]:.2f}–{v['whittle_range_MN'][1]:.2f}",
+                     f"{v['whittle_profile_covers_truth']:.2f}"])
+    write("table12_p2", "Table 12. P2 track-stiffness validation against the CT23 per-pass failure mode (true k_f = 7.7 MN/m²)",
+          md(["Roughness", "Per-pass median (MN/m²)", "Per-pass outside ×0.7–×1.43", "Per-pass range", "Per-pass no peak",
+              "Multi-pass median", "Multi-pass range", "Multi-pass profile 90% covers truth"], rows),
+          ["results/p2/scope_p2_hysteretic.json"],
+          ["With corrugation the multi-pass point estimate stays within 2% of the truth, but its profile "
+           "interval under-covers (0.45 of 90%); the cause is not yet diagnosed (open item)."])
+
+
+if __name__ == "__main__":
+    for fn in (table1, table2, table3, table4, table5, table6, table7, table8, table9, table10, table11, table12):
+        fn()

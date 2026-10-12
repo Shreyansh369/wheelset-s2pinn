@@ -249,6 +249,9 @@ def fig7():
         ct = np.array([x for r in rows if r["corrugation"] == corr for x in r["ct23_kf"] if x is not None]) / 1e6
         wk = np.array([r["whittle_kf"] for r in rows if r["corrugation"] == corr]) / 1e6
         x0 = 2 * k
+        n_hi = int(np.sum(ct > 50))
+        if n_hi:
+            ax.annotate(f"{n_hi} per-pass values > 50", (x0 - 0.3, 42), ha="left", fontsize=6.5, color=INK2)
         ax.scatter(x0 + rng.uniform(-0.25, 0.25, ct.size), ct, s=8, color=C[1], alpha=0.6, lw=0,
                    label="Per-pass peak fit (CT23)" if k == 0 else None)
         ax.scatter(x0 + 1 + rng.uniform(-0.25, 0.25, wk.size), wk, s=10, color=C[0], lw=0,
@@ -260,7 +263,7 @@ def fig7():
     ax.minorticks_off()
     ax.set_xticks([0.5, 2.5], ["Clean roughness", "Corrugation near P2"])
     ax.set_ylabel("$k_f$ estimate (MN/m$^2$)")
-    ax.legend(loc="upper left")
+    ax.legend(loc="upper left", bbox_to_anchor=(0, 0.93))
     save(fig, "fig7_p2_validation")
 
 
