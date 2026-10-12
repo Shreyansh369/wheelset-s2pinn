@@ -86,7 +86,7 @@ def sensitivity(args):
                 sig = RANGES[pname][0]
                 fp = out / f"{ename}__{pname}.jsonl"
                 done = {json.loads(l)["factor"] for l in fp.read_text().splitlines()} if fp.exists() else set()
-                for f in (0.9, 1.1, math.exp(-sig), math.exp(sig)):
+                for f in (args.factors or (0.9, 1.1, math.exp(-sig), math.exp(sig))):
                     if round(f, 6) in {round(x, 6) for x in done}:
                         continue
                     true_all = dict(thb, **TRUTH, **NOM)
@@ -220,6 +220,7 @@ if __name__ == "__main__":
     ap.add_argument("--params", nargs="+", default=list(PARAMS))
     ap.add_argument("--summarise", action="store_true")
     ap.add_argument("--validate-pseudo", action="store_true")
+    ap.add_argument("--factors", type=float, nargs="+", default=None, help="override the perturbation factors")
     a = ap.parse_args()
     if a.validate_osc:
         validate_osc(a)

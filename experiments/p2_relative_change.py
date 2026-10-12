@@ -41,7 +41,8 @@ from src.utils.results import RESULTS_DIR, save_result  # noqa: E402
 
 CASES = {"control": {}, "unsprung_x0.95": {"unsprung_scale": 0.95}, "unsprung_x1.05": {"unsprung_scale": 1.05},
          "kH0_x0.85": {"kH0": 0.85}, "kH0_x1.15": {"kH0": 1.15}, "axle_damp_x0.5": {"axle_damp_scale": 0.5},
-         "axle_damp_x2": {"axle_damp_scale": 2.0}, "kf_x0.8": {"kf": 0.8}, "kf_x1.2": {"kf": 1.2}}
+         "axle_damp_x2": {"axle_damp_scale": 2.0}, "kf_x0.8": {"kf": 0.8}, "kf_x1.2": {"kf": 1.2},
+         "eta_f_x0.82": {"eta_f": 0.82}, "eta_f_x1.22": {"eta_f": 1.22}}
 REDUCTIONS = (0.02, 0.05, 0.10)
 RUN_DIR = RESULTS_DIR / "p2" / "relative_change_runs"
 N, SPEEDS = 50, (60.0, 110.0)

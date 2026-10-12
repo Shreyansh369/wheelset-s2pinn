@@ -491,6 +491,36 @@ class MultiPassWhittle:
                 p.c2 = c2
             self.lw_meas = saved[1]
 
+    def sandwich_cov(self, phi, logg, lw, cluster: str = "bin", h: float = 1e-4) -> dict:
+        """Robust (sandwich) covariance of the globals, J^-1 M J^-1 over all parameters.
+
+        Per-bin score contributions s_ik = D_ik (|c_ik|^2 / v_ik - 1) (plus the WIM-prior score of each
+        pass as its own cluster) are summed within clusters: cluster="bin" groups the same DFT bin
+        (same spatial wavenumber) across passes, which is where a shared roughness profile correlates
+        passes; cluster="pass" groups by pass. M = sum over clusters of s s^T; J is the expected Fisher.
+        """
+        J, parts, d, n = self._fisher_parts(phi, logg, lw, h)
+        clusters: dict = {}
+        N = len(self.P)
+        off_w = n - N - (N if self.fit_noise else 0)
+        for i, ((D, v), p) in enumerate(zip(parts, self.P)):
+            S = D * (p.c2 / v - 1)[:, None]
+            if cluster == "pass":
+                clusters[("pass", i)] = clusters.get(("pass", i), 0) + S.sum(0)
+            else:
+                for kk, row in zip(p.k, S):
+                    clusters[int(kk)] = clusters.get(int(kk), 0) + row
+            pr = np.zeros(n)
+            pr[off_w + i] = -(lw[i] - self.lw_meas[i]) / self.sW**2
+            clusters[("prior", i)] = pr
+        Sm = np.array([np.asarray(v, float) if np.ndim(v) else np.zeros(n) for v in clusters.values()])
+        M = Sm.T @ Sm
+        sc = 1 / np.sqrt(np.diag(J))
+        Ci = np.linalg.inv(J * np.outer(sc, sc)) * np.outer(sc, sc)
+        V = Ci @ M @ Ci
+        return {"se_log_sandwich": [float(math.sqrt(max(V[a, a], 0))) for a in range(d)],
+                "se_log_model": [float(math.sqrt(Ci[a, a])) for a in range(d)], "n_clusters": len(clusters)}
+
     def expected_fisher(self, phi, logg, lw, h: float = 1e-4) -> dict:
         J, parts, d, n = self._fisher_parts(phi, logg, lw, h)
         sc = 1 / np.sqrt(np.diag(J))
