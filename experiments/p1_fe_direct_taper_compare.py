@@ -1,4 +1,4 @@
-"""Tapered vs untapered Whittle estimator on the same datasets (N = 50, three speed cases, 20 each).
+"""Tapered vs untapered Whittle estimator on the same datasets (N = 50, three speed cases, 20 each; --snr 40 or 20).
 
 Reads results/p1/fe_direct_runs/N50_<speed>_snr40.jsonl (rectangular window, all bins, floor measured
 from the record: noise + leakage) and N50_<speed>_snr40_hann.jsonl (Hann taper in both the floor
@@ -11,6 +11,7 @@ Writes results/p1/fe_direct_taper_compare.json.
 
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import sys
@@ -47,10 +48,13 @@ def stats(rows: list[dict], ref: list[float], j: int) -> dict:
 
 
 def main() -> None:
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--snr", type=int, default=40)
+    snr = ap.parse_args().snr
     cells = []
     for speed in SPEEDS:
-        a = load(RUN_DIR / f"N50_{speed}_snr40.jsonl")
-        b = load(RUN_DIR / f"N50_{speed}_snr40_hann.jsonl")
+        a = load(RUN_DIR / f"N50_{speed}_snr{snr}.jsonl")
+        b = load(RUN_DIR / f"N50_{speed}_snr{snr}_hann.jsonl")
         keys = sorted(set(a) & set(b))
         if not keys:
             continue
@@ -68,8 +72,8 @@ def main() -> None:
                                        "hann": float(np.median([r["wall_fit_s"] for r in rb]))}
         cells.append(cell)
         print(json.dumps(cell, indent=1), flush=True)
-    save_result("p1/fe_direct_taper_compare", {"cells": cells}, cfg={
-        "N": 50, "snr_db": 40, "reference_crb": "true noise floor, rectangular window, all bins",
+    save_result("p1/fe_direct_taper_compare" + ("" if snr == 40 else f"_snr{snr}"), {"cells": cells}, cfg={
+        "N": 50, "snr_db": snr, "reference_crb": "true noise floor, rectangular window, all bins",
         "hann": "periodic Hann taper, power-normalised; every second DFT bin; floor from 750-950 Hz of the tapered DFT",
         "rect": "rectangular window, all bins; floor from 750-950 Hz (noise + leakage)"}, seed=20261011)
 
