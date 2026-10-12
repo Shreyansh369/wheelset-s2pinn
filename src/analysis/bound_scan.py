@@ -88,10 +88,11 @@ class ScenarioModel:
         self.ibL = self.base.ib[0]
 
     def wheelset_matrices(self, th: dict):
-        """Wheelset-only (M, C, K) (no contact, no rail). Optional th["axle_damp_scale"] scales the
-        axle's stiffness-proportional damping (model-form tests)."""
+        """Wheelset-only (M, C, K) (no contact, no rail). Optional (model-form tests): th["axle_damp_scale"]
+        scales the axle's stiffness-proportional damping; th["unsprung_scale"] scales the whole wheelset
+        mass matrix (axle, wheels, axleboxes)."""
         m = self.base.matrices(th["kB0"], th["cB"], th["W"])
-        M, C, K = m.M, m.C.copy(), m.K
+        M, C, K = m.M * th.get("unsprung_scale", 1.0), m.C.copy(), m.K
         s = th.get("axle_damp_scale", 1.0)
         if s != 1.0:
             nb = self.base.ib[0]

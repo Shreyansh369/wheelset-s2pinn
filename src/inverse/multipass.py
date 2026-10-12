@@ -171,7 +171,7 @@ class MultiPassWhittle:
 
     debias=True replaces the bin-sampled signal variance |H(f_k)|^2 S(f_k) by the exact expected
     periodogram of the rectangular-window record, i.e. |H|^2 S convolved with the Fejer kernel
-    T sinc^2((f - f_k) T) (the debiased Whittle likelihood, Sykulski et al., Biometrika 2019). This
+    T sinc^2((f - f_k) T) (the debiased Whittle likelihood, Sykulski, Olhede, Guillaumin, Lilly & Early, Biometrika 106(2), 2019). This
     matters when H has structure on the bin scale (e.g. multi-wheel cross terms with ripple period
     V/d close to 1/T). The kernel is evaluated on a grid M times finer than the bins, truncated at
     +-Kb bins, over the analysis support (the band the record was filtered to).
@@ -401,7 +401,8 @@ class MultiPassWhittle:
         return {"lo": bounds[0], "hi": bounds[1], "level": level, "n_eval": self.n_eval - n0}
 
     # -- expected Fisher information (CRB) under this observation model
-    def expected_fisher(self, phi, logg, lw, h: float = 1e-4) -> dict:
+    def _fisher_parts(self, phi, logg, lw, h: float = 1e-4):
+        """Expected Fisher J over (globals, used sub-band levels, per-pass log W) and per-pass (D, v)."""
         phi = np.asarray(phi, float)
         d = phi.size
         tab0 = self.fam.table(self.theta(phi))
@@ -417,6 +418,7 @@ class MultiPassWhittle:
         smap[used] = np.arange(used.size)
         n = d + used.size + N
         J = np.zeros((n, n))
+        parts = []
         for i, p in enumerate(self.P):
             v = A[i] + p.e
             D = np.zeros((p.f.size, n))
@@ -425,7 +427,29 @@ class MultiPassWhittle:
             D[np.arange(p.f.size), d + smap[p.sub]] = A[i] / v
             D[:, d + used.size + i] = dAw[i] / v
             J += D.T @ D
+            parts.append((D, v))
         J[d + used.size:, d + used.size:] += np.eye(N) / self.sW**2
+        return J, parts, d, n
+
+    def misspec_bias(self, phi, logg, lw, fam_true: Family, theta_true: dict, h: float = 1e-4) -> dict:
+        """First-order bias of the ML estimate when the data come from fam_true(theta_true).
+
+        theta_hat - theta ~= J^-1 E[score at the truth], E[score] = sum_k D_k (v_true,k / v_k - 1),
+        with all nuisances (sub-band levels, per-pass log W) free; returns the bias of the globals (log
+        units) and the CRB of the fitted model.
+        """
+        J, parts, d, n = self._fisher_parts(phi, logg, lw, h)
+        At = self._A(fam_true.table(theta_true), lw, logg)
+        sc = np.zeros(n)
+        for (D, v), a_t, p in zip(parts, At, self.P):
+            sc += D.T @ ((a_t + p.e) / v - 1.0)
+        s_ = 1 / np.sqrt(np.diag(J))
+        Ci = np.linalg.inv(J * np.outer(s_, s_)) * np.outer(s_, s_)
+        b = Ci @ sc
+        return {"bias_log": b[:d].tolist(), "crb_log": [float(math.sqrt(Ci[a, a])) for a in range(d)]}
+
+    def expected_fisher(self, phi, logg, lw, h: float = 1e-4) -> dict:
+        J, parts, d, n = self._fisher_parts(phi, logg, lw, h)
         sc = 1 / np.sqrt(np.diag(J))
         Ci = np.linalg.inv(J * np.outer(sc, sc)) * np.outer(sc, sc)
         return {"crb_log": [float(math.sqrt(Ci[a, a])) for a in range(d)], "n_params": int(n),

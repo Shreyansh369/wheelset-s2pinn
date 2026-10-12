@@ -74,10 +74,14 @@ class MultiWheelModel:
         den = 1.0 / (1j * omegas[:, None] - lam[None, :])
         return den @ (VR[self.wdofs[0], :] * num), den @ (VR[self.sm.ibL, :] * num)
 
-    def rail(self, omegas: np.ndarray) -> np.ndarray:
-        key = (omegas.size, float(omegas[0]), float(omegas[-1]))
+    def rail(self, omegas: np.ndarray, th: dict | None = None) -> np.ndarray:
+        """Rail receptance matrix; th may override the foundation ("kf", "eta_f") for model-form tests."""
+        th = {} if th is None else th
+        kf, eta = th.get("kf", self.track.kf), th.get("eta_f", self.track.eta_f)
+        key = (omegas.size, float(omegas[0]), float(omegas[-1]), kf, eta)
         if key not in self._R:
-            self._R[key] = rail_matrix(omegas, self.layout, self.track, self.recept)
+            from dataclasses import replace
+            self._R[key] = rail_matrix(omegas, self.layout, replace(self.track, kf=kf, eta_f=eta), self.recept)
         return self._R[key]
 
     def components(self, th: dict, omegas: np.ndarray, method: str = "direct", neigh_Hw=None) -> np.ndarray:
@@ -90,7 +94,7 @@ class MultiWheelModel:
         Aw = np.empty((omegas.size, N), complex)
         for k in range(N):
             Aw[:, k] = Hw_i if k == self.j else neigh_Hw
-        rows = coupled_rows(Aw, self.kH(th), self.rail(omegas), self.layout, self.j)
+        rows = coupled_rows(Aw, self.kH(th), self.rail(omegas, th), self.layout, self.j)
         return -(omegas**2)[:, None] * Hca_i[:, None] * rows
 
     def reference_H(self, th: dict, V: float, f_grid: np.ndarray):
@@ -121,7 +125,8 @@ class MultiWheelFamily(Family):
         G = np.empty((self.W_nodes.size, self.f.size, N), complex)
         for i, W in enumerate(self.W_nodes):
             th = dict(self.fixed, **theta, W=float(W))
-            if N > 1 and i not in self._neigh:
-                self._neigh[i] = self.mw.wheelset_modal(dict(th, **self.mw.neigh), self.w)[0]
-            G[i] = self.mw.components(th, self.w, "modal", neigh_Hw=self._neigh.get(i))
+            nkey = (i, th.get("unsprung_scale", 1.0), th.get("axle_damp_scale", 1.0))
+            if N > 1 and nkey not in self._neigh:
+                self._neigh[nkey] = self.mw.wheelset_modal(dict(th, **self.mw.neigh), self.w)[0]
+            G[i] = self.mw.components(th, self.w, "modal", neigh_Hw=self._neigh.get(nkey))
         return Table(np.log(self.W_nodes), self.f, G, self.mw.d.copy())

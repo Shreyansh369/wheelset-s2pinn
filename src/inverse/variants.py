@@ -256,3 +256,125 @@ class SharedSectionWhittle(MultiPassWhittle):
         sc[keep] = 1 / np.sqrt(dg[keep])
         Ci = np.linalg.inv((J * np.outer(sc, sc))[np.ix_(keep, keep)]) * np.outer(sc[keep], sc[keep])
         return {"crb_log": [float(math.sqrt(Ci[a, a])) for a in range(d)], "n_params": int(keep.sum())}
+
+
+# --------------------------------------------------------------------------- (c) partially coherent sections
+def _sigmoid(x):
+    return 1.0 / (1.0 + math.exp(-x))
+
+
+class ExchangeableSectionWhittle(SharedSectionWhittle):
+    """Repeated passes, partially coherent roughness with exchangeable pass-to-pass correlation rho.
+
+    R_ik = sqrt(rho) R_k + sqrt(1 - rho) eps_ik, so Corr(R_ik, R_jk) = rho for i != j and
+        Sigma_k = s_k (rho h h^H + (1 - rho) diag|h|^2) + E
+    = rank one (s' = rho s) plus a diagonal (e'_i = e_i + (1 - rho) s |h_i|^2): Sherman-Morrison applies.
+    phi = (log of the family's globals..., logit rho); rho is estimated with the other globals.
+    Nuisance gradients (log g, log W) by automatic differentiation (torch, float64/complex128).
+    """
+
+    def __init__(self, *a, rho: float | None = None, **kw):
+        super().__init__(*a, **kw)
+        self.rho_fixed = rho
+        self.rho = 0.5 if rho is None else rho
+
+    def theta(self, phi):
+        nf = len(self.fam.names)
+        if self.rho_fixed is None and len(phi) > nf:
+            self.rho = _sigmoid(phi[nf])
+        return {nm: math.exp(x) for nm, x in zip(self.fam.names, phi[:nf])}
+
+    def _obj(self, x, tab):
+        import torch
+        S, N = self.S, len(self.P)
+        logg_np, lw = x[:S], x[S:]
+        Hm, dHm = self._Hmat(tab, lw, deriv=True)
+        H = torch.tensor(Hm, dtype=torch.complex128, requires_grad=True)
+        lg = torch.tensor(logg_np, dtype=torch.float64, requires_grad=True)
+        pres = torch.tensor(self.present, dtype=torch.bool)
+        C = torch.tensor(self.C, dtype=torch.complex128)
+        E = torch.tensor(np.where(self.present, 1.0 / np.maximum(self.Einv, 1e-300), 1.0), dtype=torch.float64)
+        s = torch.tensor(self.base_k, dtype=torch.float64) * torch.exp(lg[torch.tensor(self.sub_k)])
+        rho = self.rho
+        h2 = H.real ** 2 + H.imag ** 2
+        ep = E + (1 - rho) * s[:, None] * h2
+        einv = torch.where(pres, 1.0 / ep, torch.zeros_like(ep))
+        sp = rho * s
+        a = (h2 * einv).sum(1)
+        u = (torch.conj(H) * C * einv).sum(1)
+        u2 = u.real ** 2 + u.imag ** 2
+        c2 = C.real ** 2 + C.imag ** 2
+        diag = torch.where(pres, torch.log(ep) + c2 / ep, torch.zeros_like(ep)).sum()
+        f = diag + torch.sum(torch.log1p(sp * a) - sp * u2 / (1 + sp * a))
+        f.backward()
+        gH = H.grad.numpy()
+        gw = np.sum(np.real(np.conj(gH) * dHm), 0) + (lw - self.lw_meas) / self.sW**2
+        val = float(f.item()) + 0.5 * float(np.sum(((lw - self.lw_meas) / self.sW) ** 2))
+        return val, np.concatenate([lg.grad.numpy(), gw])
+
+    def _nll(self, tab, logg, lw):
+        f, _ = self._obj(np.concatenate([logg, lw]), tab)
+        return float(f)  # constants included (log e', |c|^2 / e' terms)
+
+    def fit(self, phi0, steps=None):
+        return super().fit(phi0, steps=np.r_[0.15, 0.3, [0.2] * (len(phi0) - 3), 0.5][:len(phi0)] if steps is None else steps)
+
+
+def dense_fisher(est: SharedSectionWhittle, phi, logg, lw, Cmat: np.ndarray, rho_param: bool = False, h: float = 1e-4):
+    """Exact Gaussian Fisher for Sigma_k = s_k (C o h h^H) + E per spatial bin, C = pass-to-pass coherence.
+
+    Globals (family names), used sub-band levels, per-pass log W (WIM prior) and, if rho_param, the
+    exchangeable correlation rho (C = (1 - rho) I + rho 11^T; parameter in logit units).
+    Returns CRB (log units) of the family globals (and of logit rho if included).
+    """
+    phi = np.asarray(phi, float)
+    d, N = len(est.fam.names), len(est.P)
+    th = {nm: math.exp(x) for nm, x in zip(est.fam.names, phi[:d])}
+    tab0 = est.fam.table(th)
+    Hm, dHw = est._Hmat(tab0, lw, deriv=True)
+    dHt = []
+    for a in range(d):
+        e = np.eye(d)[a] * h
+        Hp, _ = est._Hmat(est.fam.table({nm: math.exp(x) for nm, x in zip(est.fam.names, phi[:d] + e)}), lw)
+        Hn, _ = est._Hmat(est.fam.table({nm: math.exp(x) for nm, x in zip(est.fam.names, phi[:d] - e)}), lw)
+        dHt.append((Hp - Hn) / (2 * h))
+    s = est.base_k * np.exp(logg[est.sub_k])
+    used = np.unique(est.sub_k)
+    smap = -np.ones(est.S, int)
+    smap[used] = np.arange(used.size)
+    nr = 1 if rho_param else 0
+    n = d + nr + used.size + N
+    J = np.zeros((n, n))
+    for kk in range(est.ks.size):
+        pr = np.nonzero(est.present[kk])[0]
+        hk = Hm[kk, pr]
+        Ck = Cmat[np.ix_(pr, pr)]
+        sk = s[kk]
+        HH = np.outer(hk, hk.conj())
+        Sig = sk * Ck * HH + np.diag(1.0 / est.Einv[kk, pr])
+        Wi = np.linalg.inv(Sig)
+        cols, mats = [], []
+        for a in range(d):
+            x = dHt[a][kk, pr]
+            cols.append(a)
+            mats.append(sk * Ck * (np.outer(x, hk.conj()) + np.outer(hk, x.conj())))
+        if rho_param:
+            rho = Cmat[0, 1] if N > 1 else 0.0
+            cols.append(d)
+            dC = (1 - np.eye(pr.size)) * rho * (1 - rho)  # d C / d logit(rho)
+            mats.append(sk * dC * HH)
+        cols.append(d + nr + smap[est.sub_k[kk]])
+        mats.append(sk * Ck * HH)
+        for m, i in enumerate(pr):
+            x = np.zeros(pr.size, complex)
+            x[m] = dHw[kk, i]
+            cols.append(d + nr + used.size + i)
+            mats.append(sk * Ck * (np.outer(x, hk.conj()) + np.outer(hk, x.conj())))
+        WD = np.matmul(Wi[None], np.array(mats))                      # (n_p, m, m), BLAS
+        A1 = WD.reshape(len(cols), -1)
+        A2 = np.transpose(WD, (0, 2, 1)).reshape(len(cols), -1)
+        J[np.ix_(cols, cols)] += np.real(A1 @ A2.T)                    # tr(W dS_a W dS_b)
+    J[d + nr + used.size:, d + nr + used.size:] += np.eye(N) / est.sW**2
+    sc = 1 / np.sqrt(np.diag(J))
+    Ci = np.linalg.inv(J * np.outer(sc, sc)) * np.outer(sc, sc)
+    return [float(math.sqrt(Ci[a, a])) for a in range(d + nr)]
