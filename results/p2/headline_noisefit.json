@@ -21,7 +21,8 @@
       "cB": 6000.0
     },
     "intervals": "Wald (observed profile information) and profile likelihood, 90%",
-    "noise_floor": "profiled jointly (in-band + out-of-band bins)"
+    "noise_floor": "profiled jointly (in-band + out-of-band bins)",
+    "likelihood": "bin-sampled Whittle"
   },
   "payload": {
     "cells": [
@@ -187,14 +188,177 @@
           "profile_s_median": 14.990426691999346
         },
         "all_converged": true
+      },
+      {
+        "snr_db": 40,
+        "kB0_per_seed": [
+          {
+            "seed": 42,
+            "n": 10,
+            "bias_rel": -0.0002596864203906368,
+            "bias_rel_se": 0.0009439959107615024,
+            "rmse_rel": 0.0028426073106153204,
+            "crb_rel": 0.0022866457784299302,
+            "rmse_over_crb": 1.2431340863678184,
+            "coverage90_wald": 0.8,
+            "coverage90_wald_ci95": [
+              0.4439045376923585,
+              0.9747892736731666
+            ],
+            "coverage90_profile": 0.8,
+            "coverage90_profile_ci95": [
+              0.4439045376923585,
+              0.9747892736731666
+            ]
+          },
+          {
+            "seed": 123,
+            "n": 10,
+            "bias_rel": 0.0017237446553249435,
+            "bias_rel_se": 0.0008441997043743298,
+            "rmse_rel": 0.0030596713091557153,
+            "crb_rel": 0.002313799804168156,
+            "rmse_over_crb": 1.322357839102554,
+            "coverage90_wald": 0.7,
+            "coverage90_wald_ci95": [
+              0.3475471499400027,
+              0.9332604888222655
+            ],
+            "coverage90_profile": 0.7,
+            "coverage90_profile_ci95": [
+              0.3475471499400027,
+              0.9332604888222655
+            ]
+          },
+          {
+            "seed": 456,
+            "n": 10,
+            "bias_rel": 3.778567953587331e-05,
+            "bias_rel_se": 0.0009154249871443815,
+            "rmse_rel": 0.002746006811019543,
+            "crb_rel": 0.002292645695956212,
+            "rmse_over_crb": 1.1977458252110096,
+            "coverage90_wald": 0.8,
+            "coverage90_wald_ci95": [
+              0.4439045376923585,
+              0.9747892736731666
+            ],
+            "coverage90_profile": 0.8,
+            "coverage90_profile_ci95": [
+              0.4439045376923585,
+              0.9747892736731666
+            ]
+          },
+          {
+            "seed": 789,
+            "n": 10,
+            "bias_rel": -0.001303509744870013,
+            "bias_rel_se": 0.0008369787582011755,
+            "rmse_rel": 0.0028347698717071284,
+            "crb_rel": 0.002295212040688282,
+            "rmse_over_crb": 1.2350797318303737,
+            "coverage90_wald": 0.9,
+            "coverage90_wald_ci95": [
+              0.5549838829718047,
+              0.9974714214555382
+            ],
+            "coverage90_profile": 0.9,
+            "coverage90_profile_ci95": [
+              0.5549838829718047,
+              0.9974714214555382
+            ]
+          },
+          {
+            "seed": 1024,
+            "n": 10,
+            "bias_rel": 0.0014431858217268557,
+            "bias_rel_se": 0.0004487993733218007,
+            "rmse_rel": 0.001970453161875234,
+            "crb_rel": 0.0023083966273867726,
+            "rmse_over_crb": 0.8536025128861376,
+            "coverage90_wald": 0.9,
+            "coverage90_wald_ci95": [
+              0.5549838829718047,
+              0.9974714214555382
+            ],
+            "coverage90_profile": 0.9,
+            "coverage90_profile_ci95": [
+              0.5549838829718047,
+              0.9974714214555382
+            ]
+          }
+        ],
+        "kB0_across_seeds": {
+          "bias_rel": {
+            "mean": 0.00032830399826540453,
+            "sd": 0.0012533121943368551
+          },
+          "rmse_rel": {
+            "mean": 0.002690701692874588,
+            "sd": 0.00041886338378154854
+          },
+          "crb_rel": {
+            "mean": 0.002299339989325871,
+            "sd": 1.133694681322525e-05
+          },
+          "rmse_over_crb": {
+            "mean": 1.1703839990795786,
+            "sd": 0.18280682468941742
+          },
+          "coverage90_wald": {
+            "mean": 0.82,
+            "sd": 0.08366600265340757
+          },
+          "coverage90_profile": {
+            "mean": 0.82,
+            "sd": 0.08366600265340757
+          }
+        },
+        "kB0_pooled": {
+          "n": 50,
+          "bias_rel": 0.0003283039982654046,
+          "bias_rel_se": 0.0003853278150940137,
+          "rmse_rel": 0.002716658393588807,
+          "crb_rel": 0.0022993623480442424,
+          "rmse_over_crb": 1.181483377728396,
+          "coverage90_wald": 0.82,
+          "coverage90_wald_ci95": [
+            0.6856305887143497,
+            0.9142379218903364
+          ],
+          "coverage90_profile": 0.82,
+          "coverage90_profile_ci95": [
+            0.6856305887143497,
+            0.9142379218903364
+          ]
+        },
+        "cB_pooled": {
+          "n": 50,
+          "bias_rel": 0.04542626011974726,
+          "bias_rel_se": 0.007967216535165762,
+          "rmse_rel": 0.06847099510622066,
+          "crb_rel": 0.07461062744928657,
+          "rmse_over_crb": 0.9177110211646584,
+          "coverage90_wald": 0.86,
+          "coverage90_wald_ci95": [
+            0.7326039975029917,
+            0.9418082996596279
+          ]
+        },
+        "timing": {
+          "s_per_eval_median": 0.907971005810369,
+          "fit_s_median": 71.72023915699992,
+          "profile_s_median": 20.239352370001143
+        },
+        "all_converged": true
       }
     ]
   },
   "provenance": {
-    "git_commit": "e6b61adc89eba1262c7f7d18b49073eaaff002d6",
-    "timestamp_utc": "2026-10-12T15:49:48Z",
+    "git_commit": "fb4e67306304939c83011dd9a9340b0198685ab5-dirty",
+    "timestamp_utc": "2026-10-12T17:02:54Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 95.625,
+    "peak_cpu_memory_mb": 95.86328125,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

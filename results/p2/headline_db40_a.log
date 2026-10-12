@@ -1,0 +1,7 @@
+snr=40.0 seed=42 j=0 err=+0.0041 se=0.0023 prof=[+0.0003,+0.0078] fit=411s prof=67s
+snr=40.0 seed=42 j=1 err=-0.0006 se=0.0024 prof=[-0.0045,+0.0034] fit=363s prof=168s
+snr=40.0 seed=42 j=2 err=-0.0021 se=0.0024 prof=[-0.0059,+0.0018] fit=382s prof=81s
+snr=40.0 seed=42 j=3 err=-0.0019 se=0.0024 prof=[-0.0058,+0.0020] fit=581s prof=275s
+snr=40.0 seed=42 j=4 err=+0.0028 se=0.0022 prof=[-0.0008,+0.0063] fit=520s prof=122s
+snr=40.0 seed=42 j=5 err=-0.0026 se=0.0023 prof=[-0.0064,+0.0011] fit=465s prof=185s
+snr=40.0 seed=42 j=6 err=-0.0033 se=0.0024 prof=[-0.0072,+0.0006] fit=303s prof=85s
