@@ -75,7 +75,7 @@ def summarise(errs, ses, crbs, profile=None) -> dict:
            "rmse_over_crb": float(np.sqrt(np.mean(e**2)) / np.sqrt(np.mean(crb**2))),
            "coverage90_wald": k / e.size, "coverage90_wald_ci95": cp_interval(k, e.size)}
     if profile is not None:
-        lo, hi = np.asarray(profile[0]), np.asarray(profile[1])
-        kp = int(np.sum((lo <= e) & (hi >= e)))
+        lo, hi = np.asarray(profile[0]), np.asarray(profile[1])  # interval end points as errors (estimate - truth)
+        kp = int(np.sum((lo <= 0) & (hi >= 0)))
         out.update({"coverage90_profile": kp / e.size, "coverage90_profile_ci95": cp_interval(kp, e.size)})
     return out
