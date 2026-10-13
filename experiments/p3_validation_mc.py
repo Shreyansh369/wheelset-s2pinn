@@ -145,25 +145,25 @@ def drift(j0, j1, f):
 
 
 # ----------------------------------------------------------------------------- (2) bias diagnosis
-def bias(j0, j1, snr, refined):
+def bias(j0, j1, snr, refined, seed=42):
     from experiments.p2_common import setup
     from experiments.p2_multiwheel import dataset, models
     sm, thb, rough, _ = setup()
     mw = models(sm)[0]["4"]
     fam = MultiWheelFamily(mw, thb, f_grid=np.arange(45.0, 702.0, 0.25) if refined else None)
     tag = "refined" if refined else "base"
-    fp = OUT / "bias_diag_runs" / f"{tag}_snr{int(snr)}.jsonl"
+    fp = OUT / "bias_diag_runs" / (f"{tag}_snr{int(snr)}.jsonl" if seed == 42 else f"{tag}_snr{int(snr)}_seed{seed}.jsonl")
     done = _done(fp, lambda r: r["j"])
     lt = math.log(TRUTH["kB0"])
     for j in range(j0, j1):
         if j in done:
             continue
         t0 = time.perf_counter()
-        P, Wm, Ws, g = dataset(sm, thb, rough, mw, (42, 40, j), N=50, snr=snr)
+        P, Wm, Ws, g = dataset(sm, thb, rough, mw, (seed, 40, j), N=50, snr=snr)
         est = MultiPassWhittle([dict(q) for q in P], Wm, WIM, rough, fam, debias=True, exact_subband=refined)
         r = est.fit(np.log([START["kB0"], START["cB"]]))
         crb = est.expected_fisher(np.log([TRUTH["kB0"], TRUTH["cB"]]), np.log(g), np.log(Ws))["crb_log"]
-        _append(fp, {"j": j, "snr_db": snr, "variant": tag, "err_log": [r["phi"][0] - lt, r["phi"][1] - math.log(TRUTH["cB"])],
+        _append(fp, {"j": j, "seed": seed, "snr_db": snr, "variant": tag, "err_log": [r["phi"][0] - lt, r["phi"][1] - math.log(TRUTH["cB"])],
                      "se_log": r["se_log"], "crb_log": crb, "converged": r["converged"], "wall_s": time.perf_counter() - t0})
 
 
@@ -219,18 +219,20 @@ def summarise():
                     "se_median_pct": float(np.median([r["se"] for r in Re]) * 100),
                     "all_converged": all(r["converged"] for r in Re)})
     diag = []
-    hl = _rows(RESULTS_DIR / "p2" / "headline_mw_runs" / "snr40_seed42.jsonl")
-    sets = {("base", 40.0): [dict(r, j=r["seed_key"][2]) for r in hl if r["seed_key"][2] < 10]}
+    sets = {}
+    for sd in (42, 123):
+        hl = _rows(RESULTS_DIR / "p2" / "headline_mw_runs" / f"snr40_seed{sd}.jsonl")
+        sets[("base", 40.0, sd)] = [dict(r, j=r["seed_key"][2]) for r in hl if r["seed_key"][2] < 10]
     for fp in sorted((OUT / "bias_diag_runs").glob("*.jsonl")):
         R = _rows(fp)
         if R:
-            sets[(R[0]["variant"], float(R[0]["snr_db"]))] = R
-    for (v, snr), R in sorted(sets.items(), key=lambda kv: (kv[0][0], kv[0][1])):
+            sets[(R[0]["variant"], float(R[0]["snr_db"]), R[0].get("seed", 42))] = R
+    for (v, snr, sd), R in sorted(sets.items(), key=lambda kv: (kv[0][2], kv[0][0], kv[0][1])):
         e = np.array([r["err_log"][0] for r in R])
         c = np.array([r["crb_log"][0] for r in R])
         se = np.array([r["se_log"][0] for r in R])
         k = int(np.sum(np.abs(e) <= 1.645 * se))
-        diag.append({"variant": v, "snr_db": snr, "n": len(R), "bias_pct": float(np.mean(np.exp(e) - 1) * 100),
+        diag.append({"seed": sd, "variant": v, "snr_db": snr, "n": len(R), "bias_pct": float(np.mean(np.exp(e) - 1) * 100),
                      "bias_se_pct": float(np.std(np.exp(e) - 1, ddof=1) / math.sqrt(len(R)) * 100),
                      "rmse_pct": float(np.sqrt(np.mean(e**2)) * 100), "crb_pct": float(np.sqrt(np.mean(c**2)) * 100),
                      "rmse_over_crb": float(np.sqrt(np.mean(e**2)) / np.sqrt(np.mean(c**2))),
@@ -257,12 +259,13 @@ if __name__ == "__main__":
     ap.add_argument("--f", type=float, default=0.8)
     ap.add_argument("--snr", type=float, default=60.0)
     ap.add_argument("--refined", action="store_true")
+    ap.add_argument("--seed", type=int, default=42)
     a = ap.parse_args()
     if a.kappa:
         kappa(a.j0, a.j1)
     if a.drift:
         drift(a.j0, a.j1, a.f)
     if a.bias:
-        bias(a.j0, a.j1, a.snr, a.refined)
+        bias(a.j0, a.j1, a.snr, a.refined, a.seed)
     if a.summarise:
         summarise()
