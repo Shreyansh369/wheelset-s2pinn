@@ -1,0 +1,49 @@
+{
+  "name": "p3/calibration",
+  "seed": 41,
+  "config": {
+    "estimator": "coest (kB0, cB, kf, kH0)",
+    "fit": "pseudo-true, correct model",
+    "design": "p2_relative_coest_drift designs (41, 0)/(41, 1), N = 50"
+  },
+  "payload": {
+    "coest": {
+      "points": [
+        {
+          "x": 0.02,
+          "D_true": -0.020202707317519466,
+          "D_hat": -0.020202233717707685,
+          "true_change_pct": -2.0,
+          "est_change_pct": -1.9999535872074592
+        },
+        {
+          "x": 0.05,
+          "D_true": -0.05129329438755058,
+          "D_hat": -0.051293573345098764,
+          "true_change_pct": -5.0,
+          "est_change_pct": -5.000026500963384
+        },
+        {
+          "x": 0.1,
+          "D_true": -0.10536051565782628,
+          "D_hat": -0.10535820193441836,
+          "true_change_pct": -10.0,
+          "est_change_pct": -9.999791764652388
+        }
+      ],
+      "slope": 0.9999830951476415,
+      "base_abs_err_log": 1.814306997971471e-07,
+      "all_converged": true
+    }
+  },
+  "provenance": {
+    "git_commit": "1e13eafd73a84b1532c5c6b0d33ea43a7a06051d",
+    "timestamp_utc": "2026-10-13T11:57:20Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 94.5703125,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}
