@@ -90,6 +90,11 @@ def main():
         for k in keys:
             m[k] = miss("p3/exponent_bound.json")
 
+    import inspect
+    from src.inverse.multipass import MultiPassWhittle
+    m["KernelHalfWidth"] = str(inspect.signature(MultiPassWhittle.__init__).parameters["Kb"].default)
+    m["KernelFine"] = str(inspect.signature(MultiPassWhittle.__init__).parameters["M"].default)
+
     ver = load("p1/verification.json")
     if ver:
         m["GyroRatio"] = f"{ver['gyroscopic_neglect']['ratio']:.2f}"

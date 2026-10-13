@@ -62,7 +62,8 @@ replace $v_{ik}$ by the exact expected periodogram,
            |H(f_m)|^2\,2G(\gamma_m)\,\Delta\gamma + e_i,
   \label{eq:debiased}
 \end{equation}
-with the sum over a grid $M=4$ times finer than the bins, truncated at $\pm30$ bins. On the
+with the sum over a grid $M=\KernelFine$ times finer than the bins, truncated at $\pm\KernelHalfWidth$ bins
+(a narrower truncation at $\pm30$ bins leaves a measurable bias; Section~\ref{sec:res-bias}). On the
 simulated 12-wheel setup of~\citep{carrigan2023}, the bin-sampled model differs from the mean of
 \DebiasRecords{} periodograms by an rms log-ratio of \DebiasBin{}; the debiased model differs by
 \DebiasDeb{}, against \DebiasNoise{} expected from sampling alone (Fig.~\ref{fig:debias}).
