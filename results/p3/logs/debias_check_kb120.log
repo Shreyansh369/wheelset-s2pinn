@@ -1,0 +1,1 @@
+{'bin_sampled': {'rms_log_ratio': 0.46540177512030395, 'mean_ratio': 1.449629166739758}, 'debiased': {'rms_log_ratio': 0.06936316040915437, 'mean_ratio': 1.0177488819416385}, 'sampling_noise_rms_log_expected': 0.05773502691896257}

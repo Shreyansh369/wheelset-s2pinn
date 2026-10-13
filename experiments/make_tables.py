@@ -290,9 +290,15 @@ def table8():
         return missing("table8_mdc", "Table 8. Minimum detectable change", "results/p2/relative_intervals.json")
     rows = [[m["N"], m["snr_db"], m["kappa"], f"{m['sd_D0_pct']:.2f}", f"{m['mdc_pct_crb']:.2f}", f"{m['mdc_pct_inflated']:.2f}",
              f"{m['inflation']:.2f}"] for m in r["mdc"]]
-    write("table8_mdc", "Table 8. Minimum detectable decrease of k_B0 (5% false alarm, 90% detection)",
-          md(["N per period", "SNR (dB)", "Model-form term", "SD of Δ at Δ = 0 (%)", "MDC from CRB (%)", "MDC with RMSE/CRB inflation (%)",
-              "Inflation"], rows), ["results/p2/relative_intervals.json"])
+    body = md(["N per period", "SNR (dB)", "Model-form term", "SD of Δ at Δ = 0 (%)", "MDC from CRB (%)", "MDC with RMSE/CRB inflation (%)",
+               "Inflation"], rows)
+    c = load("p3/calibrated.json")
+    if c:
+        body += "\n**Simulation-calibrated MDC (frozen estimator; 40 dB only)**\n\n" + md(
+            ["N per period", "SNR (dB)", "MDC (%)", "SE inflation", "Calibrated MDC (%)", "Source"],
+            [[x["N"], x["snr_db"], f"{x['mdc_pct']:.2f}", f"{x['inflation']:.2f}", f"{x['mdc_calibrated_pct']:.2f}", x["source"]] for x in c["mdc"]])
+    write("table8_mdc", "Table 8. Minimum detectable decrease of k_B0 (5% false alarm, 90% detection)", body,
+          ["results/p2/relative_intervals.json", "results/p3/calibrated.json"])
 
 
 # ----------------------------------------------------------------------------- Table 9

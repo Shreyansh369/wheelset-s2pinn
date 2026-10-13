@@ -97,6 +97,10 @@ nuisances. The Cram\'er--Rao bound (CRB) is the inverse expected Fisher informat
 nuisance free and the weigh-in-motion prior included. When records repeat over the same section,
 the independence assumed in~\eqref{eq:whittle} fails across passes; the variance is then taken
 from a sandwich estimator clustered on DFT bin (the same wavenumber on every pass).
+Where the Wald intervals under-cover in simulation (Section~\ref{sec:res-headline}), they are
+simulation-calibrated for the design: the mean bias of $\log\hat k_{B0}$ found by simulation is
+subtracted and the standard error is multiplied by the simulated ratio of RMSE to standard error,
+checked on held-out simulation seeds.
 
 \subsection{Relative change and detection}\label{sec:relative}
 The monitoring output is the change of support stiffness between a baseline period and a later

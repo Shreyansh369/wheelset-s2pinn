@@ -3,6 +3,21 @@
 \placeholder{Section 5 body after Section 4 is final.}
 
 \subsection{Limitations}\label{sec:limitations}
+\paragraph{Residual bias and simulation-calibrated intervals.} With the frozen estimator the estimate
+of $k_{B0}$ retains a bias of about \HLFortyBias--\HLTwentyBias\% over all seeds (Table~\ref{tab:table3_headline};
+up to \BDWideBias\% for the seed with the largest bias),
+and at 40~dB a scatter \HLFortyRatioSE{} times the Wald standard error. Section~\ref{sec:res-bias}
+rules out the obvious causes: the large-sample (pseudo-true) bias is nil (slope \CalSlope), sensor
+noise does not change the error, exact sub-band scoring and a finer table change it by at most
+\BDMaxDiffExact{} percentage points, robust (sandwich) standard errors do not restore coverage, and
+fewer roughness levels do not remove it (no incidental-parameter effect). Truncation of the debiasing
+kernel explains about a fifth and is removed by the wider kernel. The remainder is unexplained. The
+40~dB intervals are therefore simulation-calibrated for the stated design (speed range, payload range,
+number of passes, roughness model and noise level), and must be re-calibrated for any other design.
+For relative changes under random model errors, the calibrated interval still under-covers
+(\KapCalCovered/\KapCalN): the gain uncertainty $\kappa$ derived from one-at-a-time model errors is too
+small, and an interval for the change that holds under realistic model errors remains open.
+
 \paragraph{Load exponent as a clearance indicator.} Clearance growth changes not only the level of the
 effective support stiffness but also its dependence on axle load, because a larger clearance shrinks
 the load zone more at light load. In principle the load exponent $p$ of~\eqref{eq:powerlaw} could

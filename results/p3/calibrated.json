@@ -1,0 +1,293 @@
+{
+  "name": "p3/calibrated",
+  "seed": 0,
+  "config": {
+    "headline": "results/p3/headline_v2_runs/kb120_attr.jsonl",
+    "kappa": 0.044,
+    "threshold_for_calibration": 0.85,
+    "splits": {
+      "A": [
+        [
+          42,
+          123,
+          456
+        ],
+        [
+          789,
+          1024
+        ]
+      ],
+      "B": [
+        [
+          789,
+          1024
+        ],
+        [
+          42,
+          123,
+          456
+        ]
+      ]
+    },
+    "inflation": "RMSE about the truth / median Wald SE",
+    "frozen_estimator": "kernel +-120 bins, own-sub-band scoring, K = 16, no prior, load exponent fixed"
+  },
+  "payload": {
+    "headline": [
+      {
+        "snr_db": 20,
+        "n": 50,
+        "uncalibrated": {
+          "covered": 45,
+          "n": 50,
+          "coverage": 0.9,
+          "ci95": [
+            0.7818646335657977,
+            0.9667249064109775
+          ]
+        },
+        "calibration_applied": false,
+        "all_seeds": {
+          "bias_pct": 0.10278569570343343,
+          "inflation_rmse_over_se": 1.0839464332812498
+        },
+        "split_A": {
+          "calibrate_on": [
+            42,
+            123,
+            456
+          ],
+          "test_on": [
+            789,
+            1024
+          ],
+          "bias_pct": 0.1202083289326028,
+          "inflation": 1.1164197195789674,
+          "test_uncalibrated": {
+            "covered": 19,
+            "n": 20,
+            "coverage": 0.95,
+            "ci95": [
+              0.7512672372279722,
+              0.9987349105020502
+            ]
+          },
+          "test_calibrated": {
+            "covered": 18,
+            "n": 20,
+            "coverage": 0.9,
+            "ci95": [
+              0.6830172859809177,
+              0.9876514728297052
+            ]
+          }
+        },
+        "split_B": {
+          "calibrate_on": [
+            789,
+            1024
+          ],
+          "test_on": [
+            42,
+            123,
+            456
+          ],
+          "bias_pct": 0.07665743038911543,
+          "inflation": 1.0335188151161971,
+          "test_uncalibrated": {
+            "covered": 26,
+            "n": 30,
+            "coverage": 0.8666666666666667,
+            "ci95": [
+              0.6927816497238732,
+              0.9624465036616366
+            ]
+          },
+          "test_calibrated": {
+            "covered": 29,
+            "n": 30,
+            "coverage": 0.9666666666666667,
+            "ci95": [
+              0.8278305443665873,
+              0.9991564290733695
+            ]
+          }
+        },
+        "used": {
+          "bias_log": 0.0,
+          "inflation": 1.0
+        }
+      },
+      {
+        "snr_db": 40,
+        "n": 50,
+        "uncalibrated": {
+          "covered": 38,
+          "n": 50,
+          "coverage": 0.76,
+          "ci95": [
+            0.6183092518959619,
+            0.8693900838025427
+          ]
+        },
+        "calibration_applied": true,
+        "all_seeds": {
+          "bias_pct": 0.09267500787000227,
+          "inflation_rmse_over_se": 1.3893586775475335
+        },
+        "split_A": {
+          "calibrate_on": [
+            42,
+            123,
+            456
+          ],
+          "test_on": [
+            789,
+            1024
+          ],
+          "bias_pct": 0.09382757636944294,
+          "inflation": 1.3215941987423254,
+          "test_uncalibrated": {
+            "covered": 14,
+            "n": 20,
+            "coverage": 0.7,
+            "ci95": [
+              0.45721081772371086,
+              0.8810684095942722
+            ]
+          },
+          "test_calibrated": {
+            "covered": 16,
+            "n": 20,
+            "coverage": 0.8,
+            "ci95": [
+              0.5633859970033317,
+              0.9426660029499672
+            ]
+          }
+        },
+        "split_B": {
+          "calibrate_on": [
+            789,
+            1024
+          ],
+          "test_on": [
+            42,
+            123,
+            456
+          ],
+          "bias_pct": 0.09094618000520249,
+          "inflation": 1.4831749967020436,
+          "test_uncalibrated": {
+            "covered": 24,
+            "n": 30,
+            "coverage": 0.8,
+            "ci95": [
+              0.6143334890033929,
+              0.9228644879989344
+            ]
+          },
+          "test_calibrated": {
+            "covered": 29,
+            "n": 30,
+            "coverage": 0.9666666666666667,
+            "ci95": [
+              0.8278305443665873,
+              0.9991564290733695
+            ]
+          }
+        },
+        "used": {
+          "bias_log": 0.0009263209109795412,
+          "inflation": 1.3893586775475335
+        }
+      }
+    ],
+    "kappa_replicates": {
+      "snr_db": 40,
+      "inflation": 1.3893586775475335,
+      "kappa": 0.044,
+      "uncalibrated_stat": {
+        "covered": 13,
+        "n": 20,
+        "coverage": 0.65,
+        "ci95": [
+          0.40781146546717184,
+          0.8460907952154588
+        ]
+      },
+      "uncalibrated_kappa": {
+        "covered": 14,
+        "n": 20,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "calibrated_stat": {
+        "covered": 14,
+        "n": 20,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "calibrated_kappa": {
+        "covered": 14,
+        "n": 20,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "note": "replicates not used for calibration; fitted with the earlier +-30-bin kernel and the co-estimating family"
+    },
+    "mdc": [
+      {
+        "N": 50,
+        "snr_db": 20,
+        "mdc_pct": 0.7115460474098612,
+        "source": "relative_intervals.json (CRB, no model-form term)",
+        "inflation": 1.0,
+        "mdc_calibrated_pct": 0.7115460474098612
+      },
+      {
+        "N": 50,
+        "snr_db": 40,
+        "mdc_pct": 0.7201521436794321,
+        "source": "relative_coest_drift.json (coest, no drift)",
+        "inflation": 1.3893586775475335,
+        "mdc_calibrated_pct": 1.0005496299754773
+      },
+      {
+        "N": 200,
+        "snr_db": 20,
+        "mdc_pct": 0.36001943930424884,
+        "source": "relative_intervals.json (CRB, no model-form term)",
+        "inflation": 1.0,
+        "mdc_calibrated_pct": 0.36001943930424884
+      },
+      {
+        "N": 200,
+        "snr_db": 40,
+        "mdc_pct": 0.34269487665486986,
+        "source": "relative_intervals.json (CRB, no model-form term)",
+        "inflation": 1.3893586775475335,
+        "mdc_calibrated_pct": 0.4761261006315251
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "0a743d39e9e6fca5422c6a37008d699a4addd8ba",
+    "timestamp_utc": "2026-10-13T22:04:33Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 95.19140625,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

@@ -69,6 +69,19 @@ rail pinned-pinned mode and wheel flexible modes are not modelled).
    single-wheelset fit is biased by −13.9% / −14.0% at 20 / 40 dB, with 0/10 coverage. On 2–8-wheel
    data the bias is −9 to −14%.
 
+## Frozen method (2026-10-13)
+
+Estimator: multi-pass debiased Whittle likelihood, Fejér kernel truncated at ±120 bins
+(`MultiPassWhittle` default), own-sub-band nuisance scoring (exact scoring agreed to 0.006 pp and is 5×
+slower), K = 16 roughness levels per third octave, no smoothness prior (option kept, unused), WIM payload
+prior 3%, load exponent fixed at 0.1 (power law; series law is an option). Per-period co-estimation of
+k_f and k_H0 for relative change. Intervals: Wald from the observed profile information, simulation-
+calibrated where they under-cover: 40 dB bias +0.09% subtracted and SE × 1.39 (all five seeds); held-out
+coverage 16/20 (split A) and 29/30 (split B); 20 dB uncalibrated (coverage 0.90). Relative-change
+intervals: SE × 1.39 at 40 dB plus κ = 0.044; κ-replicate coverage stays 14/20 (open item). Calibrated MDC
+(N = 50): 1.00% at 40 dB, 0.71% at 20 dB; N = 200: 0.48% / 0.36%. Sources: `results/p3/headline_v2_kb120_attr.json`,
+`results/p3/calibrated.json`. No further estimator changes; §4 is drafted in `paper/sec4_results.tex`.
+
 ## Section-by-section map
 
 | § | Content | Figure / table | Script → result |
@@ -81,7 +94,7 @@ rail pinned-pinned mode and wheel flexible modes are not modelled).
 | 3.2 | Identifiability: Fisher information and CRB; why speed diversity works; CRB vs speed spread and sub-band resolution K | **Fig. 2** CRB vs speed spread for K = 1…256 | `experiments/p1_bound_speed_subband.py` → `results/p1/bound_speed_subband.json` → `make_figures.py` (`fig2_crb_vs_speed_spread`) |
 | 3.3 | Debiased Whittle likelihood (Sykulski et al. 2019): why the bin-sampled form fails with cross terms | **Fig. 3** averaged periodogram vs bin-sampled vs Fejér-convolved model | `experiments/p2_debias_check.py` → `results/p2/debias_check.json` (300 records, CT23 12-wheel setup: rms log ratio 0.47 bin-sampled vs 0.10 debiased, sampling noise 0.06) → `make_figures.py` (`fig3_debiased_periodogram`) |
 | 3.4 | Profiling (incl. the exact sub-band scoring option), Wald and profile intervals, pseudo-true bias; relative change and MDC | — | `docs/method_notes.md` §7–8; LaTeX draft `paper/sec3_method.tex` |
-| 4.1 | Headline Monte Carlo on the final rail-coupled 4-wheel model: N = 50, 60–110 km/h, 5 seeds × 10 datasets, SNR 20/40 dB; the single-wheelset fit appears only as the ignore-coupling column (seed 42) | **Table 3** bias, RMSE/CRB, Wald and profile coverage | `experiments/p2_headline_mw.py` → `results/p2/headline_mw.json`. The single-wheelset rail-oscillator headline (`p2_headline.py` → `results/p2/headline.json`, `_noisefit`, `_debias`) moves to the supplement as the noise-floor diagnostic |
+| 4.1 | Headline Monte Carlo on the final rail-coupled 4-wheel model with the frozen estimator: N = 50, 60–110 km/h, 5 seeds × 10 datasets, SNR 20/40 dB; simulation-calibrated intervals with a split-seed check; the single-wheelset fit appears only as the ignore-coupling column (seed 42, ±30-bin kernel) | **Table 3** | `experiments/p3_headline_v2.py --attributed` → `results/p3/headline_v2_kb120_attr.json`; `experiments/p3_calibrated.py` → `results/p3/calibrated.json`; earlier ±30-bin headline `experiments/p2_headline_mw.py` → `results/p2/headline_mw.json`. The single-wheelset rail-oscillator headline (`p2_headline.py` → `results/p2/headline.json`, `_noisefit`, `_debias`) moves to the supplement as the noise-floor diagnostic |
 | 4.2 | Speed spread and N: fixed / 95–105 / 60–110 km/h, N = 50 / 200 | **Table 4** | `experiments/p1_fe_direct.py` → `results/p1/fe_direct.json` |
 | 4.3 | Multi-wheel coupling: bound for 1/2/4/8 wheels; correct vs single-wheelset fit | **Table 5**, **Fig. 4** bias of the single-wheelset fit (`make_tables.py`, `make_figures.py`) | `experiments/p2_multiwheel.py` → `results/p2/multiwheel_bound.json`, `results/p2/multiwheel_mc.json` |
 | 4.4 | Model-form sensitivity and bias budget (rail-coupled model) | **Fig. 5** tornado (% bias per 10% error and at ±1σ); **Table 6** budget | `experiments/p2_model_form_mw.py` → `results/p2/model_form_mw_sensitivity.json`; validation `results/p2/pseudo_true_check.json`, `results/p2/model_form.json` → `make_figures.py` (`fig5_model_form_tornado`), `make_tables.py` |
