@@ -6,8 +6,14 @@ work that does not exist yet.
 
 ## Proposed title and main claim
 
-**Title.** *Tracking wheelset bearing-support stiffness from in-service axle-box acceleration
-without measuring rail roughness: a multi-pass debiased Whittle likelihood*
+**Title.** *Tracking the support stiffness of railway wheelset bearings from in-service axle-box
+acceleration without measuring rail roughness: a multi-pass debiased Whittle likelihood*
+
+**Target (decided 2026-10-13, reading B).** k_B0 is the effective support stiffness: the roller contacts
+in series with the housing/adapter (and pad). The claim is loss of support stiffness (loose fits,
+housing/adapter or pad degradation, clearance growth), not "bearing wear". The roller-contact-only
+reading (A) is one sentence in §2: its axlebox mode near 1.8 kHz is out of scope (contact filtering,
+rail pinned-pinned mode and wheel flexible modes are not modelled).
 
 **Main claim: relative change is the headline.**
 1. **Output.** The change of bearing-support stiffness relative to a baseline from the same
@@ -31,16 +37,28 @@ without measuring rail roughness: a multi-pass debiased Whittle likelihood*
      misspecifications drawn from their 1σ ranges (n = 20), coverage was 0.70 [0.46, 0.88]. The rms
      relative-change error was 0.42 of Δ, not 0.26. All six misses have k_f ≥ 1.45× nominal: the
      gain grows faster than linearly in k_f. At ×2.7 the estimate was +1.9% for a true −9.6% change.
-   - **Headline interval: per-period co-estimation, κ = 0.044.** Contributions: unsprung mass 0.039,
-     η_f 0.017, axle damping 0.009; k_f and k_H0 contribute ~2e-5. **Not yet revalidated** on a fresh
-     random-misspecification Monte Carlo (missing item 4).
+   - **κ = 0.044 (per-period co-estimation) also failed revalidation; stopped at the interim
+     check.** Fresh Monte Carlo, co-estimating fit, all five misspecifications drawn at random, k_f
+     stratified log-normal (σ 0.35; ×0.58–×2.19 drawn): **14/20 covered, 0.70 [0.46, 0.88]**
+     (statistical only 0.65). Rule: ≤ 15/20 → stop before changing κ. The rms change error is 0.096
+     of Δ, of which the statistical SE accounts for 0.062; the mean error is +0.057 of Δ (the change
+     is under-estimated by about 6%). The misses are **not** driven by k_f: the ×2.19 draw had −0.04,
+     and the error does not correlate with k_f (r = −0.02). It correlates with unsprung mass (r 0.37)
+     and axle damping (r 0.49, p 0.03), and the intercept +0.05 is unexplained by any draw. κ is not
+     changed (`results/p3/validation_mc.json`, Table 14).
 4. **Absolute k_B0 is reported only with its model-form budget.**
    - Nominal model: 6.1% RSS at 1σ, or 5.1% if the unsprung mass is known to ±1%.
    - Foundation and contact stiffness co-estimated: 3.9%, or 1.8% with mass to ±1%.
    - The unsprung mass enters about 1:1 (−12% bias per +10% mass error).
    - On the fresh random-misspecification Monte Carlo, the rms absolute bias (nominal fit) was 10.2%,
      against the 6.1% one-at-a-time RSS budget: the same nonlinearity in k_f.
-5. **The rail-coupled multi-wheel model is necessary.** On the 4-wheel headline data, the
+5. **Health relevance (reading B).** With placeholder bearing geometry, 10 µm of diametral clearance
+   growth lowers the effective k_B by −1.1% empty and −0.26% loaded (the contact change, −6.2% /
+   −2.0%, is diluted by k_B/k_contact = 0.17 / 0.13). Detection at 0.71% needs about 6 µm (empty) or
+   27 µm (loaded). The load exponent is identifiable jointly with k_B0 (CRB 0.0034 at N = 50, 0.0019 at
+   N = 200) but clearance shifts it only by 0.005 per 10 µm: detectable between two periods only for
+   20 µm at N = 200 (Table 13).
+6. **The rail-coupled multi-wheel model is necessary.** On the 4-wheel headline data, the
    single-wheelset fit is biased by −13.9% / −14.0% at 20 / 40 dB, with 0/10 coverage. On 2–8-wheel
    data the bias is −9 to −14%.
 
@@ -49,13 +67,13 @@ without measuring rail roughness: a multi-pass debiased Whittle likelihood*
 | § | Content | Figure / table | Script → result |
 |---|---|---|---|
 | 1 | Introduction. Positioning: CT23's conclusion asks for a reliable way to reject bad P2 stiffness estimates; Pieringer & Kropp name joint estimation as open; drive-by speed diversity (Jin, Yang et al. 2021); Bayesian FFT (Au) | — | `docs/lit_review_fe_direct.md` (novelty caveats C1–C9) |
-| 2.1 | Wheelset model: stepped Timoshenko FE, bearings k_B = k_B0 (W/W0)^0.1, axleboxes, primary suspension | **Table 1** parameters with sources | `config/params.yaml`, `config/track.yaml` → `experiments/make_tables.py` → `results/tables/table1_parameters.md` (vehicle masses stay placeholders until the target vehicle is confirmed) |
+| 2.1 | Wheelset model: stepped Timoshenko FE, effective support stiffness k_B (roller contacts in series with housing/adapter; reading B), default power law k_B0 (W/W0)^0.1 and the series law as an option (`bearing.stiffness_law`), axleboxes, primary suspension; LaTeX draft `paper/sec2_model.tex` | **Table 1** parameters with sources | `config/params.yaml`, `config/track.yaml` → `experiments/make_tables.py` → `results/tables/table1_parameters.md` (vehicle masses stay placeholders until the target vehicle is confirmed) |
 | 2.2 | Rail and multi-wheel coupling: Timoshenko rail on a hysteretic foundation, coupling with cross terms (CT23 Eqs. 5–11) | **Fig. 1** transfer functions for 1/2/4/8 wheels at 60 and 110 km/h | `src/analysis/multiwheel.py` → `results/p2/fig1_transfer.json` → `make_figures.py` (`figures/fig1_transfer_functions`) |
 | 2.3 | Verification: G1 (free–free Timoshenko vs closed form 0.5%, energy 1e-6, frequency vs time domain 1e-3); rail receptance vs Eq. 11 and numerical inverse transform; single-wheel coupling = rail-oscillator model (1e-9) | **Table 2** | `make_tables.py`; `experiments/p1_verify.py` → `results/p1/verification.json`, `results/gates/G1.json`; `tests/test_track.py` |
 | 3.1 | Observation model: 20-revolution records, DFT bins, roughness sub-band levels, WIM prior | — | `docs/method_notes.md` §1–2 |
 | 3.2 | Identifiability: Fisher information and CRB; why speed diversity works; CRB vs speed spread and sub-band resolution K | **Fig. 2** CRB vs speed spread for K = 1…256 | `experiments/p1_bound_speed_subband.py` → `results/p1/bound_speed_subband.json` → `make_figures.py` (`fig2_crb_vs_speed_spread`) |
 | 3.3 | Debiased Whittle likelihood (Sykulski et al. 2019): why the bin-sampled form fails with cross terms | **Fig. 3** averaged periodogram vs bin-sampled vs Fejér-convolved model | `experiments/p2_debias_check.py` → `results/p2/debias_check.json` (300 records, CT23 12-wheel setup: rms log ratio 0.47 bin-sampled vs 0.10 debiased, sampling noise 0.06) → `make_figures.py` (`fig3_debiased_periodogram`) |
-| 3.4 | Profiling, Wald and profile intervals, pseudo-true bias | — | `docs/method_notes.md` §7–8 |
+| 3.4 | Profiling (incl. the exact sub-band scoring option), Wald and profile intervals, pseudo-true bias; relative change and MDC | — | `docs/method_notes.md` §7–8; LaTeX draft `paper/sec3_method.tex` |
 | 4.1 | Headline Monte Carlo on the final rail-coupled 4-wheel model: N = 50, 60–110 km/h, 5 seeds × 10 datasets, SNR 20/40 dB; the single-wheelset fit appears only as the ignore-coupling column (seed 42) | **Table 3** bias, RMSE/CRB, Wald and profile coverage | `experiments/p2_headline_mw.py` → `results/p2/headline_mw.json`. The single-wheelset rail-oscillator headline (`p2_headline.py` → `results/p2/headline.json`, `_noisefit`, `_debias`) moves to the supplement as the noise-floor diagnostic |
 | 4.2 | Speed spread and N: fixed / 95–105 / 60–110 km/h, N = 50 / 200 | **Table 4** | `experiments/p1_fe_direct.py` → `results/p1/fe_direct.json` |
 | 4.3 | Multi-wheel coupling: bound for 1/2/4/8 wheels; correct vs single-wheelset fit | **Table 5**, **Fig. 4** bias of the single-wheelset fit (`make_tables.py`, `make_figures.py`) | `experiments/p2_multiwheel.py` → `results/p2/multiwheel_bound.json`, `results/p2/multiwheel_mc.json` |
@@ -63,6 +81,8 @@ without measuring rail roughness: a multi-pass debiased Whittle likelihood*
 | 4.5 | **Relative change (main result)**: Δk_B0/k_B0 under misspecification vs absolute bias, nominal fit and with per-period co-estimation of k_f, k_H0; combined intervals; κ revalidated on a fresh Monte Carlo with misspecifications drawn from the 1σ ranges; minimum detectable change | **Fig. 6** estimated vs true change per misspecification; **Table 7** gains and κ; **Table 8** MDC for N = 50/200 × 20/40 dB | `experiments/p2_relative_change.py` → `results/p2/relative_change.json`; `experiments/p2_relative_intervals.py` → `results/p2/relative_intervals.json`; `experiments/p2_relative_coest_drift.py` (`--coest-rel`, `--kappa-mc`) → `results/p2/relative_coest_drift.json`; `make_figures.py` (`fig6_relative_change`), `make_tables.py` |
 | 4.6 | Wheel roughness at rotation orders: notch vs tachometer lines | **Table 9** | `experiments/p2_wheel_lines.py` → `results/p2/wheel_lines_bound.json`, `results/p2/wheel_lines_mc.json` |
 | 4.7 | Repeated passes over one section, partial coherence (ρ = 0.5/0.7/0.9, random lateral offsets): the main independent-pass estimator with model and sandwich SE; the exchangeable-ρ likelihood; the oracle bound | **Table 10** | `experiments/p2_partial_indep.py` → `results/p2/partial_indep.json`; `experiments/p2_shared_section.py` → `results/p2/partial_coherence_bound.json`, `results/p2/partial_coherence_mc.json` |
+| 4.7b | Health relevance: roller-contact model (wheelset doc Eqs. 10–14), effective k_B under reading B, clearance growth 0–50 µm at empty/loaded; identifiability of the load exponent and its clearance-induced shift | **Table 13** | `experiments/p3_bearing_clearance.py` → `results/p3/bearing_clearance.json`; `experiments/p3_exponent_bound.py` → `results/p3/exponent_bound.json` |
+| 4.7c | Validation Monte Carlo: κ revalidation (co-estimating fit), drift at k_f ×0.8, bias diagnosis (paired SNR, refined estimator, design regression) | **Table 14** | `experiments/p3_validation_mc.py` → `results/p3/validation_mc.json`; `experiments/p3_bias_regression.py` → `results/p3/bias_regression.json` |
 | 4.8 | Seasonal foundation drift between periods: k_f ×0.8/0.9/1.1/1.2 in the later period, true Δk_B0 = 0 and −5%; false-alarm rate and MDC with and without per-period co-estimation of k_f, k_H0; Monte Carlo check at k_f ×1.2 | **Table 11** | `experiments/p2_relative_coest_drift.py` (`--drift`, `--drift-mc`) → `results/p2/relative_coest_drift.json` |
 | 4.9 | Validation against the CT23 P2 failure mode: the same multi-pass likelihood for track stiffness k_f on their simulated 12-wheel metro setup; per-pass peak fits vs multi-pass, with and without corrugation near P2 | **Fig. 7**, **Table 12** | `experiments/p2_scope_p2.py` → `results/p2/scope_p2_hysteretic.json`, `scope_p2_fractional.json` |
 | 4.10 | Noise floor and window: taper vs rectangular; profiled floor | Supplementary table | `experiments/p1_fe_direct_taper_compare.py` → `results/p1/fe_direct_taper_compare*.json`; `p2_headline.py --fit-noise/--debias` |
@@ -95,11 +115,12 @@ single-line roughness model), and the `*_binsampled` result files (kept for tran
 2. ~~Debias check~~: done (`p2_debias_check.py`).
 3. ~~Headline on the final model~~: done (`p2_headline_mw.py`). It shows a significant positive bias
    (open items).
-4. **Revalidate κ = 0.044 (co-estimating fit)** on a fresh random-misspecification Monte Carlo, as
-   was done for κ = 0.26 (`p2_relative_coest_drift.py --kappa-mc` with the coest family; about
-   2 × 20 four-global fits).
-5. **Drift Monte Carlo at k_f ×0.8.** The Monte Carlo check (n = 6) used ×1.2, where the fixed-k_f
-   bias is positive and cannot raise false alarms. The false-alarm case (×0.8) is pseudo-true only.
+4. **An interval for Δ that covers.** κ = 0.26 (fixed k_f) and κ = 0.044 (co-estimated) both under-cover
+   on random misspecification. Diagnosis so far: a systematic ~6% under-estimate of |Δ| plus unsprung-mass
+   and axle-damping terms. Options (not run): an empirical κ from a larger random-misspecification MC,
+   or a bias correction of the change estimate. Decision needed before §4.5 is written.
+5. ~~Drift Monte Carlo at k_f ×0.8~~: done. True change 0, n = 20 each: fixed k_f 20/20 false alarms
+   (1.00 [0.83, 1.00], mean Δ̂ −2.21%); co-estimated 1/20 (0.05 [0.00, 0.25], mean −0.02%).
 6. **Parameter sources.**
    - All FE wheelset parameters (axle geometry, wheel and axlebox masses, primary suspension,
      bearing values) are placeholders in `config/params.yaml`. Vehicle masses stay placeholders
@@ -120,7 +141,16 @@ single-line roughness model), and the `*_binsampled` result files (kept for tran
 
 ## Open items (results that need an explanation)
 
-- **Positive bias in rail-coupled fits: now the main open item.**
+- **Positive bias in rail-coupled fits: now the main open item.** Diagnosis (2026-10-13,
+  Table 14 c–d): on the same datasets, errors at 20/40/60 dB agree to 0.02 pp and the refined
+  estimator (0.25 Hz table, exact sub-band scoring) agrees with the base one to 0.01 pp, for seed 42
+  (bias +0.02%) and seed 123 (bias +0.28%). So neither sensor noise nor the estimator approximations
+  cause it: the error is fixed by the roughness/speed/payload realisation. Across the 50 headline
+  datasets, speed spread, payload spread, minimum speed and bins near the resonance explain R² 0.19
+  (only payload spread, p 0.04, not significant after 4 tests); mean error +0.146%; seeds differ
+  (ANOVA p 0.036). Remaining candidates: the Fejér kernel truncation at ±30 bins (≈0.7% of power
+  outside), and the neglected inter-bin correlation (the Whittle CRB would then be optimistic, which
+  matches RMSE/CRB 1.3 at 60 dB on seed 42 with no bias).
   - Rail-coupled headline (n = 50 per SNR): +0.11 ± 0.02% at 20 dB and +0.15 ± 0.03% at 40 dB (5–6
     SE). RMSE/CRB is 1.12 / 1.56 and Wald coverage 0.88 / 0.70 [0.55, 0.82]; c_B bias is +2.8% / +8.3%.
     The bias explains part of the 40 dB under-coverage: with the mean removed, the scatter is 0.92 ×

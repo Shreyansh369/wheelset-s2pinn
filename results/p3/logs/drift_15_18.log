@@ -1,0 +1,6 @@
+{'estimator': 'nominal', 'rep': 15, 'f': 0.8, 'D_hat': -0.027997227983938444, 'se': 0.0027895583913162157, 'alarm': True, 'converged': True, 'wall_s': 332.9174456469991}
+{'estimator': 'coest', 'rep': 15, 'f': 0.8, 'D_hat': -0.004957380830596492, 'se': 0.002475436504855701, 'alarm': True, 'converged': True, 'wall_s': 1007.6510021389986}
+{'estimator': 'nominal', 'rep': 16, 'f': 0.8, 'D_hat': -0.015600854466214287, 'se': 0.0028121544643547316, 'alarm': True, 'converged': True, 'wall_s': 322.3382370069994}
+{'estimator': 'coest', 'rep': 16, 'f': 0.8, 'D_hat': 0.0015823462522206455, 'se': 0.0024937148988227647, 'alarm': False, 'converged': True, 'wall_s': 946.929968512999}
+{'estimator': 'nominal', 'rep': 17, 'f': 0.8, 'D_hat': -0.022149846204420953, 'se': 0.002672625112072368, 'alarm': True, 'converged': True, 'wall_s': 382.147698449}
+{'estimator': 'coest', 'rep': 17, 'f': 0.8, 'D_hat': 9.016336300149419e-05, 'se': 0.0024016300386212083, 'alarm': False, 'converged': True, 'wall_s': 1274.643850722001}

@@ -1,0 +1,363 @@
+{
+  "name": "p3/validation_mc",
+  "seed": 45,
+  "config": {
+    "kappa": {
+      "N_per_period": 50,
+      "estimator": "coest (kB0, cB, kf, kH0)",
+      "kappa": 0.044,
+      "ranges": {
+        "kf": [
+          0.35,
+          "CT23: in-situ ABA-derived kf 1.2-2.6x the lab value (Tables 2, 5 vs Sec. 5.1.1); section-to-section spread"
+        ],
+        "eta_f": [
+          0.2,
+          "CT23 Sec. 5.1.1: literature loss factor 0.2-0.3"
+        ],
+        "kH0": [
+          0.15,
+          "assumption: Hertz constant C_H for freight wheel/60E1 profiles not sourced (CT23 value is metro); wheel load from WIM"
+        ],
+        "unsprung_scale": [
+          0.03,
+          "assumption: design mass known; wear and fittings"
+        ],
+        "axle_damp_scale": [
+          0.5,
+          "assumption: axle damping is a placeholder (1% at 80 Hz); factor ~1.65 either way"
+        ]
+      },
+      "kf_sampling": "stratified log-normal sigma 0.35",
+      "x": "U(2%, 10%) decrease"
+    },
+    "drift": {
+      "true_change": 0,
+      "N_per_period": 50,
+      "snr_db": 40
+    },
+    "bias": {
+      "datasets": "keys (42, 40, j), 4-wheel headline; same data at each SNR",
+      "refined": "0.25 Hz table, exact sub-band scoring"
+    }
+  },
+  "payload": {
+    "kappa_coest_stress": [],
+    "kappa_coest": {
+      "n": 20,
+      "kappa": 0.044,
+      "coverage": 0.7,
+      "coverage_ci95": [
+        0.45721081772371086,
+        0.8810684095942722
+      ],
+      "coverage_statistical_only": 0.65,
+      "coverage_statistical_only_ci95": [
+        0.40781146546717184,
+        0.8460907952154588
+      ],
+      "rms_change_error_frac": 0.09612412663467258,
+      "mean_change_error_frac": 0.05672066329862614,
+      "kappa_empirical_rms": 0.07358918272891538,
+      "kf_draw_range": [
+        0.5845329126876087,
+        2.191291190208343
+      ],
+      "n_kf_ge_2": 1,
+      "abs_bias_base_pct_rms": 3.254091598088809,
+      "worst": [
+        {
+          "rep": 1,
+          "misspec": {
+            "kf": 1.2168262821822837,
+            "eta_f": 0.8464555741785112,
+            "kH0": 0.8313824680332844,
+            "unsprung_scale": 0.989785837451702,
+            "axle_damp_scale": 1.5324004330447663
+          },
+          "true_change_pct": -4.138205387838584,
+          "est_change_pct": -3.4190172158706678,
+          "error_frac": 0.17685445081562237,
+          "covered": false
+        },
+        {
+          "rep": 5,
+          "misspec": {
+            "kf": 0.9255273928170636,
+            "eta_f": 1.5977902031687177,
+            "kH0": 0.93532022665714,
+            "unsprung_scale": 1.0368441451984869,
+            "axle_damp_scale": 2.2531246268944916
+          },
+          "true_change_pct": -9.220592135125782,
+          "est_change_pct": -7.818653155772804,
+          "error_frac": 0.1584214023426279,
+          "covered": false
+        },
+        {
+          "rep": 13,
+          "misspec": {
+            "kf": 0.6220659823831275,
+            "eta_f": 0.8726152312324283,
+            "kH0": 1.108084803068767,
+            "unsprung_scale": 1.0295781104555908,
+            "axle_damp_scale": 0.9606430945129298
+          },
+          "true_change_pct": -2.3140671316584793,
+          "est_change_pct": -2.010262805976326,
+          "error_frac": 0.13262868008743695,
+          "covered": true
+        },
+        {
+          "rep": 4,
+          "misspec": {
+            "kf": 0.6539863051570758,
+            "eta_f": 0.8662137524817529,
+            "kH0": 1.2020377182581534,
+            "unsprung_scale": 1.026742715630364,
+            "axle_damp_scale": 1.3623311845204356
+          },
+          "true_change_pct": -6.060647727354695,
+          "est_change_pct": -5.31776279835886,
+          "error_frac": 0.1259905171722286,
+          "covered": false
+        },
+        {
+          "rep": 3,
+          "misspec": {
+            "kf": 0.8635067938987219,
+            "eta_f": 1.0237605419348719,
+            "kH0": 0.956991040574971,
+            "unsprung_scale": 0.9935052664956002,
+            "axle_damp_scale": 1.3701643117167404
+          },
+          "true_change_pct": -6.5905870620789955,
+          "est_change_pct": -5.827286110392604,
+          "error_frac": 0.11936914148417112,
+          "covered": false
+        }
+      ],
+      "all_converged": true,
+      "wall_s_median": 1435.2771550715
+    },
+    "drift_mc": [
+      {
+        "kf_factor": 0.8,
+        "estimator": "nominal",
+        "n": 20,
+        "false_alarms": 20,
+        "rate": 1.0,
+        "rate_ci95": [
+          0.8315665290169146,
+          1.0
+        ],
+        "D_hat_mean_pct": -2.2089607825292052,
+        "D_hat_sd_pct": 0.3470545402546974,
+        "se_median_pct": 0.2692161841225945,
+        "all_converged": true
+      },
+      {
+        "kf_factor": 0.8,
+        "estimator": "coest",
+        "n": 20,
+        "false_alarms": 1,
+        "rate": 0.05,
+        "rate_ci95": [
+          0.0012650894979498038,
+          0.24873276277202777
+        ],
+        "D_hat_mean_pct": -0.01803429553922431,
+        "D_hat_sd_pct": 0.2240374104860398,
+        "se_median_pct": 0.24056648467904485,
+        "all_converged": true
+      }
+    ],
+    "bias_diag": [
+      {
+        "seed": 42,
+        "variant": "base",
+        "snr_db": 20.0,
+        "n": 10,
+        "bias_pct": -0.06799954388158835,
+        "bias_se_pct": 0.07990848503523225,
+        "rmse_pct": 0.2494850409217459,
+        "crb_pct": 0.17852491712438298,
+        "rmse_over_crb": 1.3974802225950516,
+        "coverage90_wald": 0.9,
+        "cB_bias_pct": 5.198623145023394,
+        "datasets": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "seed": 42,
+        "variant": "base",
+        "snr_db": 40.0,
+        "n": 10,
+        "bias_pct": 0.021035850105948217,
+        "bias_se_pct": 0.07508044385179807,
+        "rmse_pct": 0.22617947940032435,
+        "crb_pct": 0.17041144726270505,
+        "rmse_over_crb": 1.3272551993038808,
+        "coverage90_wald": 0.9,
+        "cB_bias_pct": 9.34826698657832,
+        "datasets": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "seed": 42,
+        "variant": "base",
+        "snr_db": 60.0,
+        "n": 10,
+        "bias_pct": 0.021535488892385768,
+        "bias_se_pct": 0.0753617983281075,
+        "rmse_pct": 0.22706174147701172,
+        "crb_pct": 0.1702833815946977,
+        "rmse_over_crb": 1.3334345333677704,
+        "coverage90_wald": 0.8,
+        "cB_bias_pct": 9.414758175023556,
+        "datasets": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "seed": 42,
+        "variant": "refined",
+        "snr_db": 40.0,
+        "n": 10,
+        "bias_pct": 0.020783931436255676,
+        "bias_se_pct": 0.07461938015336379,
+        "rmse_pct": 0.22478108417005863,
+        "crb_pct": 0.17040660605268002,
+        "rmse_over_crb": 1.319086679659409,
+        "coverage90_wald": 0.8,
+        "cB_bias_pct": 9.349400467746708,
+        "datasets": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "seed": 123,
+        "variant": "base",
+        "snr_db": 40.0,
+        "n": 10,
+        "bias_pct": 0.2765633631423292,
+        "bias_se_pct": 0.04685162176601933,
+        "rmse_pct": 0.30966692248122046,
+        "crb_pct": 0.16915777953787492,
+        "rmse_over_crb": 1.8306395563195788,
+        "coverage90_wald": 0.4,
+        "cB_bias_pct": 9.495684459661504,
+        "datasets": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "seed": 123,
+        "variant": "base",
+        "snr_db": 60.0,
+        "n": 10,
+        "bias_pct": 0.283504189597531,
+        "bias_se_pct": 0.04671580581656481,
+        "rmse_pct": 0.31567058590229663,
+        "crb_pct": 0.16902209295370513,
+        "rmse_over_crb": 1.8676291388058852,
+        "coverage90_wald": 0.3,
+        "cB_bias_pct": 9.713235751776086,
+        "datasets": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "seed": 123,
+        "variant": "refined",
+        "snr_db": 40.0,
+        "n": 10,
+        "bias_pct": 0.2738887077442853,
+        "bias_se_pct": 0.046571939488232,
+        "rmse_pct": 0.30691161668247263,
+        "crb_pct": 0.16915303720507385,
+        "rmse_over_crb": 1.8144020453524945,
+        "coverage90_wald": 0.4,
+        "cB_bias_pct": 9.504689727015082,
+        "datasets": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "24a46ad7b714211ed720f91d87c382b353117259",
+    "timestamp_utc": "2026-10-13T11:33:00Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 96.65625,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

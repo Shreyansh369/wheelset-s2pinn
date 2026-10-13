@@ -26,8 +26,8 @@
 
 | Later k_f | Estimator | n | False alarms | Rate [95% CI] | Mean Δ̂ (%) | SD Δ̂ (%) | Median SE (%) |
 |---|---|---|---|---|---|---|---|
-| ×0.8 | nominal | 14 | 14 | 1.00 [0.77, 1.00] | -2.33 | 0.26 | 0.27 |
-| ×0.8 | coest | 12 | 0 | 0.00 [0.00, 0.26] | -0.08 | 0.18 | 0.24 |
+| ×0.8 | nominal | 20 | 20 | 1.00 [0.83, 1.00] | -2.21 | 0.35 | 0.27 |
+| ×0.8 | coest | 20 | 1 | 0.05 [0.00, 0.25] | -0.02 | 0.22 | 0.24 |
 
 **(c) Bias diagnosis on paired datasets (same data, different SNR or estimator)**
 
