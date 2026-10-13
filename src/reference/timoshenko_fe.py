@@ -159,8 +159,9 @@ class L1LinModel:
         self.presc = np.array(presc, int)
         self.free = np.array([i for i in range(self.n) if i not in set(presc)], int)
 
-    def matrices(self, kB0: float, cB: float, W: float) -> Matrices:
-        kB = self.p.kB(kB0, W)
+    def matrices(self, kB0: float, cB: float, W: float, load_exp: float | None = None,
+                 clearance_growth_um: float = 0.0) -> Matrices:
+        kB = self.p.kB(kB0, W, load_exp=load_exp, clearance_growth_um=clearance_growth_um)
         K, C = self.K0.copy(), self.C0.copy()
         for jn, ib in zip(self.mesh.journal_nodes, self.ib):
             iw = 2 * jn

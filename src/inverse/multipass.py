@@ -180,13 +180,19 @@ class MultiPassWhittle:
 
     def __init__(self, passes: list[dict], W_meas, sigma_W: float, rough: Roughness, family: Family,
                  mask=None, debias: bool = False, M: int = 4, Kb: int = 30, support=(F_LO - 5, F_HI),
-                 fit_noise: bool = False):
+                 fit_noise: bool = False, exact_subband: bool = False):
         """mask(pass dict) -> boolean array over the pass's bins (True = keep); None keeps all.
 
         fit_noise: the per-pass noise floor e_i is a profiled nuisance, estimated jointly from the
         in-band bins and the record's out-of-band (noise-only) bins, instead of being plugged in
         from the out-of-band mean.
+
+        exact_subband (debias only): the roughness-level scoring step uses the exact derivative of each
+        bin's kernel-smoothed variance with respect to every sub-band level (the kernel mixes neighbouring
+        sub-bands) and the full sub-band Fisher matrix, instead of attributing a bin's variance to its
+        own sub-band. Its fixed point is then the exact profile maximum.
         """
+        self.exact_subband = exact_subband and debias
         self.fit_noise = fit_noise
         self.fam = family
         self.rough = rough
@@ -227,6 +233,8 @@ class MultiPassWhittle:
                 pp.fm, pp.subm, pp.basem = fm, np.where(inb, sm_, 0), basem
                 pp.K = csr_matrix((np.concatenate(vals), (np.concatenate(rows), np.concatenate(cols))),
                                   shape=(pp.f.size, fm.size))
+                if exact_subband:
+                    pp.E = csr_matrix((np.ones(int(inb.sum())), (np.flatnonzero(inb), sm_[inb])), shape=(fm.size, rough.n_sub))
             self.P.append(pp)
         self.used = np.unique(np.concatenate([p.sub for p in self.P]))
         self._grid_ready = False
@@ -267,6 +275,8 @@ class MultiPassWhittle:
         for i, p in enumerate(self.P):
             if self.debias:
                 q = p.basem * np.exp(logg[p.subm])
+                if self.exact_subband:
+                    p._wfine = np.abs(H[i]) ** 2 * q
                 A.append(p.K @ (np.abs(H[i]) ** 2 * q))
                 if deriv:
                     dA.append(p.K @ (2 * np.real(np.conj(H[i]) * dH[i]) * q))
@@ -283,15 +293,28 @@ class MultiPassWhittle:
         for it in range(max_it):
             A, dA = self._A(tab, lw, logg, deriv=True)
             gnum, gden, wstep = np.zeros(self.S), np.zeros(self.S), np.zeros(N)
+            Fg = np.zeros((self.S, self.S)) if self.exact_subband else None
             for i, p in enumerate(self.P):
                 a = A[i]
                 v = a + p.e
                 r = p.c2 / v - 1
-                gnum += np.bincount(p.sub, a / v * r, minlength=self.S)
-                gden += np.bincount(p.sub, (a / v) ** 2, minlength=self.S)
+                if self.exact_subband:   # D[k, s] = d a_k / d log g_s (exact, kernel mixes sub-bands)
+                    D = (p.K.multiply(p._wfine[None, :]) @ p.E).tocsr()
+                    gnum += D.T @ (r / v)
+                    Dv = D.multiply((1 / v)[:, None]).tocsr()
+                    Fg += (Dv.T @ Dv).toarray()
+                else:
+                    gnum += np.bincount(p.sub, a / v * r, minlength=self.S)
+                    gden += np.bincount(p.sub, (a / v) ** 2, minlength=self.S)
                 da = dA[i] / v
                 wstep[i] = (da @ r - (lw[i] - self.lw_meas[i]) / self.sW**2) / (da @ da + 1 / self.sW**2)
-            gstep = np.where(gden > 0, gnum / np.maximum(gden, 1e-300), 0.0)
+            if self.exact_subband:
+                act = np.diag(Fg) > 0
+                gstep = np.zeros(self.S)
+                Fa = Fg[np.ix_(act, act)]
+                gstep[act] = np.linalg.solve(Fa + 1e-12 * np.trace(Fa) / max(act.sum(), 1) * np.eye(act.sum()), gnum[act])
+            else:
+                gstep = np.where(gden > 0, gnum / np.maximum(gden, 1e-300), 0.0)
             logg = logg + np.clip(gstep, -2, 2)
             lw = lw + np.clip(wstep, -0.1, 0.1)
             estep = np.zeros(N)

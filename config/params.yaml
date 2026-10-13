@@ -31,6 +31,7 @@ bearing:   # journal -> axlebox spring-damper; health parameters theta
   cB:        {value: 5.0e3, unit: N s/m, source: "placeholder: EHL/structural damping"}
   prior_log_halfwidth: {value: 0.6931471805599453, unit: "-", source: "placeholder: factor-2 prior on kB0 and cB (log-uniform)"}
   load_exponent: {value: 0.1, unit: "-", source: "doc Eq. (12): Q ~ delta^(10/9) gives k ~ Q^(1/10)"}
+  stiffness_law: {value: power, unit: "-", source: "switch: power = kB0 (W/W0)^load_exponent (default; all results to date) | series = roller contacts (bearing_geometry) in series with housing/adapter, k_housing set so the total at W0 and c_d0 equals kB0 (placeholder)"}
   support_law:   {value: linear, unit: "-", source: "switch: linear | clearance | roller_contact (non-smooth laws: time domain only, not yet implemented)"}
 
 bearing_geometry:   # roller-contact model (wheelset doc Eqs. 10-14); used only for the health-relevance check

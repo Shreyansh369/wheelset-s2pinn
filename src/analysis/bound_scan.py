@@ -91,7 +91,8 @@ class ScenarioModel:
         """Wheelset-only (M, C, K) (no contact, no rail). Optional (model-form tests): th["axle_damp_scale"]
         scales the axle's stiffness-proportional damping; th["unsprung_scale"] scales the whole wheelset
         mass matrix (axle, wheels, axleboxes)."""
-        m = self.base.matrices(th["kB0"], th["cB"], th["W"])
+        m = self.base.matrices(th["kB0"], th["cB"], th["W"], load_exp=th.get("load_exp"),
+                               clearance_growth_um=th.get("clearance_growth_um", 0.0))
         M, C, K = m.M * th.get("unsprung_scale", 1.0), m.C.copy(), m.K
         s = th.get("axle_damp_scale", 1.0)
         if s != 1.0:

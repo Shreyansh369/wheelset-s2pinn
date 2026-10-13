@@ -74,10 +74,39 @@ class Params:
     def f_r(self) -> float:
         return rotation_frequency(self.V, self.r0)
 
-    def kB(self, kB0: float, W: float) -> float:
-        """Load-dependent bearing stiffness kB0 (W/W0)^exponent (W in the same unit as W0)."""
+    def kB(self, kB0: float, W: float, load_exp: float | None = None, clearance_growth_um: float = 0.0) -> float:
+        """Effective support stiffness k_B(W) (W in t, same unit as W0).
+
+        bearing.stiffness_law = "power" (default): kB0 (W/W0)^load_exp; load_exp defaults to the config
+        value. clearance_growth_um is ignored.
+        "series": roller contacts (src/reference/bearing.py, Eqs. 10-14 of the wheelset document) in
+        series with the housing/adapter, k_B = [1/k_contact(W, c) + 1/k_housing]^-1 with
+        c = c_d0 + clearance growth. k_housing is set so that k_B(W0, c_d0) = kB0, i.e. kB0 remains the
+        effective support stiffness at the reference load and clearance; load_exp is ignored.
+        """
         b = self.v["bearing"]
-        return kB0 * (W / self.v["payload"]["W0"]) ** b["load_exponent"]
+        if b.get("stiffness_law", "power") == "series":
+            kc0 = self._k_contact(self.v["payload"]["W0"], 0.0)
+            if kB0 >= kc0:
+                raise ValueError(f"series law needs kB0 < k_contact(W0, c_d0) = {kc0:.3g} N/m")
+            k_h = 1.0 / (1.0 / kB0 - 1.0 / kc0)
+            return 1.0 / (1.0 / self._k_contact(W, clearance_growth_um) + 1.0 / k_h)
+        return kB0 * (W / self.v["payload"]["W0"]) ** (b["load_exponent"] if load_exp is None else load_exp)
+
+    def _k_contact(self, W: float, growth_um: float) -> float:
+        """Cage-averaged roller-contact stiffness at axle load W (t) and diametral clearance c_d0 + growth."""
+        key = (round(float(W), 9), round(float(growth_um), 9))
+        cache = self.__dict__.setdefault("_kc_cache", {})
+        if key not in cache:
+            from src.reference.bearing import RollerBearing
+            bg, v = self.v["bearing_geometry"], self.v
+            brg = RollerBearing(int(bg["rollers_per_row"]), bg["roller_length"], bg["contact_angle"], bg["K_contact_coeff"])
+            rho = v["material"]["rho"]
+            xs = [0.0] + [sec[0] for sec in v["axle"]["sections"]]
+            m_axle = 2 * sum(rho * math.pi * sec[1] ** 2 / 4 * (xs[i + 1] - xs[i]) for i, sec in enumerate(v["axle"]["sections"]))
+            F = (W * 1000 - 2 * v["wheel"]["mass"] - m_axle) * G / 2
+            cache[key] = brg.k_mean(F, (bg["clearance_d0"] + growth_um) * 1e-6)["k_mean"]
+        return cache[key]
 
     # ---- forcing variables (zeta_2): order matters and is fixed
     def forcing_variables(self) -> list[dict]:

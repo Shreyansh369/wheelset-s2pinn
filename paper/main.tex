@@ -1,0 +1,48 @@
+% Paper 1 draft. Build: `make -C paper` (regenerates tables and number macros from results/, then LaTeX).
+% Every number in the text is a macro from generated/numbers.tex or a table from ../results/tables/;
+% none is typed by hand.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs,graphicx}
+\usepackage[margin=25mm]{geometry}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\graphicspath{{../figures/}}
+
+\newcommand{\placeholder}[1]{\textcolor{red}{\textbf{[#1]}}}
+\input{generated/numbers.tex}
+
+\title{Tracking the support stiffness of railway wheelset bearings from in-service axle-box
+acceleration without measuring rail roughness: a multi-pass debiased Whittle likelihood}
+\author{\placeholder{authors}}
+\date{\placeholder{draft}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+\placeholder{Abstract after Section 4 results are final.}
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+\placeholder{Section 1: positioning (Carrigan and Talbot's call for a reliable way to reject bad P2
+stiffness estimates; joint roughness--system estimation; drive-by speed diversity; Bayesian FFT).
+See docs/paper1\_outline.md.}
+
+\input{sec2_model}
+\input{sec3_method}
+\input{sec4_results}
+
+\section{Discussion}\label{sec:discussion}
+\placeholder{Section 5.}
+
+\section{Conclusions}\label{sec:conclusions}
+\placeholder{Section 6.}
+
+\bibliographystyle{unsrtnat}
+\bibliography{refs}
+\end{document}
