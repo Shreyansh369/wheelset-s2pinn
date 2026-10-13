@@ -33,6 +33,17 @@ bearing:   # journal -> axlebox spring-damper; health parameters theta
   load_exponent: {value: 0.1, unit: "-", source: "doc Eq. (12): Q ~ delta^(10/9) gives k ~ Q^(1/10)"}
   support_law:   {value: linear, unit: "-", source: "switch: linear | clearance | roller_contact (non-smooth laws: time domain only, not yet implemented)"}
 
+bearing_geometry:   # roller-contact model (wheelset doc Eqs. 10-14); used only for the health-relevance check
+  # Every value is a placeholder for a generic freight double-row tapered roller unit (22.5 t class);
+  # replace from the bearing maker's datasheet for the target vehicle.
+  rollers_per_row:   {value: 20,    unit: "-",  source: "placeholder: typical freight TBU 18-23 rollers per row"}
+  roller_length:     {value: 50.0,  unit: mm,   source: "placeholder: effective contact length l"}
+  roller_diameter:   {value: 24.0,  unit: mm,   source: "placeholder: mean roller diameter D"}
+  pitch_diameter:    {value: 190.0, unit: mm,   source: "placeholder: d_m for a ~150 mm journal"}
+  contact_angle:     {value: 10.0,  unit: deg,  source: "placeholder: cup angle of a freight tapered unit"}
+  clearance_d0:      {value: 20.0,  unit: um,   source: "placeholder: initial operating diametral clearance c_d0 (mounted, at temperature)"}
+  K_contact_coeff:   {value: 8.06e4, unit: "N mm^-10/9 per mm^(8/9)", source: "doc Eq. (13): K_i,o ~ 8.06e4 l^(8/9) (steel line contact)"}
+
 axlebox:
   mass: {value: 60.0, unit: kg, source: "placeholder: housing + outer ring + adapter"}
 
