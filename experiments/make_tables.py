@@ -375,6 +375,84 @@ def table12():
            "interval under-covers (0.45 of 90%); the cause is not yet diagnosed (open item)."])
 
 
+# ----------------------------------------------------------------------------- Table 13
+def table13():
+    b, e = load("p3/bearing_clearance.json"), load("p3/exponent_bound.json")
+    if b is None:
+        return missing("table13_health", "Table 13. Health relevance", "results/p3/bearing_clearance.json")
+    rows = [[f"{c['clearance_d0_um']:g}", c["load"], f"{c['F_bearing_kN']:.0f}", f"{c['k0_contact_N_per_m'] / 1e9:.2f}",
+             f"{c['pct_change_first_10um']:+.2f}", f"{c['pct_change_per_10um_mean_0_50']:+.2f}",
+             "–" if c["growth_um_at_mdc"] is None else f"{c['growth_um_at_mdc']:.1f}",
+             f"{c['series_dilution_factor']:.2f}",
+             "–" if c["pct_change_first_10um_effective"] is None else f"{c['pct_change_first_10um_effective']:+.2f}",
+             "–" if c["growth_um_at_mdc_effective"] is None else f"{c['growth_um_at_mdc_effective']:.1f}"] for c in b["cases"]]
+    body = "**(a) Roller-contact stiffness and effective support stiffness against diametral clearance growth**\n\n" + md(
+        ["Initial clearance (µm)", "Load", "Bearing load (kN)", "k_contact (GN/m)", "Contact: change, first 10 µm (%)",
+         "Contact: mean per 10 µm, 0–50 µm (%)", "Contact: growth at MDC (µm)", "k_B/k_contact",
+         "Effective k_B: change, first 10 µm (%)", "Effective k_B: growth at MDC (µm)"], rows)
+    if e:
+        sig = e["series_signal"]
+        body += "\n**(b) Effective load exponent of the series model (reading B)**\n\n" + md(
+            ["Clearance growth (µm)", "p_eff (least squares over payload range)", "p_eff (two-point)", "k_B empty / loaded (GN/m)"],
+            [[g, f"{v['p_eff_lsq']:.4f}", f"{v['p_eff_two_point']:.4f}", f"{v['kB_empty'] / 1e9:.3f} / {v['kB_loaded'] / 1e9:.3f}"]
+             for g, v in sig.items()])
+        body += "\n**(c) Bound on the load exponent (k_B0, c_B, p free; 4-wheel rail-coupled, 40 dB)**\n\n" + md(
+            ["p at truth", "N", "CRB p (abs.)", "CRB k_B0, p free (%)", "CRB k_B0, p fixed (%)", "Two-period MDC of p",
+             "Δp 10 µm (z)", "Δp 20 µm (z)", "Detectable 10 / 20 µm"],
+            [[f"{r['p_true']:.3f}", r["N"], f"{r['crb_p_abs']:.4f}", pct(r["crb_kB0_rel_p_free"]), pct(r["crb_kB0_rel_p_fixed"]),
+              f"{r['mdc_dp_two_periods']:.4f}", f"{r['dp_10um']:.4f} ({r['z_single_10um']:.1f})", f"{r['dp_20um']:.4f} ({r['z_single_20um']:.1f})",
+              f"{'yes' if r['detectable_two_periods_10um'] else 'no'} / {'yes' if r['detectable_two_periods_20um'] else 'no'}"] for r in e["rows"]])
+    write("table13_health", "Table 13. Health relevance: clearance growth, effective support stiffness and the load exponent", body,
+          ["results/p3/bearing_clearance.json", "results/p3/exponent_bound.json"],
+          ["Bearing geometry, initial clearance and k_housing are placeholders (config/params.yaml). MDC = 0.71% (N = 50, 40 dB, "
+           "co-estimating fit). z = Δp / CRB of a single period; detection between two periods needs Δp ≥ 2.93·√2·CRB."])
+
+
+# ----------------------------------------------------------------------------- Table 14
+def table14():
+    v = load("p3/validation_mc.json")
+    if v is None:
+        return missing("table14_validation", "Table 14. Validation Monte Carlo", "results/p3/validation_mc.json")
+    body = ""
+    k = v.get("kappa_coest")
+    if k:
+        rows = [["n (stratified k_f draws)", k["n"]], ["k_f range drawn", f"×{k['kf_draw_range'][0]:.2f} – ×{k['kf_draw_range'][1]:.2f}"],
+                [f"Coverage, κ = {k['kappa']}", f"{k['coverage']:.2f} {ci(k['coverage_ci95'])}"],
+                ["Coverage, statistical only", f"{k['coverage_statistical_only']:.2f} {ci(k['coverage_statistical_only_ci95'])}"],
+                ["rms change error (fraction of Δ)", f"{k['rms_change_error_frac']:.3f}"],
+                ["mean change error (fraction of Δ)", f"{k['mean_change_error_frac']:+.3f}"],
+                ["rms absolute k_B0 bias, base period (%)", f"{k['abs_bias_base_pct_rms']:.2f}"]]
+        body += "**(a) κ revalidation, co-estimating fit**\n\n" + md(["Quantity", "Value"], rows)
+        body += "\n**Worst cases**\n\n" + md(["Rep", "k_f", "η_f", "k_H0", "Unsprung", "Axle damping", "True change (%)", "Estimated (%)",
+                                                 "Error (fraction of Δ)", "Covered"],
+                                                [[w["rep"]] + [f"×{w['misspec'][p]:.2f}" for p in ("kf", "eta_f", "kH0", "unsprung_scale", "axle_damp_scale")]
+                                                 + [f"{w['true_change_pct']:.2f}", f"{w['est_change_pct']:.2f}", f"{w['error_frac']:+.3f}", "yes" if w["covered"] else "no"]
+                                                 for w in k["worst"]])
+    if v.get("drift_mc"):
+        body += "\n**(b) Drift Monte Carlo (true change 0)**\n\n" + md(
+            ["Later k_f", "Estimator", "n", "False alarms", "Rate [95% CI]", "Mean Δ̂ (%)", "SD Δ̂ (%)", "Median SE (%)"],
+            [[f"×{m['kf_factor']}", m["estimator"], m["n"], m["false_alarms"], f"{m['rate']:.2f} {ci(m['rate_ci95'])}",
+              f"{m['D_hat_mean_pct']:+.2f}", "–" if m["D_hat_sd_pct"] is None else f"{m['D_hat_sd_pct']:.2f}", f"{m['se_median_pct']:.2f}"]
+             for m in v["drift_mc"]])
+    if v.get("bias_diag"):
+        body += "\n**(c) Bias diagnosis on paired datasets (same data, different SNR or estimator)**\n\n" + md(
+            ["Seed", "Estimator", "SNR (dB)", "n", "Bias (%) ± SE", "RMSE (%)", "CRB (%)", "RMSE/CRB", "Wald cov."],
+            [[d["seed"], d["variant"], f"{d['snr_db']:.0f}", d["n"], f"{d['bias_pct']:+.3f} ± {d['bias_se_pct']:.3f}", f"{d['rmse_pct']:.3f}",
+              f"{d['crb_pct']:.3f}", f"{d['rmse_over_crb']:.2f}", f"{d['coverage90_wald']:.2f}"] for d in v["bias_diag"]])
+    r = load("p3/bias_regression.json")
+    if r:
+        j = r["joint_ols"]
+        body += "\n**(d) Regression of the 50 headline errors (40 dB) on pass-design features**\n\n" + md(
+            ["Feature", "Coef. (% per SD)", "t", "p", "r alone (p)"],
+            [[f, f"{j['coef_pct_per_sd'][f]:+.3f}", f"{j['t'][f]:+.2f}", f"{j['p'][f]:.3f}",
+              f"{r['single_feature'][f]['r']:+.2f} ({r['single_feature'][f]['p']:.3f})"] for f in j["coef_pct_per_sd"]]
+            + [["Intercept (mean error)", f"{j['intercept_pct']:+.3f}", "", "", ""],
+               ["R² / F-test p", f"{j['r2']:.2f}", "", f"{j['p_F']:.3f}", ""],
+               ["Seed one-way ANOVA p", "", "", f"{r['seed_anova']['p']:.3f}", ""]])
+    write("table14_validation", "Table 14. Validation Monte Carlo: κ revalidation, drift at k_f ×0.8, bias diagnosis", body,
+          ["results/p3/validation_mc.json", "results/p3/bias_regression.json"])
+
+
 if __name__ == "__main__":
-    for fn in (table1, table2, table3, table4, table5, table6, table7, table8, table9, table10, table11, table12):
+    for fn in (table1, table2, table3, table4, table5, table6, table7, table8, table9, table10, table11, table12, table13, table14):
         fn()
