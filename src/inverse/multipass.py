@@ -476,7 +476,7 @@ class MultiPassWhittle:
                 from scipy.sparse import csr_matrix
                 q = p.basem * np.exp(logg[p.subm])
                 Hf = self._H(tab0, lw, fine=True)[i]
-                inb = p.basem > 0
+                inb = (p.basem > 0) & (smap[p.subm] >= 0)   # sub-bands reached only through the kernel stay fixed
                 E = csr_matrix((np.ones(int(inb.sum())), (np.flatnonzero(inb), smap[p.subm[inb]])), shape=(p.fm.size, used.size))
                 Dsub = (p.K.multiply((np.abs(Hf) ** 2 * q)[None, :]) @ E).toarray()
                 D[:, d:d + used.size] = Dsub / v[:, None]
