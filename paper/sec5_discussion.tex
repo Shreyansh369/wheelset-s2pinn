@@ -1,0 +1,18 @@
+% Section 5: discussion. Numbers: generated/numbers.tex.
+\section{Discussion}\label{sec:discussion}
+\placeholder{Section 5 body after Section 4 is final.}
+
+\subsection{Limitations}\label{sec:limitations}
+\paragraph{Load exponent as a clearance indicator.} Clearance growth changes not only the level of the
+effective support stiffness but also its dependence on axle load, because a larger clearance shrinks
+the load zone more at light load. In principle the load exponent $p$ of~\eqref{eq:powerlaw} could
+therefore separate clearance growth from other losses of support stiffness. With the exponent free
+alongside $(k_{B0}, c_B)$ and payloads spanning \PayloadMin--\PayloadMax~t, the Cram\'er--Rao bound of
+$p$ is \ExpCRBFifty{} for $N = 50$ passes and \ExpCRBTwoHundred{} for $N = 200$, and freeing $p$ raises
+the bound of $k_{B0}$ from \KBCRBExpFixed\% to \KBCRBExpFree\% ($N=50$). Under the series reading of
+the support (placeholder bearing geometry), 10 and 20~\textmu m of clearance growth raise the
+effective exponent by only \ExpShiftTen{} and \ExpShiftTwenty{}. Detecting a shift between two
+periods (one-sided 5\% false alarm, 90\% detection) needs \ExpMDCFifty{} at $N=50$ and
+\ExpMDCTwoHundred{} at $N=200$, so only 20~\textmu m at $N=200$ would be detected. The exponent is
+therefore held fixed in the estimator, and the method reports a loss of effective support stiffness
+without attributing it to a mechanism.

@@ -145,13 +145,13 @@ def drift(j0, j1, f):
 
 
 # ----------------------------------------------------------------------------- (2) bias diagnosis
-def bias(j0, j1, snr, refined, seed=42):
+def bias(j0, j1, snr, refined, seed=42, kb=None):
     from experiments.p2_common import setup
     from experiments.p2_multiwheel import dataset, models
     sm, thb, rough, _ = setup()
     mw = models(sm)[0]["4"]
     fam = MultiWheelFamily(mw, thb, f_grid=np.arange(45.0, 702.0, 0.25) if refined else None)
-    tag = "refined" if refined else "base"
+    tag = "refined" if refined else ("base" if kb is None else f"kb{kb}")
     fp = OUT / "bias_diag_runs" / (f"{tag}_snr{int(snr)}.jsonl" if seed == 42 else f"{tag}_snr{int(snr)}_seed{seed}.jsonl")
     done = _done(fp, lambda r: r["j"])
     lt = math.log(TRUTH["kB0"])
@@ -160,7 +160,8 @@ def bias(j0, j1, snr, refined, seed=42):
             continue
         t0 = time.perf_counter()
         P, Wm, Ws, g = dataset(sm, thb, rough, mw, (seed, 40, j), N=50, snr=snr)
-        est = MultiPassWhittle([dict(q) for q in P], Wm, WIM, rough, fam, debias=True, exact_subband=refined)
+        est = MultiPassWhittle([dict(q) for q in P], Wm, WIM, rough, fam, debias=True, exact_subband=refined,
+                               **({} if kb is None else {"Kb": kb}))
         r = est.fit(np.log([START["kB0"], START["cB"]]))
         crb = est.expected_fisher(np.log([TRUTH["kB0"], TRUTH["cB"]]), np.log(g), np.log(Ws))["crb_log"]
         _append(fp, {"j": j, "seed": seed, "snr_db": snr, "variant": tag, "err_log": [r["phi"][0] - lt, r["phi"][1] - math.log(TRUTH["cB"])],
@@ -260,12 +261,13 @@ if __name__ == "__main__":
     ap.add_argument("--snr", type=float, default=60.0)
     ap.add_argument("--refined", action="store_true")
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--kb", type=int, default=None, help="debiasing kernel half-width in bins (default 30)")
     a = ap.parse_args()
     if a.kappa:
         kappa(a.j0, a.j1)
     if a.drift:
         drift(a.j0, a.j1, a.f)
     if a.bias:
-        bias(a.j0, a.j1, a.snr, a.refined, a.seed)
+        bias(a.j0, a.j1, a.snr, a.refined, a.seed, a.kb)
     if a.summarise:
         summarise()

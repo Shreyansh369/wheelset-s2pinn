@@ -77,10 +77,18 @@ def main():
             m[k] = miss("p3/bearing_clearance.json")
 
     e = load("p3/exponent_bound.json")
+    keys = ("PeffSeries", "ExpCRBFifty", "ExpCRBTwoHundred", "ExpMDCFifty", "ExpMDCTwoHundred", "ExpShiftTen", "ExpShiftTwenty",
+            "KBCRBExpFree", "KBCRBExpFixed")
     if e:
         m["PeffSeries"] = f"{e['series_signal']['0.0']['p_eff_lsq']:.3f}"
+        rows = {r["N"]: r for r in e["rows"] if abs(r["p_true"] - 0.1) < 1e-9}
+        m["ExpCRBFifty"], m["ExpCRBTwoHundred"] = f"{rows[50]['crb_p_abs']:.4f}", f"{rows[200]['crb_p_abs']:.4f}"
+        m["ExpMDCFifty"], m["ExpMDCTwoHundred"] = f"{rows[50]['mdc_dp_two_periods']:.4f}", f"{rows[200]['mdc_dp_two_periods']:.4f}"
+        m["ExpShiftTen"], m["ExpShiftTwenty"] = f"{rows[50]['dp_10um']:.4f}", f"{rows[50]['dp_20um']:.4f}"
+        m["KBCRBExpFree"], m["KBCRBExpFixed"] = f"{100 * rows[50]['crb_kB0_rel_p_free']:.2f}", f"{100 * rows[50]['crb_kB0_rel_p_fixed']:.2f}"
     else:
-        m["PeffSeries"] = miss("p3/exponent_bound.json")
+        for k in keys:
+            m[k] = miss("p3/exponent_bound.json")
 
     ver = load("p1/verification.json")
     if ver:

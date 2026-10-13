@@ -444,8 +444,12 @@ class MultiPassWhittle:
         return {"lo": bounds[0], "hi": bounds[1], "level": level, "n_eval": self.n_eval - n0}
 
     # -- expected Fisher information (CRB) under this observation model
-    def _fisher_parts(self, phi, logg, lw, h: float = 1e-4):
-        """Expected Fisher J over (globals, used sub-band levels, per-pass log W) and per-pass (D, v)."""
+    def _fisher_parts(self, phi, logg, lw, h: float = 1e-4, exact_sub: bool = False):
+        """Expected Fisher J over (globals, used sub-band levels, per-pass log W) and per-pass (D, v).
+
+        exact_sub (debias only): the sub-band columns use the exact kernel-mixed derivative
+        d v_k / d log g_s instead of attributing each bin to its own sub-band.
+        """
         phi = np.asarray(phi, float)
         d = phi.size
         tab0 = self.fam.table(self.theta(phi))
@@ -468,7 +472,16 @@ class MultiPassWhittle:
             D = np.zeros((p.f.size, n))
             for a in range(d):
                 D[:, a] = dAt[a][i] / v
-            D[np.arange(p.f.size), d + smap[p.sub]] = A[i] / v
+            if exact_sub and self.debias:
+                from scipy.sparse import csr_matrix
+                q = p.basem * np.exp(logg[p.subm])
+                Hf = self._H(tab0, lw, fine=True)[i]
+                inb = p.basem > 0
+                E = csr_matrix((np.ones(int(inb.sum())), (np.flatnonzero(inb), smap[p.subm[inb]])), shape=(p.fm.size, used.size))
+                Dsub = (p.K.multiply((np.abs(Hf) ** 2 * q)[None, :]) @ E).toarray()
+                D[:, d:d + used.size] = Dsub / v[:, None]
+            else:
+                D[np.arange(p.f.size), d + smap[p.sub]] = A[i] / v
             D[:, d + used.size + i] = dAw[i] / v
             if self.fit_noise:
                 D[:, d + used.size + N + i] = p.e / v
@@ -514,15 +527,25 @@ class MultiPassWhittle:
                 p.c2 = c2
             self.lw_meas = saved[1]
 
-    def sandwich_cov(self, phi, logg, lw, cluster: str = "bin", h: float = 1e-4) -> dict:
+    def sandwich_cov(self, phi, logg, lw, cluster: str = "bin", h: float = 1e-4, block_bins: int = 61,
+                     exact_sub: bool = False, clusters_list=None) -> dict:
         """Robust (sandwich) covariance of the globals, J^-1 M J^-1 over all parameters.
 
         Per-bin score contributions s_ik = D_ik (|c_ik|^2 / v_ik - 1) (plus the WIM-prior score of each
         pass as its own cluster) are summed within clusters: cluster="bin" groups the same DFT bin
         (same spatial wavenumber) across passes, which is where a shared roughness profile correlates
-        passes; cluster="pass" groups by pass. M = sum over clusters of s s^T; J is the expected Fisher.
+        passes; cluster="pass" groups by pass; cluster="block" groups runs of block_bins adjacent bins
+        within each pass (correlation between neighbouring bins of one record, e.g. through the window
+        kernel). M = sum over clusters of s s^T; J is the expected Fisher. clusters_list evaluates several
+        clusterings at once (one Fisher computation) and returns a dict keyed by "<cluster>" or
+        "block<B>".
         """
-        J, parts, d, n = self._fisher_parts(phi, logg, lw, h)
+        J, parts, d, n = self._fisher_parts(phi, logg, lw, h, exact_sub=exact_sub)
+        if clusters_list is not None:
+            return {name: self._sandwich_from(J, parts, d, n, c, b, lw) for name, c, b in clusters_list}
+        return self._sandwich_from(J, parts, d, n, cluster, block_bins, lw)
+
+    def _sandwich_from(self, J, parts, d, n, cluster, block_bins, lw):
         clusters: dict = {}
         N = len(self.P)
         off_w = n - N - (N if self.fit_noise else 0)
@@ -530,6 +553,10 @@ class MultiPassWhittle:
             S = D * (p.c2 / v - 1)[:, None]
             if cluster == "pass":
                 clusters[("pass", i)] = clusters.get(("pass", i), 0) + S.sum(0)
+            elif cluster == "block":
+                blk = (np.asarray(p.k) - int(p.k[0])) // block_bins
+                for b_ in np.unique(blk):
+                    clusters[("blk", i, int(b_))] = S[blk == b_].sum(0)
             else:
                 for kk, row in zip(p.k, S):
                     clusters[int(kk)] = clusters.get(int(kk), 0) + row
