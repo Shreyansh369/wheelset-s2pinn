@@ -160,23 +160,30 @@ def table2():
 
 # ----------------------------------------------------------------------------- Table 3
 def table3():
-    d = load("p2/headline_mw.json")
+    d, c, old = load("p3/headline_v2_kb120_attr.json"), load("p3/calibrated.json"), load("p2/headline_mw.json")
     if d is None:
-        return missing("table3_headline", "Table 3. Headline Monte Carlo (rail-coupled model)", "results/p2/headline_mw.json")
+        return missing("table3_headline", "Table 3. Headline Monte Carlo (frozen estimator)", "results/p3/headline_v2_kb120_attr.json")
+    cal = {x["snr_db"]: x for x in c["headline"]} if c else {}
+    ign = {x["snr_db"]: x["ignore_coupling_seed42"] for x in old["cells"]} if old else {}
     rows = []
-    for c in d["cells"]:
-        p, a, pr, ig = c["kB0_pooled"], c["kB0_across_seeds"], c["kB0_seed42_with_profile"], c["ignore_coupling_seed42"]
-        rows.append([f"{c['snr_db']:.0f}", p["n"], f"{pct(p['bias_rel'])} ± {pct(p['bias_rel_se'])}", pct(p["rmse_rel"]),
-                     pct(p["crb_rel"]), f"{p['rmse_over_crb']:.2f} (seed sd {a['rmse_over_crb']['sd']:.2f})",
-                     f"{p['coverage90_wald']:.2f} {ci(p['coverage90_wald_ci95'])}",
-                     f"{pr['coverage90_profile']:.2f} (n={pr['n']})" if pr else "–",
-                     f"{pct(ig['bias_rel'])} ± {pct(ig['bias_rel_se'])}; cov. {ig['coverage90_wald']:.2f}" if ig else "–"])
-    write("table3_headline", "Table 3. Headline Monte Carlo, 4-wheel rail-coupled model (k_B0)",
-          md(["SNR (dB)", "n", "Bias (%) ± SE", "RMSE (%)", "CRB (%)", "RMSE/CRB", "Wald 90% coverage [95% CI]",
-              "Profile 90% coverage (seed 42)", "Ignore coupling (seed 42): bias (%) ± SE; Wald cov."], rows),
-          ["results/p2/headline_mw.json"],
-          ["N = 50 passes, 60–110 km/h, 5 seeds × 10 datasets, debiased Whittle likelihood. The ignore-coupling "
-           "column fits the same data with the single-wheelset model on the same rail."])
+    for cell in d["cells"]:
+        p, snr = cell["kB0_pooled"], cell["snr_db"]
+        k = cal.get(snr)
+        if k and k["calibration_applied"]:
+            calib = (f"b = {k['all_seeds']['bias_pct']:+.3f}%, r = {k['all_seeds']['inflation_rmse_over_se']:.2f}; split A {k['split_A']['test_calibrated']['coverage']:.2f} "
+                     f"{ci(k['split_A']['test_calibrated']['ci95'])}, split B {k['split_B']['test_calibrated']['coverage']:.2f} {ci(k['split_B']['test_calibrated']['ci95'])}")
+        else:
+            calib = "none (uncalibrated coverage ≥ 0.85)" if k else "–"
+        ig = ign.get(snr)
+        rows.append([f"{snr:.0f}", p["n"], f"{pct(p['bias_rel'])} ± {pct(p['bias_rel_se'])}", pct(p["rmse_rel"]), pct(p["crb_rel"]),
+                     f"{p['rmse_over_crb']:.2f}", f"{cell['rmse_over_median_se']:.2f}", f"{p['coverage90_wald']:.2f} {ci(p['coverage90_wald_ci95'])}",
+                     calib, f"{pct(ig['bias_rel'])} ± {pct(ig['bias_rel_se'])}" if ig else "–"])
+    write("table3_headline", "Table 3. Headline Monte Carlo, 4-wheel rail-coupled model, frozen estimator (k_B0)",
+          md(["SNR (dB)", "n", "Bias (%) ± SE", "RMSE (%)", "CRB (%)", "RMSE/CRB", "RMSE/SE", "Wald 90% coverage [95% CI]",
+              "Simulation calibration: bias b, inflation r; held-out coverage", "Ignore coupling (seed 42, ±30-bin kernel): bias (%)"], rows),
+          ["results/p3/headline_v2_kb120_attr.json", "results/p3/calibrated.json", "results/p2/headline_mw.json"],
+          ["N = 50 passes, 60–110 km/h, 5 seeds × 10 datasets. Frozen estimator: debiased Whittle, kernel ±120 bins, own-sub-band "
+           "scoring, K = 16, load exponent fixed. Split A calibrates on seeds 42/123/456 and tests on 789/1024; split B the reverse."])
 
 
 # ----------------------------------------------------------------------------- Table 4
