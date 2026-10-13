@@ -63,6 +63,18 @@ def _append(fp, row):
     print(row, flush=True)
 
 
+T_START = time.perf_counter()
+DEADLINE_S = 110 * 60        # a chunk never starts a replicate it cannot finish inside this budget
+REP_MAX_S = [55 * 60]        # running estimate of the slowest replicate (initial: slowest seen so far, 53 min)
+
+
+def _time_left_for_rep() -> bool:
+    ok = time.perf_counter() - T_START + REP_MAX_S[0] <= DEADLINE_S
+    if not ok:
+        print(f"deadline: stopping chunk after {time.perf_counter() - T_START:.0f} s", flush=True)
+    return ok
+
+
 def _fit(P, Wm, rough, fam, names, **kw):
     est = MultiPassWhittle([dict(q) for q in P], Wm, WIM, rough, fam, debias=True, **kw)
     r = est.fit(phi(names, start=True))
@@ -86,6 +98,8 @@ def kappa(j0, j1):
     for j in range(j0, j1):
         if j in done:
             continue
+        if not _time_left_for_rep():
+            break
         t0 = time.perf_counter()
         mis, x = kappa_draw(j)
         res = {}
@@ -101,6 +115,7 @@ def kappa(j0, j1):
                      "phi_base": res["base"]["phi"], "phi_later": res["later"]["phi"],
                      "converged": res["base"]["converged"] and res["later"]["converged"],
                      "wall_s": time.perf_counter() - t0})
+        REP_MAX_S[0] = max(REP_MAX_S[0], time.perf_counter() - t0)
 
 
 # ----------------------------------------------------------------------------- (3) drift MC
@@ -111,6 +126,8 @@ def drift(j0, j1, f):
     for j in range(j0, j1):
         if all((e, j) in done for e in EST):
             continue
+        if not _time_left_for_rep():
+            break
         t0 = time.perf_counter()
         data = {"base": gen(sm, truth(thb, {}, TRUTH["kB0"]), rough, mw, (46, j, 0)),
                 "later": gen(sm, truth(thb, {"kf": f}, TRUTH["kB0"]), rough, mw, (46, j, 1))}
@@ -124,6 +141,7 @@ def drift(j0, j1, f):
             _append(fp, {"estimator": e, "rep": j, "f": f, "D_hat": d, "se": se, "alarm": bool(d < -1.645 * se),
                          "converged": res["base"]["converged"] and res["later"]["converged"],
                          "wall_s": time.perf_counter() - t1 + (t1 - t0 if e == "nominal" else 0.0)})
+        REP_MAX_S[0] = max(REP_MAX_S[0], time.perf_counter() - t0)
 
 
 # ----------------------------------------------------------------------------- (2) bias diagnosis
