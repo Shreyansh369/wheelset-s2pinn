@@ -1,4 +1,4 @@
-# Table 14. Validation Monte Carlo: κ revalidation, drift at k_f ×0.8, bias diagnosis
+# Table 14. Validation: κ revalidation, drift at k_f ×0.8, bias diagnosis, robust standard errors, calibration
 
 **(a) κ revalidation, co-estimating fit**
 
@@ -39,6 +39,7 @@
 | 42 | refined | 40 | 10 | +0.021 ± 0.075 | 0.225 | 0.170 | 1.32 | 0.80 |
 | 123 | base | 40 | 10 | +0.277 ± 0.047 | 0.310 | 0.169 | 1.83 | 0.40 |
 | 123 | base | 60 | 10 | +0.284 ± 0.047 | 0.316 | 0.169 | 1.87 | 0.30 |
+| 123 | kb120 | 40 | 10 | +0.219 ± 0.046 | 0.259 | 0.169 | 1.53 | 0.70 |
 | 123 | refined | 40 | 10 | +0.274 ± 0.047 | 0.307 | 0.169 | 1.81 | 0.40 |
 
 **(d) Regression of the 50 headline errors (40 dB) on pass-design features**
@@ -53,5 +54,36 @@
 | R² / F-test p | 0.19 |  | 0.049 |  |
 | Seed one-way ANOVA p |  |  | 0.036 |  |
 
+**(e) Wald 90% coverage of k_B0 on the 50 headline fits per SNR, by standard error**
 
-Source: `results/p3/validation_mc.json`, `results/p3/bias_regression.json`
+| SE | 20 dB: coverage [95% CI] | 40 dB: coverage [95% CI] | 20 dB: median SE (%) | 40 dB: median SE (%) | 20 dB: RMSE / median SE | 40 dB: RMSE / median SE |
+|---|---|---|---|---|---|---|
+| observed information (stored) | 0.88 [0.76, 0.95] | 0.70 [0.55, 0.82] | 0.178 | 0.170 | 1.12 | 1.55 |
+| expected information | 0.88 [0.76, 0.95] | 0.68 [0.53, 0.80] | 0.177 | 0.170 | 1.12 | 1.55 |
+| sandwich, bin clusters | 0.88 [0.76, 0.95] | 0.62 [0.47, 0.75] | 0.172 | 0.165 | 1.16 | 1.60 |
+| sandwich, 8-bin blocks | 0.88 [0.76, 0.95] | 0.72 [0.58, 0.84] | 0.178 | 0.177 | 1.12 | 1.49 |
+| sandwich, 61-bin blocks | 0.90 [0.78, 0.97] | 0.74 [0.60, 0.85] | 0.181 | 0.179 | 1.10 | 1.47 |
+
+**(f) κ replicates (n = 20): coverage of the change, κ = 0.044, slope correction 0.99998**
+
+| SE of the change | Median SE (%) | Statistical only | With κ | With κ and slope correction |
+|---|---|---|---|---|
+| stored (fit) | 0.250 | 13/20 | 14/20 [0.46, 0.88] | 14/20 |
+| expected information | 0.254 | 13/20 | 14/20 [0.46, 0.88] | 14/20 |
+| sandwich, bin clusters | 0.261 | 13/20 | 14/20 [0.46, 0.88] | 14/20 |
+| sandwich, 8-bin blocks | 0.288 | 14/20 | 14/20 [0.46, 0.88] | 14/20 |
+| sandwich, 61-bin blocks | 0.348 | 14/20 | 16/20 [0.56, 0.94] | 16/20 |
+
+**(g) Calibration of the change, correct model (pseudo-true, k_f and k_H0 co-estimated)**
+
+| True change (%) | Estimated change (%) |
+|---|---|
+| -2.0 | -2.0000 |
+| -5.0 | -5.0000 |
+| -10.0 | -9.9998 |
+| Slope | 0.99998 |
+
+
+The slope correction and the sandwich SEs were not tuned on the κ replicates. kb120 = debiasing kernel half-width 120 bins (default 30).
+
+Source: `results/p3/validation_mc.json`, `results/p3/bias_regression.json`, `results/p3/robust_se.json`, `results/p3/calibration.json`

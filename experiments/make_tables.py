@@ -449,8 +449,29 @@ def table14():
             + [["Intercept (mean error)", f"{j['intercept_pct']:+.3f}", "", "", ""],
                ["R² / F-test p", f"{j['r2']:.2f}", "", f"{j['p_F']:.3f}", ""],
                ["Seed one-way ANOVA p", "", "", f"{r['seed_anova']['p']:.3f}", ""]])
-    write("table14_validation", "Table 14. Validation Monte Carlo: κ revalidation, drift at k_f ×0.8, bias diagnosis", body,
-          ["results/p3/validation_mc.json", "results/p3/bias_regression.json"])
+    rs = load("p3/robust_se.json")
+    if rs:
+        names = [("obs", "observed information (stored)"), ("model", "expected information"), ("bin", "sandwich, bin clusters"),
+                 ("block8", "sandwich, 8-bin blocks"), ("block61", "sandwich, 61-bin blocks")]
+        body += "\n**(e) Wald 90% coverage of k_B0 on the 50 headline fits per SNR, by standard error**\n\n" + md(
+            ["SE", *[f"{c['snr_db']} dB: coverage [95% CI]" for c in rs["headline"]], *[f"{c['snr_db']} dB: median SE (%)" for c in rs["headline"]],
+             *[f"{c['snr_db']} dB: RMSE / median SE" for c in rs["headline"]]],
+            [[lab, *[f"{c[k]['coverage90']:.2f} {ci(c[k]['ci95'])}" for c in rs["headline"]], *[f"{c[k]['se_median_pct']:.3f}" for c in rs["headline"]],
+              *[f"{c[k]['rmse_over_median_se']:.2f}" for c in rs["headline"]]] for k, lab in names])
+        kc = rs["kappa"]
+        body += "\n**(f) κ replicates (n = {}): coverage of the change, κ = 0.044, slope correction {:.5f}**\n\n".format(kc["n"], kc["slope_correction"]) + md(
+            ["SE of the change", "Median SE (%)", "Statistical only", "With κ", "With κ and slope correction"],
+            [[lab, f"{kc[k + '_se_D_median_pct']:.3f}", f"{kc[k + '_kappa0.0']['covered']}/{kc['n']}", f"{kc[k + '_kappa0.044']['covered']}/{kc['n']} {ci(kc[k + '_kappa0.044']['ci95'])}",
+              f"{kc[k + '_slopecorr_kappa0.044']['covered']}/{kc['n']}"] for k, lab in [("stored", "stored (fit)")] + names[1:]])
+    cal = load("p3/calibration.json")
+    if cal:
+        body += "\n**(g) Calibration of the change, correct model (pseudo-true, k_f and k_H0 co-estimated)**\n\n" + md(
+            ["True change (%)", "Estimated change (%)"], [[f"{q['true_change_pct']:.1f}", f"{q['est_change_pct']:.4f}"] for q in cal["coest"]["points"]]
+            + [["Slope", f"{cal['coest']['slope']:.5f}"]])
+    write("table14_validation", "Table 14. Validation: κ revalidation, drift at k_f ×0.8, bias diagnosis, robust standard errors, calibration", body,
+          ["results/p3/validation_mc.json", "results/p3/bias_regression.json", "results/p3/robust_se.json", "results/p3/calibration.json"],
+          ["The slope correction and the sandwich SEs were not tuned on the κ replicates. kb120 = debiasing kernel half-width 120 bins "
+           "(default 30)."])
 
 
 if __name__ == "__main__":

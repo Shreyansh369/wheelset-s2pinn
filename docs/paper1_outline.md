@@ -46,6 +46,12 @@ rail pinned-pinned mode and wheel flexible modes are not modelled).
      and the error does not correlate with k_f (r = −0.02). It correlates with unsprung mass (r 0.37)
      and axle damping (r 0.49, p 0.03), and the intercept +0.05 is unexplained by any draw. κ is not
      changed (`results/p3/validation_mc.json`, Table 14).
+   - Follow-up checks (2026-10-13, Table 14 e–g), not tuned on these replicates: the correct-model
+     calibration slope is 0.99998 (pseudo-true, Δ = −2/−5/−10%), so the under-estimate is a
+     finite-sample or misspecification effect, not a large-sample bias, and the slope correction
+     changes nothing. Sandwich SEs: with 61-bin blocks (the debiasing kernel support) the SE of the
+     change grows from 0.25% to 0.35% and coverage with κ = 0.044 rises to 16/20 (0.80 [0.56, 0.94]);
+     bin clusters and 8-bin blocks leave it at 14/20. Still below 0.85.
 4. **Absolute k_B0 is reported only with its model-form budget.**
    - Nominal model: 6.1% RSS at 1σ, or 5.1% if the unsprung mass is known to ±1%.
    - Foundation and contact stiffness co-estimated: 3.9%, or 1.8% with mass to ±1%.
@@ -55,9 +61,10 @@ rail pinned-pinned mode and wheel flexible modes are not modelled).
 5. **Health relevance (reading B).** With placeholder bearing geometry, 10 µm of diametral clearance
    growth lowers the effective k_B by −1.1% empty and −0.26% loaded (the contact change, −6.2% /
    −2.0%, is diluted by k_B/k_contact = 0.17 / 0.13). Detection at 0.71% needs about 6 µm (empty) or
-   27 µm (loaded). The load exponent is identifiable jointly with k_B0 (CRB 0.0034 at N = 50, 0.0019 at
-   N = 200) but clearance shifts it only by 0.005 per 10 µm: detectable between two periods only for
-   20 µm at N = 200 (Table 13).
+   27 µm (loaded). The load exponent stays fixed in the estimator; its bound goes in the paper as a
+   limitation paragraph (`paper/sec5_discussion.tex`): CRB 0.0034 at N = 50, 0.0019 at N = 200, while
+   clearance shifts it by 0.005 per 10 µm, detectable between two periods only for 20 µm at N = 200
+   (Table 13).
 6. **The rail-coupled multi-wheel model is necessary.** On the 4-wheel headline data, the
    single-wheelset fit is biased by −13.9% / −14.0% at 20 / 40 dB, with 0/10 coverage. On 2–8-wheel
    data the bias is −9 to −14%.
@@ -148,9 +155,13 @@ single-line roughness model), and the `*_binsampled` result files (kept for tran
   cause it: the error is fixed by the roughness/speed/payload realisation. Across the 50 headline
   datasets, speed spread, payload spread, minimum speed and bins near the resonance explain R² 0.19
   (only payload spread, p 0.04, not significant after 4 tests); mean error +0.146%; seeds differ
-  (ANOVA p 0.036). Remaining candidates: the Fejér kernel truncation at ±30 bins (≈0.7% of power
-  outside), and the neglected inter-bin correlation (the Whittle CRB would then be optimistic, which
-  matches RMSE/CRB 1.3 at 60 dB on seed 42 with no bias).
+  (ANOVA p 0.036). **Kernel truncation explains part of it:** refitting the seed-123 datasets with a
+  ±120-bin kernel (default ±30) shifts every error down by 0.058 ± 0.005 pp (paired, 10/10), bias
+  0.277 → 0.219%, RMSE/CRB 1.83 → 1.53, Wald coverage 0.4 → 0.7. About a fifth of that seed's bias.
+  Inter-bin correlation (sandwich with 61-bin blocks) widens the k_B0 SE by only ~5% on the headline
+  fits, so 40 dB coverage stays 0.74 [0.60, 0.85]; the sandwich SE is not adopted as the default
+  (the 0.85–0.95 criterion is not met). Next candidate fix: a wider or full kernel as the default
+  (cost about 1.5× per fit), then rerun the headline.
   - Rail-coupled headline (n = 50 per SNR): +0.11 ± 0.02% at 20 dB and +0.15 ± 0.03% at 40 dB (5–6
     SE). RMSE/CRB is 1.12 / 1.56 and Wald coverage 0.88 / 0.70 [0.55, 0.82]; c_B bias is +2.8% / +8.3%.
     The bias explains part of the 40 dB under-coverage: with the mean removed, the scatter is 0.92 ×

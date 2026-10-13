@@ -325,6 +325,31 @@
       },
       {
         "seed": 123,
+        "variant": "kb120",
+        "snr_db": 40.0,
+        "n": 10,
+        "bias_pct": 0.21886736398961437,
+        "bias_se_pct": 0.046330347927259985,
+        "rmse_pct": 0.2588643826679803,
+        "crb_pct": 0.16949343234837078,
+        "rmse_over_crb": 1.527282674504577,
+        "coverage90_wald": 0.7,
+        "cB_bias_pct": 8.151455384270214,
+        "datasets": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      },
+      {
+        "seed": 123,
         "variant": "refined",
         "snr_db": 40.0,
         "n": 10,
@@ -351,10 +376,10 @@
     ]
   },
   "provenance": {
-    "git_commit": "24a46ad7b714211ed720f91d87c382b353117259",
-    "timestamp_utc": "2026-10-13T11:33:00Z",
+    "git_commit": "a06111e806b3d6f63f94d40dc61fba2db80f78e1",
+    "timestamp_utc": "2026-10-13T13:10:49Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 96.65625,
+    "peak_cpu_memory_mb": 96.296875,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

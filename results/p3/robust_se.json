@@ -1,0 +1,308 @@
+{
+  "name": "p3/robust_se",
+  "seed": 0,
+  "config": {
+    "clusters": [
+      [
+        "bin",
+        "bin",
+        0
+      ],
+      [
+        "block8",
+        "block",
+        8
+      ],
+      [
+        "block61",
+        "block",
+        61
+      ]
+    ],
+    "fisher": "expected, exact kernel-mixed sub-band columns",
+    "wald_level": 0.9
+  },
+  "payload": {
+    "headline": [
+      {
+        "snr_db": 20,
+        "n": 50,
+        "obs": {
+          "coverage90": 0.88,
+          "ci95": [
+            0.7568986832944374,
+            0.9546646792263361
+          ],
+          "se_median_pct": 0.17765269834226893,
+          "rmse_over_median_se": 1.117079412770256
+        },
+        "model": {
+          "coverage90": 0.88,
+          "ci95": [
+            0.7568986832944374,
+            0.9546646792263361
+          ],
+          "se_median_pct": 0.17742723049149495,
+          "rmse_over_median_se": 1.1184989552702624
+        },
+        "bin": {
+          "coverage90": 0.88,
+          "ci95": [
+            0.7568986832944374,
+            0.9546646792263361
+          ],
+          "se_median_pct": 0.1716765239709826,
+          "rmse_over_median_se": 1.155965692634692
+        },
+        "block8": {
+          "coverage90": 0.88,
+          "ci95": [
+            0.7568986832944374,
+            0.9546646792263361
+          ],
+          "se_median_pct": 0.17767114307500695,
+          "rmse_over_median_se": 1.1169634444095018
+        },
+        "block61": {
+          "coverage90": 0.9,
+          "ci95": [
+            0.7818646335657977,
+            0.9667249064109775
+          ],
+          "se_median_pct": 0.1806785372599751,
+          "rmse_over_median_se": 1.0983715882959797
+        }
+      },
+      {
+        "snr_db": 40,
+        "n": 50,
+        "obs": {
+          "coverage90": 0.7,
+          "ci95": [
+            0.5539176743388218,
+            0.821382154335853
+          ],
+          "se_median_pct": 0.17014182308228265,
+          "rmse_over_median_se": 1.5514427618615354
+        },
+        "model": {
+          "coverage90": 0.68,
+          "ci95": [
+            0.5330061598852693,
+            0.8047958053371607
+          ],
+          "se_median_pct": 0.17011454700778236,
+          "rmse_over_median_se": 1.551691519355235
+        },
+        "bin": {
+          "coverage90": 0.62,
+          "ci95": [
+            0.4717491630528553,
+            0.7534989222001378
+          ],
+          "se_median_pct": 0.16471477067101123,
+          "rmse_over_median_se": 1.602559981934817
+        },
+        "block8": {
+          "coverage90": 0.72,
+          "ci95": [
+            0.5750946429838912,
+            0.8376893992928247
+          ],
+          "se_median_pct": 0.17695837269868742,
+          "rmse_over_median_se": 1.4916801950953478
+        },
+        "block61": {
+          "coverage90": 0.74,
+          "ci95": [
+            0.5965523212719342,
+            0.8536994156034454
+          ],
+          "se_median_pct": 0.17931017566563343,
+          "rmse_over_median_se": 1.4721155613787338
+        }
+      }
+    ],
+    "kappa": {
+      "n": 20,
+      "slope_correction": 0.9999830951476415,
+      "kappa": 0.044,
+      "note": "slope from pseudo-true correct-model fits and sandwich SE are not tuned on these replicates",
+      "stored_kappa0.0": {
+        "covered": 13,
+        "coverage": 0.65,
+        "ci95": [
+          0.40781146546717184,
+          0.8460907952154588
+        ]
+      },
+      "stored_kappa0.044": {
+        "covered": 14,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "stored_slopecorr_kappa0.0": {
+        "covered": 13,
+        "coverage": 0.65,
+        "ci95": [
+          0.40781146546717184,
+          0.8460907952154588
+        ]
+      },
+      "stored_slopecorr_kappa0.044": {
+        "covered": 14,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "model_kappa0.0": {
+        "covered": 13,
+        "coverage": 0.65,
+        "ci95": [
+          0.40781146546717184,
+          0.8460907952154588
+        ]
+      },
+      "model_kappa0.044": {
+        "covered": 14,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "model_slopecorr_kappa0.0": {
+        "covered": 13,
+        "coverage": 0.65,
+        "ci95": [
+          0.40781146546717184,
+          0.8460907952154588
+        ]
+      },
+      "model_slopecorr_kappa0.044": {
+        "covered": 14,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "model_se_D_median_pct": 0.254415467153767,
+      "bin_kappa0.0": {
+        "covered": 13,
+        "coverage": 0.65,
+        "ci95": [
+          0.40781146546717184,
+          0.8460907952154588
+        ]
+      },
+      "bin_kappa0.044": {
+        "covered": 14,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "bin_slopecorr_kappa0.0": {
+        "covered": 13,
+        "coverage": 0.65,
+        "ci95": [
+          0.40781146546717184,
+          0.8460907952154588
+        ]
+      },
+      "bin_slopecorr_kappa0.044": {
+        "covered": 14,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "bin_se_D_median_pct": 0.26140339268848095,
+      "block8_kappa0.0": {
+        "covered": 14,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "block8_kappa0.044": {
+        "covered": 14,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "block8_slopecorr_kappa0.0": {
+        "covered": 14,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "block8_slopecorr_kappa0.044": {
+        "covered": 14,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "block8_se_D_median_pct": 0.28756945636522585,
+      "block61_kappa0.0": {
+        "covered": 14,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "block61_kappa0.044": {
+        "covered": 16,
+        "coverage": 0.8,
+        "ci95": [
+          0.5633859970033317,
+          0.9426660029499672
+        ]
+      },
+      "block61_slopecorr_kappa0.0": {
+        "covered": 14,
+        "coverage": 0.7,
+        "ci95": [
+          0.45721081772371086,
+          0.8810684095942722
+        ]
+      },
+      "block61_slopecorr_kappa0.044": {
+        "covered": 16,
+        "coverage": 0.8,
+        "ci95": [
+          0.5633859970033317,
+          0.9426660029499672
+        ]
+      },
+      "block61_se_D_median_pct": 0.3475565206803871,
+      "stored_se_D_median_pct": 0.2502563759287227
+    }
+  },
+  "provenance": {
+    "git_commit": "a06111e806b3d6f63f94d40dc61fba2db80f78e1",
+    "timestamp_utc": "2026-10-13T12:15:58Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 95.78125,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

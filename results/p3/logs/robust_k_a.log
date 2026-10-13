@@ -1,0 +1,37 @@
+{'rep': 0, 'set': 'base', 'wall_s': 40.853358298001694}
+{'rep': 0, 'set': 'later', 'wall_s': 37.65004299000066}
+{'rep': 1, 'set': 'base', 'wall_s': 36.59661028499977}
+{'rep': 1, 'set': 'later', 'wall_s': 39.09238343100151}
+{'rep': 2, 'set': 'base', 'wall_s': 39.70430639299957}
+{'rep': 2, 'set': 'later', 'wall_s': 39.88577542400162}
+{'rep': 3, 'set': 'base', 'wall_s': 37.806074009997246}
+{'rep': 3, 'set': 'later', 'wall_s': 39.17553952199887}
+{'rep': 4, 'set': 'base', 'wall_s': 43.47639830899789}
+{'rep': 4, 'set': 'later', 'wall_s': 41.96538659399812}
+{'rep': 5, 'set': 'base', 'wall_s': 39.276637285001925}
+{'rep': 5, 'set': 'later', 'wall_s': 39.41770558600183}
+{'rep': 6, 'set': 'base', 'wall_s': 47.21425037500012}
+{'rep': 6, 'set': 'later', 'wall_s': 41.058600820997526}
+{'rep': 7, 'set': 'base', 'wall_s': 38.109064258002036}
+{'rep': 7, 'set': 'later', 'wall_s': 42.922947481001756}
+Traceback (most recent call last):
+  File "/home/user/wheelset-s2pinn/experiments/p3_robust_se.py", line 178, in <module>
+    kappa(a.j0, a.j1)
+    ~~~~~^^^^^^^^^^^^
+  File "/home/user/wheelset-s2pinn/experiments/p3_robust_se.py", line 116, in kappa
+    se = robust(est, r["phi_" + s])
+  File "/home/user/wheelset-s2pinn/experiments/p3_robust_se.py", line 60, in robust
+    r = est.sandwich_cov(phi, st["logg"], st["lw"], exact_sub=True, clusters_list=CL)
+  File "/home/user/wheelset-s2pinn/src/inverse/multipass.py", line 543, in sandwich_cov
+    J, parts, d, n = self._fisher_parts(phi, logg, lw, h, exact_sub=exact_sub)
+                     ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/wheelset-s2pinn/src/inverse/multipass.py", line 480, in _fisher_parts
+    E = csr_matrix((np.ones(int(inb.sum())), (np.flatnonzero(inb), smap[p.subm[inb]])), shape=(p.fm.size, used.size))
+  File "/usr/local/lib/python3.13/dist-packages/scipy/sparse/_compressed.py", line 57, in __init__
+    coo = self._coo_container(arg1, shape=shape, dtype=dtype)
+  File "/usr/local/lib/python3.13/dist-packages/scipy/sparse/_coo.py", line 103, in __init__
+    self._check()
+    ~~~~~~~~~~~^^
+  File "/usr/local/lib/python3.13/dist-packages/scipy/sparse/_coo.py", line 226, in _check
+    raise ValueError(f'negative axis {i} index: {idx.min()}')
+ValueError: negative axis 1 index: -1
