@@ -145,13 +145,20 @@ def drift(j0, j1, f):
 
 
 # ----------------------------------------------------------------------------- (2) bias diagnosis
-def bias(j0, j1, snr, refined, seed=42, kb=None):
+def bias(j0, j1, snr, refined, seed=42, kb=None, ksub=None, smooth=None):
     from experiments.p2_common import setup
     from experiments.p2_multiwheel import dataset, models
     sm, thb, rough, _ = setup()
     mw = models(sm)[0]["4"]
     fam = MultiWheelFamily(mw, thb, f_grid=np.arange(45.0, 702.0, 0.25) if refined else None)
-    tag = "refined" if refined else ("base" if kb is None else f"kb{kb}")
+    # tags: "base"/"refined" = the original +-30-bin kernel runs; otherwise the kernel width is explicit
+    kb_eff = 30 if (kb is None and ksub is None and smooth is None) else (kb or 120)
+    if ksub is None and smooth is None:
+        tag = ("refined" if refined else "base") if kb is None else f"kb{kb}"
+    else:
+        tag = f"kb{kb_eff}" + (f"_K{ksub}" if ksub else "") + (f"_sm{smooth:g}" if smooth else "")
+    import dataclasses
+    rough_est = dataclasses.replace(rough, K=ksub) if ksub else rough
     fp = OUT / "bias_diag_runs" / (f"{tag}_snr{int(snr)}.jsonl" if seed == 42 else f"{tag}_snr{int(snr)}_seed{seed}.jsonl")
     done = _done(fp, lambda r: r["j"])
     lt = math.log(TRUTH["kB0"])
@@ -160,10 +167,10 @@ def bias(j0, j1, snr, refined, seed=42, kb=None):
             continue
         t0 = time.perf_counter()
         P, Wm, Ws, g = dataset(sm, thb, rough, mw, (seed, 40, j), N=50, snr=snr)
-        est = MultiPassWhittle([dict(q) for q in P], Wm, WIM, rough, fam, debias=True, exact_subband=refined,
-                               **({} if kb is None else {"Kb": kb}))
+        est = MultiPassWhittle([dict(q) for q in P], Wm, WIM, rough_est, fam, debias=True, exact_subband=refined,
+                               Kb=kb_eff, smooth_sigma_db=smooth)
         r = est.fit(np.log([START["kB0"], START["cB"]]))
-        crb = est.expected_fisher(np.log([TRUTH["kB0"], TRUTH["cB"]]), np.log(g), np.log(Ws))["crb_log"]
+        crb = est.expected_fisher(np.log([TRUTH["kB0"], TRUTH["cB"]]), np.log(g) if not ksub else np.zeros(est.S), np.log(Ws))["crb_log"]
         _append(fp, {"j": j, "seed": seed, "snr_db": snr, "variant": tag, "err_log": [r["phi"][0] - lt, r["phi"][1] - math.log(TRUTH["cB"])],
                      "se_log": r["se_log"], "crb_log": crb, "converged": r["converged"], "wall_s": time.perf_counter() - t0})
 
@@ -261,13 +268,15 @@ if __name__ == "__main__":
     ap.add_argument("--snr", type=float, default=60.0)
     ap.add_argument("--refined", action="store_true")
     ap.add_argument("--seed", type=int, default=42)
-    ap.add_argument("--kb", type=int, default=None, help="debiasing kernel half-width in bins (default 30)")
+    ap.add_argument("--kb", type=int, default=None, help="debiasing kernel half-width in bins")
+    ap.add_argument("--ksub", type=int, default=None, help="estimator roughness sub-bands per third octave (data: 16)")
+    ap.add_argument("--smooth", type=float, default=None, help="random-walk prior step sigma on log sub-band levels (dB)")
     a = ap.parse_args()
     if a.kappa:
         kappa(a.j0, a.j1)
     if a.drift:
         drift(a.j0, a.j1, a.f)
     if a.bias:
-        bias(a.j0, a.j1, a.snr, a.refined, a.seed, a.kb)
+        bias(a.j0, a.j1, a.snr, a.refined, a.seed, a.kb, a.ksub, a.smooth)
     if a.summarise:
         summarise()

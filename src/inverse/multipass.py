@@ -179,8 +179,8 @@ class MultiPassWhittle:
     """
 
     def __init__(self, passes: list[dict], W_meas, sigma_W: float, rough: Roughness, family: Family,
-                 mask=None, debias: bool = False, M: int = 4, Kb: int = 30, support=(F_LO - 5, F_HI),
-                 fit_noise: bool = False, exact_subband: bool = False):
+                 mask=None, debias: bool = False, M: int = 4, Kb: int = 120, support=(F_LO - 5, F_HI),
+                 fit_noise: bool = False, exact_subband: bool = False, smooth_sigma_db: float | None = None):
         """mask(pass dict) -> boolean array over the pass's bins (True = keep); None keeps all.
 
         fit_noise: the per-pass noise floor e_i is a profiled nuisance, estimated jointly from the
@@ -191,7 +191,18 @@ class MultiPassWhittle:
         bin's kernel-smoothed variance with respect to every sub-band level (the kernel mixes neighbouring
         sub-bands) and the full sub-band Fisher matrix, instead of attributing a bin's variance to its
         own sub-band. Its fixed point is then the exact profile maximum.
+
+        smooth_sigma_db (debias only; implies exact_subband): Gaussian random-walk prior on the log
+        sub-band levels, log g_{s+1} - log g_s ~ N(0, sigma^2) with sigma given in dB of power. It
+        regularises the K-per-third-octave nuisance levels without reducing K.
         """
+        self.smooth_prec = None
+        if smooth_sigma_db is not None and debias:
+            sig = smooth_sigma_db * math.log(10) / 10
+            Dd = np.diff(np.eye(rough.n_sub), axis=0)
+            self.smooth_L = (Dd.T @ Dd) / sig**2
+            self.smooth_prec = 1 / sig**2
+            exact_subband = True
         self.exact_subband = exact_subband and debias
         self.fit_noise = fit_noise
         self.fam = family
@@ -309,6 +320,9 @@ class MultiPassWhittle:
                 da = dA[i] / v
                 wstep[i] = (da @ r - (lw[i] - self.lw_meas[i]) / self.sW**2) / (da @ da + 1 / self.sW**2)
             if self.exact_subband:
+                if self.smooth_prec is not None:
+                    gnum -= self.smooth_L @ logg
+                    Fg += self.smooth_L
                 act = np.diag(Fg) > 0
                 gstep = np.zeros(self.S)
                 Fa = Fg[np.ix_(act, act)]
@@ -337,6 +351,8 @@ class MultiPassWhittle:
             out += np.sum(np.log(v) + p.c2 / v)
             if self.fit_noise:
                 out += np.sum(math.log(p.e) + p.c2n / p.e)
+        if self.smooth_prec is not None:
+            out += 0.5 * float(logg @ self.smooth_L @ logg)
         return float(out + 0.5 * np.sum(((lw - self.lw_meas) / self.sW) ** 2))
 
     def theta(self, phi) -> dict:
@@ -489,6 +505,8 @@ class MultiPassWhittle:
             J += D.T @ D
             parts.append((D, v))
         J[d + used.size:d + used.size + N, d + used.size:d + used.size + N] += np.eye(N) / self.sW**2
+        if self.smooth_prec is not None:
+            J[d:d + used.size, d:d + used.size] += self.smooth_L[np.ix_(used, used)]
         return J, parts, d, n
 
     def misspec_bias(self, phi, logg, lw, fam_true: Family, theta_true: dict, h: float = 1e-4) -> dict:
