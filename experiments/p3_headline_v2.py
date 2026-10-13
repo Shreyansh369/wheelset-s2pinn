@@ -2,7 +2,8 @@
 
 Same data as the p2 headline (4-wheel rail-coupled model, keys (seed, snr, j), N = 50, 60-110 km/h,
 seeds 42/123/456/789/1024 x 10, SNR 20 and 40 dB). Estimator: debiased Whittle with the +-Kb-bin kernel
-(default 120), exact sub-band scoring, and optionally the random-walk smoothness prior on the log
+(default 120), exact sub-band scoring (or --attributed: own-sub-band scoring, which agreed with exact to
+0.006 pp on 3 datasets and is 5x faster), and optionally the random-walk smoothness prior on the log
 sub-band levels (--smooth, dB). Wald 90% intervals from the observed profile information. Chunked by
 --j0/--j1 over the 100 (snr, seed, j) keys with a 110-minute budget per process.
 Rows: results/p3/headline_v2_runs/<tag>.jsonl; --aggregate -> results/p3/headline_v2_<tag>.json.
@@ -34,29 +35,30 @@ from src.utils.results import RESULTS_DIR, save_result  # noqa: E402
 
 RUN_DIR = RESULTS_DIR / "p3" / "headline_v2_runs"
 KEYS = [(seed, snr, j) for snr in (20, 40) for seed in SEEDS for j in range(10)]
-T0, BUDGET, FIT_MAX = time.perf_counter(), 110 * 60, 12 * 60
+T0, BUDGET = time.perf_counter(), 110 * 60
+FIT_MAX = [12 * 60]   # updated to the slowest fit seen in this process
 
 
-def tag_of(kb, smooth):
-    return f"kb{kb}" + (f"_sm{smooth:g}" if smooth else "")
+def tag_of(kb, smooth, exact=True):
+    return f"kb{kb}" + ("" if exact else "_attr") + (f"_sm{smooth:g}" if smooth else "")
 
 
-def run(j0, j1, kb, smooth):
+def run(j0, j1, kb, smooth, exact=True):
     sm, thb, rough, _ = setup()
     mw = models(sm)[0]["4"]
     fam = MultiWheelFamily(mw, thb)
-    fp = RUN_DIR / f"{tag_of(kb, smooth)}.jsonl"
+    fp = RUN_DIR / f"{tag_of(kb, smooth, exact)}.jsonl"
     done = {tuple(json.loads(l)["seed_key"]) for l in fp.read_text().splitlines()} if fp.exists() else set()
     lt = math.log(TRUTH["kB0"])
     for key in KEYS[j0:j1]:
         if key in done:
             continue
-        if time.perf_counter() - T0 + FIT_MAX > BUDGET:
+        if time.perf_counter() - T0 + FIT_MAX[0] > BUDGET:
             print("deadline", flush=True)
             break
         t0 = time.perf_counter()
         P, Wm, Ws, g = dataset(sm, thb, rough, mw, key, N=50, snr=float(key[1]))
-        est = MultiPassWhittle([dict(q) for q in P], Wm, WIM, rough, fam, debias=True, Kb=kb, exact_subband=True,
+        est = MultiPassWhittle([dict(q) for q in P], Wm, WIM, rough, fam, debias=True, Kb=kb, exact_subband=exact,
                                smooth_sigma_db=smooth)
         r = est.fit(np.log([START["kB0"], START["cB"]]))
         crb = est.expected_fisher(np.log([TRUTH["kB0"], TRUTH["cB"]]), np.log(g), np.log(Ws))["crb_log"]
@@ -66,10 +68,11 @@ def run(j0, j1, kb, smooth):
         with fp.open("a") as fh:
             fh.write(json.dumps(row) + "\n")
         print(row, flush=True)
+        FIT_MAX[0] = max(FIT_MAX[0], 1.3 * row["wall_s"])
 
 
-def aggregate(kb, smooth):
-    tag = tag_of(kb, smooth)
+def aggregate(kb, smooth, exact=True):
+    tag = tag_of(kb, smooth, exact)
     R = [json.loads(l) for l in (RUN_DIR / f"{tag}.jsonl").read_text().splitlines() if l.strip()]
     cells = []
     for snr in (20, 40):
@@ -88,7 +91,7 @@ def aggregate(kb, smooth):
                       "cB_pooled": summ([r["err_log"][1] for r in Rs], [r["se_log"][1] for r in Rs], [r["crb_log"][1] for r in Rs]),
                       "all_converged": all(r["converged"] for r in Rs), "fit_s_median": float(np.median([r["wall_s"] for r in Rs]))})
     save_result(f"p3/headline_v2_{tag}", {"cells": cells}, cfg={"kernel_half_width_bins": kb, "smooth_sigma_db": smooth,
-                                                                 "exact_subband": True, "data": "p2 headline keys", "N": 50}, seed=SEEDS[0])
+                                                                 "exact_subband": exact, "data": "p2 headline keys", "N": 50}, seed=SEEDS[0])
     print(json.dumps(cells, indent=1)[:3000])
 
 
@@ -98,6 +101,7 @@ if __name__ == "__main__":
     ap.add_argument("--j1", type=int, default=100)
     ap.add_argument("--kb", type=int, default=120)
     ap.add_argument("--smooth", type=float, default=None)
+    ap.add_argument("--attributed", action="store_true", help="default (own-sub-band) scoring instead of exact; 5x faster at Kb=120")
     ap.add_argument("--aggregate", action="store_true")
     a = ap.parse_args()
-    aggregate(a.kb, a.smooth) if a.aggregate else run(a.j0, a.j1, a.kb, a.smooth)
+    aggregate(a.kb, a.smooth, not a.attributed) if a.aggregate else run(a.j0, a.j1, a.kb, a.smooth, not a.attributed)
