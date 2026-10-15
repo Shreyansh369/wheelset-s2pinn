@@ -42,15 +42,28 @@ from src.inverse.multipass import MultiPassWhittle, SingleWheelsetFamily  # noqa
 from src.utils.results import RESULTS_DIR, Timer, save_result  # noqa: E402
 
 PARAMS = ("kf", "eta_f", "kH0", "unsprung_scale", "axle_damp_scale")
-NOM = {"kf": 154e6, "eta_f": 0.2, "kH0": 1.4e9, "unsprung_scale": 1.0, "axle_damp_scale": 1.0}
+def _nominal():
+    """Nominal foundation and contact from config/track.yaml (the representative freight case)."""
+    from src.reference.track import load_track_config
+    c = load_track_config()
+    t = c[c["nominal"]["track"]]
+    return {"kf": float(t["kf"]), "eta_f": float(t["eta_f"]), "kH0": float(c["contact_freight"]["kH0"]),
+            "unsprung_scale": 1.0, "axle_damp_scale": 1.0}
+
+
+NOM = _nominal()
+RUN_LABEL = "_freight"   # run-file suffix for the sourced-nominal round (2026-10-15)
+T_START, DEADLINE_S, FIT_MAX = __import__("time").perf_counter(), 110 * 60, [45 * 60]
 ESTIMATORS = {"nominal": ("kB0", "cB"), "coest": ("kB0", "cB", "kf", "kH0"), "coest_eta": ("kB0", "cB", "kf", "kH0", "eta_f")}
 # realistic 1-sigma uncertainty (log scale) and where it comes from
+# 1-sigma uncertainty (log scale): the sourced range is taken as about +-2 sigma (sigma = ln(hi/lo)/4);
+# sources in config/params.yaml, config/track.yaml and docs/parameter_sources.md
 RANGES = {
-    "kf": (0.35, "CT23: in-situ ABA-derived kf 1.2-2.6x the lab value (Tables 2, 5 vs Sec. 5.1.1); section-to-section spread"),
-    "eta_f": (0.20, "CT23 Sec. 5.1.1: literature loss factor 0.2-0.3"),
-    "kH0": (0.15, "assumption: Hertz constant C_H for freight wheel/60E1 profiles not sourced (CT23 value is metro); wheel load from WIM"),
-    "unsprung_scale": (0.03, "assumption: design mass known; wear and fittings"),
-    "axle_damp_scale": (0.50, "assumption: axle damping is a placeholder (1% at 80 Hz); factor ~1.65 either way"),
+    "kf": (math.log(1333.0 / 123.0) / 4, "rail pad 80-800 MN/m per pad at 0.60-0.65 m spacing -> 123-1333 MN/m^2 (Thompson et al. 2007; EUROBOLT; snippets)"),
+    "eta_f": (math.log(0.25 / 0.10) / 4, "rail pad loss factor 0.1-0.25 (snippets)"),
+    "kH0": (math.log(2.3 / 1.4) / 4, "linearised contact stiffness 1.4-2.3 GN/m across authors (ASCE paper, snippet)"),
+    "unsprung_scale": (0.04, "about 20 kg per axlebox, 4% of the wheelset unsprung mass, between axlebox designs (SKF Evolution, snippet)"),
+    "axle_damp_scale": (math.log(0.01 / 0.001) / 4, "wheelset modal damping 0.1-1% (Chaar 2007; IPME paper; snippets)"),
 }
 FIT_N, SPEEDS = 50, (60.0, 110.0)
 
@@ -72,8 +85,9 @@ def sensitivity(args):
     mws, track = models(sm)
     mw = mws["4"]
     rows = []
-    out = RESULTS_DIR / "p2" / "model_form_mw_runs"
+    out = RESULTS_DIR / "p2" / f"model_form_mw_runs{RUN_LABEL}"
     out.mkdir(parents=True, exist_ok=True)
+    import time
     with Timer() as tm:
         P, Wm, Ws, g = designs(sm, thb, rough, mw, n=1)[0]
         for ename in args.estimators:
@@ -86,9 +100,13 @@ def sensitivity(args):
                 sig = RANGES[pname][0]
                 fp = out / f"{ename}__{pname}.jsonl"
                 done = {json.loads(l)["factor"] for l in fp.read_text().splitlines()} if fp.exists() else set()
-                for f in (args.factors or (0.9, 1.1, math.exp(-sig), math.exp(sig))):
+                facs = args.factors or ((0.9, 1.1, math.exp(-sig), math.exp(sig)) if ename == "nominal" else (math.exp(-sig), math.exp(sig)))
+                for f in facs:
                     if round(f, 6) in {round(x, 6) for x in done}:
                         continue
+                    if time.perf_counter() - T_START + FIT_MAX[0] > DEADLINE_S:
+                        print("deadline", flush=True)
+                        return
                     true_all = dict(thb, **TRUTH, **NOM)
                     true_all[pname] = NOM[pname] * f
                     r = est.pseudo_true(MultiWheelFamily(mw, true_all, names=()), {}, np.zeros(est.S), np.log(Ws), phi0)
@@ -97,11 +115,12 @@ def sensitivity(args):
                     with fp.open("a") as fh:
                         fh.write(json.dumps(row) + "\n")
                     print(row, flush=True)
+                    FIT_MAX[0] = max(FIT_MAX[0], 1.3 * r["wall_fit_s"])
     summarise_sensitivity(tm.seconds)
 
 
 def summarise_sensitivity(wall=None):
-    out = RESULTS_DIR / "p2" / "model_form_mw_runs"
+    out = RESULTS_DIR / "p2" / f"model_form_mw_runs{RUN_LABEL}"
     rows = [json.loads(l) for fp in sorted(out.glob("*.jsonl")) for l in fp.read_text().splitlines() if l.strip()]
     table, budget = [], {}
     for ename in ESTIMATORS:
@@ -125,7 +144,7 @@ def summarise_sensitivity(wall=None):
         print(t, flush=True)
     print(budget, flush=True)
     save_result("p2/model_form_mw_sensitivity", {"table": table, "budget": budget, "ranges": RANGES}, cfg={
-        "model": "4 wheels (CT23 subset), BS113A Timoshenko rail, kf 154e6, eta_f 0.2, kH0 1.4e9", "N": FIT_N,
+        "model": "4 wheels (freight wagon layout), nominal track of config/track.yaml (60E1, ballasted)", "N": FIT_N,
         "speeds_kmh": SPEEDS, "snr_db": 40, "method": "pseudo-true fit to expected periodograms (large-sample bias)",
         "likelihood": "debiased Whittle", "nominal": NOM, "truth": TRUTH}, seed=31, wall_seconds=wall)
 

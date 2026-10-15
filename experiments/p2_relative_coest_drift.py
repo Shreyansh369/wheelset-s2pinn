@@ -100,15 +100,24 @@ def coest_rel(cases):
             print(row, flush=True)
 
 
+DRIFT_FILE = "drift_pseudo_freight.jsonl"   # sourced-nominal round (2026-10-15); earlier placeholder round: drift_pseudo.jsonl
+
+
 def drift(estimators):
+    import time
+    t_start, fit_max = time.perf_counter(), [45 * 60]
     sm, thb, rough, mw, fams, designs = setup_all()
-    fp = RUN_DIR / "drift_pseudo.jsonl"
+    fp = RUN_DIR / DRIFT_FILE
     done = {(json.loads(l)["estimator"], json.loads(l)["f"], json.loads(l)["x"]) for l in fp.read_text().splitlines()} if fp.exists() else set()
     for e in estimators:
         for f in (1.0,) + DRIFT_F:
             for x in ((0.0,) if f == 1.0 else (0.0, 0.05)):
                 if (e, f, x) in done:
                     continue
+                if time.perf_counter() - t_start + fit_max[0] > 110 * 60:
+                    print("deadline", flush=True)
+                    return
+                t0 = time.perf_counter()
                 setname = "base" if f == 1.0 else "later"
                 P, Wm, Ws, g = designs[setname]
                 est = MultiPassWhittle(P, Ws, WIM, rough, fams[e], debias=True)
@@ -116,10 +125,12 @@ def drift(estimators):
                 th = truth(thb, {"kf": f} if f != 1.0 else {}, kt)
                 lk, ok = pt(est, mw, th, EST[e])
                 crb = est.expected_fisher(phi(EST[e], kB0=kt), np.zeros(est.S), est.lw_meas.copy())["crb_log"][0]
-                row = {"estimator": e, "f": f, "x": x, "set": setname, "log_k_hat": lk, "crb_log": crb, "converged": ok}
+                row = {"estimator": e, "f": f, "x": x, "set": setname, "log_k_hat": lk, "crb_log": crb, "converged": ok,
+                       "wall_s": time.perf_counter() - t0}
                 with fp.open("a") as fh:
                     fh.write(json.dumps(row) + "\n")
                 print(row, flush=True)
+                fit_max[0] = max(fit_max[0], 1.3 * row["wall_s"])
 
 
 def drift_mc(n_rep, estimators, f=1.2, rep_start=0):
