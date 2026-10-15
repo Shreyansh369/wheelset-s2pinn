@@ -47,7 +47,7 @@ SWEEP = [
     ("kp", "param", ("primary", "kp"), 0.98e6, 2.6e6, "sourced range"),
     ("cp", "param", ("primary", "cp"), 5.0e3, 5.0e5, "assumed, swept (heavy-haul range)"),
     ("wheel_diametral_inertia", "param", ("wheel", "diametral_inertia"), 10.0, 30.0, "assumed, swept"),
-    ("axle_damping_zeta", "param", ("axle", "damping_zeta"), 0.001, 0.01, "sourced range"),
+    ("axle_damping_zeta", "param", ("axle", "damping_zeta"), 0.001, 0.02, "sourced range"),
     ("r0", "param", ("wheel", "r0"), 0.42, 0.46, "sourced range"),
     ("cB", "truth", "cB", 3.0e3, 1.2e4, "assumed, swept (factor 2 about the sourced 6740 N s/m)"),
     ("kf", "track", "kf", 123.0e6, 1333.0e6, "sourced range (derived)"),
@@ -96,14 +96,14 @@ def evaluate(name, kind, key, value):
 def run(names):
     OUT.mkdir(parents=True, exist_ok=True)
     fp = OUT / "sweep_runs.jsonl"
-    done = {(r["param"], r["point"]) for r in (json.loads(l) for l in fp.read_text().splitlines())} if fp.exists() else set()
+    done = {(r["param"], r["point"], r["value"]) for r in (json.loads(l) for l in fp.read_text().splitlines())} if fp.exists() else set()
     t0, tmax = time.perf_counter(), 10 * 60
-    jobs = [("nominal", "none", None, None, "nominal")] if ("nominal", "nominal") not in done else []
+    jobs = [("nominal", "none", None, None, "nominal")] if ("nominal", "nominal", None) not in done else []
     for nm, kind, key, lo, hi, src in SWEEP:
         if names and nm not in names:
             continue
         for pt, v in (("low", lo), ("high", hi)):
-            if (nm, pt) not in done:
+            if (nm, pt, v) not in done:
                 jobs.append((nm, kind, key, v, pt))
     for nm, kind, key, v, pt in jobs:
         if time.perf_counter() - t0 + tmax > 110 * 60:
@@ -123,7 +123,7 @@ def summarise():
     nom = next(r for r in rows if r["param"] == "nominal")
     table = []
     for nm, kind, key, lo, hi, src in SWEEP:
-        R = {r["point"]: r for r in rows if r["param"] == nm}
+        R = {r["point"]: r for r in rows if r["param"] == nm and r["value"] == (lo if r["point"] == "low" else hi)}
         if "low" in R and "high" in R:
             table.append({"param": nm, "low": lo, "high": hi, "source": src,
                           **{f"{q}_{pt}": R[pt][q] for pt in ("low", "high") for q in ("crb_kB0_pct", "mdc_pct", "support_mode_hz")}})

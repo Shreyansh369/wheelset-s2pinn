@@ -16,10 +16,10 @@ axle:   # symmetric about xi = 0; sections listed outward from the centre (half 
     value: [[0.640, 0.173], [0.860, 0.200], [0.900, 0.160], [1.090, 0.130]]
     unit: [m, m]
     source: "diameters [snippet]: body 173 mm, wheel seat 200 mm, journal 130 mm (BA004 listings; Unirail BA004, EN 13261 130x191 mm); dust-guard collar 160 mm and section boundaries assumed, swept"
-  wheel_xi:     {value: 0.750, unit: m, source: "[snippet] 2s = 1500 mm between nominal rolling circles (Bizic & Petrovic 2021, Communications - Sci. Letters Univ. Zilina 19(3))"}
+  wheel_xi:     {value: 0.750, unit: m, source: "[snippet] 2s = 1500 mm between nominal rolling circles (Bizic & Petrovic 2021, Mechanics Transport Communications 19(3), art. 2113)"}
   journal_xi:   {value: 1.000, unit: m, source: "[snippet] 2b = 2000 mm between axle-box centres (Bizic & Petrovic 2021)"}
   n_elements:   {value: 32,    unit: "-", source: "brief: 20-40 elements; convergence checked at 20/30/40"}
-  damping_zeta: {value: 0.01,  unit: "-", range: [0.001, 0.01], source: "[snippet] wheelset modal damping below 1% for the first five modes (Chaar 2007, KTH thesis); 0.1-1.0% measured (IPME paper, citation incomplete); nominal at the upper bound, swept"}
+  damping_zeta: {value: 0.01,  unit: "-", range: [0.001, 0.02], source: "[snippet] measured damping ratios of the first torsion and first and second bending modes below 2% (Chaar 2007, KTH doctoral thesis TRITA AVE 2007:17, Table 2-1); 0.1-1.0% (IPME paper, citation incomplete); swept"}
   damping_fref: {value: 96.0,  unit: Hz,  range: [96.0, 115.0], source: "[snippet] first wheelset bending mode of a freight wagon 96 Hz (Sci. Rep. 2025, s41598-025-15781-4); 115 Hz (Mu et al. 2021, Shock Vib. 4677851)"}
 
 wheel:
@@ -29,7 +29,7 @@ wheel:
 
 bearing:   # journal -> axlebox spring-damper; health parameters theta
   kB0:       {value: 1.0e9, unit: N/m, range: [0.5e9, 3.0e9], source: "assumed, swept (effective support stiffness not found; indications [snippet]: total supporting stiffness 7.6e8 N/m in a Y21 bogie rig model, Bustos et al. 2025, Adv. Mech. Eng. 17(9), meaning unclear; adapter-pad vertical stiffness >= 8.8e8 to 5.3e9 N/m, three-piece-truck patent US 9,580,087)"}
-  cB:        {value: 6.74e3, unit: N s/m, source: "[snippet] axle-box bearing vertical damping 6740 N s/m (Li et al. 2019, Adv. Mech. Eng. 11(4), 10.1177/1687814019840503)"}
+  cB:        {value: 6.74e3, unit: N s/m, range: [3.0e3, 1.2e4], source: "assumed, swept (round-1 snippet attributed 6740 N s/m to Li et al. 2019, Adv. Mech. Eng. 11(4), 10.1177/1687814019840503; round 2 found the parameter defined there but not the value)"}
   prior_log_halfwidth: {value: 0.6931471805599453, unit: "-", source: "placeholder: factor-2 prior on kB0 and cB (log-uniform)"}
   load_exponent: {value: 0.1, unit: "-", source: "doc Eq. (12): Q ~ delta^(10/9) gives k ~ Q^(1/10)"}
   stiffness_law: {value: power, unit: "-", source: "switch: power = kB0 (W/W0)^load_exponent (default; all results to date) | series = roller contacts (bearing_geometry) in series with housing/adapter, k_housing set so the total at W0 and c_d0 equals kB0 (placeholder)"}
@@ -50,7 +50,7 @@ axlebox:
   mass: {value: 100.0, unit: kg, range: [100.0, 158.4], source: "[snippet] axlebox 100 kg in a Y25 multibody model (Dusza et al. 2024, Appl. Sci. 14(11) 4545); 158.42 kg (Bustos et al. 2025, Y21 bogie rig model)"}
 
 primary:   # axlebox -> fixed bogie frame (Zener element dropped)
-  kp: {value: 1.017e6, unit: N/m, range: [0.98e6, 2.6e6], source: "[snippet] Y25 primary vertical stiffness k_zz 1017 and 2280 kN/m, empty and laden (Dusza et al. 2024, Appl. Sci. 14(11) 4545); spring-set rate 980 (tare) to 2600 N/mm (laden), EP 1484228 A1"}
+  kp: {value: 1.017e6, unit: N/m, range: [0.98e6, 2.6e6], source: "[snippet] Y25 primary vertical stiffness 1017 kN/m empty / 2280 kN/m loaded (Dusza 2023, Rail Vehicles 2023(3-4) 13-24, 10.53502/RAIL-175725; per axlebox or per spring set not resolved); spring-set rate 980 (tare) to 2600 N/mm (laden), EP 1484228 A1"}
   cp: {value: 1.0e4, unit: N s/m, range: [5.0e3, 5.0e5], source: "assumed, swept (Y25 Lenoir friction damping has no viscous equivalent in the sources; preferable primary vertical damping of a heavy-haul freight car 50-500 kN s/m [snippet], Yang, Li & Huang 2011, J. Southwest Jiaotong Univ.)"}
 
 payload:   # axle load W, uniform per pass; enters only through kB = kB0 (W/W0)^(1/10)
