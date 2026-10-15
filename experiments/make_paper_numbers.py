@@ -56,24 +56,43 @@ def main():
             m[k] = miss("p2/debias_check.json")
 
     b = load("p3/bearing_clearance.json")
-    if b:
+    hkeys = ("KcontactLoaded", "KcontactEmpty", "AxleboxModeContactHz", "ContactPctTenLoaded", "ContactPctTenEmpty", "EffPctTenLoaded",
+             "EffPctTenEmpty", "DilutionLoaded", "DilutionEmpty", "ClearanceZero", "RollersPerRow", "RollerLength")
+    if b and "variant" in b["cases"][0]:
         c0 = v["bearing_geometry"]["clearance_d0"]
-        cs = {(c["clearance_d0_um"], c["load"]): c for c in b["cases"]}
-        lo, em = cs[(c0, "loaded")], cs[(c0, "empty")]
+        cs = {(c["geometry"], c["variant"], c["clearance_d0_um"], c["load"]): c for c in b["cases"]}
+        lo, em = cs[("cylindrical", "nominal geometry", c0, "loaded")], cs[("cylindrical", "nominal geometry", c0, "empty")]
         m["KcontactLoaded"] = f"{lo['k0_contact_N_per_m'] / 1e9:.1f}"
         m["KcontactEmpty"] = f"{em['k0_contact_N_per_m'] / 1e9:.1f}"
         m["AxleboxModeContactHz"] = f"{math.sqrt(lo['k0_contact_N_per_m'] / v['axlebox']['mass']) / (2 * math.pi):.0f}"
         m["ContactPctTenLoaded"] = f"{lo['pct_change_first_10um']:.1f}"
         m["ContactPctTenEmpty"] = f"{em['pct_change_first_10um']:.1f}"
         m["EffPctTenLoaded"] = f"{lo['pct_change_first_10um_effective']:.2f}"
-        m["EffPctTenEmpty"] = f"{em['pct_change_first_10um_effective']:.1f}"
+        m["EffPctTenEmpty"] = f"{em['pct_change_first_10um_effective']:.2f}"
         m["DilutionLoaded"] = f"{lo['series_dilution_factor']:.2f}"
         m["DilutionEmpty"] = f"{em['series_dilution_factor']:.2f}"
         m["ClearanceZero"] = f"{c0:g}"
         m["RollersPerRow"] = f"{int(v['bearing_geometry']['rollers_per_row'])}"
+        m["RollerLength"] = f"{v['bearing_geometry']['roller_length']:g}"
+        m["HealthMDC"] = _f(b["mdc_pct"])
+        for geom, G_ in (("cylindrical", "Cyl"), ("tapered", "Tap")):
+            for ld, L in (("empty", "Empty"), ("loaded", "Loaded")):
+                C = [c for c in b["cases"] if c["geometry"] == geom and c["load"] == ld]
+                eff = [c["pct_change_first_10um_effective"] for c in C if c["pct_change_first_10um_effective"] is not None]
+                gm = [c["growth_um_at_mdc_effective"] for c in C if c["growth_um_at_mdc_effective"] is not None]
+                if eff:
+                    m[f"{G_}EffTen{L}Min"], m[f"{G_}EffTen{L}Max"] = _f(min(eff)), _f(max(eff))
+                if gm:
+                    m[f"{G_}GrowthMDC{L}Min"], m[f"{G_}GrowthMDC{L}Max"] = _f(min(gm), 0), _f(max(gm), 0)
+                m[f"{G_}GrowthMDC{L}Censored"] = str(sum(c["growth_um_at_mdc_effective"] is None for c in C))
+            nomc = [c for c in b["cases"] if c["geometry"] == geom and c["variant"] in ("nominal geometry", "proxy geometry")
+                    and c["clearance_d0_um"] == (c0 if geom == "cylindrical" else v["bearing_geometry_tapered"]["clearance_d0"])]
+            for c in nomc:
+                L = "Empty" if c["load"] == "empty" else "Loaded"
+                m[f"{G_}GrowthMDC{L}Nom"] = "--" if c["growth_um_at_mdc_effective"] is None else _f(c["growth_um_at_mdc_effective"], 0)
+                m[f"{G_}EffTen{L}Nom"] = _f(c["pct_change_first_10um_effective"])
     else:
-        for k in ("KcontactLoaded", "KcontactEmpty", "AxleboxModeContactHz", "ContactPctTenLoaded", "ContactPctTenEmpty",
-                  "EffPctTenLoaded", "EffPctTenEmpty", "DilutionLoaded", "DilutionEmpty", "ClearanceZero", "RollersPerRow"):
+        for k in hkeys:
             m[k] = miss("p3/bearing_clearance.json")
 
     e = load("p3/exponent_bound.json")

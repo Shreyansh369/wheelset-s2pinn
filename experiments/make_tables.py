@@ -403,14 +403,14 @@ def table13():
     b, e = load("p3/bearing_clearance.json"), load("p3/exponent_bound.json")
     if b is None:
         return missing("table13_health", "Table 13. Health relevance", "results/p3/bearing_clearance.json")
-    rows = [[f"{c['clearance_d0_um']:g}", c["load"], f"{c['F_bearing_kN']:.0f}", f"{c['k0_contact_N_per_m'] / 1e9:.2f}",
+    rows = [[c.get("geometry", "–"), c.get("variant", "–"), f"{c['clearance_d0_um']:g}", c["load"], f"{c['F_bearing_kN']:.0f}", f"{c['k0_contact_N_per_m'] / 1e9:.2f}",
              f"{c['pct_change_first_10um']:+.2f}", f"{c['pct_change_per_10um_mean_0_50']:+.2f}",
              "–" if c["growth_um_at_mdc"] is None else f"{c['growth_um_at_mdc']:.1f}",
              f"{c['series_dilution_factor']:.2f}",
              "–" if c["pct_change_first_10um_effective"] is None else f"{c['pct_change_first_10um_effective']:+.2f}",
              "–" if c["growth_um_at_mdc_effective"] is None else f"{c['growth_um_at_mdc_effective']:.1f}"] for c in b["cases"]]
     body = "**(a) Roller-contact stiffness and effective support stiffness against diametral clearance growth**\n\n" + md(
-        ["Initial clearance (µm)", "Load", "Bearing load (kN)", "k_contact (GN/m)", "Contact: change, first 10 µm (%)",
+        ["Bearing", "Variant", "Initial clearance (µm)", "Load", "Bearing load (kN)", "k_contact (GN/m)", "Contact: change, first 10 µm (%)",
          "Contact: mean per 10 µm, 0–50 µm (%)", "Contact: growth at MDC (µm)", "k_B/k_contact",
          "Effective k_B: change, first 10 µm (%)", "Effective k_B: growth at MDC (µm)"], rows)
     if e:
@@ -427,8 +427,11 @@ def table13():
               f"{'yes' if r['detectable_two_periods_10um'] else 'no'} / {'yes' if r['detectable_two_periods_20um'] else 'no'}"] for r in e["rows"]])
     write("table13_health", "Table 13. Health relevance: clearance growth, effective support stiffness and the load exponent", body,
           ["results/p3/bearing_clearance.json", "results/p3/exponent_bound.json"],
-          ["Bearing geometry, initial clearance and k_housing are placeholders (config/params.yaml). MDC = 0.71% (N = 50, 40 dB, "
-           "co-estimating fit). z = Δp / CRB of a single period; detection between two periods needs Δp ≥ 2.93·√2·CRB."])
+          ["Main case: Y25 cylindrical roller bearings (two rows per journal); roller count and length assumed from the "
+           "130×240×80 envelope and swept; initial clearance 130 µm = lower unmounted value (operating clearance not found). "
+           "Secondary case: proxy double-row tapered unit. k_housing is set so that the effective stiffness equals k_B0 at W0. "
+           f"MDC = {b['mdc_pct']:.2f}% (N = 50, 40 dB, co-estimating fit). z = Δp / CRB of a single period; detection between two "
+           "periods needs Δp ≥ 2.93·√2·CRB."])
 
 
 # ----------------------------------------------------------------------------- Table 14

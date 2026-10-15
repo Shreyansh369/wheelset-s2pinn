@@ -58,9 +58,10 @@ def models(sm, rail=None, kf=None, eta_f=None, layout=None):
     pos = np.array(lay["positions"])
     j0 = int(lay["instrumented_index"])
     subsets = {"1": [j0], **lay["subsets"]}
+    kH0 = float(cfg["contact_freight"]["kH0"]) if "contact_freight" in cfg else 1.4e9
     out = {}
     for nm, idx in subsets.items():
-        out[nm] = MultiWheelModel(sm, track, pos[idx], list(idx).index(j0))
+        out[nm] = MultiWheelModel(sm, track, pos[idx], list(idx).index(j0), kH0=kH0)
     return out, track
 
 

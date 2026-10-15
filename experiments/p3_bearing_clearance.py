@@ -1,14 +1,16 @@
 """Health relevance of k_B0: roller-contact stiffness against diametral clearance growth.
 
 Roller-contact model of the wheelset document (Eqs. 10-14; src/reference/bearing.py) with the static
-load shared over the rollers. Bearing geometry is a placeholder (config/params.yaml: bearing_geometry).
+load shared over the rollers, two rows per journal. Main case: the Y25 cylindrical roller bearings
+(config bearing_geometry: contact angle 0, assumed roller count and length, swept), initial clearance
+130 um (lower unmounted value; operating clearance not found) and 0/50/100/180 um. Secondary case: the
+proxy double-row tapered unit (config bearing_geometry_tapered), initial clearance 20, 0 and 50 um.
 Journal load per bearing = (W - m_wheels - m_axle) g / 2 at the empty and loaded axle loads.
-Clearance growth 0-50 um diametral on top of c_d0 (placeholder 20 um; 0 and 50 um as sensitivity).
 
-Reports: k vs growth, % change per 10 um (secant over the first 10 um and mean slope over 0-50 um), and
-the growth at which |dk/k| reaches the 0.71% detection limit (MDC, N = 50, 40 dB, co-estimating fit,
-results/p2/relative_coest_drift.json). Also reported: the change diluted by series compliance if the
-identified k_B0 (placeholder 1e9 N/m) is the contact stiffness in series with the rest of the support.
+Reports: k vs growth 0-50 um, % change per 10 um (secant over the first 10 um and mean slope over
+0-50 um), the growth at which |dk/k| reaches the detection limit (MDC, N = 50, 40 dB, co-estimating
+fit, results/p2/relative_coest_drift.json), and the same for the effective support stiffness when the
+identified k_B0 is the contact stiffness in series with the rest of the support (housing, adapter, pad).
 Writes results/p3/bearing_clearance.json.
 """
 
@@ -28,9 +30,11 @@ from src.reference.params import G, Params, load_raw  # noqa: E402
 from src.utils.results import RESULTS_DIR, Timer, save_result  # noqa: E402
 
 GROWTH_UM = np.arange(0.0, 50.01, 1.0)
-# Y25 axleboxes in DB service: cylindrical roller bearings WJ/WJP 130x240, radial clearance 130-180 um
-# unmounted [snippet] (config/params.yaml, bearing_geometry); same roller set with contact angle 0.
-CYL_CLEARANCES_UM = (20.0, 130.0, 180.0)
+# Main case: Y25 cylindrical roller bearings (config bearing_geometry), initial clearance swept over the
+# unmounted range and below it (operating clearance not found); geometry swept over its assumed ranges.
+# Secondary case: proxy double-row tapered unit (config bearing_geometry_tapered).
+CYL_CLEARANCES_UM = (None, 0.0, 50.0, 100.0, 180.0)        # None = nominal clearance_d0
+TAP_CLEARANCES_UM = (None, 0.0, 50.0)
 
 
 def mdc_pct():
@@ -39,10 +43,19 @@ def mdc_pct():
 
 
 def main():
-    P = Params(load_raw())
-    bg, v = P.v["bearing_geometry"], P.v
-    brg = RollerBearing(int(bg["rollers_per_row"]), bg["roller_length"], bg["contact_angle"], bg["K_contact_coeff"])
-    cyl = RollerBearing(int(bg["rollers_per_row"]), bg["roller_length"], 0.0, bg["K_contact_coeff"])
+    raw = load_raw()
+    P = Params(raw)
+    v = P.v
+    rng_ = {k: [float(x) for x in raw["bearing_geometry"][k]["range"]] for k in ("rollers_per_row", "roller_length")}
+    bg, bt = v["bearing_geometry"], v["bearing_geometry_tapered"]
+
+    def brg(g, z=None, l=None):
+        return RollerBearing(int(z or g["rollers_per_row"]), l or g["roller_length"], g["contact_angle"], g["K_contact_coeff"])
+
+    variants = [("cylindrical", "nominal geometry", brg(bg), bg["clearance_d0"] if c is None else c) for c in CYL_CLEARANCES_UM]
+    variants += [("cylindrical", f"z = {z}", brg(bg, z=z), bg["clearance_d0"]) for z in rng_["rollers_per_row"]]
+    variants += [("cylindrical", f"l = {l:g} mm", brg(bg, l=l), bg["clearance_d0"]) for l in rng_["roller_length"]]
+    variants += [("tapered", "proxy geometry", brg(bt), bt["clearance_d0"] if c is None else c) for c in TAP_CLEARANCES_UM]
     rho = v["material"]["rho"]
     xs = [0.0] + [s[0] for s in v["axle"]["sections"]]
     m_axle = 2 * sum(rho * math.pi * s[1] ** 2 / 4 * (xs[i + 1] - xs[i]) for i, s in enumerate(v["axle"]["sections"]))
@@ -50,11 +63,10 @@ def main():
     loads = {"empty": v["payload"]["W_min"], "loaded": v["payload"]["W_max"]}
     kB0_model = v["bearing"]["kB0"]
     mdc = mdc_pct()
-    out = {"geometry": bg, "Kn_N_per_mm10_9": brg.Kn, "m_axle_kg": m_axle, "m_wheels_kg": m_wheels, "mdc_pct": mdc,
-           "kB0_model_placeholder": kB0_model, "cases": []}
+    out = {"geometry_main": bg, "geometry_secondary": bt, "m_axle_kg": m_axle, "m_wheels_kg": m_wheels, "mdc_pct": mdc,
+           "kB0_model": kB0_model, "cases": []}
     with Timer() as tm:
-        for geom, b, cd0 in [("tapered_proxy", brg, c) for c in (bg["clearance_d0"], 0.0, 50.0)] + \
-                [("cylindrical", cyl, c) for c in CYL_CLEARANCES_UM]:
+        for geom, var, b, cd0 in variants:
             for lname, W in loads.items():
                 F = (W * 1000 - m_wheels - m_axle) * G / 2
                 rows = [dict(growth_um=g, **b.k_mean(F, (cd0 + g) * 1e-6)) for g in GROWTH_UM]
@@ -70,7 +82,7 @@ def main():
                 if rel_eff is not None:
                     cross_eff = next((float(np.interp(-mdc, rel_eff[i:i + 2][::-1], GROWTH_UM[i:i + 2][::-1]))
                                       for i in range(len(rel_eff) - 1) if rel_eff[i] > -mdc >= rel_eff[i + 1]), None)
-                case = {"geometry": geom, "clearance_d0_um": cd0, "load": lname, "W_t": W, "F_bearing_kN": F / 1e3,
+                case = {"geometry": geom, "variant": var, "clearance_d0_um": cd0, "load": lname, "W_t": W, "F_bearing_kN": F / 1e3,
                         "k0_contact_N_per_m": float(k[0]), "n_loaded_per_row_at_0": rows[0]["n_loaded_per_row"],
                         "pct_change_first_10um": float(rel[i10]),
                         "pct_change_per_10um_mean_0_50": float(rel[-1] / 5),

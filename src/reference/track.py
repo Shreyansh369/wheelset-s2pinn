@@ -138,8 +138,8 @@ def load_track_config(path=None) -> dict:
 
     import yaml
 
-    from src.reference.params import _num
-    path = Path(__file__).resolve().parents[2] / "config" / "track.yaml" if path is None else Path(path)
+    from src.reference.params import CONFIG_DIR, _num
+    path = CONFIG_DIR / "track.yaml" if path is None else Path(path)
     raw = yaml.safe_load(path.read_text())
 
     def conv(node):

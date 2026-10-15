@@ -7,6 +7,7 @@
 from __future__ import annotations
 
 import math
+import os
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -15,7 +16,11 @@ import numpy as np
 import yaml
 
 REPO = Path(__file__).resolve().parents[2]
-DEFAULT_PARAMS = REPO / "config" / "params.yaml"
+# WHEELSET_CONFIG_DIR pins a run to a config snapshot (e.g. config/snapshots/headline_freight_v1)
+CONFIG_DIR = Path(os.environ.get("WHEELSET_CONFIG_DIR", REPO / "config"))
+if not CONFIG_DIR.is_absolute():
+    CONFIG_DIR = REPO / CONFIG_DIR
+DEFAULT_PARAMS = CONFIG_DIR / "params.yaml"
 G = 9.80665
 
 

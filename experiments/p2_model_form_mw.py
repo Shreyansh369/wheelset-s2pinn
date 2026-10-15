@@ -61,7 +61,7 @@ ESTIMATORS = {"nominal": ("kB0", "cB"), "coest": ("kB0", "cB", "kf", "kH0"), "co
 RANGES = {
     "kf": (math.log(1333.0 / 123.0) / 4, "rail pad 80-800 MN/m per pad at 0.60-0.65 m spacing -> 123-1333 MN/m^2 (Thompson et al. 2007; EUROBOLT; snippets)"),
     "eta_f": (math.log(0.25 / 0.10) / 4, "rail pad loss factor 0.1-0.25 (snippets)"),
-    "kH0": (math.log(2.3 / 1.4) / 4, "linearised contact stiffness 1.4-2.3 GN/m across authors (ASCE paper, snippet)"),
+    "kH0": (math.log(2.3 / 1.388) / 4, "linearised contact stiffness 1.388 GN/m (Hertz, S1002 transverse radius +0.5 m) to 2.3 GN/m (published spread, Hasan 2020)"),
     "unsprung_scale": (0.04, "about 20 kg per axlebox, 4% of the wheelset unsprung mass, between axlebox designs (SKF Evolution, snippet)"),
     "axle_damp_scale": (math.log(0.01 / 0.001) / 4, "wheelset modal damping 0.1-1% (Chaar 2007; IPME paper; snippets)"),
 }

@@ -43,9 +43,8 @@ vehicle_CT23:  # London Underground 2009-stock (metro) values, for the scope che
   c1:  {value: 3.0e3,  unit: N s/m, source: "CT23 Table 1"}
 
 contact_freight:
-  C_H: {value: 89.0e9, unit: N/m^1.5, source: "CT23 Sec. 5.1.2 citing Sanchis et al. (metro wheel/rail radii); freight value not found: assumed, swept through kH0"}
-  kH0: {value: 1.4e9, unit: N/m, range: [1.4e9, 2.3e9], source: "[snippet] linearised Hertzian contact stiffness spread 1400-2300 kN/mm across authors (Hasan N. 2020, Hertzian contact stiffness under Eisenmann assumptions, Int. Conf. Transportation and Development, ASCE, 10.1061/9780784483176.010); nominal at the low end (C_H above at 110 kN)"}
-  note: "kH = 1.5 F0^(1/3) C_H^(2/3) gives 1.44e9 N/m at F0 = 110 kN (22.5 t axle), consistent with kH0 = 1.4e9"
+  C_H: {value: 94.13e9, unit: N/m^1.5, source: "Hertz theory (Johnson 1985): S1002 wheel, rolling radius 0.46 m (Dusza et al. 2024, full text verified), on UIC60 rail, crown radius 0.30 m [snippet]; wheel transverse radius infinite (assumed); results/p4/contact_hertz.json"}
+  kH0: {value: 1.489e9, unit: N/m, range: [1.388e9, 2.3e9], source: "Hertz theory at W0 = 22.5 t (F0 = 110 kN), results/p4/contact_hertz.json; 1.388-1.576e9 for S1002 tread transverse radius +0.5 m to -1.0 m; cross-check: published spread 1.4-2.3e9 N/m [snippet] (Hasan 2020, ICTD, ASCE, 10.1061/9780784483176.010)"}
 
 layout_CT23:   # wheel positions along the rail (m), 2009 Victoria line stock; instrumented wheel = wheel 5
   positions: {value: [0.0, 2.05, 6.52, 8.57, 16.62, 18.67, 23.14, 25.19, 33.24, 35.29, 39.76, 41.81], unit: m,

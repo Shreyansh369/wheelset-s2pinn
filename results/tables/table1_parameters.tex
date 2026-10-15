@@ -17,19 +17,19 @@ Axle & damping\_zeta & 0.01 & 0.001--0.02 & - & [snippet] measured damping ratio
 Axle & damping\_fref & 96 & 96--115 & Hz & [snippet] first wheelset bending mode of a freight wagon 96 Hz (Sci. Rep. 2025, s41598-025-15781-4); 115 Hz (Mu et al. 2021, Shock Vib. 4677851) \\
 Wheel & mass & 304 & -- & kg & [snippet] 920 mm ER7 wheel, nominal weight 304 kg (Unirail BA004 and BA 092 wheelset pages) \\
 Wheel & diametral\_inertia & 20 & 10--30 & kg m\textasciicircum{}2 & assumed, swept (single-wheel inertia not found; disc estimate m r\textasciicircum{}2/4) \\
-Wheel & r0 & 0.46 & 0.42--0.46 & m & [snippet] new wheel 920 mm (Y25 bogie data, railway-technology.com; Bizic \& Petrovic 2021), worn limit 840 mm (Unirail) \\
+Wheel & r0 & 0.46 & 0.42--0.46 & m & full text verified: rolling radius 0.46 m, S1002 wheels on UIC60 rail (Dusza, Golofit-Stawinska \& Zboinski 2024, Appl. Sci. 14(11) 4545, Table A1); worn limit 840 mm diameter [snippet] (Unirail) \\
 Support & kB0 & 1e+09 & 5e+08--5e+09 & N/m & assumed, swept (effective support stiffness of a freight axlebox not found; indications [snippet]: equivalent vertical stiffness of an EMU axle-box bearing 4.96e9 N/m, bearing only (J. Mech. Eng. 2023, 10.3901/JME.2023.14.179); adapter-pad vertical stiffness 8.8e8-5.3e9 N/m, three-piece-truck patent US 9,580,087) \\
 Support & cB & 6740 & 3000--1.2e+04 & N s/m & assumed, swept (round-1 snippet attributed 6740 N s/m to Li et al. 2019, Adv. Mech. Eng. 11(4), 10.1177/1687814019840503; round 2 found the parameter defined there but not the value) \\
 Support & load\_exponent & 0.1 & -- & - & doc Eq. (12): Q \textasciitilde{} delta\textasciicircum{}(10/9) gives k \textasciitilde{} Q\textasciicircum{}(1/10) \\
-Bearing (health check) & rollers\_per\_row & 21 & 17--23 & - & [snippet] 130 mm-bore double-row TRB: z = 21 (Guan et al. 2023, Sci. Rep. 13; Liu \& Du 2020, IJAV 25(4)); 23 for the 150 mm 353130B freight unit (Sun et al. 2026); proxy, freight 130 mm unit not found \\
-Bearing (health check) & roller\_length & 45 & -- & mm & [snippet] effective length 45 mm (Guan et al. 2023), proxy \\
-Bearing (health check) & roller\_diameter & 23 & 21.4--26.5 & mm & [snippet] 23 mm (Guan et al. 2023; Liu \& Du 2020); 21.384 mm (353130B); 26.5 mm (Zhao et al. 2024) \\
-Bearing (health check) & pitch\_diameter & 180.5 & -- & mm & [snippet] 180.5 mm (Guan et al. 2023; Liu \& Du 2020), proxy \\
-Bearing (health check) & contact\_angle & 10 & -- & deg & [snippet] outer-race contact angle 10 deg (Liu \& Du 2020; Zhao et al. 2024) \\
-Bearing (health check) & clearance\_d0 & 20 & 0--50 & um & assumed, swept (mounted axial endplay 0.025-0.381 mm [snippet], Timken AP manual; conversion to radial clearance not sourced) \\
-Axlebox & mass & 100 & 100--158.4 & kg & [snippet] axlebox 100 kg in a Y25 multibody model (Dusza et al. 2024, Appl. Sci. 14(11) 4545); 158.42 kg (Bustos et al. 2025, Y21 bogie rig model) \\
-Primary & kp & 1.017e+06 & 9.8e+05--2.6e+06 & N/m & [snippet] Y25 primary vertical stiffness 1017 kN/m empty / 2280 kN/m loaded (Dusza 2023, Rail Vehicles 2023(3-4) 13-24, 10.53502/RAIL-175725; per axlebox or per spring set not resolved); spring-set rate 980 (tare) to 2600 N/mm (laden), EP 1484228 A1 \\
-Primary & cp & 1e+04 & 7000--1.233e+05 & N s/m & [snippet] Y25 primary equivalent vertical damping 7 kN s/m (empty) and 123.3 kN s/m (laden), identified from measured car responses (Dusza, Golofit-Stawinska \& Zboinski 2024, Appl. Sci. 14(11) 4545, Table A1; per axlebox not stated); swept \\
+Bearing (health check) & rollers\_per\_row & 18 & 15--21 & - & assumed from the envelope (pitch circle pi x 185 mm / \textasciitilde{}1.15 x 27.5 mm roller pitch), swept \\
+Bearing (health check) & roller\_length & 48 & 40--56 & mm & assumed, \textasciitilde{}0.6 x 80 mm bearing width, swept \\
+Bearing (health check) & roller\_diameter & 27.5 & -- & mm & assumed, (240 - 130)/4 mm; does not enter the line-contact law \\
+Bearing (health check) & pitch\_diameter & 185 & -- & mm & envelope: (130 + 240)/2 mm [snippet: WJ 130x240x80 listings] \\
+Bearing (health check) & contact\_angle & 0 & -- & deg & cylindrical roller bearing \\
+Bearing (health check) & clearance\_d0 & 130 & 0--180 & um & [snippet] radial clearance of WJ/WJP 130x240 P before mounting 130-180 um (SKF Railway Technical Handbook; Schaeffler TPI 256); mounted/operating clearance not found (handbook not reachable): nominal = lower unmounted value, swept 0-180 um \\
+Axlebox & mass & 100 & 100--158.4 & kg & full text verified: axlebox 100 kg (Dusza et al. 2024, Table A1); 158.42 kg [snippet] (Bustos et al. 2025, Y21 bogie rig model) \\
+Primary & kp & 1.017e+06 & 1.017e+06--2.28e+06 & N/m & full text verified: Y25 primary vertical stiffness 1017 kN/m empty / 2280 kN/m loaded per axlebox (Dusza et al. 2024, Table A1; springs on each axle box, Dusza 2023); nominal = empty value \\
+Primary & cp & 7000 & 7000--1.233e+05 & N s/m & full text verified: Y25 primary equivalent vertical damping 7 kN s/m empty / 123.3 kN s/m laden (Dusza et al. 2024, Table A1); nominal = empty value, paired with kp \\
 Payload & W\_min & 5.5 & 5.8--6.6 & t & design value 5.5 t; [snippet] Eanos tare 23.1 t (Wascosa), 23.5 t (DB Cargo), 24.0 t (Greenbrier), 24.5-26.5 t (VTG, Tatravagonka, Transwagon), i.e. empty axle load 5.8-6.6 t; effect of 5.8-6.6 t on the bound in results/p4/sweep.json \\
 Payload & W\_max & 22.5 & -- & t & [snippet] Y25 bogie axle load 22.5 t (railway-technology.com, Y25 bogie) \\
 Payload & W0 & 22.5 & -- & t & reference load for kB0 (loaded) \\
@@ -40,12 +40,12 @@ Track (ballasted) & pad\_stiffness & 2e+08 & 8e+07--8e+08 & N/m & [snippet] typi
 Track (ballasted) & sleeper\_spacing & 0.6 & 0.6--0.65 & m & [snippet] 0.6 m (EUROBOLT optimal track); 0.65 m (CT23 Table 1; Thompson et al.) \\
 Track (ballasted) & kf & 3.333e+08 & 1.23e+08--1.333e+09 & N/m\textasciicircum{}2 & derived: pad stiffness / sleeper spacing (pad modulus, PWI Guide to Track Stiffness definition) from the sourced ranges above; ballast compliance in series not modelled \\
 Track (ballasted) & eta\_f & 0.2 & 0.1--0.25 & - & [snippet] rail pad loss factor 0.16 (Thompson et al. 2007 table), 0.25 (rolling-noise models), about 0.1 (EVA) to 0.2 (natural rubber) pads \\
-Contact & kH0 & 1.4e+09 & 1.4e+09--2.3e+09 & N/m & [snippet] linearised Hertzian contact stiffness spread 1400-2300 kN/mm across authors (Hasan N. 2020, Hertzian contact stiffness under Eisenmann assumptions, Int. Conf. Transportation and Development, ASCE, 10.1061/9780784483176.010); nominal at the low end (C\_H above at 110 kN) \\
-Contact & C\_H & 8.9e+10 & -- & N/m\textasciicircum{}1.5 & CT23 Sec. 5.1.2 citing Sanchis et al. (metro wheel/rail radii); freight value not found: assumed, swept through kH0 \\
+Contact & kH0 & 1.489e+09 & 1.388e+09--2.3e+09 & N/m & Hertz theory at W0 = 22.5 t (F0 = 110 kN), results/p4/contact\_hertz.json; 1.388-1.576e9 for S1002 tread transverse radius +0.5 m to -1.0 m; cross-check: published spread 1.4-2.3e9 N/m [snippet] (Hasan 2020, ICTD, ASCE, 10.1061/9780784483176.010) \\
+Contact & C\_H & 9.413e+10 & -- & N/m\textasciicircum{}1.5 & Hertz theory (Johnson 1985): S1002 wheel, rolling radius 0.46 m (Dusza et al. 2024, full text verified), on UIC60 rail, crown radius 0.30 m [snippet]; wheel transverse radius infinite (assumed); results/p4/contact\_hertz.json \\
 Layout & wheel positions & [0.0,1.8,10.7,12.5,15.74,17.54,26.44,28.24] & -- & m & derived from [snippet] Y25 wheelbase 1800 mm (railway-technology.com; Tatravagonka Y25 data) and Eanos bogie pivot pitch 10.70 m, length over buffers 15.74 m (Rail Cargo Group; Wascosa datasheets): overhang (15.74 - 12.5)/2 per wagon end \\
 \bottomrule
 \end{tabular}
 
-\par\smallskip{\footnotesize 6 of 38 entries were not found in the literature (marked 'assumed, swept'); their effect is in Table 15. [snippet] = value seen in search results; the full-text status of each source is in docs/parameter\_sources.md.}
+\par\smallskip{\footnotesize 8 of 38 entries were not found in the literature (marked 'assumed, swept'); their effect is in Table 15. [snippet] = value seen in search results; the full-text status of each source is in docs/parameter\_sources.md.}
 \end{minipage}}
 \end{table}

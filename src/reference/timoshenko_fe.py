@@ -140,6 +140,9 @@ class L1LinModel:
         for j in self.mesh.wheel_nodes:
             self.M0[2 * j, 2 * j] += w["mass"]
             self.M0[2 * j + 1, 2 * j + 1] += w["diametral_inertia"]
+        mj = p.v["axle"].get("journal_mass", 0.0)          # lumped mass on each journal (bearing inner parts etc.)
+        for jn in self.mesh.journal_nodes:
+            self.M0[2 * jn, 2 * jn] += mj
         mb = p.v["axlebox"]["mass"]
         kp, cp = p.v["primary"]["kp"], p.v["primary"]["cp"]
         for ib in self.ib:
