@@ -44,7 +44,7 @@ vehicle_CT23:  # London Underground 2009-stock (metro) values, for the scope che
 
 contact_freight:
   C_H: {value: 89.0e9, unit: N/m^1.5, source: "CT23 Sec. 5.1.2 citing Sanchis et al. (metro wheel/rail radii); freight value not found: assumed, swept through kH0"}
-  kH0: {value: 1.4e9, unit: N/m, range: [1.4e9, 2.3e9], source: "[snippet] linearised Hertzian contact stiffness spread 1400-2300 kN/mm across authors (Hasan N. 2020, "Hertzian contact stiffness under Eisenmann assumptions", Int. Conf. Transportation and Development, ASCE, 10.1061/9780784483176.010); nominal at the low end (C_H above at 110 kN)"}
+  kH0: {value: 1.4e9, unit: N/m, range: [1.4e9, 2.3e9], source: "[snippet] linearised Hertzian contact stiffness spread 1400-2300 kN/mm across authors (Hasan N. 2020, Hertzian contact stiffness under Eisenmann assumptions, Int. Conf. Transportation and Development, ASCE, 10.1061/9780784483176.010); nominal at the low end (C_H above at 110 kN)"}
   note: "kH = 1.5 F0^(1/3) C_H^(2/3) gives 1.44e9 N/m at F0 = 110 kN (22.5 t axle), consistent with kH0 = 1.4e9"
 
 layout_CT23:   # wheel positions along the rail (m), 2009 Victoria line stock; instrumented wheel = wheel 5
