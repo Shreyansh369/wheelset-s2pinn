@@ -1,0 +1,4 @@
+{"estimator": "nominal", "param": "kf", "factor": 0.9, "bias_pct": -2.545782765526483, "phi_hat": [20.534959422357407, 8.775455675573143], "converged": true, "wall_fit_s": 322.5396570210005}
+{"estimator": "nominal", "param": "kf", "factor": 1.1, "bias_pct": 1.3007017609789173, "phi_hat": [20.573670060242804, 9.258774070390773], "converged": true, "wall_fit_s": 369.4215493769998}
+{"estimator": "nominal", "param": "kf", "factor": 0.5511486405192355, "bias_pct": -9.299052100427186, "phi_hat": [20.46314452945947, 10.665196367130152], "converged": true, "wall_fit_s": 493.1557855450001}
+{"estimator": "nominal", "param": "kf", "factor": 1.814392573041463, "bias_pct": -19.90076486453831, "phi_hat": [20.338843026618626, 10.02490980818735], "converged": true, "wall_fit_s": 464.61658846200044}
