@@ -72,5 +72,18 @@ No page could be fetched in round 2 either (WebFetch DNS failures; proxy 403 for
 | Bearing geometry (Guan, Deng & Wang 2023, Sci. Rep. 13, art. 22680) | z 21, d_m 180.5 mm, l 45 mm, D 23 mm, contact angles 7.75°/10° (printed "mm") | kept; high-speed TRB used as proxy for the freight bearing |
 | Eanos layout, Y25 wheelbase | confirmed (Rail Cargo, Wascosa: outer axle base 12.50 m = 10.70 + 1.80 m) | kept |
 
+Second round-2 agent (missing bearing, contact and wagon values), all snippet level:
+
+| Item | Value / range seen | Source (snippet) | Action |
+|---|---|---|---|
+| Bearing-only vertical stiffness (EMU axle-box bearing) | 4.96e9 N/m | "Dynamic load calculation method of EMU axle box bearing based on vehicle dynamics", J. Mech. Eng. 2023, doi 10.3901/JME.2023.14.179 (authors not seen) | k_B0 sweep extended to 5e9 N/m (`kB0_ext`) |
+| Bustos et al. 2025 "7.6e8 N/m total supporting stiffness" | not seen in round 2; rig bogie is a Y21, not a Y25 | Bustos et al. (2025) | dropped as an indication |
+| Y25 axlebox bearing type | cylindrical roller bearings WJ/WJP 130×240 in DB freight service | Schaeffler "Axlebox bearings for freight cars"; Novotný & Babka (2025), Current Problems in Rail Vehicles 27:189–194, doi 10.46585/spkv20252667 | health check adds a cylindrical variant (contact angle 0) |
+| WJ/WJP 130×240 radial clearance | 130–180 µm (unmounted) | SKF Railway Technical Handbook (DIN 5412-11); Schaeffler TPI 256 | cylindrical variant at 20, 130, 180 µm initial clearance |
+| Y25 primary vertical damping (equivalent viscous) | 7 kN s/m empty, 123.3 kN s/m laden | Dusza, Gołofit-Stawińska & Zboiński (2024), Appl. Sci. 14(11) 4545, Table A1 | c_p sourced; sweep range 7e3–1.233e5 N s/m (was 5e3–5e5 assumed) |
+| Empty axle load | 5.8–6.6 t (Eanos tare 23.1–26.5 t / 4) | Wascosa Eanos 82.5 (23.1 t); DB Cargo Eanos-x 056 (23.5 t); Greenbrier (24.0 t); VTG (24.5–26 t); Tatravagónka Eanoss (24.6 t); Transwagon (26.5 t) | design keeps 5.5 t (already running); sweep `W_min` 5.8–6.6 t quantifies the effect on the bound |
+| Hertz contact stiffness range 1.4–2.3e9 N/m | attribution resolved | Hasan N. (2020), "Hertzian contact stiffness under Eisenmann assumptions", ICTD 2020, ASCE, doi 10.1061/9780784483176.010 | source updated |
+| C_H for freight wheels; wheel diametral inertia; freight TBU internal geometry; mounted clearance | not found | – | stay assumed, swept |
+
 Open before submission: full-text checks of all of the above once publisher hosts are reachable.
 

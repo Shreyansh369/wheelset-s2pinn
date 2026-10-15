@@ -45,7 +45,7 @@ SWEEP = [
     ("kB0", "truth", "kB0", 0.5e9, 3.0e9, "assumed, swept"),
     ("axlebox_mass", "param", ("axlebox", "mass"), 100.0, 158.4, "sourced range"),
     ("kp", "param", ("primary", "kp"), 0.98e6, 2.6e6, "sourced range"),
-    ("cp", "param", ("primary", "cp"), 5.0e3, 5.0e5, "assumed, swept (heavy-haul range)"),
+    ("cp", "param", ("primary", "cp"), 7.0e3, 1.233e5, "sourced range (Y25 equivalent viscous, empty/laden)"),
     ("wheel_diametral_inertia", "param", ("wheel", "diametral_inertia"), 10.0, 30.0, "assumed, swept"),
     ("axle_damping_zeta", "param", ("axle", "damping_zeta"), 0.001, 0.02, "sourced range"),
     ("r0", "param", ("wheel", "r0"), 0.42, 0.46, "sourced range"),
@@ -53,6 +53,8 @@ SWEEP = [
     ("kf", "track", "kf", 123.0e6, 1333.0e6, "sourced range (derived)"),
     ("eta_f", "track", "eta_f", 0.10, 0.25, "sourced range"),
     ("kH0", "contact", "kH0", 1.4e9, 2.3e9, "sourced range"),
+    ("kB0_ext", "truth", "kB0", 0.5e9, 5.0e9, "extension to the EMU bearing-only vertical stiffness 4.96e9 N/m"),
+    ("W_min", "design", "W_min", 5.8, 6.6, "sourced range (empty axle load = Eanos tare 23.1-26.5 t / 4); design value 5.5 t"),
 ]
 
 
@@ -72,6 +74,8 @@ def build(override=None):
 
 def evaluate(name, kind, key, value):
     from experiments.p2_multiwheel import models
+    import experiments.p1_fe_direct as fd
+    fd.W_RANGE = (value, 22.5) if kind == "design" else (5.5, 22.5)
     p, sm, thb = build((key, value) if kind == "param" else None)
     kw = {key: value} if kind == "track" else {}
     mws, track = models(sm, **kw)

@@ -28,6 +28,9 @@ from src.reference.params import G, Params, load_raw  # noqa: E402
 from src.utils.results import RESULTS_DIR, Timer, save_result  # noqa: E402
 
 GROWTH_UM = np.arange(0.0, 50.01, 1.0)
+# Y25 axleboxes in DB service: cylindrical roller bearings WJ/WJP 130x240, radial clearance 130-180 um
+# unmounted [snippet] (config/params.yaml, bearing_geometry); same roller set with contact angle 0.
+CYL_CLEARANCES_UM = (20.0, 130.0, 180.0)
 
 
 def mdc_pct():
@@ -39,6 +42,7 @@ def main():
     P = Params(load_raw())
     bg, v = P.v["bearing_geometry"], P.v
     brg = RollerBearing(int(bg["rollers_per_row"]), bg["roller_length"], bg["contact_angle"], bg["K_contact_coeff"])
+    cyl = RollerBearing(int(bg["rollers_per_row"]), bg["roller_length"], 0.0, bg["K_contact_coeff"])
     rho = v["material"]["rho"]
     xs = [0.0] + [s[0] for s in v["axle"]["sections"]]
     m_axle = 2 * sum(rho * math.pi * s[1] ** 2 / 4 * (xs[i + 1] - xs[i]) for i, s in enumerate(v["axle"]["sections"]))
@@ -49,10 +53,11 @@ def main():
     out = {"geometry": bg, "Kn_N_per_mm10_9": brg.Kn, "m_axle_kg": m_axle, "m_wheels_kg": m_wheels, "mdc_pct": mdc,
            "kB0_model_placeholder": kB0_model, "cases": []}
     with Timer() as tm:
-        for cd0 in (bg["clearance_d0"], 0.0, 50.0):
+        for geom, b, cd0 in [("tapered_proxy", brg, c) for c in (bg["clearance_d0"], 0.0, 50.0)] + \
+                [("cylindrical", cyl, c) for c in CYL_CLEARANCES_UM]:
             for lname, W in loads.items():
                 F = (W * 1000 - m_wheels - m_axle) * G / 2
-                rows = [dict(growth_um=g, **brg.k_mean(F, (cd0 + g) * 1e-6)) for g in GROWTH_UM]
+                rows = [dict(growth_um=g, **b.k_mean(F, (cd0 + g) * 1e-6)) for g in GROWTH_UM]
                 k = np.array([r["k_mean"] for r in rows])
                 rel = (k / k[0] - 1) * 100
                 i10 = int(np.argmin(np.abs(GROWTH_UM - 10)))
@@ -65,7 +70,7 @@ def main():
                 if rel_eff is not None:
                     cross_eff = next((float(np.interp(-mdc, rel_eff[i:i + 2][::-1], GROWTH_UM[i:i + 2][::-1]))
                                       for i in range(len(rel_eff) - 1) if rel_eff[i] > -mdc >= rel_eff[i + 1]), None)
-                case = {"clearance_d0_um": cd0, "load": lname, "W_t": W, "F_bearing_kN": F / 1e3,
+                case = {"geometry": geom, "clearance_d0_um": cd0, "load": lname, "W_t": W, "F_bearing_kN": F / 1e3,
                         "k0_contact_N_per_m": float(k[0]), "n_loaded_per_row_at_0": rows[0]["n_loaded_per_row"],
                         "pct_change_first_10um": float(rel[i10]),
                         "pct_change_per_10um_mean_0_50": float(rel[-1] / 5),
