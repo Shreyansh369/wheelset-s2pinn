@@ -284,6 +284,45 @@ def section4(m, miss):
     block("p2/scope_p2_hysteretic.json", p2, ["PTwoCTMedianCorr", "PTwoCTOutsideCorr", "PTwoCTOutsideClean", "PTwoWhMedianCorr", "PTwoWhMedianClean",
                                               "PTwoWhCovCorr", "PTwoWhCovClean"])
 
+    def sweep(d):
+        n, T = d["nominal"], d["table"]
+        m["SweepNomMode"], m["SweepNomCRB"], m["SweepNomMDC"] = _f(n["support_mode_hz"], 0), _f(n["crb_kB0_pct"]), _f(n["mdc_pct"])
+        core = [r for r in T if r["param"] != "kB0_ext"]
+        crb = [r[f"crb_kB0_pct_{q}"] for r in core for q in ("low", "high")]
+        mdc = [r[f"mdc_pct_{q}"] for r in core for q in ("low", "high")]
+        mode = [r[f"support_mode_hz_{q}"] for r in core for q in ("low", "high")]
+        m["SweepCRBMin"], m["SweepCRBMax"] = _f(min(crb)), _f(max(crb))
+        m["SweepMDCMin"], m["SweepMDCMax"] = _f(min(mdc)), _f(max(mdc))
+        m["SweepModeMin"], m["SweepModeMax"] = _f(min(mode), 0), _f(max(mode), 0)
+        R = {r["param"]: r for r in T}
+        for key, w in (("kB0", "KB"), ("cp", "Cp"), ("kB0_ext", "KBExt"), ("W_min", "Wmin"), ("cB", "CB"),
+                       ("wheel_diametral_inertia", "Inertia"), ("axle_damping_zeta", "Zeta")):
+            if key in R:
+                for q, Q in (("low", "Lo"), ("high", "Hi")):
+                    m[f"Sweep{w}MDC{Q}"] = _f(R[key][f"mdc_pct_{q}"])
+                    m[f"Sweep{w}Mode{Q}"] = _f(R[key][f"support_mode_hz_{q}"], 0)
+    block("p4/sweep.json", sweep, ["SweepNomMode", "SweepNomCRB", "SweepNomMDC", "SweepCRBMin", "SweepCRBMax", "SweepMDCMin", "SweepMDCMax",
+                                   "SweepModeMin", "SweepModeMax"])
+
+    def icrime(d):
+        for mode, w in (("nl", "NL"), ("lin", "Lin")):
+            if mode in d:
+                c = d[mode]
+                m[f"IC{w}N"], m[f"IC{w}Bias"], m[f"IC{w}BiasSE"] = str(c["n"]), _f(c["bias_pct"]), _f(c["bias_se_pct"])
+                m[f"IC{w}RMSE"], m[f"IC{w}CovCal"] = _f(c["rmse_pct"]), _f(c["coverage_calibrated"])
+                m[f"IC{w}CovCalLo"], m[f"IC{w}CovCalHi"] = _f(c["coverage_calibrated_ci95"][0]), _f(c["coverage_calibrated_ci95"][1])
+        if "nl" in d:
+            m["ICDeltaRmsMax"] = _f(100 * d["nl"]["delta_rms_over_delta0_max"], 1)
+            m["ICContactLossMax"] = _f(100 * d["nl"]["contact_loss_max"], 2)
+        if "nl_minus_lin" in d:
+            x = d["nl_minus_lin"]
+            m["ICDiffMean"], m["ICDiffSE"], m["ICDiffMax"] = _f(x["mean_pp"], 3), _f(x["se_pp"] or 0, 3), _f(x["max_abs_pp"], 3)
+        if "pairs" in d:
+            x = d["pairs"]
+            m["ICPairsN"], m["ICPairsFA"], m["ICPairsFACal"] = str(x["n"]), str(x["false_alarms_raw"]), str(x["false_alarms_calibrated"])
+            m["ICPairsFACalLo"], m["ICPairsFACalHi"] = _f(x["rate_calibrated_ci95"][0]), _f(x["rate_calibrated_ci95"][1])
+    block("p4/inverse_crime.json", icrime, ["ICNLN", "ICNLBias", "ICNLRMSE", "ICNLCovCal", "ICDiffMean", "ICPairsN", "ICPairsFACal"])
+
 
 if __name__ == "__main__":
     main()
