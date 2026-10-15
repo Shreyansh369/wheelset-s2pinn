@@ -1,0 +1,25 @@
+% Section 6: conclusions. Numbers: generated/numbers.tex.
+\section{Conclusions}\label{sec:conclusions}
+The vertical support stiffness of a wheelset bearing can be identified from in-service axle-box
+acceleration without measuring the rail roughness, by pooling passes at different speeds and payloads
+in a debiased Whittle likelihood in which the roughness levels are free nuisance parameters. For a
+representative freight wagon on ballasted track, simulations show that:
+\begin{itemize}
+\item with 50 passes at 60--110~km/h the support stiffness is estimated with a bias of
+  \HLTwentyBias--\HLFortyBias\% and a root-mean-square error of \HLTwentyRMSE--\HLFortyRMSE\%, close to
+  the Cram\'er--Rao bound at 20~dB and \HLFortyRatioCRB{} times it at 40~dB, where intervals are
+  calibrated by simulation;
+\item the speed spread is the design variable that makes the support stiffness identifiable, and the
+  wheel-to-wheel coupling through the rail must be modelled, since ignoring it biases the estimate by
+  \IgnoreCouplingForty\%;
+\item the absolute level carries a model-form uncertainty of about \BudgetCoest\%, so the method is a
+  trend monitor: re-estimating the foundation and contact stiffness in each period, a decrease of
+  \MDCCalFiftyTwenty--\MDCCalFiftyForty\% is detectable with 50 passes per period, and a 20\% change of
+  the foundation raises \DriftMCCoestFA{} false alarm in \DriftMCCoestN{} trials;
+\item a loss of housing, adapter or pad stiffness reaches the identified stiffness directly, while
+  clearance growth is diluted by the stiff roller contacts, so the method reports support-stiffness
+  loss without attributing it to a mechanism.
+\end{itemize}
+The next steps are a field test with a controlled change of support stiffness, an extension of the
+model to the pinned--pinned frequency band, and calibrated intervals for the track-side use of the
+same likelihood.

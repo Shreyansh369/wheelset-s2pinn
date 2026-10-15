@@ -1,8 +1,22 @@
 % Section 1: introduction. Related work and the novelty statement (fixed wording, 2026-10-15).
 \section{Introduction}\label{sec:intro}
-\placeholder{Motivation: support-stiffness loss (loose fits, housing/adapter or pad degradation,
-clearance growth) and in-service monitoring from axle-box acceleration; Carrigan and Talbot's call for
-a reliable way to reject bad P2 stiffness estimates.}
+Each journal of a railway wheelset carries the axle load into the axlebox through the rollers of the
+bearing, the bearing housing, the adapter and, on many bogies, an elastomeric pad. The vertical
+stiffness of this load path, which we call the effective support stiffness, falls when the bearing
+fits loosen, when the housing, adapter or pad degrades, or when the bearing clearance grows. Such
+losses are not detected by the temperature and envelope-spectrum methods used for rolling-contact
+faults, which respond to impacts at roller-passing frequencies rather than to a change of stiffness.
+The support stiffness does, however, set the frequency of the axlebox resonating on its support, and
+on a freight wagon this resonance lies at a few hundred hertz, inside the band in which axle-box
+acceleration (ABA) is excited by rail roughness. ABA is already recorded in service for track
+monitoring, so the support stiffness could in principle be tracked from data that are collected
+anyway.
+
+The obstacle is the excitation. The rail roughness under each pass is unknown, varies along the line
+and has a spectrum that falls steeply with wavenumber, so a change of ABA level near the support
+resonance can come from the roughness just as well as from the support. Measuring the roughness
+directly needs a trolley or a dedicated vehicle, and deriving it from ABA requires the vehicle
+transfer function, which is what is to be identified.
 
 \paragraph{Related work.} Axle-box acceleration (ABA) responds to rail roughness filtered by the
 vehicle--track system, so any vehicle or track parameter identified from it is confounded with the
@@ -28,4 +42,22 @@ of vehicle or track parameters with unknown excitation has been studied for trac
 \citep{carrigan2023,shen2023} and for road-vehicle suspensions \citep{liu2024,an2024}. There, roughness is handled by deconvolution, a single level parameter, or axle
 time lags, and the targets lie below the axle-box support band.
 
-\placeholder{Contributions and outline of the paper.}
+The contributions of this paper are:
+\begin{enumerate}
+\item a multi-pass debiased Whittle likelihood that identifies the effective support stiffness and
+damping of a wheelset bearing from ABA spectra of many passes, with the roughness level of each
+sub-band a free nuisance parameter, payload entering through a weigh-in-motion measurement, and the
+leakage of the finite records handled by the debiased periodogram;
+\item a forward model in which the instrumented wheelset is coupled to its neighbours through an
+infinite Timoshenko rail, with the phase factors between wheels kept, and evidence that ignoring this
+coupling biases the support stiffness by \IgnoreCouplingForty\%;
+\item an error budget for a representative freight wagon: the Cram\'er--Rao bound and its dependence
+on speed spread and number of passes, Monte Carlo bias and coverage, model-form sensitivity, and
+simulation-calibrated intervals;
+\item a procedure for detecting changes between monitoring periods that re-estimates the track
+foundation and contact stiffness in each period, with detection limits and false-alarm rates under
+track drift, and an assessment of which support faults are large enough to be detected.
+\end{enumerate}
+Section~\ref{sec:model} describes the vehicle--track model and Section~\ref{sec:method} the
+estimator. Section~\ref{sec:results} reports the simulation results, Section~\ref{sec:discussion}
+discusses them together with the limitations, and Section~\ref{sec:conclusions} concludes.

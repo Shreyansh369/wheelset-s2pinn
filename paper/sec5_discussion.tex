@@ -1,6 +1,35 @@
 % Section 5: discussion. Numbers: generated/numbers.tex.
 \section{Discussion}\label{sec:discussion}
-\placeholder{Section 5 body after Section 4 is final.}
+\paragraph{What the method delivers.} The estimator separates the support resonance from the roughness
+because the two scale differently with speed: the resonance is fixed in frequency, the roughness
+excitation is fixed in wavenumber. Speed spread is therefore the design variable that matters most
+(Section~\ref{sec:res-speed}); at a single speed the support stiffness is barely identifiable, and a
+spread of 60--110~km/h, typical of a mixed freight route, brings the bound to a fraction of a per cent
+with 50 passes. Payload variation and a weigh-in-motion measurement add the load dependence of the
+contact and support stiffness. Neither requires a dedicated test: the passes are those a wagon makes
+in service, and the roughness never has to be measured.
+
+\paragraph{Absolute level and relative change.} The absolute level of $k_{B0}$ inherits the error of
+every other model parameter, above all the unsprung mass and the foundation stiffness
+(Section~\ref{sec:res-modelform}); its budget of a few per cent is an order of magnitude larger than the
+statistical error. For monitoring this matters less than it seems, because a model error that is the
+same in two periods largely cancels in the change. What does not cancel is a change of the track
+between periods, and re-estimating the foundation and contact stiffness in each period removes the
+resulting false alarms (Section~\ref{sec:res-drift}). The method is therefore best used as a trend
+monitor for each wheelset, with the first period as its own baseline.
+
+\paragraph{Which faults can be seen.} The detection limit of the change is below one per cent for 50
+passes per period and roughly halves with 200 (Section~\ref{sec:res-relative}). A loss of housing,
+adapter or pad stiffness enters $k_B$ directly and is detectable once it exceeds this limit. Clearance
+growth is a weaker signal, because the roller contacts are much stiffer than the rest of the support
+and their change is diluted in the series sum (Section~\ref{sec:res-health}). The method is not a
+substitute for envelope or temperature monitoring of rolling-contact faults; it covers a different
+failure path, the progressive loss of support, which those methods do not see.
+
+\paragraph{Relation to track monitoring.} The same likelihood, with the foundation stiffness as the
+target, gives median estimates close to the truth where per-pass P2 fits scatter widely under
+corrugation (Section~\ref{sec:res-p2}); its intervals then under-cover, so on the track side it can
+screen per-pass estimates but does not yet give calibrated intervals.
 
 \subsection{Limitations}\label{sec:limitations}
 \paragraph{Residual bias and simulation-calibrated intervals.} With the frozen estimator the estimate
@@ -25,9 +54,37 @@ therefore separate clearance growth from other losses of support stiffness. With
 alongside $(k_{B0}, c_B)$ and payloads spanning \PayloadMin--\PayloadMax~t, the Cram\'er--Rao bound of
 $p$ is \ExpCRBFifty{} for $N = 50$ passes and \ExpCRBTwoHundred{} for $N = 200$, and freeing $p$ raises
 the bound of $k_{B0}$ from \KBCRBExpFixed\% to \KBCRBExpFree\% ($N=50$). Under the series reading of
-the support (placeholder bearing geometry), 10 and 20~\textmu m of clearance growth raise the
+the support (proxy bearing geometry, Table~\ref{tab:table1_parameters}), 10 and 20~\textmu m of clearance growth raise the
 effective exponent by only \ExpShiftTen{} and \ExpShiftTwenty{}. Detecting a shift between two
 periods (one-sided 5\% false alarm, 90\% detection) needs \ExpMDCFifty{} at $N=50$ and
 \ExpMDCTwoHundred{} at $N=200$, so only 20~\textmu m at $N=200$ would be detected. The exponent is
 therefore held fixed in the estimator, and the method reports a loss of effective support stiffness
 without attributing it to a mechanism.
+
+\paragraph{Linear contact and model form.} Data and estimator share the linear vehicle--track model, so
+the Monte Carlo results do not include the error of the model itself beyond the parameter errors of
+Section~\ref{sec:res-modelform}. The wheel--rail contact is linearised about the static load; the
+effect of the nonlinear Hertzian contact on the estimates is reported in
+Section~\ref{sec:res-inverse-crime}. The model is vertical and two-dimensional, the bogie frame is
+held fixed, the wheels are rigid, and the rail pinned--pinned resonance of discretely supported track
+is not represented; all of these lie outside or at the edge of the analysis band but have not been
+tested against data.
+
+\paragraph{Representative parameter values.} The vehicle and track values are those of a
+representative freight wagon (Y25 bogies, 22.5~t axle load) on ballasted 60E1 track, taken from
+published sources where they could be found (Table~\ref{tab:table1_parameters}). The effective support
+stiffness, the support damping, the wheel diametral inertia and the internal geometry of the bearing
+were not found for a freight axlebox and are swept over plausible ranges
+(Table~\ref{tab:table15_sweep}); the bound and detection limit are reported over each range rather
+than at a single value. A specific vehicle requires its own values, above all the unsprung mass.
+
+\paragraph{Roughness and operating model.} Roughness is modelled as a stationary Gaussian process
+with a level per sub-band that differs between passes but is common to the wheels of one pass, and
+speed is constant within a pass. Non-stationary features (joints, welds, switches) and speed changes
+within a record are not modelled and would have to be excluded or windowed out in practice.
+Environmental effects on the support, for example the temperature dependence of elastomeric pads,
+would appear as changes of $k_B$ and must be separated by comparing like conditions.
+
+\paragraph{No field data.} All results are from simulation. A field test with an axlebox whose
+support stiffness is changed in a controlled way is needed before the detection limits can be
+claimed for a real vehicle.

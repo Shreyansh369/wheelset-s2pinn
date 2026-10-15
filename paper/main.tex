@@ -1,44 +1,51 @@
-% Paper 1 draft. Build: `make -C paper` (regenerates tables and number macros from results/, then LaTeX).
-% Every number in the text is a macro from generated/numbers.tex or a table from ../results/tables/;
-% none is typed by hand.
-\documentclass[11pt,a4paper]{article}
+% Paper 1. Build: `make -C paper` (regenerates tables and number macros from results/, then LaTeX).
+% Every number in the text is a macro from generated/numbers.tex or a table from tables/;
+% none is typed by hand. Elsevier elsarticle template (numbered references).
+\documentclass[preprint,12pt]{elsarticle}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{amsmath,amssymb,bm}
-\usepackage{booktabs,graphicx}
-\usepackage[margin=25mm]{geometry}
-\usepackage[numbers,sort&compress]{natbib}
-\usepackage{xcolor}
+\usepackage{booktabs,graphicx,longtable,array}
+\usepackage{lineno}
 \usepackage[hidelinks]{hyperref}
-\graphicspath{{../figures/}}
+\graphicspath{{figures/}{../figures/}}
+\IfFileExists{tables/table1_parameters.tex}{\def\tabdir{tables}}{\def\tabdir{../results/tables}}
+\newcommand{\inputtable}[1]{\input{\tabdir/#1}}
 
-\newcommand{\placeholder}[1]{\textcolor{red}{\textbf{[#1]}}}
 \input{generated/numbers.tex}
+
+\journal{Mechanical Systems and Signal Processing}
+
+\begin{document}
+\begin{frontmatter}
 
 \title{Tracking the support stiffness of railway wheelset bearings from in-service axle-box
 acceleration without measuring rail roughness: a multi-pass debiased Whittle likelihood}
-\author{\placeholder{authors}}
-\date{\placeholder{draft}}
 
-\begin{document}
-\maketitle
+% Author list, affiliations and corresponding author: authors.tex (to be completed by the authors).
+\input{authors}
 
-\begin{abstract}
-\placeholder{Abstract after Section 4 results are final.}
-\end{abstract}
+\input{abstract}
+
+\begin{keyword}
+axle-box acceleration \sep bearing support stiffness \sep condition monitoring \sep
+debiased Whittle likelihood \sep rail roughness \sep vehicle--track interaction
+\end{keyword}
+
+\end{frontmatter}
+
+\linenumbers
 
 \input{sec1_intro}
-
 \input{sec2_model}
 \input{sec3_method}
 \input{sec4_results}
-
 \input{sec5_discussion}
+\input{sec6_conclusions}
 
-\section{Conclusions}\label{sec:conclusions}
-\placeholder{Section 6.}
+\input{declarations}
 
-\bibliographystyle{unsrtnat}
+\bibliographystyle{elsarticle-num}
 \bibliography{refs}
 \end{document}

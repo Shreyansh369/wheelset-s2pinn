@@ -43,7 +43,7 @@ TEX_MAP = {"\\": r"\textbackslash{}", "&": r"\&", "%": r"\%", "$": r"\$", "#": r
            "−": "$-$", "≥": r"$\geq$", "≤": r"$\leq$", "²": r"$^2$", "³": r"$^3$", "µ": r"$\mu$", "σ": r"$\sigma$",
            "ρ": r"$\rho$", "η": r"$\eta$", "κ": r"$\kappa$", "γ": r"$\gamma$", "Δ": r"$\Delta$", "ξ": r"$\xi$",
            "θ": r"$\theta$", "Ω": r"$\Omega$", "̂": "", "’": "'", "→": r"$\rightarrow$", "ω": r"$\omega$", "₁": r"$_1$",
-           "ν": r"$\nu$", "α": r"$\alpha$", "β": r"$\beta$", "°": r"$^\circ$", "≈": r"$\approx$", "·": r"$\cdot$", "§": r"\S{}"}
+           "ν": r"$\nu$", "α": r"$\alpha$", "β": r"$\beta$", "°": r"$^\circ$", "≈": r"$\approx$", "·": r"$\cdot$", "§": r"\S{}", "√": r"$\surd$"}
 
 
 def tex_escape(x: str) -> str:
@@ -102,11 +102,21 @@ def table1():
     t = yaml.safe_load((ROOT / "config/track.yaml").read_text())
     rows = []
 
+    def num(v):
+        try:
+            return f"{float(v):.4g}"
+        except (TypeError, ValueError):
+            return str(v).replace(" ", "")
+
     def add(group, name, e):
         v, u = e["value"], e["unit"]
-        v = f"{v:.4g}" if isinstance(v, float) else str(v).replace(" ", "")
-        rows.append([group, name, v, u if isinstance(u, str) else u[0], e["source"].replace("|", "/")])
+        rng = e.get("range")
+        rows.append([group, name, num(v) if not isinstance(v, list) else str(v).replace(" ", ""),
+                     f"{num(rng[0])}–{num(rng[1])}" if rng else "–", u if isinstance(u, str) else u[0],
+                     e["source"].replace("|", "/")])
 
+    nom = {k: (v["value"] if isinstance(v, dict) else v) for k, v in t["nominal"].items()}
+    rail, track = t[nom["rail"]], t[nom["track"]]
     for k in ("E", "nu", "rho"):
         add("Material", k, p["material"][k])
     add("Axle", "length", p["axle"]["length"])
@@ -116,26 +126,26 @@ def table1():
     for k in ("mass", "diametral_inertia", "r0"):
         add("Wheel", k, p["wheel"][k])
     for k in ("kB0", "cB", "load_exponent"):
-        add("Bearing", k, p["bearing"][k])
+        add("Support", k, p["bearing"][k])
+    for k in ("rollers_per_row", "roller_length", "roller_diameter", "pitch_diameter", "contact_angle", "clearance_d0"):
+        add("Bearing (health check)", k, p["bearing_geometry"][k])
     add("Axlebox", "mass", p["axlebox"]["mass"])
     for k in ("kp", "cp"):
         add("Primary", k, p["primary"][k])
     for k in ("W_min", "W_max", "W0"):
         add("Payload", k, p["payload"][k])
-    for k in ("A", "rho", "E", "I", "G", "kappa"):
-        add("Rail BS113A", k, t["rail_BS113A"][k])
-    for k in ("A", "I"):
-        add("Rail 60E1", k, t["rail_60E1"][k])
-    for k in ("standard_kf_lab", "resilient_kf", "eta_f"):
-        add("Foundation", k, t["foundation"][k])
-    add("Contact", "C_H", t["contact_freight"]["C_H"])
-    add("Layout", "positions", t["layout_CT23"]["positions"])
-    n_ph = sum("placeholder" in r[4] for r in rows)
-    write("table1_parameters", "Table 1. Model parameters and sources",
-          md(["Group", "Parameter", "Value", "Unit", "Source"], rows), ["config/params.yaml", "config/track.yaml"],
-          [f"{n_ph} of {len(rows)} entries are placeholders. Vehicle masses (wheel, axlebox, unsprung) stay "
-           "placeholders until the target vehicle is confirmed; values marked 'verify' are to be checked against "
-           "the cited standard."])
+    for k in ("A", "I", "kappa"):
+        add("Rail 60E1", k, rail[k])
+    for k in ("pad_stiffness", "sleeper_spacing", "kf", "eta_f"):
+        add("Track (ballasted)", k, track[k])
+    for k in ("kH0", "C_H"):
+        add("Contact", k, t["contact_freight"][k])
+    add("Layout", "wheel positions", t[nom["layout"]]["positions"])
+    n_as = sum("assumed" in r[5] for r in rows)
+    write("table1_parameters", "Table 1. Representative freight wagon and track: model parameters and sources",
+          md(["Group", "Parameter", "Value", "Range", "Unit", "Source"], rows), ["config/params.yaml", "config/track.yaml"],
+          [f"{n_as} of {len(rows)} entries were not found in the literature (marked 'assumed, swept'); their effect is in Table 15. "
+           "[snippet] = value seen in search results; the full-text status of each source is in docs/parameter_sources.md."])
 
 
 # ----------------------------------------------------------------------------- Table 2
@@ -487,6 +497,34 @@ def table14():
            "(default 30)."])
 
 
+# ----------------------------------------------------------------------------- Table 15
+SWEEP_LABELS = {"kB0": "Effective support stiffness k_B0 (N/m)", "axlebox_mass": "Axlebox mass (kg)",
+                "kp": "Primary stiffness k_p (N/m)", "cp": "Primary damping c_p (N s/m)",
+                "wheel_diametral_inertia": "Wheel diametral inertia (kg m²)", "axle_damping_zeta": "Axle modal damping ratio",
+                "r0": "Wheel radius (m)", "cB": "Support damping c_B (N s/m)", "kf": "Foundation stiffness k_f (N/m²)",
+                "eta_f": "Foundation loss factor", "kH0": "Contact stiffness k_H0 (N/m)",
+                "kB0_ext": "k_B0, extended to bearing-only stiffness (N/m)", "W_min": "Empty axle load (t; design 5.5)"}
+
+
+def table15():
+    d = load("p4/sweep.json")
+    if d is None:
+        return missing("table15_sweep", "Table 15. Sweep over published ranges", "results/p4/sweep.json")
+    n = d["nominal"]
+    rows = [["Nominal", "–", "–", f"{n['support_mode_hz']:.0f}", pct(n["crb_kB0_pct"] / 100), pct(n["mdc_pct"] / 100), "–"]]
+    for r in d["table"]:
+        rows.append([SWEEP_LABELS.get(r["param"], r["param"]), f"{r['low']:.4g}", f"{r['high']:.4g}",
+                     f"{r['support_mode_hz_low']:.0f} / {r['support_mode_hz_high']:.0f}",
+                     f"{pct(r['crb_kB0_pct_low'] / 100)} / {pct(r['crb_kB0_pct_high'] / 100)}",
+                     f"{pct(r['mdc_pct_low'] / 100)} / {pct(r['mdc_pct_high'] / 100)}", r["source"]])
+    write("table15_sweep", "Table 15. Bound and detection limit over the published (or assumed) range of each parameter",
+          md(["Parameter", "Low", "High", "Support mode (Hz), low / high", "CRB k_B0 (%), low / high",
+              "MDC (%), low / high", "Range"], rows), ["results/p4/sweep.json"],
+          ["One parameter at a time; data generated and fitted with the same model (bound, not misspecification). "
+           "4-wheel design, N = 50, 60–110 km/h, 40 dB. MDC = (1.645 + 1.282) √2 CRB, uncalibrated. Support mode at 14 t."])
+
+
 if __name__ == "__main__":
-    for fn in (table1, table2, table3, table4, table5, table6, table7, table8, table9, table10, table11, table12, table13, table14):
+    for fn in (table1, table2, table3, table4, table5, table6, table7, table8, table9, table10, table11, table12, table13, table14,
+               table15):
         fn()

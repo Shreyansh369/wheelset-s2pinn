@@ -38,7 +38,7 @@ reverse split (inflation \CalSplitBInfl). These intervals are valid for the simu
 (no neighbouring wheels) biases $k_{B0}$ by \IgnoreCouplingTwenty\% and \IgnoreCouplingForty\% at 20
 and 40~dB, with no interval covering the truth.
 
-\input{../results/tables/table3_headline.tex}
+\inputtable{table3_headline}
 
 \subsection{Speed spread and number of passes}\label{sec:res-speed}
 The bound on $k_{B0}$ is set by the speed spread (Table~\ref{tab:table4_speed_N},
@@ -46,7 +46,7 @@ Fig.~\ref{fig:crb-speed}). For $N=50$ at 40~dB it is \SpeedCRBFixed\% with all p
 \SpeedCRBNarrow\% for speeds within 95--105~km/h and \SpeedCRBWide\% for 60--110~km/h; with $N=200$
 and the wide spread it falls to \SpeedCRBWideTwoHundred\%.
 
-\input{../results/tables/table4_speed_N.tex}
+\inputtable{table4_speed_N}
 
 \subsection{Multi-wheel coupling}\label{sec:res-multiwheel}
 With 60--110~km/h, the bound on $k_{B0}$ is \MWCRBMin--\MWCRBMax\% for one to eight coupled wheels and
@@ -64,7 +64,7 @@ coupled model gives \MWCorrectBiasTwo\,$\pm$\,\MWCorrectBiasSETwo\%,
 \label{fig:mwbias}
 \end{figure}
 
-\input{../results/tables/table5_multiwheel.tex}
+\inputtable{table5_multiwheel}
 
 \subsection{Estimator bias diagnosis}\label{sec:res-bias}
 The diagnosis uses the ten seed-123 datasets at 40~dB, where the bias is largest
@@ -108,7 +108,7 @@ $k_{H0}$ fixed (left) and re-estimated (right). Data: \texttt{results/p2/model\_
 \label{fig:tornado}
 \end{figure}
 
-\input{../results/tables/table6_budget.tex}
+\inputtable{table6_budget}
 
 \subsection{Relative change, interval and detection}\label{sec:res-relative}
 A model error that biases $\log\hat k_{B0}$ by a constant cancels in the change $D$; what remains
@@ -140,11 +140,11 @@ and the absolute bias of $k_{B0}$ against the error of a $-5$\% change (right). 
 \label{fig:relchange}
 \end{figure}
 
-\input{../results/tables/table7_gains.tex}
-\input{../results/tables/table8_mdc.tex}
+\inputtable{table7_gains}
+\inputtable{table8_mdc}
 
 \subsection{Health relevance}\label{sec:res-health}
-Under the series reading~\eqref{eq:series} with the placeholder bearing geometry, a 10~\textmu m growth
+Under the series reading~\eqref{eq:series} with the proxy bearing geometry, a 10~\textmu m growth
 of the diametral clearance lowers the contact stiffness by \ContactPctTenEmpty\% (empty) and
 \ContactPctTenLoaded\% (loaded), and the effective support stiffness by \EffPctTenEmpty\% and
 \EffPctTenLoaded\% (Table~\ref{tab:table13_health}). Against the calibrated MDC of
@@ -154,7 +154,7 @@ of the diametral clearance lowers the contact stiffness by \ContactPctTenEmpty\%
 other causes of support-stiffness loss (fits, housing, adapter, pad) are not modelled here; their
 stiffness change enters $k_B$ undiluted.
 
-\input{../results/tables/table13_health.tex}
+\inputtable{table13_health}
 
 \subsection{Foundation drift}\label{sec:res-drift}
 A seasonal change of the foundation stiffness between periods is the main false-alarm risk
@@ -168,7 +168,7 @@ $k_f$ fixed ([\DriftMCNomLo, \DriftMCNomHi], mean apparent change \DriftMCNomMea
 \DriftMCCoestFA/\DriftMCCoestN{} with $k_f$ re-estimated ([\DriftMCCoestLo, \DriftMCCoestHi], mean
 \DriftMCCoestMean\%).
 
-\input{../results/tables/table11_drift.tex}
+\inputtable{table11_drift}
 
 \subsection{Wheel roughness at rotation orders}\label{sec:res-wheel}
 Wheel out-of-roundness puts lines at the rotation orders of an angle-synchronous record
@@ -177,7 +177,7 @@ bound (\WLNone\% without wheel roughness). Modelling them as lines with a mean s
 lowers the bound to \WLTachoZero\% when the lines are at the roughness level and \WLTachoTen\% when
 they are 10~dB above it, because the lines then carry information about $|H|$ at known frequencies.
 
-\input{../results/tables/table9_wheel_lines.tex}
+\inputtable{table9_wheel_lines}
 
 \subsection{Repeated passes over one section}\label{sec:res-repeated}
 When passes repeat over the same stretch, their roughness is partially coherent. For coherence
@@ -186,7 +186,7 @@ When passes repeat over the same stretch, their roughness is partially coherent.
 the bin-clustered sandwich standard error is calibrated (RMSE/SE \PCSandRatioMin--\PCSandRatioMax) and is
 used for repeated sections (Table~\ref{tab:table10_partial}).
 
-\input{../results/tables/table10_partial.tex}
+\inputtable{table10_partial}
 
 \subsection{Validation against the P2 failure mode}\label{sec:res-p2}
 Carrigan and Talbot~\citep{carrigan2023} estimate the foundation stiffness from the P2 peak of single
@@ -206,5 +206,5 @@ likelihood (8 passes per section), with and without corrugation near P2. Data:
 \label{fig:p2}
 \end{figure}
 
-\input{../results/tables/table12_p2.tex}
-\input{../results/tables/table14_validation.tex}
+\inputtable{table12_p2}
+\inputtable{table14_validation}
