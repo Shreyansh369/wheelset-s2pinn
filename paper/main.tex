@@ -1,40 +1,36 @@
-% Paper 1. Build: `make -C paper` (regenerates tables and number macros from results/, then LaTeX).
+% Paper 1, Mechanical Systems and Signal Processing. Elsevier CAS single-column template (cas-sc).
+% Build: `make -C paper` (regenerates tables and number macros from results/, then LaTeX).
 % Every number in the text is a macro from generated/numbers.tex or a table from tables/;
-% none is typed by hand. Elsevier elsarticle template (numbered references).
-\documentclass[preprint,12pt]{elsarticle}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{lmodern}
-\usepackage{amsmath,amssymb,bm}
-\usepackage{booktabs,graphicx,longtable,array}
+% none is typed by hand. Submission folder: `make -C paper submission`.
+\documentclass[a4paper,fleqn]{cas-sc}
+\usepackage[numbers,square,compress]{natbib}
+\usepackage{bm,graphicx,longtable}
 \usepackage{lineno}
-\usepackage[hidelinks]{hyperref}
 \graphicspath{{figures/}{../figures/}}
 \IfFileExists{tables/table1_parameters.tex}{\def\tabdir{tables}}{\def\tabdir{../results/tables}}
 \newcommand{\inputtable}[1]{\input{\tabdir/#1}}
 
 \input{generated/numbers.tex}
 
-\journal{Mechanical Systems and Signal Processing}
-
 \begin{document}
-\begin{frontmatter}
+\let\WriteBookmarks\relax
+\def\floatpagepagefraction{1}
+\def\textpagefraction{.001}
 
-\title{Tracking the support stiffness of railway wheelset bearings from in-service axle-box
-acceleration without measuring rail roughness: a multi-pass debiased Whittle likelihood}
-
-% Author list, affiliations and corresponding author: authors.tex (to be completed by the authors).
+\shorttitle{Support stiffness of wheelset bearings from axle-box acceleration}
 \input{authors}
+
+\title[mode=title]{Tracking the support stiffness of railway wheelset bearings from in-service
+axle-box acceleration without measuring rail roughness: a multi-pass debiased Whittle likelihood}
 
 \input{abstract}
 
-\begin{keyword}
-axle-box acceleration \sep bearing support stiffness \sep condition monitoring \sep
-debiased Whittle likelihood \sep rail roughness \sep vehicle--track interaction
-\end{keyword}
+\begin{keywords}
+axle-box acceleration \sep wheelset bearing support stiffness \sep condition monitoring \sep
+debiased Whittle likelihood \sep rail roughness \sep vehicle--track interaction \sep system identification
+\end{keywords}
 
-\end{frontmatter}
-
+\maketitle
 \linenumbers
 
 \input{sec1_intro}
@@ -44,7 +40,7 @@ debiased Whittle likelihood \sep rail roughness \sep vehicle--track interaction
 \input{sec5_discussion}
 \input{sec6_conclusions}
 
-\input{declarations}
+\input{backmatter}
 
 \bibliographystyle{elsarticle-num}
 \bibliography{refs}

@@ -82,13 +82,13 @@ With $\mathbf{A}^w$ the wheel receptances, $\mathbf{A}^c = \mathrm{diag}(1/k_H)$
 $A^r_{jk} = R(|d_j-d_k|)$, the contact forces under a roughness $z(x)$ are
 \begin{equation}
   \mathbf{F} = (\mathbf{A}^c + \mathbf{A}^r + \mathbf{A}^w)^{-1}\mathbf{Z},\qquad
-  Z_k = Z\,e^{\mathrm{i}\omega d_k/V},
+  Z_k = Z\exp(\mathrm{i}\omega d_k/V),
   \label{eq:coupling}
 \end{equation}
 \citep[Eqs.~5 and 8]{carrigan2023}, and the axle-box acceleration per unit roughness at the
 instrumented wheel is
 \begin{equation}
-  H(f;\bm\theta, W, V) = \sum_k G_k(f;\bm\theta, W)\,e^{\mathrm{i}2\pi f d_k/V}.
+  H(f;\bm\theta, W, V) = \sum_k G_k(f;\bm\theta, W)\exp(\mathrm{i}2\pi f d_k/V).
   \label{eq:H}
 \end{equation}
 Carrigan and Talbot drop the phase factors (their Eq.~6) because their spectra cannot resolve
@@ -101,7 +101,7 @@ parameter; up to eight wheels (two coupled wagons) are used in Section~\ref{sec:
 
 \begin{figure}[tbp]\centering
 \includegraphics[width=\textwidth]{fig1_transfer_functions}
-\caption{Axle-box acceleration per unit roughness, $|H|$, for 2, 4 and 8 rail-coupled wheels against
+\caption{Transfer functions with and without rail coupling. Axle-box acceleration per unit roughness, $|H|$, for 2, 4 and 8 rail-coupled wheels against
 a single wheel without coupling, at 60 and 110~km/h. Data: \texttt{results/p2/fig1\_transfer.json}.}
 \label{fig:transfer}
 \end{figure}

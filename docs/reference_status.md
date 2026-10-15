@@ -1,5 +1,9 @@
 # Reference status (paper/refs.bib)
 
+Journal names are abbreviated (LTWA) in refs.bib; DOIs are given wherever one was seen. Entries without
+a DOI: bizic2021 (none found), harris2006 and johnson1985 (books, ISBN given), iso3095 (standard),
+chaar2007 (thesis, ISBN), lebelhal (conference paper, HAL id).
+
 No publisher page could be opened from this environment (WebFetch DNS failures; proxy 403), so
 "confirmed" below means seen in web-search results (title/URL/summary of the named page), not read on
 the publisher page. Check each DOI resolves before submission.
@@ -27,6 +31,11 @@ the publisher page. Check each DOI resolves before submission.
 | bizic2021 | venue Mechanics Transport Communications 19(3) art. 2113 | page numbers |
 | guan2023 | title, authors (Tiantian Guan, Xiaoyu Deng, Jiangwen Wang), DOI seen | – |
 | chaar2007 | thesis, TRITA AVE 2007:17, ISBN 978-91-7178-636-4 | – |
+| randall2011 | 25(2) 485–520, DOI seen in two independent reference lists | – |
+| pieringer2022 | Appl. Acoust. 193, 108760, DOI, authors seen (Chalmers repository record and full-text PDF listing) | – |
+| johnson1985 | Contact Mechanics, CUP 1985, ISBN 0521255767 seen in library catalogues | DOI (Cambridge Core) not confirmed, so not given |
+| hasan2020 | ICTD 2020, ASCE, DOI seen | – |
+| li2026s2pinn | title, authors, arXiv:2610.03303 read from the PDF in docs/ (not committed) | – |
 | nielsen2015 | title, 3(1) 17–39 seen (RePEc); author order differs between listings; DOI from round-1 snippet only | first-author order, DOI |
 
 ## The 10 most influential parameter sources still verified only from search snippets

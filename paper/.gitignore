@@ -8,3 +8,6 @@
 *.synctex.gz
 build/
 main.pdf
+submission/*.zip
+submission/build/
+*.abs

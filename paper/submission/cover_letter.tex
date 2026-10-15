@@ -1,0 +1,49 @@
+% Cover letter (one page). Slots in [brackets] to be filled by the corresponding author.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[margin=22mm]{geometry}
+\usepackage{parskip}
+\pagestyle{empty}
+\begin{document}
+\noindent{}[Corresponding author name]\\{}
+{}[Department, Institution, full postal address, Country]\\{}
+[e-mail] \hfill [Date]
+
+\medskip
+\noindent To the Editor-in-Chief, \emph{Mechanical Systems and Signal Processing}
+
+Dear Editor,
+
+We submit the manuscript \textbf{``Tracking the support stiffness of railway wheelset bearings from
+in-service axle-box acceleration without measuring rail roughness: a multi-pass debiased Whittle
+likelihood''} for consideration as a research paper.
+
+\textbf{Problem.} The vertical stiffness of the load path from a wheelset journal to its axlebox (roller
+contacts, housing, adapter, pad) falls when fits loosen, when the housing or pad degrades, or when the
+bearing clearance grows. Existing bearing monitoring detects temperature and impacts, not stiffness.
+The support resonance lies in the band of axle-box acceleration that operators already record, but any
+stiffness identified from it is confounded with the unmeasured rail roughness.
+
+\textbf{Contributions.} To our knowledge, this is the first method to identify the vertical stiffness of
+the axle-box bearing support from in-service axle-box acceleration without measuring rail roughness.
+Passes at different speeds and payloads are pooled in one debiased Whittle likelihood in which the
+roughness levels are free nuisance parameters. The forward model couples the instrumented wheelset to
+its neighbours through the rail; ignoring that coupling biases the estimate by more than ten per cent.
+For a representative freight wagon (Y25 bogies, ballasted UIC60 track) we give a complete simulation
+error budget: Cram\'er--Rao bounds, Monte Carlo bias and coverage, model-form sensitivity, sweeps over
+published parameter ranges, a check against nonlinear Hertzian contact, detection limits for changes
+between monitoring periods, and false-alarm rates under track drift.
+
+\textbf{Fit to MSSP.} The work combines system identification, statistical signal processing of
+spectra and vehicle--track dynamics for condition monitoring, and builds on recent MSSP papers on
+axle-box acceleration (Carrigan \& Talbot 2023; Shen et al.\ 2023). Suggested subject area:
+[subject area as listed in the submission system].
+
+The code that produces every number, table and figure is openly available
+(\texttt{https://github.com/Shreyansh369/wheelset-s2pinn}; Zenodo DOI [to be added]). The manuscript has
+not been published and is not under consideration elsewhere. All authors have approved the manuscript
+and its submission to \emph{Mechanical Systems and Signal Processing}.
+
+Yours sincerely,\\[2mm]
+[Corresponding author name], on behalf of all authors
+\end{document}
