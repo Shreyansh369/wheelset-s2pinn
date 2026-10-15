@@ -87,3 +87,61 @@ Second round-2 agent (missing bearing, contact and wagon values), all snippet le
 
 Open before submission: full-text checks of all of the above once publisher hosts are reachable.
 
+
+## Decisions of 2026-10-15 (after the user's full-text check)
+
+**Single vehicle source.** The representative vehicle is a four-axle Eaos/Eanos-type wagon on Y25
+bogies on ballasted 60E1/UIC60 track. The vehicle set comes from one source: Dusza, Gołofit-Stawińska &
+Zboiński (2024), Appl. Sci. 14(11) 4545, Table A1, **full text verified by the user**. It gives
+axlebox 100 kg, wheelset 1400 kg, k_p 1017/2280 kN/m (empty/loaded, per axlebox: Dusza 2023 places the
+springs "on each axle box"), c_p 7/123.3 kN s/m, rolling radius 0.46 m, S1002 wheels on UIC60 rail.
+Nominals use the empty values (k_p 1.017e6 N/m, c_p 7e3 N s/m; c_p was 1e4 before). Loaded values bound
+the sweep.
+
+**Wheelset mass: 998 kg vs 1400 kg.** 998 kg is a vendor's *bare* wheelset: an EN axle (390 kg) and two
+920 mm ER7 wheels (304 kg each), with no bearings, axleboxes or attached parts (Unirail BA004,
+snippet). The model's bare wheelset, an FE axle of 397 kg plus two 304 kg wheels, is 1005 kg and matches.
+Dusza et al.'s 1400 kg is the wheelset body of a multibody model. Such bodies usually include the
+bearing inner parts and other journal-mounted items, and the 1400 kg is close to the 1355 kg *unsprung*
+mass per wheelset that RIVAS D5.5 gives for a Y25 bogie with 920 mm wheels (snippet). So the two figures
+describe different assemblies. The model keeps the bare wheelset and puts the axleboxes (2 × 100 kg) in
+separately. That gives an unsprung mass of 1205 kg, so the model leaves out about 150 kg of bearings and
+attached parts. One WJ 130×240×80 bearing weighs about 15 kg (supplier listings, snippet), and there are
+four per wheelset. The 10% support-mode rule was applied to 1400 kg, adding the 395 kg either on the
+wheels or lumped on the journals:
+
+| Wheelset mass | Placement | Symmetric modes with axlebox participation (Hz), share of axlebox energy |
+|---|---|---|
+| 1005 kg (nominal) | – | 405 (0.40), 504 (0.21) |
+| 1400 kg | wheels | 399 (support mode by max share) |
+| 1400 kg | journals | 399 (0.26), 497 (0.37) |
+
+The ~400 Hz mode moves by at most 1.5%, so the rule is not triggered. With 200 kg on each journal,
+however, the larger axlebox share moves to the 497 Hz mode, so the "support mode" label switches between
+two modes 100 Hz apart. 200 kg per journal is far more than the bearings (about 30 kg per journal), so
+this placement is an upper bound. The sweep (`wheelset_mass_wheels`, `wheelset_mass_journals`,
+1400 and 1526 kg) reports the bound and detection limit for both placements.
+
+**Wheel layout.** The freight runs already use the Y25/Eanos layout (wheelbase 1.80 m, bogie pivot
+pitch 10.70 m, length over buffers 15.74 m; `config/track.yaml: layout_freight`). No metro layout is
+in use for the freight results.
+
+**Contact stiffness.** k_H0 now comes from Hertz theory (Johnson 1985) for an S1002 wheel with rolling
+radius 0.46 m (Dusza, verified) on a UIC60 rail with crown radius 0.30 m (snippet). The wheel's
+transverse radius is taken as infinite (conical tread; the S1002 value at the nominal point was not
+found). At W0 = 22.5 t (110 kN per wheel) this gives k_H0 = 1.489e9 N/m and C_H = 94.1e9 N/m^1.5. For
+wheel transverse radii of +0.5 m to −1.0 m it gives 1.388–1.576e9 N/m
+(`results/p4/contact_hertz.json`). This is within the published spread of 1.4–2.3e9 N/m (Hasan 2020,
+cross-check only). k_H0 was 1.4e9 N/m before.
+
+**Bearing (health case).** Main case: two single-row cylindrical roller bearings WJ + WJP 130×240×80
+per journal (Schaeffler; Novotný & Babka 2025; snippet). Contact angle 0. The roller count (18, swept
+15–21) and length (48 mm, swept 40–56) are assumed from the envelope. Initial clearance 130 µm: this is
+the lower *unmounted* value of 130–180 µm. The SKF Railway Technical Handbook was not reachable (proxy
+refused cdn.skfmediahub.skf.com), so the mounted/operating clearance is not known; it is swept over
+0–180 µm. Secondary case: the proxy tapered unit, as before.
+
+**Running headline.** The 5-seed freight headline was launched with k_H0 1.4e9 and c_p 1e4. It is
+pinned to that config (`config/snapshots/headline_freight_v1`, `WHEELSET_CONFIG_DIR`) so that no
+chunk mixes nominals. Under the 10% rule it is kept. Every other rerun (Fisher bounds, model-form,
+drift, sweep, health, exponent bound, inverse-crime check) uses the current config.

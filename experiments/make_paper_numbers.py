@@ -303,6 +303,11 @@ def section4(m, miss):
     block("p2/scope_p2_hysteretic.json", p2, ["PTwoCTMedianCorr", "PTwoCTOutsideCorr", "PTwoCTOutsideClean", "PTwoWhMedianCorr", "PTwoWhMedianClean",
                                               "PTwoWhCovCorr", "PTwoWhCovClean"])
 
+    def hertz(d):
+        m["KHZeroHertz"] = _f(d["kH0_nominal"] / 1e9, 2)
+        m["KHZeroLo"], m["KHZeroHi"] = _f(d["kH0_range"][0] / 1e9, 2), _f(d["kH0_range"][1] / 1e9, 2)
+    block("p4/contact_hertz.json", hertz, ["KHZeroHertz", "KHZeroLo", "KHZeroHi"])
+
     def sweep(d):
         n, T = d["nominal"], d["table"]
         m["SweepNomMode"], m["SweepNomCRB"], m["SweepNomMDC"] = _f(n["support_mode_hz"], 0), _f(n["crb_kB0_pct"]), _f(n["mdc_pct"])

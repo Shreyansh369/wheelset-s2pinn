@@ -28,3 +28,21 @@ the publisher page. Check each DOI resolves before submission.
 | guan2023 | title, authors (Tiantian Guan, Xiaoyu Deng, Jiangwen Wang), DOI seen | – |
 | chaar2007 | thesis, TRITA AVE 2007:17, ISBN 978-91-7178-636-4 | – |
 | nielsen2015 | title, 3(1) 17–39 seen (RePEc); author order differs between listings; DOI from round-1 snippet only | first-author order, DOI |
+
+## The 10 most influential parameter sources still verified only from search snippets
+
+Ranked by their effect on the results (model-form sensitivity, Table 6; sweep, Table 15; health case).
+Dusza et al. 2024 (vehicle set) is full-text verified and not listed.
+
+| # | Parameter (value used) | Why it matters | Source to check in full text |
+|---|---|---|---|
+| 1 | Wheel mass 304 kg (920 mm ER7) | unsprung mass is the largest model-form term | Unirail BA004 wheelset datasheet (unirail.bg) |
+| 2 | Axle diameters 130/200/173 mm, length 2180 mm | axle mass (397 kg) and bending modes | BA004 / Unirail listings; EN 13261 axle drawing |
+| 3 | Rail pad stiffness 200 MN/m per pad | sets k_f, second-largest model-form term | Thompson, Jones, Waters & Farrington (2007), Appl. Acoust. 68(1) 43–57 |
+| 4 | Sleeper spacing 0.60 m | sets k_f | EUROBOLT optimal-track chapter (Nova); CT23 Table 1 |
+| 5 | Foundation loss factor 0.2 (0.1–0.25) | rail receptance damping, coupling | Thompson et al. (2007) pad table; rolling-noise model papers |
+| 6 | Eanos bogie pivot pitch 10.70 m, length over buffers 15.74 m; Y25 wheelbase 1.80 m | wheel layout, coupling phase factors | Rail Cargo Group Eanos fact sheet; Wascosa Eanos 82.5 datasheet; railway-technology.com Y25 |
+| 7 | Y25 bearing type WJ/WJP 130×240 and radial clearance 130–180 µm | main health case | SKF Railway Technical Handbook vol. 1 (cylindrical roller bearings, DIN 5412-11); Schaeffler TPI 256 |
+| 8 | UIC60 crown radius 0.30 m | k_H0 from Hertz | EN 13674-1 60E1 profile drawing |
+| 9 | 60E1 section A = 76.70 cm², I = 3038.3 cm⁴ | rail receptance | ArcelorMittal / British Steel 60E1 datasheets (EN 13674-1) |
+| 10 | Wheelset modal damping < 2% (first torsion and bending) | axle damping; swept 0.1–2% | Chaar (2007), KTH thesis TRITA AVE 2007:17, Table 2-1 |

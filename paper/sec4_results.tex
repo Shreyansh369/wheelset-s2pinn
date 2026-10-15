@@ -144,15 +144,23 @@ and the absolute bias of $k_{B0}$ against the error of a $-5$\% change (right). 
 \inputtable{table8_mdc}
 
 \subsection{Health relevance}\label{sec:res-health}
-Under the series reading~\eqref{eq:series} with the proxy bearing geometry, a 10~\textmu m growth
-of the diametral clearance lowers the contact stiffness by \ContactPctTenEmpty\% (empty) and
-\ContactPctTenLoaded\% (loaded), and the effective support stiffness by \EffPctTenEmpty\% and
-\EffPctTenLoaded\% (Table~\ref{tab:table13_health}). Against the calibrated MDC of
-\MDCCalFiftyForty\% (40~dB) or \MDCFiftyTwenty\% (20~dB) for $N=50$, a clearance growth of order
-10~\textmu m is detectable from empty passes, while loaded passes need several tens of micrometres
-(the fitted change of $k_{B0}$ from a mixed-payload period lies between the two). The
-other causes of support-stiffness loss (fits, housing, adapter, pad) are not modelled here; their
-stiffness change enters $k_B$ undiluted.
+For the Y25 cylindrical roller bearings under the series reading~\eqref{eq:series} (initial clearance
+\ClearanceZero~\textmu m), a 10~\textmu m growth of the diametral clearance lowers the contact stiffness
+by \ContactPctTenEmpty\% (empty) and \ContactPctTenLoaded\% (loaded), and the effective support
+stiffness by \EffPctTenEmpty\% and \EffPctTenLoaded\% (Table~\ref{tab:table13_health}). The effective
+change reaches the detection limit of \HealthMDC\% ($N=50$, 40~dB, co-estimating fit) after
+\CylGrowthMDCEmptyNom~\textmu m of growth at empty load and \CylGrowthMDCLoadedNom~\textmu m at full
+load. Over the swept initial clearance (0--180~\textmu m), roller count and roller length, the change
+per 10~\textmu m ranges from \CylEffTenEmptyMin{} to \CylEffTenEmptyMax\% (empty) and
+\CylEffTenLoadedMin{} to \CylEffTenLoadedMax\% (loaded), and the growth that reaches the detection
+limit from \CylGrowthMDCEmptyMin{} to \CylGrowthMDCEmptyMax~\textmu m (empty) and
+\CylGrowthMDCLoadedMin{} to \CylGrowthMDCLoadedMax~\textmu m (loaded). The changes are not smooth in
+the clearance, because the number of rollers in the load zone changes in steps. For the secondary case,
+a double-row tapered roller unit, the corresponding growths are \TapGrowthMDCEmptyMin--\TapGrowthMDCEmptyMax{}
+and \TapGrowthMDCLoadedMin--\TapGrowthMDCLoadedMax~\textmu m. Empty passes are therefore the more
+sensitive to clearance growth; a mixed-payload period gives a change between the two. The other causes
+of support-stiffness loss (fits, housing, adapter, pad) are not modelled here; their stiffness change
+enters $k_B$ undiluted.
 
 \inputtable{table13_health}
 
