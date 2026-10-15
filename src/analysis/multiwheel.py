@@ -27,7 +27,14 @@ from scipy.linalg import eig
 from src.inverse.multipass import Family, Table
 from src.reference.track import RailTrack, coupled_rows, rail_matrix, receptance_timoshenko
 
-NEIGHBOUR = {"kB0": 1.0e9, "cB": 5.0e3}
+def _neighbour_default():
+    """Healthy neighbouring wheelsets: the config's nominal bearing values."""
+    from src.reference.params import Params, load_raw
+    b = Params(load_raw()).v["bearing"]
+    return {"kB0": float(b["kB0"]), "cB": float(b["cB"])}
+
+
+NEIGHBOUR = _neighbour_default()
 
 
 class MultiWheelModel:

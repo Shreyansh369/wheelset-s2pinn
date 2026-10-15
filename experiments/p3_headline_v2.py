@@ -39,8 +39,11 @@ T0, BUDGET = time.perf_counter(), 110 * 60
 FIT_MAX = [12 * 60]   # updated to the slowest fit seen in this process
 
 
+LABEL = [""]   # appended to the run tag (e.g. "_freight" for the sourced-nominal rerun)
+
+
 def tag_of(kb, smooth, exact=True):
-    return f"kb{kb}" + ("" if exact else "_attr") + (f"_sm{smooth:g}" if smooth else "")
+    return f"kb{kb}" + ("" if exact else "_attr") + (f"_sm{smooth:g}" if smooth else "") + LABEL[0]
 
 
 def run(j0, j1, kb, smooth, exact=True):
@@ -103,5 +106,7 @@ if __name__ == "__main__":
     ap.add_argument("--smooth", type=float, default=None)
     ap.add_argument("--attributed", action="store_true", help="default (own-sub-band) scoring instead of exact; 5x faster at Kb=120")
     ap.add_argument("--aggregate", action="store_true")
+    ap.add_argument("--label", default="", help="suffix of the run tag, e.g. _freight")
     a = ap.parse_args()
+    LABEL[0] = a.label
     aggregate(a.kb, a.smooth, not a.attributed) if a.aggregate else run(a.j0, a.j1, a.kb, a.smooth, not a.attributed)

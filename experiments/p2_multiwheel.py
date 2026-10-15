@@ -46,12 +46,18 @@ FG = np.arange(44.0, 701.0, 0.25)
 RUN_DIR = RESULTS_DIR / "p2" / "multiwheel_runs"
 
 
-def models(sm, rail="BS113A"):
+def models(sm, rail=None, kf=None, eta_f=None, layout=None):
+    """Multi-wheel models (1/2/4/8 wheels). Defaults: the config's nominal case (track.yaml: nominal),
+    i.e. 60E1 on the ballasted-freight foundation with the freight wagon layout."""
     cfg = load_track_config()
-    track = make_track(rail, cfg=cfg)
-    pos = np.array(cfg["layout_CT23"]["positions"])
-    j0 = int(cfg["layout_CT23"]["instrumented_index"])
-    subsets = {"1": [j0], **cfg["layout_CT23"]["subsets"]}
+    nom = cfg.get("nominal", {"rail": "BS113A", "track": None, "layout": "layout_CT23"})
+    rail = str(nom["rail"]).replace("rail_", "") if rail is None else rail
+    ft = cfg.get(nom["track"]) if nom.get("track") else None
+    track = make_track(rail, kf=(ft["kf"] if ft and kf is None else kf), eta_f=(ft["eta_f"] if ft and eta_f is None else eta_f), cfg=cfg)
+    lay = cfg[nom["layout"] if layout is None else layout]
+    pos = np.array(lay["positions"])
+    j0 = int(lay["instrumented_index"])
+    subsets = {"1": [j0], **lay["subsets"]}
     out = {}
     for nm, idx in subsets.items():
         out[nm] = MultiWheelModel(sm, track, pos[idx], list(idx).index(j0))
