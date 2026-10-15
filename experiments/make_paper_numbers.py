@@ -320,11 +320,14 @@ def section4(m, miss):
         m["SweepModeMin"], m["SweepModeMax"] = _f(min(mode), 0), _f(max(mode), 0)
         R = {r["param"]: r for r in T}
         for key, w in (("kB0", "KB"), ("cp", "Cp"), ("kB0_ext", "KBExt"), ("W_min", "Wmin"), ("cB", "CB"),
-                       ("wheel_diametral_inertia", "Inertia"), ("axle_damping_zeta", "Zeta")):
+                       ("wheel_diametral_inertia", "Inertia"), ("axle_damping_zeta", "Zeta"),
+                       ("wheelset_mass_wheels", "WsWheels"), ("wheelset_mass_journals", "WsJournals"), ("axlebox_mass", "Axlebox"),
+                       ("kf", "Kf")):
             if key in R:
                 for q, Q in (("low", "Lo"), ("high", "Hi")):
                     m[f"Sweep{w}MDC{Q}"] = _f(R[key][f"mdc_pct_{q}"])
                     m[f"Sweep{w}Mode{Q}"] = _f(R[key][f"support_mode_hz_{q}"], 0)
+                    m[f"Sweep{w}CRB{Q}"] = _f(R[key][f"crb_kB0_pct_{q}"])
     block("p4/sweep.json", sweep, ["SweepNomMode", "SweepNomCRB", "SweepNomMDC", "SweepCRBMin", "SweepCRBMax", "SweepMDCMin", "SweepMDCMax",
                                    "SweepModeMin", "SweepModeMax"])
 

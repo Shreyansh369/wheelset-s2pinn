@@ -1,0 +1,223 @@
+{
+  "name": "p4/sweep",
+  "seed": 51,
+  "config": {
+    "design": "4-wheel, N = 50, 60-110 km/h, 40 dB, g_sd 0",
+    "mdc": "(1.645+1.282) sqrt(2) CRB, uncalibrated"
+  },
+  "payload": {
+    "nominal": {
+      "param": "nominal",
+      "point": "nominal",
+      "value": null,
+      "axlebox_modes": [
+        {
+          "f_hz": 407.0807800657373,
+          "axlebox_share": 0.40884109948182934
+        },
+        {
+          "f_hz": 504.5795670329614,
+          "axlebox_share": 0.20552871242145418
+        }
+      ],
+      "crb_kB0_pct": 0.16609616918869574,
+      "crb_cB_pct": 7.581866941584758,
+      "mdc_pct": 0.6873992795711469,
+      "support_mode_hz": 407.0807800657373,
+      "support_mode_zeta": 0.06648080783573324,
+      "wall_s": 43.343596114998945
+    },
+    "table": [
+      {
+        "param": "kB0",
+        "low": 500000000.0,
+        "high": 3000000000.0,
+        "source": "assumed, swept",
+        "crb_kB0_pct_low": 0.12124364613576685,
+        "mdc_pct_low": 0.5017743359970122,
+        "support_mode_hz_low": 358.04994997326287,
+        "crb_kB0_pct_high": 0.4282437149494742,
+        "mdc_pct_high": 1.7723131278404876,
+        "support_mode_hz_high": 666.3248234795049
+      },
+      {
+        "param": "axlebox_mass",
+        "low": 100.0,
+        "high": 158.4,
+        "source": "sourced range",
+        "crb_kB0_pct_low": 0.16609616918869574,
+        "mdc_pct_low": 0.6873992795711469,
+        "support_mode_hz_low": 407.0807800657373,
+        "crb_kB0_pct_high": 0.13842314830442098,
+        "mdc_pct_high": 0.5728727693432253,
+        "support_mode_hz_high": 367.2534264771413
+      },
+      {
+        "param": "kp",
+        "low": 1017000.0,
+        "high": 2280000.0,
+        "source": "full text: empty / loaded (Dusza et al. 2024)",
+        "crb_kB0_pct_low": 0.16609616918869574,
+        "mdc_pct_low": 0.6873992795711469,
+        "support_mode_hz_low": 407.0807800657373,
+        "crb_kB0_pct_high": 0.16623872258949562,
+        "mdc_pct_high": 0.6879892456461557,
+        "support_mode_hz_high": 407.2413723533194
+      },
+      {
+        "param": "cp",
+        "low": 7000.0,
+        "high": 123300.0,
+        "source": "full text: empty / laden (Dusza et al. 2024)",
+        "crb_kB0_pct_low": 0.16609616918869574,
+        "mdc_pct_low": 0.6873992795711469,
+        "support_mode_hz_low": 407.0807800657373,
+        "crb_kB0_pct_high": 0.423104442056836,
+        "mdc_pct_high": 1.7510439287904744,
+        "support_mode_hz_high": 407.0807800657373
+      },
+      {
+        "param": "wheel_diametral_inertia",
+        "low": 10.0,
+        "high": 30.0,
+        "source": "assumed, swept",
+        "crb_kB0_pct_low": 0.20709005283189238,
+        "mdc_pct_low": 0.8570550050511456,
+        "support_mode_hz_low": 407.17475414912116,
+        "crb_kB0_pct_high": 0.13226224347360233,
+        "mdc_pct_high": 0.5473754832655439,
+        "support_mode_hz_high": 406.9473054306048
+      },
+      {
+        "param": "axle_damping_zeta",
+        "low": 0.001,
+        "high": 0.02,
+        "source": "sourced range",
+        "crb_kB0_pct_low": 0.11610044638468867,
+        "mdc_pct_low": 0.48048888540022466,
+        "support_mode_hz_low": 407.0807800657373,
+        "crb_kB0_pct_high": 0.1887923962005433,
+        "mdc_pct_high": 0.7813290202336367,
+        "support_mode_hz_high": 407.0807800657373
+      },
+      {
+        "param": "r0",
+        "low": 0.42,
+        "high": 0.46,
+        "source": "sourced range",
+        "crb_kB0_pct_low": 0.1734296901351614,
+        "mdc_pct_low": 0.7177495100427086,
+        "support_mode_hz_low": 407.0807800657373,
+        "crb_kB0_pct_high": 0.16609616918869574,
+        "mdc_pct_high": 0.6873992795711469,
+        "support_mode_hz_high": 407.0807800657373
+      },
+      {
+        "param": "cB",
+        "low": 3000.0,
+        "high": 12000.0,
+        "source": "assumed, swept (factor 2 about the sourced 6740 N s/m)",
+        "crb_kB0_pct_low": 0.15950830344858627,
+        "mdc_pct_low": 0.6601349893362647,
+        "support_mode_hz_low": 407.0807800657373,
+        "crb_kB0_pct_high": 0.1794211630228995,
+        "mdc_pct_high": 0.7425455915340421,
+        "support_mode_hz_high": 407.0807800657373
+      },
+      {
+        "param": "kf",
+        "low": 123000000.0,
+        "high": 1333000000.0,
+        "source": "sourced range (derived)",
+        "crb_kB0_pct_low": 0.17059849084638085,
+        "mdc_pct_low": 0.7060324165002372,
+        "support_mode_hz_low": 407.0807800657373,
+        "crb_kB0_pct_high": 0.14635363269582496,
+        "mdc_pct_high": 0.6056935699910004,
+        "support_mode_hz_high": 407.0807800657373
+      },
+      {
+        "param": "eta_f",
+        "low": 0.1,
+        "high": 0.25,
+        "source": "sourced range",
+        "crb_kB0_pct_low": 0.16681839556870884,
+        "mdc_pct_low": 0.6903882581594747,
+        "support_mode_hz_low": 407.0807800657373,
+        "crb_kB0_pct_high": 0.16604727167629396,
+        "mdc_pct_high": 0.6871969141887182,
+        "support_mode_hz_high": 407.0807800657373
+      },
+      {
+        "param": "kH0",
+        "low": 1388000000.0,
+        "high": 2300000000.0,
+        "source": "Hertz, S1002 transverse radius +0.5 m (low); published spread up to 2.3e9 (high)",
+        "crb_kB0_pct_low": 0.16581255343760964,
+        "mdc_pct_low": 0.6862255182259943,
+        "support_mode_hz_low": 407.0807800657373,
+        "crb_kB0_pct_high": 0.16712411297083907,
+        "mdc_pct_high": 0.6916534885558359,
+        "support_mode_hz_high": 407.0807800657373
+      },
+      {
+        "param": "kB0_ext",
+        "low": 500000000.0,
+        "high": 5000000000.0,
+        "source": "extension to the EMU bearing-only vertical stiffness 4.96e9 N/m",
+        "crb_kB0_pct_low": 0.12124364613576685,
+        "mdc_pct_low": 0.5017743359970122,
+        "support_mode_hz_low": 358.04994997326287,
+        "crb_kB0_pct_high": 1.2744075340137289,
+        "mdc_pct_high": 5.274214480924345,
+        "support_mode_hz_high": 702.1592397472328
+      },
+      {
+        "param": "wheelset_mass_wheels",
+        "low": 1400.0,
+        "high": 1526.0,
+        "source": "wheelset mass 1400 kg (Dusza et al. 2024) and 1526 kg (Y25 MBS model); nominal 1005 kg bare (vendor 998 kg); extra mass on the wheels",
+        "crb_kB0_pct_low": 0.18363313942517384,
+        "mdc_pct_low": 0.7599771166476936,
+        "support_mode_hz_low": 400.49413501116476,
+        "crb_kB0_pct_high": 0.185908329472587,
+        "mdc_pct_high": 0.7693931315209956,
+        "support_mode_hz_high": 398.7230031971364
+      },
+      {
+        "param": "wheelset_mass_journals",
+        "low": 1400.0,
+        "high": 1526.0,
+        "source": "as above, extra mass lumped on the journals",
+        "crb_kB0_pct_low": 0.15307432521836747,
+        "mdc_pct_low": 0.6335075720885835,
+        "support_mode_hz_low": 497.838940962968,
+        "crb_kB0_pct_high": 0.14381630247293956,
+        "mdc_pct_high": 0.5951926717718244,
+        "support_mode_hz_high": 495.4222157472373
+      },
+      {
+        "param": "W_min",
+        "low": 5.8,
+        "high": 6.6,
+        "source": "sourced range (empty axle load = Eanos tare 23.1-26.5 t / 4); design value 5.5 t",
+        "crb_kB0_pct_low": 0.16629471057839276,
+        "mdc_pct_low": 0.6882209554045475,
+        "support_mode_hz_low": 407.0807800657373,
+        "crb_kB0_pct_high": 0.1667928343790803,
+        "mdc_pct_high": 0.6902824715936469,
+        "support_mode_hz_high": 407.0807800657373
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "d4b9f385b70c8853189040c8423b48668ea4611a",
+    "timestamp_utc": "2026-10-15T22:57:21Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 95.7734375,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}
