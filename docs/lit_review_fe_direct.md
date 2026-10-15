@@ -64,7 +64,7 @@ All of these are **unverified / not found**, which is not the same as nonexisten
 | **Carrigan, T.D., Talbot, J.P. (2023)**, "A new method to derive rail roughness from axle-box vibration accounting for track stiffness variations and wheel-to-wheel coupling", *Mech. Syst. Signal Process.* 192, 110232 | Fits a model transfer function to the **P2 peak** of the ABA spectrum to estimate track stiffness, updated continuously along the track. Accounts for multiple wheels on one rail and removes wheel roughness with a comb filter. Validated by simulation and Victoria line trials. One snippet notes the measured frequency response is independent of vehicle speed except in some track sections. | **Yes**: track stiffness plus roughness spectrum, sequentially (stiffness first, then deconvolution) | Not as an identifiability mechanism, from what was seen |
 | Cambridge (Carrigan & Talbot), *Lecture Notes in Mechanical Engineering* (ISBN 978-981-99-7851-9), repository 1810/375902 | Frequency-domain method with several flexible wheelsets on two rails. Track stiffness is updated from the P2 peak; comb filter for wheel roughness. On London Underground data, spectra fall within 10 dB of direct measurement over most of 40–1000 mm. | Yes (same scheme) | Not seen |
 | ISMA 2022 proceedings, Contribution 434, "Monitoring rail roughness using axle-box accelerometers …" | Fits the FRF of a rigid-wheel model to the square root of the measured ABA PSD around P2, section by section (62 m sections). Stiffness lands within 18 % of nominal. | Yes | Not seen; authors **unverified** (very likely the Cambridge group) |
-| **Shen, C., Zhang, P., Dollevoet, R., Zoeteman, A., Li, Z. (2023)**, "Evaluating railway track stiffness using axle box accelerations: A digital twin approach", *MSSP* 204, 110730 | Digital twin (physics model plus data-driven model) updated from a local spectrogram feature of ABA. Evaluates railpad, sleeper and ballast stiffness at the same time. | How roughness is handled: **unverified** | Associated dataset simulates 40/50/55/65 km/h; its role in identification is **unverified** |
+| **Shen, C., Zhang, P., Dollevoet, R., Zoeteman, A., Li, Z. (2023)**, "Evaluating railway track stiffness using axle box accelerations: A digital twin approach", *MSSP* 204, 110730 | Digital twin: a Gaussian-process library of simulated ABA features from a vehicle–track model, used to estimate **rail-pad and ballast stiffness and the track-irregularity level** from ABA. Frequency bands include 400–700 Hz. **No vehicle-side parameters** are identified. (Detail added 2026-10-15 from the user's reading of the full text.) | Irregularity enters as **a single level parameter** estimated with the stiffnesses | **No**: three speeds are **estimated separately**, not pooled |
 | **Hoelzl, C.A., Dertimanis, V., Ancu, L., Kollros, A., Chatzi, E. (2022)**, "Vold-Kalman Filter Order tracking of Axle Box Accelerations for Railway Stiffness Assessment", arXiv:2209.12899 | Vold-Kalman order tracking splits ABA into periodic wheel-related and track-related (sleeper-passing) components. Links track stiffness to sleeper-passage amplitude. Notes that common methods are not conditioned on speed. | No | Uses speed to track orders, not to separate roughness from the TF |
 | **Quirke, P., Cantero, D., OBrien, E.J., Bowe, C. (2017)**, "Drive-by detection of railway track stiffness variation using in-service vehicles", *Proc. IMechE F* 231(4), 498–514 | Cross-entropy optimisation finds the track-stiffness profile whose simulated bogie response best matches measured acceleration. Numerical, 2-D half-bogie. | Roughness handling **unverified** | No |
 | Malekjafarian, A., OBrien, E.J., Quirke, P., Cantero, D., Golpayegani, F. (2021), "Railway Track Loss-of-Stiffness Detection Using Bogie Filtered Displacement Data Measured on a Passing Train", *Infrastructures* 6, 93 | Title only retrieved | **unverified** | **unverified** |
@@ -86,6 +86,17 @@ All of these are **unverified / not found**, which is not the same as nonexisten
 | Malekjafarian, A., McGetrick, P., OBrien, E.J. (2015), "A Review of Indirect Bridge Monitoring Using Passing Vehicles", *Shock and Vibration* 286139 | Review. 10.1155/2015/286139 (seen). |
 
 **Mechanism note for the paper.** The drive-by literature already uses the idea that roughness is fixed in wavenumber while the structural resonance is fixed in frequency, through multi-speed or multi-pass subtraction. It does so for *bridge* frequencies seen through a road vehicle, by **subtraction or residuals**, not by a likelihood with per-band roughness nuisance parameters. That literature has to be cited as the conceptual antecedent of the speed-diversity idea.
+
+---
+
+### B3. Railway-vehicle suspension identification (added 2026-10-15)
+
+| Ref | What it does | Relation to this work |
+|---|---|---|
+| **Lebel, D., Soize, C., et al. (2019)**, *J. Sound Vib.* (title, volume and pages to be filled) | Railway-vehicle suspension parameter identification as a statistical inverse problem | Suspension parameters, below the axle-box support band; how track irregularity is handled is **unverified** here |
+| **Lebel, Soize et al.**, HAL paper on statistical inverse identification (reference to be filled) | Companion statistical inverse-problem paper of the same group | As above; **unverified** |
+
+All entries in B3 are user-supplied; their details have not been read in this repository.
 
 ---
 
@@ -186,7 +197,7 @@ spot is Chinese-language work on axle-box bearings.
 | **Carrigan & Talbot 2023**, *MSSP* 192, 110232; Cambridge LNME chapter; ISMA 2022 #434 | **Same problem structure**: unknown roughness, a stiffness parameter estimated from the ABA spectrum by fitting a model TF to a resonance peak (P2), then the roughness spectrum by deconvolution. Wheel roughness removed with a comb filter | Track/pad stiffness at P2 (≈50–150 Hz), not bearing support. Sequential deterministic peak fit per section, not a joint likelihood. No CRB or coverage seen. Speed not used for identifiability (one snippet: measured FRF largely speed-independent) | snippets of the abstract and repository record; **full text needed to rule out multi-speed use** |
 | **Pieringer & Kropp 2022**, *Appl. Acoust.* 193, 108760 | Model-based roughness from ABA; quantifies that stiffness error (rail pad, 20% gives 3.5 dB) contaminates roughness | Track parameters assumed known; **joint estimation stated as future work** | snippet (abstract) |
 | **Stoura et al. 2023**, *SCHM*, 10.1155/2023/8855542; Dertimanis et al. 2020 (IMAC) | Roughness as an unknown input estimated jointly with the vehicle state; **some vehicle parameters updated (UKF)** | Parameters calibrated from diagnostic-vehicle data. Time-domain profile. Low-frequency vehicle model; no bearing, no speed diversity | snippet (abstract) |
-| Shen, Zhang, Dollevoet, Zoeteman, Li 2023, *MSSP* 204, 110730 | Several track stiffnesses identified from ABA (digital twin) | How roughness is handled, and whether the four simulated speeds help identification: **unverified** | snippet |
+| Shen, Zhang, Dollevoet, Zoeteman, Li 2023, *MSSP* 204, 110730 | Rail-pad and ballast stiffness **and the irregularity level** identified jointly from ABA, through a Gaussian-process library of simulations; uses bands including 400–700 Hz | Track parameters only, no vehicle-side parameters; irregularity as one level parameter, not a spectrum with free sub-band levels; three speeds estimated separately, so speed diversity is not used for identifiability | user's full-text reading (2026-10-15) |
 | "Simultaneous identification of the frequencies and track irregularities of high-speed railway bridges from vehicle vibration data", *MSSP* 2020/21 | Joint structural frequencies and track irregularity from vehicle response (Kalman) | Bridge frequencies, not vehicle parameters; single speed | snippet; authors unverified |
 
 ### C3. Roughness as a wavenumber-domain spectrum with free per-band levels (nuisance)
@@ -218,7 +229,9 @@ spot is Chinese-language work on axle-box bearings.
 |---|---|---|---|
 | **Keenahan, Ren, OBrien 2019** (UCD) | Several vehicles over one profile jointly give the profile; **only relative vehicle properties are identifiable** without prior information (the same gain ambiguity our per-band level nuisance creates; we break it with a known physical parametrisation and speed/payload diversity) | Road, low frequency, time-domain optimisation | snippet |
 | Ren, Feng, OBrien, Li, He (*IJSSD*), fleet concept | Profile and vehicle properties from a fleet | Same differences | snippet; year not seen |
-| **Liu, Guo, Yang, Liu 2024**, *Appl. Sci.* 14, 10310 | Vehicle parameters (including tyre stiffness) and road roughness identified jointly | Uses the front–rear axle time lag, not speed; EKF; half-car | snippet |
+| **Liu, Guo, Yang, Liu 2024**, *Appl. Sci.* 14, 10310 | Vehicle parameters (including tyre stiffness) and road roughness identified jointly | Uses the front–rear axle time lag, not speed; EKF with unknown input; half-car | snippet |
+| **An et al. 2024**, *Struct. Multidiscip. Optim.* 67, 164 | Road-vehicle parameters and road roughness identified jointly, **Bayesian, in the frequency domain** | Road vehicle; suspension-band targets (well below an axle-box support band); roughness handling to be checked against our per-sub-band levels | user-supplied (2026-10-15); full text not read here |
+| **Guo et al. 2026**, *Struct. Control Health Monit.* | Road-vehicle joint parameter and roughness identification (same group as Liu et al. 2024) | Road vehicle, suspension band | user-supplied (2026-10-15); details not read here |
 
 ### C7. Payload measured per pass (WIM) entering load-dependent bearing and contact stiffness
 No overlapping identification paper was found. Load dependence of Hertzian contact and roller-bearing
@@ -256,20 +269,30 @@ found** is not the same as absent.
   - Railway axlebox-bearing papers are forward models, load estimators, or rig-based EKF stiffness identification without roughness.
 - **Frequency-domain likelihood with a nuisance input PSD: yes, in OMA** (Au's Bayesian FFT; Katafygiotis & Yuen). It has not been applied to ABA or vehicle–track identification.
 
-The novelty claim this supports: the combination is new. That means bearing-support stiffness at
-about 500–650 Hz, a multi-pass Whittle likelihood with per-band roughness nuisance parameters,
-identifiability from speed diversity, and payload known from WIM. The paper must cite and
-position against:
-- Carrigan & Talbot (2023): joint stiffness and roughness from ABA;
-- Pieringer & Kropp (2022): the stated open problem;
-- Stoura et al. (2023): Bayesian joint input and parameters;
-- Jin, Yang et al. (2021) and the speed-subtraction drive-by papers: the speed-diversity concept;
-- Keenahan et al. (2019): multi-vehicle joint profile and vehicle properties, relative identifiability only;
-- Au (2011, 2012): the likelihood structure.
+**Novelty statement (fixed 2026-10-15, user's wording; use only this):**
+
+> To our knowledge, this is the first method to identify the vertical stiffness of the axle-box bearing
+> support from in-service axle-box acceleration without measuring rail roughness. The support resonance
+> and the roughness are separated by pooling passes at different speeds and payloads in a single
+> debiased Whittle likelihood, in which roughness levels are free nuisance parameters. Joint estimation
+> of vehicle or track parameters with unknown excitation has been studied for track stiffness
+> (Carrigan & Talbot 2023; Shen et al. 2023) and for road-vehicle suspensions (Liu et al. 2024; An et
+> al. 2024). There, roughness is handled by deconvolution, a single level parameter, or axle time lags,
+> and the targets lie below the axle-box support band.
+
+The paper must also cite and position against: Pieringer & Kropp (2022), the stated open problem;
+Stoura et al. (2023), Bayesian joint input and parameters; Jin, Yang et al. (2021) and the
+speed-subtraction drive-by papers, the speed-diversity concept; Keenahan et al. (2019), relative
+identifiability only; Guo et al. (2026); Lebel, Soize et al. (2019 and the HAL paper), rail-vehicle
+suspension identification; Au (2011, 2012), the likelihood structure.
 
 Do not claim novelty for:
+- joint parameter and roughness (or unknown-excitation) estimation in general: track stiffness
+  (Carrigan & Talbot; Shen et al.), road vehicles (Liu et al.; An et al.; Guo et al.), rail-vehicle
+  suspensions (Lebel, Soize et al.);
 - "using speed to separate roughness from structure" in general (drive-by precedent);
-- "joint roughness plus stiffness from ABA" in general (Carrigan & Talbot).
+- a frequency-domain Bayesian or likelihood treatment with unknown excitation in general (An et al.
+  2024; Au).
 
 **Risks a reviewer may raise, from the snippets:**
 1. **Wheel roughness.** Polygon orders are also speed-proportional and can sit near 500–650 Hz; the Sci. Rep. 2023 paper puts the 20th-order polygon at 576.5 Hz at 300 km/h. Carrigan & Talbot use a comb filter or synchronous averaging for this.
@@ -278,7 +301,9 @@ Do not claim novelty for:
 
 **Before submission, confirm with library access:**
 - the full text of Carrigan & Talbot (2023), whether they exploit multiple speeds;
-- whether Shen et al. (2023) or any of the 2024–2025 Chinese axle-box bearing papers identify bearing stiffness from ABA.
+- whether any of the 2024–2025 Chinese axle-box bearing papers identify bearing stiffness from ABA (Shen et al. 2023 resolved 2026-10-15: track parameters and irregularity level only, three speeds estimated separately);
+- the full texts of An et al. (2024) and Guo et al. (2026), how they parametrise roughness;
+- the titles and bibliographic details of the Lebel, Soize et al. papers.
 
 ---
 

@@ -1,0 +1,31 @@
+% Section 1: introduction. Related work and the novelty statement (fixed wording, 2026-10-15).
+\section{Introduction}\label{sec:intro}
+\placeholder{Motivation: support-stiffness loss (loose fits, housing/adapter or pad degradation,
+clearance growth) and in-service monitoring from axle-box acceleration; Carrigan and Talbot's call for
+a reliable way to reject bad P2 stiffness estimates.}
+
+\paragraph{Related work.} Axle-box acceleration (ABA) responds to rail roughness filtered by the
+vehicle--track system, so any vehicle or track parameter identified from it is confounded with the
+roughness. For track stiffness, Carrigan and Talbot~\citep{carrigan2023} fit a model transfer function
+to the P2 peak of each section and then derive the roughness spectrum by deconvolution. Shen et
+al.~\citep{shen2023} estimate rail-pad and ballast stiffness together with the track-irregularity level
+from ABA through a Gaussian-process library of simulations, using frequency bands that include
+400--700~Hz; they estimate three speeds separately and identify no vehicle-side parameters. For road
+vehicles, Liu et al.~\citep{liu2024} identify suspension parameters and road roughness with an extended
+Kalman filter with unknown input, separating the two through the time lag between axles; An et
+al.~\citep{an2024} treat the problem in a Bayesian frequency-domain setting; and Guo et
+al.~\citep{guo2026} also address road-vehicle parameters with unknown roughness. For railway vehicles, Lebel, Soize and co-authors identify
+suspension parameters as a statistical inverse problem~\citep{lebel2019,lebelhal}. Drive-by bridge
+monitoring removes road roughness by subtracting responses recorded at different
+speeds~\citep{jin2021}, and Bayesian FFT operational modal analysis treats the unknown excitation
+spectrum as a nuisance in a frequency-domain likelihood~\citep{au2011}.
+
+To our knowledge, this is the first method to identify the vertical stiffness of the axle-box bearing
+support from in-service axle-box acceleration without measuring rail roughness. The support resonance
+and the roughness are separated by pooling passes at different speeds and payloads in a single
+debiased Whittle likelihood, in which roughness levels are free nuisance parameters. Joint estimation
+of vehicle or track parameters with unknown excitation has been studied for track stiffness
+\citep{carrigan2023,shen2023} and for road-vehicle suspensions \citep{liu2024,an2024}. There, roughness is handled by deconvolution, a single level parameter, or axle
+time lags, and the targets lie below the axle-box support band.
+
+\placeholder{Contributions and outline of the paper.}

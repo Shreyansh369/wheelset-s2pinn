@@ -86,7 +86,7 @@ intervals: SE × 1.39 at 40 dB plus κ = 0.044; κ-replicate coverage stays 14/2
 
 | § | Content | Figure / table | Script → result |
 |---|---|---|---|
-| 1 | Introduction. Positioning: CT23's conclusion asks for a reliable way to reject bad P2 stiffness estimates; Pieringer & Kropp name joint estimation as open; drive-by speed diversity (Jin, Yang et al. 2021); Bayesian FFT (Au) | — | `docs/lit_review_fe_direct.md` (novelty caveats C1–C9) |
+| 1 | Introduction (`paper/sec1_intro.tex`: related work and the fixed novelty statement of 2026-10-15; no claim of joint parameter/roughness estimation in general). Related work: CT23 and Shen et al. 2023 (track stiffness), Liu et al. 2024, An et al. 2024, Guo et al. 2026 (road vehicles), Lebel/Soize et al. (rail suspensions). Positioning: CT23's conclusion asks for a reliable way to reject bad P2 stiffness estimates; Pieringer & Kropp name joint estimation as open; drive-by speed diversity (Jin, Yang et al. 2021); Bayesian FFT (Au) | — | `docs/lit_review_fe_direct.md` (novelty caveats C1–C9) |
 | 2.1 | Wheelset model: stepped Timoshenko FE, effective support stiffness k_B (roller contacts in series with housing/adapter; reading B), default power law k_B0 (W/W0)^0.1 and the series law as an option (`bearing.stiffness_law`), axleboxes, primary suspension; LaTeX draft `paper/sec2_model.tex` | **Table 1** parameters with sources | `config/params.yaml`, `config/track.yaml` → `experiments/make_tables.py` → `results/tables/table1_parameters.md` (vehicle masses stay placeholders until the target vehicle is confirmed) |
 | 2.2 | Rail and multi-wheel coupling: Timoshenko rail on a hysteretic foundation, coupling with cross terms (CT23 Eqs. 5–11) | **Fig. 1** transfer functions for 1/2/4/8 wheels at 60 and 110 km/h | `src/analysis/multiwheel.py` → `results/p2/fig1_transfer.json` → `make_figures.py` (`figures/fig1_transfer_functions`) |
 | 2.3 | Verification: G1 (free–free Timoshenko vs closed form 0.5%, energy 1e-6, frequency vs time domain 1e-3); rail receptance vs Eq. 11 and numerical inverse transform; single-wheel coupling = rail-oscillator model (1e-9) | **Table 2** | `make_tables.py`; `experiments/p1_verify.py` → `results/p1/verification.json`, `results/gates/G1.json`; `tests/test_track.py` |
@@ -156,7 +156,7 @@ single-line roughness model), and the `*_binsampled` result files (kept for tran
    from the same model class. This is the main threat to the paper.
 8. **Foundation frequency dependence at 450–700 Hz.** In the P2 check, the fractional vs hysteretic
    foundation mismatch gave about 7% bias in k_f. Not tested for k_B0.
-9. **Literature.** Full-text checks of Shen et al. 2023 (MSSP 204) and the Chinese axle-box bearing
+9. **Literature.** Shen et al. 2023 resolved (track parameters and irregularity level, speeds estimated separately). Still to check: full texts of An et al. 2024 and Guo et al. 2026, bibliographic details of the Lebel/Soize papers, and the Chinese axle-box bearing
    papers.
 
 ## Open items (results that need an explanation)
