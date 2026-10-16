@@ -215,7 +215,7 @@ def summarise():
             "all_converged": all(r["converged"] for r in R),
             "wall_s_median": float(np.median([r["wall_s"] for r in R]))}
     for fp in sorted((OUT / "drift_mc_runs").glob("kf*.jsonl")):
-        R = _rows(fp)
+        R = list({(r["estimator"], r["rep"]): r for r in reversed(_rows(fp))}.values())   # one row per replicate (first kept)
         for e in EST:
             Re = [r for r in R if r["estimator"] == e]
             if Re:
