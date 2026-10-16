@@ -2,7 +2,7 @@
   "name": "p3/calibrated",
   "seed": 0,
   "config": {
-    "headline": "results/p3/headline_v2_runs/kb120_attr.jsonl",
+    "headline": "results/p3/headline_v2_runs/kb120_attr_freight.jsonl",
     "kappa": 0.044,
     "threshold_for_calibration": 0.85,
     "splits": {
@@ -38,18 +38,18 @@
         "snr_db": 20,
         "n": 50,
         "uncalibrated": {
-          "covered": 45,
+          "covered": 44,
           "n": 50,
-          "coverage": 0.9,
+          "coverage": 0.88,
           "ci95": [
-            0.7818646335657977,
-            0.9667249064109775
+            0.7568986832944374,
+            0.9546646792263361
           ]
         },
         "calibration_applied": false,
         "all_seeds": {
-          "bias_pct": 0.10278569570343343,
-          "inflation_rmse_over_se": 1.0839464332812498
+          "bias_pct": -0.005553298604343837,
+          "inflation_rmse_over_se": 1.037428308625983
         },
         "split_A": {
           "calibrate_on": [
@@ -61,8 +61,8 @@
             789,
             1024
           ],
-          "bias_pct": 0.1202083289326028,
-          "inflation": 1.1164197195789674,
+          "bias_pct": -0.023195308225476552,
+          "inflation": 1.1614382918669606,
           "test_uncalibrated": {
             "covered": 19,
             "n": 20,
@@ -73,12 +73,12 @@
             ]
           },
           "test_calibrated": {
-            "covered": 18,
+            "covered": 20,
             "n": 20,
-            "coverage": 0.9,
+            "coverage": 1.0,
             "ci95": [
-              0.6830172859809177,
-              0.9876514728297052
+              0.8315665290169146,
+              1.0
             ]
           }
         },
@@ -92,24 +92,24 @@
             123,
             456
           ],
-          "bias_pct": 0.07665743038911543,
-          "inflation": 1.0335188151161971,
+          "bias_pct": 0.020915553112388352,
+          "inflation": 0.82597514806471,
           "test_uncalibrated": {
-            "covered": 26,
+            "covered": 25,
             "n": 30,
-            "coverage": 0.8666666666666667,
+            "coverage": 0.8333333333333334,
             "ci95": [
-              0.6927816497238732,
-              0.9624465036616366
+              0.6527883011658562,
+              0.9435783035319285
             ]
           },
           "test_calibrated": {
-            "covered": 29,
+            "covered": 21,
             "n": 30,
-            "coverage": 0.9666666666666667,
+            "coverage": 0.7,
             "ci95": [
-              0.8278305443665873,
-              0.9991564290733695
+              0.5060409585374464,
+              0.8526548152452988
             ]
           }
         },
@@ -122,18 +122,18 @@
         "snr_db": 40,
         "n": 50,
         "uncalibrated": {
-          "covered": 38,
+          "covered": 42,
           "n": 50,
-          "coverage": 0.76,
+          "coverage": 0.84,
           "ci95": [
-            0.6183092518959619,
-            0.8693900838025427
+            0.7088736934048891,
+            0.9282992328167138
           ]
         },
         "calibration_applied": true,
         "all_seeds": {
-          "bias_pct": 0.09267500787000227,
-          "inflation_rmse_over_se": 1.3893586775475335
+          "bias_pct": 0.06900937963627563,
+          "inflation_rmse_over_se": 1.0717297680962927
         },
         "split_A": {
           "calibrate_on": [
@@ -145,15 +145,15 @@
             789,
             1024
           ],
-          "bias_pct": 0.09382757636944294,
-          "inflation": 1.3215941987423254,
+          "bias_pct": 0.057900551061162986,
+          "inflation": 0.9906572786657696,
           "test_uncalibrated": {
-            "covered": 14,
+            "covered": 15,
             "n": 20,
-            "coverage": 0.7,
+            "coverage": 0.75,
             "ci95": [
-              0.45721081772371086,
-              0.8810684095942722
+              0.5089541282920425,
+              0.9134285308985653
             ]
           },
           "test_calibrated": {
@@ -176,15 +176,15 @@
             123,
             456
           ],
-          "bias_pct": 0.09094618000520249,
-          "inflation": 1.4831749967020436,
+          "bias_pct": 0.08567493506665969,
+          "inflation": 1.1839189103907728,
           "test_uncalibrated": {
-            "covered": 24,
+            "covered": 27,
             "n": 30,
-            "coverage": 0.8,
+            "coverage": 0.9,
             "ci95": [
-              0.6143334890033929,
-              0.9228644879989344
+              0.7347115495257919,
+              0.9788828629702774
             ]
           },
           "test_calibrated": {
@@ -198,14 +198,14 @@
           }
         },
         "used": {
-          "bias_log": 0.0009263209109795412,
-          "inflation": 1.3893586775475335
+          "bias_log": 0.0006898557911299718,
+          "inflation": 1.0717297680962927
         }
       }
     ],
     "kappa_replicates": {
       "snr_db": 40,
-      "inflation": 1.3893586775475335,
+      "inflation": 1.0717297680962927,
       "kappa": 0.044,
       "uncalibrated_stat": {
         "covered": 13,
@@ -226,12 +226,12 @@
         ]
       },
       "calibrated_stat": {
-        "covered": 14,
+        "covered": 13,
         "n": 20,
-        "coverage": 0.7,
+        "coverage": 0.65,
         "ci95": [
-          0.45721081772371086,
-          0.8810684095942722
+          0.40781146546717184,
+          0.8460907952154588
         ]
       },
       "calibrated_kappa": {
@@ -259,8 +259,8 @@
         "snr_db": 40,
         "mdc_pct": 0.7201521436794321,
         "source": "relative_coest_drift.json (coest, no drift)",
-        "inflation": 1.3893586775475335,
-        "mdc_calibrated_pct": 1.0005496299754773
+        "inflation": 1.0717297680962927,
+        "mdc_calibrated_pct": 0.7718084899396059
       },
       {
         "N": 200,
@@ -275,16 +275,16 @@
         "snr_db": 40,
         "mdc_pct": 0.34269487665486986,
         "source": "relative_intervals.json (CRB, no model-form term)",
-        "inflation": 1.3893586775475335,
-        "mdc_calibrated_pct": 0.4761261006315251
+        "inflation": 1.0717297680962927,
+        "mdc_calibrated_pct": 0.3672763006851113
       }
     ]
   },
   "provenance": {
-    "git_commit": "0a743d39e9e6fca5422c6a37008d699a4addd8ba",
-    "timestamp_utc": "2026-10-13T22:04:33Z",
+    "git_commit": "9162fa67c2b014cd3a278d9116d3c841a3ea6c52-dirty",
+    "timestamp_utc": "2026-10-16T03:10:56Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 95.19140625,
+    "peak_cpu_memory_mb": 95.34765625,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

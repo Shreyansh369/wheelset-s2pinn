@@ -83,11 +83,16 @@ def main():
                                "uncalibrated_kappa": kcov(1.0, KAPPA), "calibrated_stat": kcov(r40, 0.0),
                                "calibrated_kappa": kcov(r40, KAPPA),
                                "note": "replicates not used for calibration; fitted with the earlier +-30-bin kernel and the co-estimating family"}
-    rc = json.loads((RESULTS_DIR / "p2" / "relative_coest_drift.json").read_text())["payload"]["drift"]["no_drift_reference"]["coest"]
-    ri = json.loads((RESULTS_DIR / "p2" / "relative_intervals.json").read_text())["payload"]["mdc"]
-    mdc = [{"N": 50, "snr_db": 40, "mdc_pct": rc["mdc_pct"], "source": "relative_coest_drift.json (coest, no drift)"}]
-    mdc += [{"N": m["N"], "snr_db": m["snr_db"], "mdc_pct": m["mdc_pct_crb"], "source": "relative_intervals.json (CRB, no model-form term)"}
-            for m in ri if m["kappa"] == "no_model_form" and not (m["N"] == 50 and m["snr_db"] == 40)]
+    mb = RESULTS_DIR / "p4" / "mdc_bounds.json"
+    if mb.exists():              # current configuration: co-estimating fit, bound-based
+        mdc = [{"N": r["N"], "snr_db": r["snr_db"], "mdc_pct": r["mdc_pct"], "source": "p4/mdc_bounds.json (coest, CRB, current config)"}
+               for r in json.loads(mb.read_text())["payload"]["rows"] if r["estimator"] == "coest"]
+    else:
+        rc = json.loads((RESULTS_DIR / "p2" / "relative_coest_drift.json").read_text())["payload"]["drift"]["no_drift_reference"]["coest"]
+        ri = json.loads((RESULTS_DIR / "p2" / "relative_intervals.json").read_text())["payload"]["mdc"]
+        mdc = [{"N": 50, "snr_db": 40, "mdc_pct": rc["mdc_pct"], "source": "relative_coest_drift.json (coest, no drift)"}]
+        mdc += [{"N": m["N"], "snr_db": m["snr_db"], "mdc_pct": m["mdc_pct_crb"], "source": "relative_intervals.json (CRB, no model-form term)"}
+                for m in ri if m["kappa"] == "no_model_form" and not (m["N"] == 50 and m["snr_db"] == 40)]
     for m in mdc:
         m["inflation"] = use[m["snr_db"]][1]
         m["mdc_calibrated_pct"] = m["mdc_pct"] * m["inflation"]
