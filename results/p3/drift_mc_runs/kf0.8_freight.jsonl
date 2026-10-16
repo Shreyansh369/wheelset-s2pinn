@@ -23,3 +23,8 @@
 {"estimator": "nominal", "rep": 11, "f": 0.8, "D_hat": -0.061044110515716454, "se": 0.002473941202232716, "alarm": true, "converged": true, "wall_s": 943.7304465490015}
 {"estimator": "coest", "rep": 3, "f": 0.8, "D_hat": -0.001908410225954782, "se": 0.0025186259029768344, "alarm": false, "converged": true, "wall_s": 3000.8561609149983}
 {"estimator": "coest", "rep": 11, "f": 0.8, "D_hat": 0.001361576637712858, "se": 0.002519658712454529, "alarm": false, "converged": true, "wall_s": 2935.1113606390027}
+{"estimator": "nominal", "rep": 4, "f": 0.8, "D_hat": -0.04770383622448193, "se": 0.0024755735059096653, "alarm": true, "converged": true, "wall_s": 764.8918759879998}
+{"estimator": "nominal", "rep": 6, "f": 0.8, "D_hat": -0.0665345644097961, "se": 0.0025095292846331395, "alarm": true, "converged": true, "wall_s": 863.1517062059975}
+{"estimator": "nominal", "rep": 12, "f": 0.8, "D_hat": -0.0562108926309719, "se": 0.002547529515810062, "alarm": true, "converged": true, "wall_s": 783.4954048069994}
+{"estimator": "nominal", "rep": 13, "f": 0.8, "D_hat": -0.05926904803215294, "se": 0.002424803886625172, "alarm": true, "converged": true, "wall_s": 914.1520743600013}
+{"estimator": "coest", "rep": 4, "f": 0.8, "D_hat": 0.000421782163027018, "se": 0.0024956994697184045, "alarm": false, "converged": true, "wall_s": 2510.7949810089995}
