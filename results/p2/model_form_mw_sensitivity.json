@@ -69,6 +69,51 @@
         "bias_at_plus_1sigma_pct": 4.751892453827522,
         "sigma_log": 0.5756462732485115,
         "range_source": "wheelset modal damping 0.1-1% (Chaar 2007; IPME paper; snippets)"
+      },
+      {
+        "estimator": "coest",
+        "param": "kf",
+        "sens_pct_per_10pct": null,
+        "bias_at_minus_1sigma_pct": 0.00013203982773823952,
+        "bias_at_plus_1sigma_pct": -4.179300688855747e-05,
+        "sigma_log": 0.5957507412015728,
+        "range_source": "rail pad 80-800 MN/m per pad at 0.60-0.65 m spacing -> 123-1333 MN/m^2 (Thompson et al. 2007; EUROBOLT; snippets)"
+      },
+      {
+        "estimator": "coest",
+        "param": "eta_f",
+        "sens_pct_per_10pct": null,
+        "bias_at_minus_1sigma_pct": 0.40302697309733126,
+        "bias_at_plus_1sigma_pct": -1.0781553031368962,
+        "sigma_log": 0.22907268296853878,
+        "range_source": "rail pad loss factor 0.1-0.25 (snippets)"
+      },
+      {
+        "estimator": "coest",
+        "param": "kH0",
+        "sens_pct_per_10pct": null,
+        "bias_at_minus_1sigma_pct": -8.184044260062251e-05,
+        "bias_at_plus_1sigma_pct": 0.00015170301312927847,
+        "sigma_log": 0.12626131521262282,
+        "range_source": "linearised contact stiffness 1.388 GN/m (Hertz, S1002 transverse radius +0.5 m) to 2.3 GN/m (published spread, Hasan 2020)"
+      },
+      {
+        "estimator": "coest",
+        "param": "unsprung_scale",
+        "sens_pct_per_10pct": null,
+        "bias_at_minus_1sigma_pct": 7.041934741689793,
+        "bias_at_plus_1sigma_pct": -6.660698247806163,
+        "sigma_log": 0.04,
+        "range_source": "about 20 kg per axlebox, 4% of the wheelset unsprung mass, between axlebox designs (SKF Evolution, snippet)"
+      },
+      {
+        "estimator": "coest",
+        "param": "axle_damp_scale",
+        "sens_pct_per_10pct": null,
+        "bias_at_minus_1sigma_pct": -2.266006292012046,
+        "bias_at_plus_1sigma_pct": 4.850852988205623,
+        "sigma_log": 0.5756462732485115,
+        "range_source": "wheelset modal damping 0.1-1% (Chaar 2007; IPME paper; snippets)"
       }
     ],
     "budget": {
@@ -82,6 +127,17 @@
         },
         "rss_pct": 20.677775986446754,
         "sum_abs_pct": 31.835942251269778
+      },
+      "coest": {
+        "terms_pct_1sigma_worst_side": {
+          "kf": 0.00013203982773823952,
+          "eta_f": 1.0781553031368962,
+          "kH0": 0.00015170301312927847,
+          "unsprung_scale": 7.041934741689793,
+          "axle_damp_scale": 4.850852988205623
+        },
+        "rss_pct": 8.618702832650145,
+        "sum_abs_pct": 12.971226775873179
       }
     },
     "ranges": {
@@ -108,10 +164,10 @@
     }
   },
   "provenance": {
-    "git_commit": "9179c28f8cd8145c9d18eeeb939618ee5a329596",
-    "timestamp_utc": "2026-10-16T01:20:57Z",
-    "wall_seconds": 1282.054089494999,
-    "peak_cpu_memory_mb": 1196.1328125,
+    "git_commit": "827437a7628b4a60288f56fcdadef8b74684607b-dirty",
+    "timestamp_utc": "2026-10-16T05:43:41Z",
+    "wall_seconds": 807.7000725000003,
+    "peak_cpu_memory_mb": 1222.02734375,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

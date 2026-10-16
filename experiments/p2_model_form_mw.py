@@ -63,7 +63,7 @@ RANGES = {
     "eta_f": (math.log(0.25 / 0.10) / 4, "rail pad loss factor 0.1-0.25 (snippets)"),
     "kH0": (math.log(2.3 / 1.388) / 4, "linearised contact stiffness 1.388 GN/m (Hertz, S1002 transverse radius +0.5 m) to 2.3 GN/m (published spread, Hasan 2020)"),
     "unsprung_scale": (0.04, "about 20 kg per axlebox, 4% of the wheelset unsprung mass, between axlebox designs (SKF Evolution, snippet)"),
-    "axle_damp_scale": (math.log(0.01 / 0.001) / 4, "wheelset modal damping 0.1-1% (Chaar 2007; IPME paper; snippets)"),
+    "axle_damp_scale": (math.log(0.02 / 0.001) / 4, "wheelset modal damping 0.1-2% (Chaar 2007: measured below 2%; IPME paper 0.1-1%; snippets)"),
 }
 FIT_N, SPEEDS = 50, (60.0, 110.0)
 
