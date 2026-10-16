@@ -38,6 +38,11 @@ TAP_CLEARANCES_UM = (None, 0.0, 50.0)
 
 
 def mdc_pct():
+    """Two-period MDC with the co-estimating fit (N = 50, 40 dB) at the current config (drift_freight.json)
+    when available, else the earlier configuration."""
+    fp = RESULTS_DIR / "p2/drift_freight.json"
+    if fp.exists():
+        return json.loads(fp.read_text())["payload"]["no_drift_reference"]["coest"]["mdc_pct"]
     d = json.loads((RESULTS_DIR / "p2/relative_coest_drift.json").read_text())["payload"]
     return d["drift"]["no_drift_reference"]["coest"]["mdc_pct"]
 

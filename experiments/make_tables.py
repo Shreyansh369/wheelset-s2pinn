@@ -358,6 +358,9 @@ def table10():
 # ----------------------------------------------------------------------------- Table 11
 def table11():
     c = load("p2/relative_coest_drift.json")
+    f = load("p2/drift_freight.json")
+    if f:                                 # current configuration
+        c = {"drift": f}
     if c is None or "drift" not in c:
         return missing("table11_drift", "Table 11. Foundation-stiffness drift between periods", "results/p2/relative_coest_drift.json")
     rows = [[t["estimator"], f"×{t['kf_factor_later']:.1f}", f"{t['apparent_change_no_true_change_pct']:+.2f}", f"{t['bias_at_5pct_drop_pp']:+.2f}",

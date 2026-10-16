@@ -208,6 +208,43 @@ def mdc_under(b0, b5, s0, alpha=0.05, power=0.90):
     return float(brentq(lambda m: pdet(m) - power, 1e-9, 0.5) * 100)
 
 
+def drift_table(fname):
+    """Pseudo-true drift table (apparent change, bias at a 5% drop, false-alarm rate, MDC) from a run file."""
+    dr = {(r["estimator"], r["f"], r["x"]): r for r in _rows(fname)}
+    drift_tab = []
+    for e in EST:
+        if (e, 1.0, 0.0) not in dr:
+            continue
+        base = dr[(e, 1.0, 0.0)]
+        for f in DRIFT_F:
+            if (e, f, 0.0) not in dr or (e, f, 0.05) not in dr:
+                continue
+            l0, l5 = dr[(e, f, 0.0)], dr[(e, f, 0.05)]
+            b0 = l0["log_k_hat"] - base["log_k_hat"]
+            b5 = (l5["log_k_hat"] - base["log_k_hat"]) - math.log(0.95)
+            s0 = math.hypot(base["crb_log"], l0["crb_log"])
+            drift_tab.append({"estimator": e, "kf_factor_later": f, "apparent_change_no_true_change_pct": (math.exp(b0) - 1) * 100,
+                              "bias_at_5pct_drop_pp": ((math.exp(math.log(0.95) + b5) - 1) + 0.05) * 100,
+                              "sd_change_pct": s0 * 100, "false_alarm_rate": float(norm.cdf(-1.645 - b0 / s0)),
+                              # MDC is only meaningful when the test still holds its 5% false-alarm rate
+                              "mdc_pct": mdc_under(b0, b5, s0) if norm.cdf(-1.645 - b0 / s0) <= 0.06 else None})
+    nodrift = {}
+    for e in EST:
+        if (e, 1.0, 0.0) in dr:
+            s0 = math.sqrt(2) * dr[(e, 1.0, 0.0)]["crb_log"]
+            nodrift[e] = {"sd_change_pct": s0 * 100, "mdc_pct": mdc_under(0.0, 0.0, s0)}
+    return {"table": drift_tab, "no_drift_reference": nodrift}
+
+
+def summarise_freight():
+    """Drift pseudo-true at the current (sourced) configuration -> results/p2/drift_freight.json."""
+    out = drift_table(DRIFT_FILE)
+    print(json.dumps(out, indent=1))
+    save_result("p2/drift_freight", out, cfg={"model": "4-wheel rail-coupled (config nominal: Y25/Eanos layout, 60E1 ballasted)",
+                                             "N_per_period": N, "speeds_kmh": SPEEDS, "snr_db": 40, "estimators": EST,
+                                             "drift_kf_factors": DRIFT_F, "test": "one-sided decrease, alpha 0.05; detection 90%"}, seed=41)
+
+
 def summarise():
     out = {}
     # (1) coest relative change gains
@@ -231,30 +268,7 @@ def summarise():
                              "kappa_coest": float(math.sqrt(sum(t**2 for t in terms.values()))) if terms else None,
                              "note": "kf and kH0 are co-estimated, so their gain terms are taken as the single-case ratios (kf x1.2, kH0 x1.15)"}
     # (2) drift
-    dr = {(r["estimator"], r["f"], r["x"]): r for r in _rows("drift_pseudo.jsonl")}
-    drift_tab = []
-    for e in EST:
-        if (e, 1.0, 0.0) not in dr:
-            continue
-        base = dr[(e, 1.0, 0.0)]
-        for f in DRIFT_F:
-            if (e, f, 0.0) not in dr or (e, f, 0.05) not in dr:
-                continue
-            l0, l5 = dr[(e, f, 0.0)], dr[(e, f, 0.05)]
-            b0 = l0["log_k_hat"] - base["log_k_hat"]
-            b5 = (l5["log_k_hat"] - base["log_k_hat"]) - math.log(0.95)
-            s0 = math.hypot(base["crb_log"], l0["crb_log"])
-            drift_tab.append({"estimator": e, "kf_factor_later": f, "apparent_change_no_true_change_pct": (math.exp(b0) - 1) * 100,
-                              "bias_at_5pct_drop_pp": ((math.exp(math.log(0.95) + b5) - 1) + 0.05) * 100,
-                              "sd_change_pct": s0 * 100, "false_alarm_rate": float(norm.cdf(-1.645 - b0 / s0)),
-                              # MDC is only meaningful when the test still holds its 5% false-alarm rate
-                              "mdc_pct": mdc_under(b0, b5, s0) if norm.cdf(-1.645 - b0 / s0) <= 0.06 else None})
-    nodrift = {}
-    for e in EST:
-        if (e, 1.0, 0.0) in dr:
-            s0 = math.sqrt(2) * dr[(e, 1.0, 0.0)]["crb_log"]
-            nodrift[e] = {"sd_change_pct": s0 * 100, "mdc_pct": mdc_under(0.0, 0.0, s0)}
-    out["drift"] = {"table": drift_tab, "no_drift_reference": nodrift}
+    out["drift"] = drift_table("drift_pseudo.jsonl")
     # (3) drift MC check
     dm = []
     for fp in sorted(RUN_DIR.glob("drift_mc_*.jsonl")):
@@ -289,6 +303,7 @@ if __name__ == "__main__":
     ap.add_argument("--drift-mc", action="store_true")
     ap.add_argument("--kappa-mc", action="store_true")
     ap.add_argument("--summarise", action="store_true")
+    ap.add_argument("--summarise-freight", action="store_true")
     ap.add_argument("--cases", nargs="+", default=list(COEST_CASES))
     ap.add_argument("--estimators", nargs="+", default=list(EST))
     ap.add_argument("--n-rep", type=int, default=6)
@@ -304,3 +319,5 @@ if __name__ == "__main__":
         kappa_mc(a.n_rep, rep_start=a.rep_start)
     if a.summarise:
         summarise()
+    if a.summarise_freight:
+        summarise_freight()

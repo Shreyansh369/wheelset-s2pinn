@@ -237,6 +237,19 @@ def section4(m, miss):
     block("p2/relative_coest_drift.json", rcd, ["KappaCoest", "KapNomCov", "KapNomN", "KapNomLo", "KapNomHi", "KapNomGainErr", "DriftSoftTenApparent",
                                                 "DriftSoftTwentyApparent", "DriftSoftTenFA", "DriftStiffTenMDC", "DriftStiffTwentyMDC", "DriftCoestMDC"])
 
+    def driftf(d):                       # current configuration: overrides the drift values above
+        dr = {(x["estimator"], x["kf_factor_later"]): x for x in d["table"]}
+        m["DriftSoftTenApparent"] = _f(dr[("nominal", 0.9)]["apparent_change_no_true_change_pct"])
+        m["DriftSoftTwentyApparent"] = _f(dr[("nominal", 0.8)]["apparent_change_no_true_change_pct"])
+        m["DriftSoftTenFA"] = _f(dr[("nominal", 0.9)]["false_alarm_rate"])
+        m["DriftStiffTenMDC"] = _f(dr[("nominal", 1.1)]["mdc_pct"], 1)
+        m["DriftStiffTwentyMDC"] = _f(dr[("nominal", 1.2)]["mdc_pct"], 1)
+        if ("coest", 0.8) in dr:
+            m["DriftCoestMDC"] = _f(dr[("coest", 0.8)]["mdc_pct"])
+        m["DriftNoDriftCoestMDC"] = _f(d["no_drift_reference"]["coest"]["mdc_pct"]) if "coest" in d["no_drift_reference"] else "--"
+    if load("p2/drift_freight.json"):
+        block("p2/drift_freight.json", driftf, [])
+
     def vmc(d):
         k = d["kappa_coest"]
         m["KapCoestCovered"], m["KapCoestN"] = str(round(k["coverage"] * k["n"])), str(k["n"])
