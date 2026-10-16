@@ -215,6 +215,18 @@ def section4(m, miss):
         m["KappaKfTerm"] = _f(d["kappa_mass3"]["terms"]["kf"])
     block("p2/relative_intervals.json", bud, ["BudgetNominal", "BudgetNominalMassOne", "BudgetCoest", "BudgetCoestMassOne", "KappaNominal", "KappaKfTerm"])
 
+    def budf(d):                          # current configuration: overrides the absolute budget above
+        b = d["budget"]
+        sig_m = d["ranges"]["unsprung_scale"][0] if isinstance(d["ranges"]["unsprung_scale"], list) else d["ranges"]["unsprung_scale"]
+        for e, w in (("nominal", "Nominal"), ("coest", "Coest")):
+            t = dict(b[e]["terms_pct_1sigma_worst_side"])
+            m[f"Budget{w}"] = _f(b[e]["rss_pct"], 1)
+            t["unsprung_scale"] *= 0.01 / sig_m      # unsprung mass known to 1% (linear scaling of the 1-sigma term)
+            m[f"Budget{w}MassOne"] = _f(math.sqrt(sum(v**2 for v in t.values())), 1)
+        m["BudgetMassSigmaPct"] = _f(100 * sig_m, 0)
+    if (load("p2/model_form_mw_sensitivity.json") or {}).get("budget"):
+        block("p2/model_form_mw_sensitivity.json", budf, [])
+
     def sens(d):
         t = {(x["estimator"], x["param"]): x for x in d["table"]}
         m["SensUnsprung"] = _f(t[("nominal", "unsprung_scale")]["sens_pct_per_10pct"], 1)
