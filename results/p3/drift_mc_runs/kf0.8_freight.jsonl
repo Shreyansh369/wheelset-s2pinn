@@ -16,3 +16,5 @@
 {"estimator": "coest", "rep": 9, "f": 0.8, "D_hat": 0.002313526487498052, "se": 0.0025014958838660865, "alarm": false, "converged": true, "wall_s": 2621.2749327130005}
 {"estimator": "nominal", "rep": 10, "f": 0.8, "D_hat": -0.06039340129166604, "se": 0.0025821892210682114, "alarm": true, "converged": true, "wall_s": 761.8342980239977}
 {"estimator": "coest", "rep": 2, "f": 0.8, "D_hat": -0.0010511175834331254, "se": 0.0025078179082397957, "alarm": false, "converged": true, "wall_s": 4939.681766870999}
+{"estimator": "coest", "rep": 16, "f": 0.8, "D_hat": 0.000986131535753998, "se": 0.0026236982008653854, "alarm": false, "converged": true, "wall_s": 3128.352750135}
+{"estimator": "coest", "rep": 10, "f": 0.8, "D_hat": 0.0016650749365219042, "se": 0.002522403124180671, "alarm": false, "converged": true, "wall_s": 2571.5296228549996}
