@@ -31,6 +31,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from experiments.p1_fe_direct import cp_interval  # noqa: E402
 from src.utils.results import RESULTS_DIR, save_result  # noqa: E402
 
+# freight rerun (sourced nominals) when complete, else the earlier headline
+HEADLINE_RUNS = "kb120_attr_freight.jsonl" if (RESULTS_DIR / "p3/headline_v2_runs/kb120_attr_freight.jsonl").exists() else "kb120_attr.jsonl"
+
 Z = 1.6448536269514722
 KAPPA = 0.044
 SPLITS = {"A": ((42, 123, 456), (789, 1024)), "B": ((789, 1024), (42, 123, 456))}
@@ -53,7 +56,7 @@ def cover(R, b, r):
 
 
 def main():
-    H = rows(RESULTS_DIR / "p3" / "headline_v2_runs" / "kb120_attr.jsonl")
+    H = rows(RESULTS_DIR / "p3" / "headline_v2_runs" / HEADLINE_RUNS)
     out, use = {"headline": []}, {}
     for snr in (20, 40):
         R = [x for x in H if x["snr_db"] == snr]
@@ -89,7 +92,7 @@ def main():
         m["inflation"] = use[m["snr_db"]][1]
         m["mdc_calibrated_pct"] = m["mdc_pct"] * m["inflation"]
     out["mdc"] = sorted(mdc, key=lambda m: (m["N"], m["snr_db"]))
-    save_result("p3/calibrated", out, cfg={"headline": "results/p3/headline_v2_runs/kb120_attr.jsonl", "kappa": KAPPA,
+    save_result("p3/calibrated", out, cfg={"headline": f"results/p3/headline_v2_runs/{HEADLINE_RUNS}", "kappa": KAPPA,
                                            "threshold_for_calibration": THRESH, "splits": {k: [list(a), list(b)] for k, (a, b) in SPLITS.items()},
                                            "inflation": "RMSE about the truth / median Wald SE", "frozen_estimator":
                                            "kernel +-120 bins, own-sub-band scoring, K = 16, no prior, load exponent fixed"}, seed=0)

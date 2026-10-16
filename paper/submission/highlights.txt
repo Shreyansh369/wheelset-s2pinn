@@ -3,5 +3,5 @@ Highlights
 - Wheelset-bearing support stiffness identified from in-service axle-box acceleration
 - Rail roughness enters as free nuisance levels; no roughness measurement is needed
 - Passes at different speeds separate the support resonance from the roughness
-- Ignoring wheel-to-wheel coupling through the rail biases the stiffness by over 10%
+- Ignoring wheel-to-wheel coupling through the rail biases the stiffness by 5.6%
 - Per-period track re-estimation keeps false alarms low under foundation drift

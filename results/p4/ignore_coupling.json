@@ -1,0 +1,26 @@
+{
+  "name": "p4/ignore_coupling",
+  "seed": 42,
+  "config": {
+    "data": "4-wheel freight layout, current config",
+    "fit": "single wheelset, frozen estimator",
+    "keys": "seed 42, 40 dB, j = 0..9"
+  },
+  "payload": {
+    "n": 10,
+    "bias_pct": -5.554139836598402,
+    "bias_se_pct": 0.19950862322306043,
+    "covered_90": 0,
+    "all_converged": true
+  },
+  "provenance": {
+    "git_commit": "06b15e94ac7faec5495c74cc970a4acf2fa1a500",
+    "timestamp_utc": "2026-10-16T00:25:17Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 95.140625,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

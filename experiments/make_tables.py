@@ -170,11 +170,11 @@ def table2():
 
 # ----------------------------------------------------------------------------- Table 3
 def table3():
-    d, c, old = load("p3/headline_v2_kb120_attr.json"), load("p3/calibrated.json"), load("p2/headline_mw.json")
+    d, c, ic = load("p3/headline_v2_kb120_attr_freight.json") or load("p3/headline_v2_kb120_attr.json"), load("p3/calibrated.json"), load("p4/ignore_coupling.json")
     if d is None:
         return missing("table3_headline", "Table 3. Headline Monte Carlo (frozen estimator)", "results/p3/headline_v2_kb120_attr.json")
     cal = {x["snr_db"]: x for x in c["headline"]} if c else {}
-    ign = {x["snr_db"]: x["ignore_coupling_seed42"] for x in old["cells"]} if old else {}
+    ign = {40: ic} if ic else {}
     rows = []
     for cell in d["cells"]:
         p, snr = cell["kB0_pooled"], cell["snr_db"]
@@ -187,11 +187,11 @@ def table3():
         ig = ign.get(snr)
         rows.append([f"{snr:.0f}", p["n"], f"{pct(p['bias_rel'])} ± {pct(p['bias_rel_se'])}", pct(p["rmse_rel"]), pct(p["crb_rel"]),
                      f"{p['rmse_over_crb']:.2f}", f"{cell['rmse_over_median_se']:.2f}", f"{p['coverage90_wald']:.2f} {ci(p['coverage90_wald_ci95'])}",
-                     calib, f"{pct(ig['bias_rel'])} ± {pct(ig['bias_rel_se'])}" if ig else "–"])
+                     calib, f"{ig['bias_pct']:.2f} ± {ig['bias_se_pct']:.2f} (covered {ig['covered_90']}/{ig['n']})" if ig else "–"])
     write("table3_headline", "Table 3. Headline Monte Carlo, 4-wheel rail-coupled model, frozen estimator (k_B0)",
           md(["SNR (dB)", "n", "Bias (%) ± SE", "RMSE (%)", "CRB (%)", "RMSE/CRB", "RMSE/SE", "Wald 90% coverage [95% CI]",
-              "Simulation calibration: bias b, inflation r; held-out coverage", "Ignore coupling (seed 42, ±30-bin kernel): bias (%)"], rows),
-          ["results/p3/headline_v2_kb120_attr.json", "results/p3/calibrated.json", "results/p2/headline_mw.json"],
+              "Simulation calibration: bias b, inflation r; held-out coverage", "Ignore coupling (seed 42, 10 datasets): bias (%) ± SE"], rows),
+          ["results/p3/headline_v2_kb120_attr_freight.json", "results/p3/calibrated.json", "results/p4/ignore_coupling.json"],
           ["N = 50 passes, 60–110 km/h, 5 seeds × 10 datasets. Frozen estimator: debiased Whittle, kernel ±120 bins, own-sub-band "
            "scoring, K = 16, load exponent fixed. Split A calibrates on seeds 42/123/456 and tests on 789/1024; split B the reverse."])
 

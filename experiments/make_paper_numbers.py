@@ -156,7 +156,8 @@ def section4(m, miss):
             m[f"HL{w}CovLo"], m[f"HL{w}CovHi"] = _f(p["coverage90_wald_ci95"][0]), _f(p["coverage90_wald_ci95"][1])
             m[f"HL{w}cBBias"] = _f(100 * c[snr]["cB_pooled"]["bias_rel"], 1)
         m["HLN"] = str(c[20]["kB0_pooled"]["n"])
-    block("p3/headline_v2_kb120_attr.json", headline, [f"HL{w}{k}" for w in ("Twenty", "Forty") for k in
+    hl_src = "p3/headline_v2_kb120_attr_freight.json" if load("p3/headline_v2_kb120_attr_freight.json") else "p3/headline_v2_kb120_attr.json"
+    block(hl_src, headline, [f"HL{w}{k}" for w in ("Twenty", "Forty") for k in
           ("Bias", "BiasSE", "RMSE", "CRB", "RatioCRB", "RatioSE", "Cov", "CovLo", "CovHi", "cBBias")] + ["HLN"])
 
     def calib(d):
@@ -179,11 +180,10 @@ def section4(m, miss):
           + [f"CalSplit{w}{k}" for w in "AB" for k in ("Cov", "k", "n", "Lo", "Hi", "Infl")]
           + [f"MDC{a}{w}" for a in ("", "Cal") for w in ("FiftyForty", "FiftyTwenty", "TwoHundredForty", "TwoHundredTwenty")])
 
-    def oldhl(d):
-        c = {x["snr_db"]: x for x in d["cells"]}
-        m["IgnoreCouplingForty"] = _f(100 * c[40]["ignore_coupling_seed42"]["bias_rel"], 1)
-        m["IgnoreCouplingTwenty"] = _f(100 * c[20]["ignore_coupling_seed42"]["bias_rel"], 1)
-    block("p2/headline_mw.json", oldhl, ["IgnoreCouplingForty", "IgnoreCouplingTwenty"])
+    def ignc(d):
+        m["IgnoreCouplingForty"], m["IgnoreCouplingFortySE"] = _f(d["bias_pct"], 1), _f(d["bias_se_pct"], 1)
+        m["IgnoreCouplingN"], m["IgnoreCouplingCovered"] = str(d["n"]), str(d["covered_90"])
+    block("p4/ignore_coupling.json", ignc, ["IgnoreCouplingForty", "IgnoreCouplingFortySE", "IgnoreCouplingN", "IgnoreCouplingCovered"])
 
     def mwb(d):
         r = [x["crb_rel_kB0"] for x in d["rows"] if x["speeds"] == "uniform_60_110"]
