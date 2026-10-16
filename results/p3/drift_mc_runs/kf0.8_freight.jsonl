@@ -10,3 +10,4 @@
 {"estimator": "coest", "rep": 8, "f": 0.8, "D_hat": 0.0006029527640052379, "se": 0.0025154242100891146, "alarm": false, "converged": true, "wall_s": 2897.209552837}
 {"estimator": "nominal", "rep": 16, "f": 0.8, "D_hat": -0.07225559984730268, "se": 0.0026214008021690966, "alarm": true, "converged": true, "wall_s": 857.2477575999992}
 {"estimator": "nominal", "rep": 9, "f": 0.8, "D_hat": -0.04931277244532595, "se": 0.0024920393674392563, "alarm": true, "converged": true, "wall_s": 777.9326333540002}
+{"estimator": "nominal", "rep": 1, "f": 0.8, "D_hat": -0.055998351600081264, "se": 0.002540918574208264, "alarm": true, "converged": true, "wall_s": 975.5682813969997}
