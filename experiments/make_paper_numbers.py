@@ -187,7 +187,7 @@ def section4(m, miss):
 
     def mwb(d):
         r = [x["crb_rel_kB0"] for x in d["rows"] if x["speeds"] == "uniform_60_110"]
-        m["MWCRBMin"], m["MWCRBMax"] = _f(100 * min(r)), _f(100 * max(r))
+        m["MWCRBMin"], m["MWCRBMax"] = _f(100 * min(r), 3), _f(100 * max(r), 3)
         f = [x["crb_rel_kB0"] for x in d["rows"] if x["speeds"] == "fixed_100"]
         m["MWCRBFixedMin"], m["MWCRBFixedMax"] = _f(100 * min(f)), _f(100 * max(f))
     block("p2/multiwheel_bound.json", mwb, ["MWCRBMin", "MWCRBMax", "MWCRBFixedMin", "MWCRBFixedMax"])

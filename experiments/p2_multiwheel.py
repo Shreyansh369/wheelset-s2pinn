@@ -81,13 +81,11 @@ def bound(args):
     sm, thb, rough, _ = setup()
     rows = []
     with Timer() as tm:
-        for rail in ("BS113A", "60E1"):
-            mws, track = models(sm, rail)
+        for rail in ("60E1",):                 # the config's nominal track (ballasted freight) and layout
+            mws, track = models(sm)
             for nw, mw in mws.items():
                 fam = MultiWheelFamily(mw, thb)
                 for sname, spd in SPEEDS.items():
-                    if rail == "60E1" and sname != "uniform_60_110":
-                        continue
                     passes, Wm, Ws, g = dataset(sm, thb, rough, mw, (20261012, 99, int(nw)), speeds=spd, g_sd=0.0)
                     est = MultiPassWhittle(passes, Ws, WIM, rough, fam, debias=True)
                     c = est.expected_fisher(np.log([TRUTH["kB0"], TRUTH["cB"]]), np.log(g), np.log(Ws))
@@ -95,8 +93,8 @@ def bound(args):
                                  "crb_rel_kB0": c["crb_log"][0], "crb_rel_cB": c["crb_log"][1], "track": track.__dict__})
                     print(rows[-1]["rail"], nw, sname, round(c["crb_log"][0] * 100, 3), round(c["crb_log"][1] * 100, 2), flush=True)
     save_result("p2/multiwheel_bound", {"rows": rows}, cfg={
-        "layout": "CT23 Fig. 5 subsets", "foundation": "kf 154 MN/m^2, eta_f 0.2 (CT23 Sec. 5.1.1)",
-        "neighbour_bearing": "kB0 1e9, cB 5e3", "truth": TRUTH, "likelihood": "debiased Whittle (Fejer kernel, M=4, +-30 bins)", "wim_sigma": WIM, "roughness": "ISO 3095 shape, K=16 levels free"},
+        "layout": "config nominal (Y25/Eanos freight wagon, 1/2/4/8 wheels)", "track": "config nominal (60E1, ballasted freight)",
+        "truth": TRUTH, "likelihood": "debiased Whittle (Fejer kernel, M=4, +-120 bins)", "wim_sigma": WIM, "roughness": "ISO 3095 shape, K=16 levels free"},
         seed=20261012, wall_seconds=tm.seconds)
 
 
