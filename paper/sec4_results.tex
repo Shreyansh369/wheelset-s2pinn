@@ -207,8 +207,12 @@ band's fixed values (Section~\ref{sec:relative}), the same stress truth gives a 
 \BandEmptyPseudo\% (empty band) and \BandLadenPseudo\% (laden band). In \BandEmptyPairsN{} zero-change
 pairs in the empty band, $z$ ranged from \BandEmptyZMin{} to \BandEmptyZMax{} with \BandEmptyPairsFA{}
 false alarms (95\% interval of the rate \BandEmptyPairsFALo--\BandEmptyPairsFAHi), and the standard error
-of the change was \BandEmptySE\%, as without the stress; in \BandLadenPairsN{} laden pairs, $z$ ranged from
-\BandLadenZMin{} to \BandLadenZMax{} (\BandLadenPairsFA{} false alarms). The detection limits per band, from
+of the change was \BandEmptySE\%, as without the stress; the apparent changes lean upwards (mean
+\BandEmptyMeanD\%, \BandEmptyZPos{} of \BandEmptyPairsN{} positive), which the one-sided test for a loss
+of stiffness does not flag. In \BandLadenPairsN{} laden pairs there was no false alarm either; in
+\BandLadenNSingular{} of them the observed information was singular because $c_B$ ran to its lower bound,
+and with the median standard error used for those, $z$ ranged from \BandLadenZMin{} to \BandLadenZMax{}
+(largest apparent change an increase of \BandLadenDMax\%). The detection limits per band, from
 the Cram\'er--Rao bound with $k_f$ and $k_{H0}$ re-estimated, are \BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\%
 ($N=50$) and \BandEmptyMDCTwoHundredMin--\BandEmptyMDCTwoHundredMax\% ($N=200$) for the empty band, and
 \BandLadenMDCFiftyMin--\BandLadenMDCFiftyMax\% and \BandLadenMDCTwoHundredMin--\BandLadenMDCTwoHundredMax\%

@@ -138,12 +138,17 @@ def summarise():
         Pr = rows(f"pairs_{b}.jsonl")
         if Pr:
             D, se = np.array([r["D_hat"] for r in Pr]), np.array([r["se"] for r in Pr])
-            k = int(np.sum(D < -Z * se))
+            fin = np.isfinite(se)
+            se_med = float(np.median(se[fin])) if fin.any() else float("nan")
+            k = int(np.sum((D < -Z * se) & fin))
+            k_fb = int(np.sum(D < -Z * np.where(fin, se, se_med)))      # singular-information pairs at the median SE
             lev = [math.exp(r[x]) - 1 for r in Pr for x in ("err_base", "err_later")]
             out.setdefault("pairs", {})[b] = {
-                "n": len(Pr), "false_alarms": k, "rate_ci95": cp_interval(k, len(Pr)),
-                "z": [float(x) for x in D / se], "D_mean_pct": float(np.mean(np.exp(D) - 1) * 100),
-                "D_sd_pct": float(np.std(D, ddof=1) * 100) if len(D) > 1 else None, "se_median_pct": float(np.median(se) * 100),
+                "n": len(Pr), "n_finite_se": int(fin.sum()), "false_alarms": k, "rate_ci95": cp_interval(k, int(fin.sum())),
+                "false_alarms_median_se_fallback": k_fb, "D_pct": [float(100 * x) for x in D],
+                "z": [float(x) for x in D[fin] / se[fin]],
+                "z_median_se_fallback": [float(x) for x in D / np.where(fin, se, se_med)], "D_mean_pct": float(np.mean(np.exp(D) - 1) * 100),
+                "D_sd_pct": float(np.std(D, ddof=1) * 100) if len(D) > 1 else None, "se_median_pct": se_med * 100,
                 "level_err_mean_pct": float(np.mean(lev) * 100), "level_err_sd_pct": float(np.std(lev, ddof=1) * 100),
                 "all_converged": all(r["converged"] for r in Pr)}
     save_result("p4/banded", out, cfg={"speeds_kmh": SPEEDS, "estimator": "coest (kB0, cB, kf, kH0), band's fixed primary values",
