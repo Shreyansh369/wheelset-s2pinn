@@ -4,4 +4,4 @@ Highlights
 - Rail roughness enters as free nuisance levels; no roughness measurement is needed
 - Passes at different speeds separate the support resonance from the roughness
 - Ignoring wheel-to-wheel coupling through the rail biases the stiffness by 5.6%
-- Per-period track re-estimation keeps false alarms low under foundation drift
+- Payload-banded comparison and track re-estimation keep false alarms low

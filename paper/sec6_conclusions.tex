@@ -13,14 +13,18 @@ representative freight wagon on ballasted track, simulations show that:
   \IgnoreCouplingForty\%; nonlinear Hertzian contact, by contrast, shifts the estimate by only
   \ICDiffMean{} percentage points;
 \item the absolute level carries a model-form uncertainty of about \BudgetCoest\%, so the method is a
-  trend monitor: re-estimating the foundation and contact stiffness in each period, a decrease of
-  \MDCCalFiftyMin--\MDCCalFiftyMax\% is detectable with 50 passes per period, and a change of the
-  track foundation between periods causes no bias;
+  trend monitor: comparing periods within a payload band and re-estimating the foundation and contact
+  stiffness in each, a decrease of \BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\% is detectable with 50
+  empty passes per period, and a change of the track foundation between periods causes no bias;
+\item pooling passes over the whole payload range requires a payload-dependent model of the primary
+  suspension: with a fixed suspension the error of each period depends on its payload mix and raised
+  false alarms, while within a band it did not;
 \item a loss of housing, adapter or pad stiffness reaches the identified stiffness directly, while
   clearance growth is diluted by the stiff roller contacts, so the method reports support-stiffness
   loss without attributing it to a mechanism.
 \end{itemize}
-The next steps are a field test with a controlled change of support stiffness; application to
+The next steps are a field test with a controlled change of support stiffness; co-estimation of a
+payload-dependent primary suspension, to restore the full payload range; application to
 freight wagons of Indian Railways, once vehicle-specific values are available from RDSO; an extension of
 the model to the pinned--pinned frequency band; and calibrated intervals for the track-side use of the
 same likelihood.

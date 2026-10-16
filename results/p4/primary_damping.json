@@ -21,13 +21,39 @@
         "bias_pct": 0.7013716635712708,
         "converged": true
       }
+    },
+    "pairs": {
+      "n": 3,
+      "false_alarms_raw": 2,
+      "rate_raw_ci95": [
+        0.09429932405024609,
+        0.9915962413403874
+      ],
+      "false_alarms_calibrated": 2,
+      "rate_calibrated_ci95": [
+        0.09429932405024609,
+        0.9915962413403874
+      ],
+      "D_mean_pct": 0.1066028508776351,
+      "D_sd_pct": 2.6241347085587603,
+      "z": [
+        -2.4680151865579463,
+        -4.62001850668923,
+        7.374630910352344
+      ],
+      "se_median_pct": 0.4027860447539831,
+      "level_err_min_pct": -0.803195326817896,
+      "level_err_max_pct": 2.9723308952240846,
+      "level_bias_mean_pct": 1.2977505458190284,
+      "se_inflation_used": 1.0717297680962927,
+      "all_converged": true
     }
   },
   "provenance": {
-    "git_commit": "846fa1bc41e62d6148eee9ed137e70ec6c1a7c94-dirty",
-    "timestamp_utc": "2026-10-16T08:17:51Z",
+    "git_commit": "87169a65a685a7fefa5a96f9bace79c3d7c5057f-dirty",
+    "timestamp_utc": "2026-10-16T13:30:38Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 95.12109375,
+    "peak_cpu_memory_mb": 95.73046875,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

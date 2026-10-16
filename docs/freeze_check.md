@@ -13,11 +13,10 @@ Every number in the abstract, highlights, conclusions and cover letter, with the
 | `\IgnoreCouplingForty` | -5.6 | results/p4/ignore_coupling.json | current (representative wagon, Table 1) |
 | `\ICDiffMean` | 0.059 | results/p4/inverse_crime.json | current (representative wagon, Table 1) |
 | `\BudgetCoest` | 10.0 | results/p2/model_form_mw_sensitivity.json | current (representative wagon, Table 1) |
-| `\MDCCalFiftyMin` | 0.78 | results/p3/calibrated.json <- results/p4/mdc_bounds.json (calibration from the headline) | current (representative wagon, Table 1); calibration factor from current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
-| `\MDCCalFiftyMax` | 0.84 | results/p3/calibrated.json <- results/p4/mdc_bounds.json (calibration from the headline) | current (representative wagon, Table 1); calibration factor from current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
-| `\MDCCalTwoHundredMin` | 0.39 | results/p3/calibrated.json <- results/p4/mdc_bounds.json (calibration from the headline) | current (representative wagon, Table 1); calibration factor from current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
-| `\MDCCalTwoHundredMax` | 0.42 | results/p3/calibrated.json <- results/p4/mdc_bounds.json (calibration from the headline) | current (representative wagon, Table 1); calibration factor from current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
-| `\DriftSoftTwentyApparent` | -6.05 | results/p2/drift_freight.json | current (representative wagon, Table 1) |
+| `\BandEmptyMDCFiftyMin` | 0.75 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
+| `\BandEmptyMDCFiftyMax` | 0.83 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
+| `\BandEmptyMDCTwoHundredMin` | 0.35 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
+| `\BandEmptyMDCTwoHundredMax` | 0.39 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\EffPctTenEmpty` | -0.74 | results/p3/bearing_clearance.json | current (representative wagon, Table 1) |
 
 ## paper/sec6_conclusions.tex
@@ -31,8 +30,8 @@ Every number in the abstract, highlights, conclusions and cover letter, with the
 | `\IgnoreCouplingForty` | -5.6 | results/p4/ignore_coupling.json | current (representative wagon, Table 1) |
 | `\ICDiffMean` | 0.059 | results/p4/inverse_crime.json | current (representative wagon, Table 1) |
 | `\BudgetCoest` | 10.0 | results/p2/model_form_mw_sensitivity.json | current (representative wagon, Table 1) |
-| `\MDCCalFiftyMin` | 0.78 | results/p3/calibrated.json <- results/p4/mdc_bounds.json (calibration from the headline) | current (representative wagon, Table 1); calibration factor from current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
-| `\MDCCalFiftyMax` | 0.84 | results/p3/calibrated.json <- results/p4/mdc_bounds.json (calibration from the headline) | current (representative wagon, Table 1); calibration factor from current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
+| `\BandEmptyMDCFiftyMin` | 0.75 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
+| `\BandEmptyMDCFiftyMax` | 0.83 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 
 ## Numbers typed by hand (highlights, cover letter)
 

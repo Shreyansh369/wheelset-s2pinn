@@ -115,6 +115,9 @@ def summarise():
         out["pairs"] = {"n": len(Pr), "false_alarms_raw": k_raw, "rate_raw_ci95": cp_interval(k_raw, len(Pr)),
                         "false_alarms_calibrated": k_cal, "rate_calibrated_ci95": cp_interval(k_cal, len(Pr)),
                         "D_mean_pct": float(np.mean(np.exp(D) - 1) * 100), "D_sd_pct": float(np.std(D, ddof=1) * 100) if len(D) > 1 else None,
+                        "z": [float(x) for x in D / se], "se_median_pct": float(np.median(se) * 100),
+                        "level_err_min_pct": float(min(math.exp(r[x]) - 1 for r in Pr for x in ("err_base", "err_later")) * 100),
+                        "level_err_max_pct": float(max(math.exp(r[x]) - 1 for r in Pr for x in ("err_base", "err_later")) * 100),
                         "level_bias_mean_pct": float(np.mean([math.exp(r["err_base"]) - 1 for r in Pr] + [math.exp(r["err_later"]) - 1 for r in Pr]) * 100),
                         "se_inflation_used": r40, "all_converged": all(r["converged"] for r in Pr)}
     save_result("p4/primary_damping", out, cfg={"data": "k_p, c_p linear in axle load between empty and laden (Dusza et al. 2024)",

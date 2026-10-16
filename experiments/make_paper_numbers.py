@@ -375,10 +375,37 @@ def section4(m, miss):
         m["PDNominalBias"], m["PDCoestBias"] = _f(p["nominal"]["bias_pct"]), _f(p["coest"]["bias_pct"])
         if "pairs" in d:
             x = d["pairs"]
-            m["PDPairsN"], m["PDPairsFA"] = str(x["n"]), str(x["false_alarms_calibrated"])
+            m["PDPairsN"], m["PDPairsFA"] = str(x["n"]), str(x["false_alarms_raw"])
             m["PDPairsMean"] = _f(x["D_mean_pct"])
             m["PDLevelBias"] = _f(x["level_bias_mean_pct"])
+            az = [abs(z) for z in x.get("z", [])]
+            if az:
+                m["PDPairsAbsZMin"], m["PDPairsAbsZMax"] = _f(min(az), 1), _f(max(az), 1)
+                m["PDLevelMin"], m["PDLevelMax"] = _f(x["level_err_min_pct"], 1), _f(x["level_err_max_pct"], 1)
+                m["PDPairsSE"] = _f(x["se_median_pct"])
     block("p4/primary_damping.json", pdamp, ["PDNominalBias", "PDCoestBias", "PDPairsN", "PDPairsFA", "PDPairsMean"])
+
+    def banded(d):
+        B = {(r["band"], r["N"], int(r["snr_db"])): r for r in d["bounds"]}
+        for b, w in (("empty", "Empty"), ("laden", "Laden")):
+            for N, n in ((50, "Fifty"), (200, "TwoHundred")):
+                v = [B[(b, N, s)]["mdc_pct"] for s in (20, 40) if (b, N, s) in B]
+                if v:
+                    m[f"Band{w}MDC{n}Min"], m[f"Band{w}MDC{n}Max"] = _f(min(v)), _f(max(v))
+                for s_, sn in ((20, "Twenty"), (40, "Forty")):
+                    if (b, N, s_) in B:
+                        m[f"Band{w}MDC{n}{sn}"] = _f(B[(b, N, s_)]["mdc_pct"])
+                        m[f"Band{w}CRB{n}{sn}"] = _f(B[(b, N, s_)]["crb_kB0_pct"])
+            if b in d.get("pseudo_true", {}):
+                m[f"Band{w}Pseudo"] = _f(d["pseudo_true"][b])
+            if b in d.get("pairs", {}):
+                x = d["pairs"][b]
+                m[f"Band{w}PairsN"], m[f"Band{w}PairsFA"] = str(x["n"]), str(x["false_alarms"])
+                m[f"Band{w}PairsFALo"], m[f"Band{w}PairsFAHi"] = _f(x["rate_ci95"][0]), _f(x["rate_ci95"][1])
+                m[f"Band{w}ZMin"], m[f"Band{w}ZMax"] = _f(min(x["z"]), 1), _f(max(x["z"]), 1)
+                m[f"Band{w}SE"] = _f(x["se_median_pct"])
+                m[f"Band{w}LevelMean"], m[f"Band{w}LevelSD"] = _f(x["level_err_mean_pct"]), _f(x["level_err_sd_pct"])
+    block("p4/banded.json", banded, ["BandEmptyMDCFiftyMin"])
 
     def icrime(d):
         for mode, w in (("nl", "NL"), ("lin", "Lin")):

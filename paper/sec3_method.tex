@@ -104,7 +104,12 @@ checked on held-out simulation seeds.
 
 \subsection{Relative change and detection}\label{sec:relative}
 The monitoring output is the change of support stiffness between a baseline period and a later
-period of the same vehicle and sensor, each with $N$ passes,
+period of the same vehicle and sensor, each with $N$ passes in the same payload band. Two bands are used:
+empty (axle load 5.5--7~t) and laden (20--22.5~t); in each, the estimator uses the band's primary
+stiffness and damping (Table~\ref{tab:table1_parameters}), and the weigh-in-motion payload assigns each
+pass to its band. Pooling passes over the whole payload range requires a payload-dependent model of the
+primary suspension (Section~\ref{sec:res-primary}). The change is
+
 \begin{equation}
   D = \log\hat k_{B0}^{\,\mathrm{later}} - \log\hat k_{B0}^{\,\mathrm{base}},
 \end{equation}

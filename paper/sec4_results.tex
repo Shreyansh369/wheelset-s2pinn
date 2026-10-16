@@ -188,6 +188,34 @@ worst pass), and brief loss of contact occurs in some empty passes (at most \ICC
 samples of a pass). For \ICPairsN{} pairs of periods with no change and nonlinear contact, the
 calibrated test raised \ICPairsFACal{} false alarms (95\% interval of the rate \ICPairsFACalLo--\ICPairsFACalHi).
 
+\subsection{Payload-dependent primary suspension}\label{sec:res-primary}
+The primary stiffness and damping of the Y25 bogie differ strongly between the empty and the laden wagon
+(Table~\ref{tab:table1_parameters}), whereas the model uses one value of each. As a stress test, data
+were generated with both varying linearly with axle load between the empty and laden values, and fitted
+with fixed values.
+
+\emph{Mixed payloads.} With passes over the whole payload range and the empty values in the fit, the
+large-sample bias of $k_{B0}$ is \PDCoestBias\% ($k_f$, $k_{H0}$ re-estimated), but individual periods
+are biased by \PDLevelMin{} to \PDLevelMax\%, depending on the payload mix of the period, and the
+errors do not cancel between periods: in \PDPairsN{} pairs of periods with no change the apparent change
+reached $|z| = \PDPairsAbsZMin$--$\PDPairsAbsZMax$, and \PDPairsFA{} pairs raised a false alarm. The
+standard error of the change also grew to \PDPairsSE\%. Mixed-payload pooling with a fixed primary
+suspension is therefore not used.
+
+\emph{Payload bands.} With the comparison restricted to one payload band and the estimator using that
+band's fixed values (Section~\ref{sec:relative}), the same stress truth gives a large-sample bias of
+\BandEmptyPseudo\% (empty band) and \BandLadenPseudo\% (laden band). In \BandEmptyPairsN{} zero-change
+pairs in the empty band, $z$ ranged from \BandEmptyZMin{} to \BandEmptyZMax{} with \BandEmptyPairsFA{}
+false alarms (95\% interval of the rate \BandEmptyPairsFALo--\BandEmptyPairsFAHi), and the standard error
+of the change was \BandEmptySE\%, as without the stress; in \BandLadenPairsN{} laden pairs, $z$ ranged from
+\BandLadenZMin{} to \BandLadenZMax{} (\BandLadenPairsFA{} false alarms). The detection limits per band, from
+the Cram\'er--Rao bound with $k_f$ and $k_{H0}$ re-estimated, are \BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\%
+($N=50$) and \BandEmptyMDCTwoHundredMin--\BandEmptyMDCTwoHundredMax\% ($N=200$) for the empty band, and
+\BandLadenMDCFiftyMin--\BandLadenMDCFiftyMax\% and \BandLadenMDCTwoHundredMin--\BandLadenMDCTwoHundredMax\%
+for the laden band, where the strongly damped laden suspension widens the support resonance; in the laden
+band the support damping $c_B$ is not resolved. Payload diversity therefore remains a lever only within
+a band, and the empty band is the preferred operating mode.
+
 \subsection{Relative change, interval and detection}\label{sec:res-relative}
 A model error that biases $\log\hat k_{B0}$ by a constant cancels in the change $D$; what remains
 scales with $D$ (Fig.~\ref{fig:relchange}, Table~\ref{tab:table7_gains}). With $k_f$ and $k_{H0}$

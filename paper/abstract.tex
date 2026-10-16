@@ -11,11 +11,11 @@ wheels through an infinite Timoshenko rail. For a representative freight wagon (
 root-mean-square error of \HLRMSEMin--\HLRMSEMax\%, within \HLRatioCRBMax{} times the Cram\'er--Rao
 bound. Ignoring wheel-to-wheel coupling biases the estimate by \IgnoreCouplingForty\%; nonlinear
 Hertzian contact shifts it by only \ICDiffMean{} percentage points. Because absolute values carry a
-model-form uncertainty of about \BudgetCoest\%, the method targets changes between periods. With the
-foundation and contact stiffness re-estimated in each period, a decrease of
-\MDCCalFiftyMin--\MDCCalFiftyMax\% is detectable from 50 passes per period and
-\MDCCalTwoHundredMin--\MDCCalTwoHundredMax\% from 200, and a 20\% softer foundation, which appears as a
-\DriftSoftTwentyApparent\% change if the track is held fixed, causes no bias. Clearance growth changes the
+model-form uncertainty of about \BudgetCoest\%, the method targets changes between periods. Comparing
+periods within a payload band, with the foundation and contact stiffness re-estimated in each, a
+decrease of \BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\% is detectable from 50 empty passes per period and
+\BandEmptyMDCTwoHundredMin--\BandEmptyMDCTwoHundredMax\% from 200, and a 20\% softer foundation causes
+no bias; pooling mixed payloads requires a payload-dependent suspension model. Clearance growth changes the
 effective stiffness little (\EffPctTenEmpty\% per 10~\textmu m), so the method reports support-stiffness
 loss rather than its mechanism.
 \end{abstract}

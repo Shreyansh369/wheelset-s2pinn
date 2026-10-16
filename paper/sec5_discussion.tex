@@ -74,16 +74,17 @@ held fixed, the wheels are rigid, and the rail pinned--pinned resonance of discr
 is not represented; all of these lie outside or at the edge of the analysis band but have not been
 tested against data.
 
-\paragraph{Primary suspension.} The primary damping of the Y25 bogie comes from a friction damper; the
-values used are equivalent viscous coefficients identified at low frequency for the empty and the laden
-wagon~\citep{dusza2024}, not at the 400~Hz of the support resonance, where the damper is likely to stick
-and act as a stiffness rather than a damper. The model uses one stiffness and one damping for all payloads.
-If both instead vary linearly with payload between the empty and laden values while the fit keeps the
-empty values, the large-sample bias of $k_{B0}$ is \PDNominalBias\% with the track held fixed and
-\PDCoestBias\% with it re-estimated. % RESULT UNDER REVIEW (zero-change pairs show period-to-period scatter); text to be finalised.
-At the laden damping the detection limit rises to
-\SweepCpMDCHi\% (Table~\ref{tab:table15_sweep}). The behaviour of the friction damper at these
-frequencies, and its dependence on payload, should be measured before the absolute level of $k_{B0}$ is used.
+\paragraph{Primary suspension and payload bands.} The primary damping of the Y25 bogie comes from a
+friction damper; the values used are low-frequency equivalent viscous coefficients for the empty and the
+laden wagon~\citep{dusza2024}, not validated at the 400~Hz of the support resonance, where the damper is
+likely to stick and act more as a stiffness than as a damper. The stress test of
+Section~\ref{sec:res-primary}, which lets the low-frequency values vary with payload, is therefore likely
+to be conservative. It shows that pooling passes over the whole payload range requires a
+payload-dependent model of the primary suspension: with a fixed suspension, the error of each period
+depends on its payload mix and does not cancel in the change. The method is therefore operated within
+payload bands, with the empty band preferred. Co-estimating a payload-dependent primary suspension, which
+would restore the full payload range, is left for future work, as is measuring the damper's behaviour at
+the support frequency, which the absolute level of $k_{B0}$ also depends on.
 
 \paragraph{Representative parameter values.} The vehicle and track values are those of a
 representative freight wagon (Y25 bogies, 22.5~t axle load) on ballasted 60E1 track, taken from
