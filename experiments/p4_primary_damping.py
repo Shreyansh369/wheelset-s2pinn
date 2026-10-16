@@ -73,7 +73,7 @@ def pseudo():
                      "phi_hat": r["phi"], "converged": r["converged"], "wall_fit_s": r["wall_fit_s"]})
 
 
-def pairs():
+def pairs(j0=0, j1=N_PAIRS):
     sm, thb, rough, _ = setup()
     mw = models(sm)[0]["4"]
     fams = families(mw, thb)
@@ -81,7 +81,7 @@ def pairs():
     done = _done(fp, lambda r: r["rep"])
     th = dict(truth(thb, {}, TRUTH["kB0"]), primary_payload_law=True)
     tmax = 30 * 60
-    for j in range(N_PAIRS):
+    for j in range(j0, j1):
         if j in done:
             continue
         if time.perf_counter() - T0 + tmax > BUDGET:
@@ -127,10 +127,12 @@ if __name__ == "__main__":
     ap.add_argument("--pseudo", action="store_true")
     ap.add_argument("--pairs", action="store_true")
     ap.add_argument("--summarise", action="store_true")
+    ap.add_argument("--j0", type=int, default=0)
+    ap.add_argument("--j1", type=int, default=N_PAIRS)
     a = ap.parse_args()
     if a.pseudo:
         pseudo()
     if a.pairs:
-        pairs()
+        pairs(a.j0, a.j1)
     if a.summarise:
         summarise()
