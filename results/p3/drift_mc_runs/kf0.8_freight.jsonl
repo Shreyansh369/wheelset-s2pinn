@@ -4,3 +4,5 @@
 {"estimator": "coest", "rep": 14, "f": 0.8, "D_hat": 0.0032076234239610812, "se": 0.0025867074506889195, "alarm": false, "converged": true, "wall_s": 2703.888186644}
 {"estimator": "coest", "rep": 7, "f": 0.8, "D_hat": 0.0014247210295046386, "se": 0.0025255724274395224, "alarm": false, "converged": true, "wall_s": 2747.419085484}
 {"estimator": "coest", "rep": 0, "f": 0.8, "D_hat": 0.00582022868059795, "se": 0.002496335250568094, "alarm": false, "converged": true, "wall_s": 2939.707442688}
+{"estimator": "nominal", "rep": 15, "f": 0.8, "D_hat": -0.059951547162327756, "se": 0.002560546114217775, "alarm": true, "converged": true, "wall_s": 819.4402238880002}
+{"estimator": "nominal", "rep": 8, "f": 0.8, "D_hat": -0.06042527619370475, "se": 0.002526902457069268, "alarm": true, "converged": true, "wall_s": 854.8555235810004}

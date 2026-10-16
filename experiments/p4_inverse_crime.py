@@ -45,6 +45,7 @@ OUT = RESULTS_DIR / "p4" / "inverse_crime_runs"
 N, SNR, SPEEDS = 50, 40.0, (60.0, 110.0)
 T0, BUDGET = time.perf_counter(), 110 * 60
 Z = 1.6448536269514722
+TAG = [""]
 
 
 def dataset(gen, rough, r0, key, contact):
@@ -75,7 +76,7 @@ def run(mode, j0, j1):
     gen = NonlinearContactGenerator(mw, dict(thb, **TRUTH))
     fam = MultiWheelFamily(mw, thb)
     OUT.mkdir(parents=True, exist_ok=True)
-    fp = OUT / f"{mode}.jsonl"
+    fp = OUT / f"{mode}{TAG[0]}.jsonl"
     done = {tuple(json.loads(l)["key"]) for l in fp.read_text().splitlines()} if fp.exists() else set()
     keys = [(61, j, per) for j in range(j0, j1) for per in (0, 1)] if mode == "pairs" else [(60, j) for j in range(j0, j1)]
     # --fd: frequency-domain generator at the current config on the same keys (generator check)
@@ -164,10 +165,12 @@ def summarise():
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--mode", choices=("nl", "lin", "pairs", "fd"))
+    ap.add_argument("--tag", default="", help="run-file suffix (e.g. _v2 after the roughness-grid fix)")
     ap.add_argument("--j0", type=int, default=0)
     ap.add_argument("--j1", type=int, default=20)
     ap.add_argument("--summarise", action="store_true")
     a = ap.parse_args()
+    TAG[0] = a.tag
     if a.summarise:
         summarise()
     else:

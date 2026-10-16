@@ -32,6 +32,7 @@ import numpy as np
 from src.inverse.multipass import F_HI, F_LO, FS, N_REVS, NOISE_BAND
 
 G0 = 9.80665
+ROUGH_LINES_PER_BIN = 4      # set to 0 to reproduce the original (padded-record) roughness grid
 
 
 class NonlinearContactGenerator:
@@ -76,7 +77,10 @@ class NonlinearContactGenerator:
         dt = 1 / self.fs
         span = self.d.max() - self.d.min()
         dx = V * dt / 4
-        nx = int(2 ** math.ceil(math.log2((V * nfft * dt + span + 1.0) / dx)))
+        # roughness lines at least 4 per record bin (spacing <= 1/(4T) in frequency), as in generate_pass;
+        # a coarser line grid (the padded record alone) puts a picket-fence ripple into the expected periodogram
+        length = max(V * nfft * dt, ROUGH_LINES_PER_BIN * V * T) + span + 1.0
+        nx = int(2 ** math.ceil(math.log2(length / dx)))
         dOm = 2 * np.pi / (nx * dx)
         Om = np.arange(nx // 2 + 1) * dOm
         fb = Om * V / (2 * np.pi)
