@@ -2,3 +2,4 @@
 {"estimator": "nominal", "rep": 7, "f": 0.8, "D_hat": -0.057508333815405877, "se": 0.0025162432786217767, "alarm": true, "converged": true, "wall_s": 963.613298455}
 {"estimator": "nominal", "rep": 0, "f": 0.8, "D_hat": -0.05450966532995949, "se": 0.0024689602637299217, "alarm": true, "converged": true, "wall_s": 977.7477551129999}
 {"estimator": "coest", "rep": 14, "f": 0.8, "D_hat": 0.0032076234239610812, "se": 0.0025867074506889195, "alarm": false, "converged": true, "wall_s": 2703.888186644}
+{"estimator": "coest", "rep": 7, "f": 0.8, "D_hat": 0.0014247210295046386, "se": 0.0025255724274395224, "alarm": false, "converged": true, "wall_s": 2747.419085484}
