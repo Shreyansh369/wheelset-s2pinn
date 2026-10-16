@@ -8,24 +8,24 @@
       "kappa": 0.044,
       "ranges": {
         "kf": [
-          0.35,
-          "CT23: in-situ ABA-derived kf 1.2-2.6x the lab value (Tables 2, 5 vs Sec. 5.1.1); section-to-section spread"
+          0.5957507412015728,
+          "rail pad 80-800 MN/m per pad at 0.60-0.65 m spacing -> 123-1333 MN/m^2 (Thompson et al. 2007; EUROBOLT; snippets)"
         ],
         "eta_f": [
-          0.2,
-          "CT23 Sec. 5.1.1: literature loss factor 0.2-0.3"
+          0.22907268296853878,
+          "rail pad loss factor 0.1-0.25 (snippets)"
         ],
         "kH0": [
-          0.15,
-          "assumption: Hertz constant C_H for freight wheel/60E1 profiles not sourced (CT23 value is metro); wheel load from WIM"
+          0.12626131521262282,
+          "linearised contact stiffness 1.388 GN/m (Hertz, S1002 transverse radius +0.5 m) to 2.3 GN/m (published spread, Hasan 2020)"
         ],
         "unsprung_scale": [
-          0.03,
-          "assumption: design mass known; wear and fittings"
+          0.04,
+          "about 20 kg per axlebox, 4% of the wheelset unsprung mass, between axlebox designs (SKF Evolution, snippet)"
         ],
         "axle_damp_scale": [
-          0.5,
-          "assumption: axle damping is a placeholder (1% at 80 Hz); factor ~1.65 either way"
+          0.7489330683884977,
+          "wheelset modal damping 0.1-2% (Chaar 2007: measured below 2%; IPME paper 0.1-1%; snippets)"
         ]
       },
       "kf_sampling": "stratified log-normal sigma 0.35",
@@ -142,6 +142,7 @@
     },
     "drift_mc": [
       {
+        "file": "kf0.8.jsonl",
         "kf_factor": 0.8,
         "estimator": "nominal",
         "n": 20,
@@ -152,11 +153,12 @@
           1.0
         ],
         "D_hat_mean_pct": -2.2089607825292052,
-        "D_hat_sd_pct": 0.3470545402546974,
+        "D_hat_sd_pct": 0.34705454025469745,
         "se_median_pct": 0.2692161841225945,
         "all_converged": true
       },
       {
+        "file": "kf0.8.jsonl",
         "kf_factor": 0.8,
         "estimator": "coest",
         "n": 20,
@@ -169,6 +171,38 @@
         "D_hat_mean_pct": -0.01803429553922431,
         "D_hat_sd_pct": 0.2240374104860398,
         "se_median_pct": 0.24056648467904485,
+        "all_converged": true
+      },
+      {
+        "file": "kf0.8_freight.jsonl",
+        "kf_factor": 0.8,
+        "estimator": "nominal",
+        "n": 17,
+        "false_alarms": 17,
+        "rate": 1.0,
+        "rate_ci95": [
+          0.8049356770309067,
+          1.0
+        ],
+        "D_hat_mean_pct": -5.72569951765951,
+        "D_hat_sd_pct": 0.595710276408244,
+        "se_median_pct": 0.2516243278621777,
+        "all_converged": true
+      },
+      {
+        "file": "kf0.8_freight.jsonl",
+        "kf_factor": 0.8,
+        "estimator": "coest",
+        "n": 17,
+        "false_alarms": 0,
+        "rate": 0.0,
+        "rate_ci95": [
+          0.0,
+          0.19506432296909318
+        ],
+        "D_hat_mean_pct": 0.07690254786887536,
+        "D_hat_sd_pct": 0.23490553481455045,
+        "se_median_pct": 0.25154242100891144,
         "all_converged": true
       }
     ],
@@ -426,10 +460,10 @@
     ]
   },
   "provenance": {
-    "git_commit": "67ffb7af09ee34b588cf7ead2b15035acde0327c",
-    "timestamp_utc": "2026-10-13T16:52:26Z",
+    "git_commit": "c0ec663e71b6581d46f90f0811ff2d3d3fb11a41-dirty",
+    "timestamp_utc": "2026-10-16T16:29:45Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 96.13671875,
+    "peak_cpu_memory_mb": 96.43359375,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

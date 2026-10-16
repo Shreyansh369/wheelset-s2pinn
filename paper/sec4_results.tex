@@ -27,11 +27,10 @@ values of Table~\ref{tab:table1_parameters}. The headline Monte Carlo study was 
 contact stiffness was computed from Hertz theory and the primary damping taken from the vehicle source,
 and uses $k_{H0} = 1.4$~GN/m and $c_p = 10$~kN\,s/m; both lie within the swept ranges of
 Table~\ref{tab:table15_sweep}, where they change the bound by a few hundredths of a percentage point.
-Four studies were run with an earlier configuration (a metro wheel layout, BS113A rail and a
+Three studies were run with an earlier configuration (a metro wheel layout, BS113A rail and a
 $\pm30$-bin kernel) and are reported for their qualitative conclusions only: the bias diagnosis
 (Section~\ref{sec:res-bias}), the multi-wheel Monte Carlo (Fig.~\ref{fig:mwbias}), the gain
-uncertainty of relative changes and its replicates (Section~\ref{sec:res-relative}), and the drift
-Monte Carlo (Section~\ref{sec:res-drift}). Sections~\ref{sec:res-speed}, \ref{sec:res-wheel}
+uncertainty of relative changes and its replicates (Section~\ref{sec:res-relative}). Sections~\ref{sec:res-speed}, \ref{sec:res-wheel}
 and~\ref{sec:res-repeated} use a single wheelset on a rail oscillator, whose transfer function is
 smooth on the bin scale, and Section~\ref{sec:res-p2} uses the setup of~\citep{carrigan2023}.
 
@@ -281,8 +280,7 @@ change of \DriftSoftTenApparent\% or \DriftSoftTwentyApparent\% in $k_{B0}$ (fal
 \DriftSoftTenFA{} at 10\%), and a stiffer one masks real losses (MDC \DriftStiffTenMDC\% and
 \DriftStiffTwentyMDC\%). Re-estimating $k_f$ and $k_{H0}$ per period keeps the MDC at \DriftCoestMDC\%
 for every drift level. A Monte Carlo with the later foundation 20\% softer and no true change
-(\DriftMCNomN{} replicates per estimator, earlier configuration with a metro wheel layout and BS113A
-rail) confirms the qualitative result: \DriftMCNomFA/\DriftMCNomN{} false alarms with
+(\DriftMCNomN{} replicates per estimator) confirms this: \DriftMCNomFA/\DriftMCNomN{} false alarms with
 $k_f$ fixed ([\DriftMCNomLo, \DriftMCNomHi], mean apparent change \DriftMCNomMean\%) against
 \DriftMCCoestFA/\DriftMCCoestN{} with $k_f$ re-estimated ([\DriftMCCoestLo, \DriftMCCoestHi], mean
 \DriftMCCoestMean\%).

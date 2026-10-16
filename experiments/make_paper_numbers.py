@@ -282,7 +282,10 @@ def section4(m, miss):
         m["KapCoestLo"], m["KapCoestHi"] = _f(k["coverage_ci95"][0]), _f(k["coverage_ci95"][1])
         m["KapCoestRMS"], m["KapCoestMean"] = _f(k["rms_change_error_frac"], 3), _f(k["mean_change_error_frac"], 3)
         m["KapCoestKfMin"], m["KapCoestKfMax"] = _f(k["kf_draw_range"][0]), _f(k["kf_draw_range"][1])
-        dm = {(x["estimator"], x["kf_factor"]): x for x in d["drift_mc"]}
+        cur = any(x.get("file", "").endswith("_freight.jsonl") for x in d["drift_mc"])   # current config if present
+        dm = {(x["estimator"], x["kf_factor"]): x for x in d["drift_mc"]
+              if (x.get("file", "").endswith("_freight.jsonl") if cur else not x.get("file", "").endswith("_freight.jsonl"))}
+        m["DriftMCCurrentConfig"] = "1" if cur else "0"
         for e, w in (("nominal", "Nom"), ("coest", "Coest")):
             x = dm[(e, 0.8)]
             m[f"DriftMC{w}FA"], m[f"DriftMC{w}N"] = str(x["false_alarms"]), str(x["n"])

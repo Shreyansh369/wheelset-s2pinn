@@ -23,7 +23,7 @@ SRC = [  # (macro prefix, source file, configuration)
     ("Budget", "results/p2/model_form_mw_sensitivity.json", CUR),
     ("MDCCal", "results/p3/calibrated.json <- results/p4/mdc_bounds.json (calibration from the headline)", CUR + "; calibration factor from " + HL),
     ("MDC", "results/p4/mdc_bounds.json via results/p3/calibrated.json", CUR),
-    ("DriftMC", "results/p2/relative_coest_drift.json (drift Monte Carlo)", OLD),
+    ("DriftMC", "results/p3/validation_mc.json (drift Monte Carlo, kf0.8_freight)", CUR),
     ("Drift", "results/p2/drift_freight.json", CUR),
     ("EffPctTen", "results/p3/bearing_clearance.json", CUR),
     ("Kap", "results/p3/validation_mc.json / calibrated.json", OLD),
