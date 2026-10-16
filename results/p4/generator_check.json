@@ -1,0 +1,33 @@
+{
+  "name": "p4/generator_check",
+  "seed": 7,
+  "config": {
+    "pass": "85 km/h, 14 t, 4 wheels (record) / 1 wheel (damping)",
+    "contact": "linear",
+    "fs_sim": 8000.0
+  },
+  "payload": {
+    "V_kmh": 85.0,
+    "W_t": 14.0,
+    "rel_L2_misfit_record": 0.0008455160217076709,
+    "spectral_ratio_support_300_550": 1.0000569762242508,
+    "spectral_ratio_analysis_band": 1.0001813565335955,
+    "operator_max_rel_misfit_single_wheel": 0.00844791487957077,
+    "support_peak_hz_td": 451.904296875,
+    "support_zeta_halfpower_td": 0.055105348460291734,
+    "support_peak_hz_fd": 451.904296875,
+    "support_zeta_halfpower_fd": 0.055105348460291734,
+    "support_mode_eig_hz": 404.62789155877596,
+    "support_mode_eig_zeta": 0.06911539833217774
+  },
+  "provenance": {
+    "git_commit": "8959b8cdbc7f15339d47bc6a73236b42b9a81e25-dirty",
+    "timestamp_utc": "2026-10-16T07:43:48Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 194.9375,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

@@ -78,6 +78,7 @@ def run(mode, j0, j1):
     fp = OUT / f"{mode}.jsonl"
     done = {tuple(json.loads(l)["key"]) for l in fp.read_text().splitlines()} if fp.exists() else set()
     keys = [(61, j, per) for j in range(j0, j1) for per in (0, 1)] if mode == "pairs" else [(60, j) for j in range(j0, j1)]
+    # --fd: frequency-domain generator at the current config on the same keys (generator check)
     tmax = 15 * 60
     lt = math.log(TRUTH["kB0"])
     for key in keys:
@@ -87,7 +88,12 @@ def run(mode, j0, j1):
             print("deadline", flush=True)
             break
         t1 = time.perf_counter()
-        P, Wm, Ws, g, st = dataset(gen, rough, thb["r0"], key, "linear" if mode == "lin" else "hertz")
+        if mode == "fd":   # frequency-domain generator (estimator's data model), same speeds/payloads/levels
+            from experiments.p2_multiwheel import dataset as fd_dataset
+            P, Wm, Ws, g = fd_dataset(sm, thb, rough, mw, key, N=N, snr=SNR, speeds=SPEEDS)
+            st = [{"converged": True, "contact_loss_fraction": 0.0, "delta_min_ratio": 1.0, "delta_rms_um": 0.0, "delta0_um": 1.0}]
+        else:
+            P, Wm, Ws, g, st = dataset(gen, rough, thb["r0"], key, "linear" if mode == "lin" else "hertz")
         t_gen = time.perf_counter() - t1
         r = fit(P, Wm, rough, fam)
         row = {"key": list(key), "mode": mode, "err_log": r["phi"][0] - lt, "se_log": r["se_log"][0],
@@ -114,7 +120,7 @@ def summarise():
     c40 = next((h for h in json.loads(cal.read_text())["payload"]["headline"] if h["snr_db"] == 40), None) if cal.exists() else None
     b40 = math.log(1 + c40["all_seeds"]["bias_pct"] / 100) if c40 and c40["calibration_applied"] else 0.0
     r40 = c40["all_seeds"]["inflation_rmse_over_se"] if c40 and c40["calibration_applied"] else 1.0
-    for mode in ("nl", "lin"):
+    for mode in ("nl", "lin", "fd"):
         R = _rows(mode)
         if not R:
             continue
@@ -157,7 +163,7 @@ def summarise():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", choices=("nl", "lin", "pairs"))
+    ap.add_argument("--mode", choices=("nl", "lin", "pairs", "fd"))
     ap.add_argument("--j0", type=int, default=0)
     ap.add_argument("--j1", type=int, default=20)
     ap.add_argument("--summarise", action="store_true")

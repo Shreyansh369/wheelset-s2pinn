@@ -94,6 +94,18 @@ class ScenarioModel:
         m = self.base.matrices(th["kB0"], th["cB"], th["W"], load_exp=th.get("load_exp"),
                                clearance_growth_um=th.get("clearance_growth_um", 0.0))
         M, C, K = m.M * th.get("unsprung_scale", 1.0), m.C.copy(), m.K
+        if th.get("primary_payload_law"):
+            # payload-dependent primary suspension (model-form test): k_p and c_p interpolated linearly in axle
+            # load between the empty (W_min) and laden (W_max) values of config primary.kp/cp ranges
+            pr, pl = self.p.raw["primary"], self.p.v["payload"]
+            u = (th["W"] - pl["W_min"]) / (pl["W_max"] - pl["W_min"])
+            kp0, cp0 = self.p.v["primary"]["kp"], self.p.v["primary"]["cp"]
+            klo, khi = (float(x) for x in pr["kp"]["range"])
+            clo, chi = (float(x) for x in pr["cp"]["range"])
+            K = K.copy()
+            for ib in self.base.ib:
+                K[ib, ib] += klo + u * (khi - klo) - kp0
+                C[ib, ib] += clo + u * (chi - clo) - cp0
         s = th.get("axle_damp_scale", 1.0)
         if s != 1.0:
             nb = self.base.ib[0]

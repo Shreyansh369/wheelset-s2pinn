@@ -119,9 +119,9 @@ def kappa(j0, j1):
 
 
 # ----------------------------------------------------------------------------- (3) drift MC
-def drift(j0, j1, f):
+def drift(j0, j1, f, tag=""):
     sm, thb, rough, mw, fams, _ = setup_all()
-    fp = OUT / "drift_mc_runs" / f"kf{f}.jsonl"
+    fp = OUT / "drift_mc_runs" / f"kf{f}{tag}.jsonl"
     done = _done(fp, lambda r: (r["estimator"], r["rep"]))
     for j in range(j0, j1):
         if all((e, j) in done for e in EST):
@@ -221,7 +221,7 @@ def summarise():
             if Re:
                 k = sum(r["alarm"] for r in Re)
                 out.setdefault("drift_mc", []).append({
-                    "kf_factor": Re[0]["f"], "estimator": e, "n": len(Re), "false_alarms": k, "rate": k / len(Re),
+                    "file": fp.name, "kf_factor": Re[0]["f"], "estimator": e, "n": len(Re), "false_alarms": k, "rate": k / len(Re),
                     "rate_ci95": cp_interval(k, len(Re)), "D_hat_mean_pct": float(np.mean([math.exp(r["D_hat"]) - 1 for r in Re]) * 100),
                     "D_hat_sd_pct": float(np.std([r["D_hat"] for r in Re], ddof=1) * 100) if len(Re) > 1 else None,
                     "se_median_pct": float(np.median([r["se"] for r in Re]) * 100),
@@ -265,6 +265,7 @@ if __name__ == "__main__":
     ap.add_argument("--j0", type=int, default=0)
     ap.add_argument("--j1", type=int, default=1)
     ap.add_argument("--f", type=float, default=0.8)
+    ap.add_argument("--tag", default="", help="run-file suffix, e.g. _freight for the current configuration")
     ap.add_argument("--snr", type=float, default=60.0)
     ap.add_argument("--refined", action="store_true")
     ap.add_argument("--seed", type=int, default=42)
@@ -275,7 +276,7 @@ if __name__ == "__main__":
     if a.kappa:
         kappa(a.j0, a.j1)
     if a.drift:
-        drift(a.j0, a.j1, a.f)
+        drift(a.j0, a.j1, a.f, a.tag)
     if a.bias:
         bias(a.j0, a.j1, a.snr, a.refined, a.seed, a.kb, a.ksub, a.smooth)
     if a.summarise:
