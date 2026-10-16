@@ -94,6 +94,12 @@ class ScenarioModel:
         m = self.base.matrices(th["kB0"], th["cB"], th["W"], load_exp=th.get("load_exp"),
                                clearance_growth_um=th.get("clearance_growth_um", 0.0))
         M, C, K = m.M * th.get("unsprung_scale", 1.0), m.C.copy(), m.K
+        if ("kp" in th or "cp" in th) and not th.get("primary_payload_law"):
+            # fixed primary values other than the config's (payload-banded operation: empty or laden values)
+            K = K.copy()
+            for ib in self.base.ib:
+                K[ib, ib] += th.get("kp", self.p.v["primary"]["kp"]) - self.p.v["primary"]["kp"]
+                C[ib, ib] += th.get("cp", self.p.v["primary"]["cp"]) - self.p.v["primary"]["cp"]
         if th.get("primary_payload_law"):
             # payload-dependent primary suspension (model-form test): k_p and c_p interpolated linearly in axle
             # load between the empty (W_min) and laden (W_max) values of config primary.kp/cp ranges
