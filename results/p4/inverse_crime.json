@@ -64,30 +64,30 @@
       "max_abs_pp": 0.18975283524120812
     },
     "pairs": {
-      "n": 6,
-      "false_alarms_raw": 0,
-      "rate_raw": 0.0,
+      "n": 19,
+      "false_alarms_raw": 1,
+      "rate_raw": 0.05263157894736842,
       "rate_raw_ci95": [
-        0.0,
-        0.45925812643990044
+        0.0013316288041794228,
+        0.2602806541952142
       ],
-      "false_alarms_calibrated": 0,
-      "rate_calibrated": 0.0,
+      "false_alarms_calibrated": 1,
+      "rate_calibrated": 0.05263157894736842,
       "rate_calibrated_ci95": [
-        0.0,
-        0.45925812643990044
+        0.0013316288041794228,
+        0.2602806541952142
       ],
-      "D_mean_pct": 0.023384285038659712,
-      "D_sd_pct": 0.21909039146966264,
-      "sD_median_pct": 0.23563964120815822,
+      "D_mean_pct": -0.040806368577594426,
+      "D_sd_pct": 0.2177857744295057,
+      "sD_median_pct": 0.23653911632234506,
       "se_inflation_used": 1.0717297680962927
     }
   },
   "provenance": {
-    "git_commit": "8c041228289ff0b3387bf2cdd07added6ddd30b9-dirty",
-    "timestamp_utc": "2026-10-16T06:07:58Z",
+    "git_commit": "eabdf82f62fa27937849bfbb12b79aaa3122d7b5-dirty",
+    "timestamp_utc": "2026-10-16T07:16:15Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 95.95703125,
+    "peak_cpu_memory_mb": 95.875,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

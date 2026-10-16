@@ -161,6 +161,23 @@ of a percentage point.
 
 \inputtable{table15_sweep}
 
+\subsection{Nonlinear Hertzian contact}\label{sec:res-inverse-crime}
+Data and estimator otherwise share the linear model, so the Monte Carlo results above contain no error
+from the contact law itself. To test this, \ICNLN{} datasets of the headline design (40~dB) were
+generated with nonlinear Hertzian contact, $F = C_H[\delta_0+\delta]_+^{3/2}$, solved in the time domain by
+a fixed-point iteration with the linear vehicle--track operators, and fitted with the frozen linear
+estimator. The same datasets were also generated with linear contact (identical roughness, speeds,
+payloads and noise), so that the effect of the nonlinearity is isolated dataset by dataset. With
+nonlinear contact the bias of $k_{B0}$ is \ICNLBias\,$\pm$\,\ICNLBiasSE\% and the RMSE \ICNLRMSE\%
+(linear contact: \ICLinBias\,$\pm$\,\ICLinBiasSE\% and \ICLinRMSE\%); the paired difference due to
+the nonlinearity is \ICDiffMean\,$\pm$\,\ICDiffSE{} percentage points (at most \ICDiffMax{} in any
+dataset), small against the detection limit. With the 40~dB simulation calibration the intervals cover
+the truth in \ICNLCovCal{} of datasets [\ICNLCovCalLo, \ICNLCovCalHi] (linear contact
+\ICLinCovCal). The dynamic contact deflection reaches \ICDeltaRmsMax\% of the static deflection (rms,
+worst pass), and brief loss of contact occurs in some empty passes (at most \ICContactLossMax\% of the
+samples of a pass). For \ICPairsN{} pairs of periods with no change and nonlinear contact, the
+calibrated test raised \ICPairsFACal{} false alarms (95\% interval of the rate \ICPairsFACalLo--\ICPairsFACalHi).
+
 \subsection{Relative change, interval and detection}\label{sec:res-relative}
 A model error that biases $\log\hat k_{B0}$ by a constant cancels in the change $D$; what remains
 scales with $D$ (Fig.~\ref{fig:relchange}, Table~\ref{tab:table7_gains}). With $k_f$ and $k_{H0}$
