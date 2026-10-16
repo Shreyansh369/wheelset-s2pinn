@@ -32,17 +32,21 @@ corrugation (Section~\ref{sec:res-p2}); its intervals then under-cover, so on th
 screen per-pass estimates but does not yet give calibrated intervals.
 
 \subsection{Limitations}\label{sec:limitations}
-\paragraph{Residual bias and simulation-calibrated intervals.} With the frozen estimator the estimate
-of $k_{B0}$ retains a bias of about \HLFortyBias--\HLTwentyBias\% over all seeds (Table~\ref{tab:table3_headline};
-up to \BDWideBias\% for the seed with the largest bias),
-and at 40~dB a scatter \HLFortyRatioSE{} times the Wald standard error. Section~\ref{sec:res-bias}
-rules out the obvious causes: the large-sample (pseudo-true) bias is nil (slope \CalSlope), sensor
-noise does not change the error, exact sub-band scoring and a finer table change it by at most
-\BDMaxDiffExact{} percentage points, robust (sandwich) standard errors do not restore coverage, and
-fewer roughness levels do not remove it (no incidental-parameter effect). Truncation of the debiasing
-kernel explains about a fifth and is removed by the wider kernel. The remainder is unexplained. The
-40~dB intervals are therefore simulation-calibrated for the stated design (speed range, payload range,
-number of passes, roughness model and noise level), and must be re-calibrated for any other design.
+\paragraph{Residual bias and simulation-calibrated intervals.} For the representative wagon the frozen
+estimator has a bias of at most \HLBiasAbsMax\% (Table~\ref{tab:table3_headline}) and a scatter up to
+\HLRatioCRBMax{} times the Cram\'er--Rao bound, but the 40~dB Wald intervals still cover the truth
+slightly less often than nominal (\HLFortyCov). In the earlier configuration the bias reached
+\BDWideBias\% for one seed, and Section~\ref{sec:res-bias} ruled out the obvious causes: the
+large-sample (pseudo-true) bias is nil (slope \CalSlope), sensor noise does not change the error, exact
+sub-band scoring and a finer table change it by at most \BDMaxDiffExact{} percentage points, robust
+(sandwich) standard errors do not restore coverage, and fewer roughness levels do not remove it (no
+incidental-parameter effect). Truncation of the debiasing kernel explained about a fifth and is removed by
+the wider kernel; the remainder is unexplained and depends on the realisation of roughness, speeds and
+payloads. The 40~dB intervals are therefore simulation-calibrated for the stated design (speed range,
+payload range, number of passes, roughness model and noise level), and must be re-calibrated for any
+other design. The calibration was checked on held-out seeds (Section~\ref{sec:res-headline}); at
+20~dB, where no calibration is applied, the held-out coverage differed between the two splits, so the
+nominal 90\% should be read as approximate.
 For relative changes under random model errors, the calibrated interval still under-covers
 (\KapCalCovered/\KapCalN): the gain uncertainty $\kappa$ derived from one-at-a-time model errors is too
 small, and an interval for the change that holds under realistic model errors remains open.

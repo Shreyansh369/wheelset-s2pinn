@@ -175,6 +175,10 @@ def section4(m, miss):
             m[f"CalSplit{w}Infl"] = _f(h[sp]["inflation"])
         h20 = {x["snr_db"]: x for x in d["headline"]}[20]
         m["CalTwentyRawCov"] = _f(h20["uncalibrated"]["coverage"])
+        for sp, w in (("split_A", "A"), ("split_B", "B")):
+            t = h20[sp]["test_calibrated"]
+            m[f"CalTwentySplit{w}Cov"], m[f"CalTwentySplit{w}k"], m[f"CalTwentySplit{w}n"] = _f(t["coverage"]), str(t["covered"]), str(t["n"])
+            m[f"CalTwentySplit{w}Lo"], m[f"CalTwentySplit{w}Hi"] = _f(t["ci95"][0]), _f(t["ci95"][1])
         k = d["kappa_replicates"]
         m["KapCalCovered"], m["KapCalN"] = str(k["calibrated_kappa"]["covered"]), str(k["calibrated_kappa"]["n"])
         m["KapCalLo"], m["KapCalHi"] = _f(k["calibrated_kappa"]["ci95"][0]), _f(k["calibrated_kappa"]["ci95"][1])
