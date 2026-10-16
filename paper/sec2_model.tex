@@ -12,7 +12,11 @@ discretised with \NElements{} two-node elements with interdependent interpolatio
 shear locking~\citep{friedman1993}. The shear coefficient is Cowper's value for a solid circular
 section~\citep{cowper1966}. Each wheel is a rigid disc with mass and diametral inertia at its seat.
 Each axlebox is a rigid mass on its journal, tied to a bogie frame that is held fixed by a linear
-primary spring--damper pair. Axle damping is stiffness proportional. The model is linear and
+primary spring--damper pair. The primary stiffness and damping are the empty-wagon values of the
+vehicle source~\citep{dusza2024}. That damping is a low-frequency equivalent viscous value for the
+friction damper of the Y25 bogie and has not been validated at the 400~Hz of the support
+resonance, where the damper is likely to stick; the primary damping is therefore treated as uncertain
+and swept (Sections~\ref{sec:res-sweep} and~\ref{sec:limitations}). Axle damping is stiffness proportional. The model is linear and
 vertical-plane. Gyroscopic and rotating-damping terms are omitted: the rotation rate is
 \GyroRatio{} of the first constrained bending frequency at the reference speed (Table~\ref{tab:table2_verification}).
 

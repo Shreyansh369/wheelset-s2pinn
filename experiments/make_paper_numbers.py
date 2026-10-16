@@ -370,6 +370,16 @@ def section4(m, miss):
     block("p4/sweep.json", sweep, ["SweepNomMode", "SweepNomCRB", "SweepNomMDC", "SweepCRBMin", "SweepCRBMax", "SweepMDCMin", "SweepMDCMax",
                                    "SweepModeMin", "SweepModeMax"])
 
+    def pdamp(d):
+        p = d["pseudo_true"]
+        m["PDNominalBias"], m["PDCoestBias"] = _f(p["nominal"]["bias_pct"]), _f(p["coest"]["bias_pct"])
+        if "pairs" in d:
+            x = d["pairs"]
+            m["PDPairsN"], m["PDPairsFA"] = str(x["n"]), str(x["false_alarms_calibrated"])
+            m["PDPairsMean"] = _f(x["D_mean_pct"])
+            m["PDLevelBias"] = _f(x["level_bias_mean_pct"])
+    block("p4/primary_damping.json", pdamp, ["PDNominalBias", "PDCoestBias", "PDPairsN", "PDPairsFA", "PDPairsMean"])
+
     def icrime(d):
         for mode, w in (("nl", "NL"), ("lin", "Lin")):
             if mode in d:
