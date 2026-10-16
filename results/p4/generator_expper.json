@@ -1,0 +1,82 @@
+{
+  "name": "p4/generator_expper",
+  "seed": 1000,
+  "config": {
+    "pass": "85 km/h, 14 t, 4 wheels, noise-free"
+  },
+  "payload": {
+    "realisations": 200,
+    "rows": [
+      {
+        "band_hz": [
+          45,
+          300
+        ],
+        "n_bins": 612,
+        "mean_log_ratio_td_fd": 1.589697090164339e-05,
+        "ratio_of_band_power_td_fd": 1.024462495973922,
+        "log_ratio_se": 0.004062456920102186
+      },
+      {
+        "band_hz": [
+          300,
+          380
+        ],
+        "n_bins": 196,
+        "mean_log_ratio_td_fd": 0.0059196001626825815,
+        "ratio_of_band_power_td_fd": 1.0060317034468917,
+        "log_ratio_se": 0.007081025878555865
+      },
+      {
+        "band_hz": [
+          380,
+          430
+        ],
+        "n_bins": 122,
+        "mean_log_ratio_td_fd": 0.0007850423947050448,
+        "ratio_of_band_power_td_fd": 1.00904156600859,
+        "log_ratio_se": 0.00874834364636996
+      },
+      {
+        "band_hz": [
+          430,
+          480
+        ],
+        "n_bins": 123,
+        "mean_log_ratio_td_fd": -0.0011073962286789938,
+        "ratio_of_band_power_td_fd": 0.9959466045255921,
+        "log_ratio_se": 0.009500416560909176
+      },
+      {
+        "band_hz": [
+          480,
+          550
+        ],
+        "n_bins": 171,
+        "mean_log_ratio_td_fd": -0.017715314827846846,
+        "ratio_of_band_power_td_fd": 0.9892769741582269,
+        "log_ratio_se": 0.007291662213839934
+      },
+      {
+        "band_hz": [
+          550,
+          700
+        ],
+        "n_bins": 367,
+        "mean_log_ratio_td_fd": -0.001561811073091128,
+        "ratio_of_band_power_td_fd": 0.9973468695507355,
+        "log_ratio_se": 0.0053477886921670225
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "142d7b288d77d857d0d4583c4e7abec1b8f937aa",
+    "timestamp_utc": "2026-10-16T11:03:36Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 188.1796875,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}
