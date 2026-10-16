@@ -35,40 +35,59 @@
       "all_converged": false
     },
     "lin": {
-      "n": 7,
-      "bias_pct": 0.0646117004917568,
-      "bias_se_pct": 0.0695077251486206,
-      "rmse_pct": 0.18199429513079338,
-      "se_median_pct": 0.17206775808694136,
-      "coverage_raw": 0.8571428571428571,
+      "n": 20,
+      "bias_pct": 0.10090321003457803,
+      "bias_se_pct": 0.03769329293714021,
+      "rmse_pct": 0.19255028357534512,
+      "se_median_pct": 0.16982248553279877,
+      "coverage_raw": 0.8,
       "coverage_raw_ci95": [
-        0.4212768029568048,
-        0.9963897031380994
+        0.5633859970033317,
+        0.9426660029499672
       ],
-      "coverage_calibrated": 1.0,
+      "coverage_calibrated": 0.9,
       "coverage_calibrated_ci95": [
-        0.5903836027749966,
-        1.0
+        0.6830172859809177,
+        0.9876514728297052
       ],
-      "cB_bias_pct": 16.90103042136053,
+      "cB_bias_pct": 12.783036983157267,
       "contact_loss_max": 0.0,
-      "delta_min_ratio_min": 0.2538884570578599,
-      "delta_rms_over_delta0_max": 0.22189768171680851,
+      "delta_min_ratio_min": 0.12093087176118664,
+      "delta_rms_over_delta0_max": 0.2666366360083467,
       "all_converged": true
     },
     "nl_minus_lin": {
-      "n": 7,
-      "mean_pp": 0.04944953697975255,
-      "sd_pp": 0.018990571474637816,
-      "se_pp": 0.0071777613395555455,
-      "max_abs_pp": 0.07374788605716276
+      "n": 20,
+      "mean_pp": 0.05865592281406151,
+      "sd_pp": 0.034637429864500066,
+      "se_pp": 0.007745164774290348,
+      "max_abs_pp": 0.18975283524120812
+    },
+    "pairs": {
+      "n": 6,
+      "false_alarms_raw": 0,
+      "rate_raw": 0.0,
+      "rate_raw_ci95": [
+        0.0,
+        0.45925812643990044
+      ],
+      "false_alarms_calibrated": 0,
+      "rate_calibrated": 0.0,
+      "rate_calibrated_ci95": [
+        0.0,
+        0.45925812643990044
+      ],
+      "D_mean_pct": 0.023384285038659712,
+      "D_sd_pct": 0.21909039146966264,
+      "sD_median_pct": 0.23563964120815822,
+      "se_inflation_used": 1.0717297680962927
     }
   },
   "provenance": {
-    "git_commit": "27c8e57c6961b4ce03669b4602d9b17e638898b4-dirty",
-    "timestamp_utc": "2026-10-16T05:06:11Z",
+    "git_commit": "8c041228289ff0b3387bf2cdd07added6ddd30b9-dirty",
+    "timestamp_utc": "2026-10-16T06:07:58Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 95.9140625,
+    "peak_cpu_memory_mb": 95.95703125,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",
