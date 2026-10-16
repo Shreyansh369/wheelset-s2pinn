@@ -1,0 +1,128 @@
+{
+  "name": "p2/drift_freight",
+  "seed": 41,
+  "config": {
+    "model": "4-wheel rail-coupled (config nominal: Y25/Eanos layout, 60E1 ballasted)",
+    "N_per_period": 50,
+    "speeds_kmh": [
+      60.0,
+      110.0
+    ],
+    "snr_db": 40,
+    "estimators": {
+      "nominal": [
+        "kB0",
+        "cB"
+      ],
+      "coest": [
+        "kB0",
+        "cB",
+        "kf",
+        "kH0"
+      ]
+    },
+    "drift_kf_factors": [
+      0.8,
+      0.9,
+      1.1,
+      1.2
+    ],
+    "test": "one-sided decrease, alpha 0.05; detection 90%"
+  },
+  "payload": {
+    "table": [
+      {
+        "estimator": "nominal",
+        "kf_factor_later": 0.8,
+        "apparent_change_no_true_change_pct": -6.047743979321818,
+        "bias_at_5pct_drop_pp": -6.168609650663952,
+        "sd_change_pct": 0.24083375845703808,
+        "false_alarm_rate": 1.0,
+        "mdc_pct": null
+      },
+      {
+        "estimator": "nominal",
+        "kf_factor_later": 0.9,
+        "apparent_change_no_true_change_pct": -2.754082108874223,
+        "bias_at_5pct_drop_pp": -2.77813935608973,
+        "sd_change_pct": 0.24083375845703808,
+        "false_alarm_rate": 1.0,
+        "mdc_pct": null
+      },
+      {
+        "estimator": "nominal",
+        "kf_factor_later": 1.1,
+        "apparent_change_no_true_change_pct": 1.7111261933025812,
+        "bias_at_5pct_drop_pp": 1.4768103565094017,
+        "sd_change_pct": 0.24083375845703808,
+        "false_alarm_rate": 1.8136889972280747e-18,
+        "mdc_pct": 2.3035016879675965
+      },
+      {
+        "estimator": "nominal",
+        "kf_factor_later": 1.2,
+        "apparent_change_no_true_change_pct": 1.6680742950187621,
+        "bias_at_5pct_drop_pp": 0.6449995954010814,
+        "sd_change_pct": 0.24083375845703808,
+        "false_alarm_rate": 8.39338161676373e-18,
+        "mdc_pct": 1.9570263978170739
+      },
+      {
+        "estimator": "coest",
+        "kf_factor_later": 0.8,
+        "apparent_change_no_true_change_pct": -6.925206310626209e-05,
+        "bias_at_5pct_drop_pp": 8.709026852599111e-05,
+        "sd_change_pct": 0.25707702236168645,
+        "false_alarm_rate": 0.05001268795655639,
+        "mdc_pct": 0.7494439602055485
+      },
+      {
+        "estimator": "coest",
+        "kf_factor_later": 0.9,
+        "apparent_change_no_true_change_pct": 6.504638472293323e-06,
+        "bias_at_5pct_drop_pp": -4.196343281054338e-05,
+        "sd_change_pct": 0.25707702236168645,
+        "false_alarm_rate": 0.049982296653419286,
+        "mdc_pct": 0.7494876695554498
+      },
+      {
+        "estimator": "coest",
+        "kf_factor_later": 1.1,
+        "apparent_change_no_true_change_pct": -9.146597585996119e-05,
+        "bias_at_5pct_drop_pp": -5.0627260554658715e-05,
+        "sd_change_pct": 0.25707702236168645,
+        "false_alarm_rate": 0.050021602305887314,
+        "mdc_pct": 0.749403651205032
+      },
+      {
+        "estimator": "coest",
+        "kf_factor_later": 1.2,
+        "apparent_change_no_true_change_pct": 4.8003779240524125e-05,
+        "bias_at_5pct_drop_pp": 6.394324668229645e-05,
+        "sd_change_pct": 0.25707702236168645,
+        "false_alarm_rate": 0.04996565470437558,
+        "mdc_pct": 0.7495392692819987
+      }
+    ],
+    "no_drift_reference": {
+      "nominal": {
+        "sd_change_pct": 0.24160187348674883,
+        "mdc_pct": 0.7045314356117759
+      },
+      "coest": {
+        "sd_change_pct": 0.25647621636548557,
+        "mdc_pct": 0.7477437134374773
+      }
+    }
+  },
+  "provenance": {
+    "git_commit": "2d4d94b30b7bed5af3f1a755e98d3c2122715824-dirty",
+    "timestamp_utc": "2026-10-16T04:19:56Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 96.27734375,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

@@ -15,3 +15,4 @@
 {"estimator": "coest", "f": 1.1, "x": 0.0, "set": "later", "log_k_hat": 20.56074597964067, "crb_log": 0.001822047492404448, "converged": true, "wall_s": 828.7076377130002}
 {"estimator": "coest", "f": 1.1, "x": 0.05, "set": "later", "log_k_hat": 20.509453066994624, "crb_log": 0.0017645878321738194, "converged": true, "wall_s": 821.4293834600003}
 {"estimator": "coest", "f": 1.2, "x": 0.0, "set": "later", "log_k_hat": 20.560747374338526, "crb_log": 0.001822047492404448, "converged": true, "wall_s": 1001.6818137689997}
+{"estimator": "coest", "f": 1.2, "x": 0.05, "set": "later", "log_k_hat": 20.50945427299988, "crb_log": 0.0017645878321738194, "converged": true, "wall_s": 951.1440444560003}
