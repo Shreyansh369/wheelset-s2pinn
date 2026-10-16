@@ -37,3 +37,4 @@
 {"estimator": "nominal", "rep": 18, "f": 0.8, "D_hat": -0.06786409801749826, "se": 0.002626708451586118, "alarm": true, "converged": true, "wall_s": 759.825494069999}
 {"estimator": "coest", "rep": 19, "f": 0.8, "D_hat": -0.003837347518121703, "se": 0.0026595834518356076, "alarm": false, "converged": true, "wall_s": 1952.6393230700014}
 {"estimator": "coest", "rep": 5, "f": 0.8, "D_hat": 0.0041264295089931124, "se": 0.0024487501281060964, "alarm": false, "converged": true, "wall_s": 2347.3657148799975}
+{"estimator": "coest", "rep": 18, "f": 0.8, "D_hat": 0.0009516105195999103, "se": 0.0026028957380680707, "alarm": false, "converged": true, "wall_s": 2482.973948021998}

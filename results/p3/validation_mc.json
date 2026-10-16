@@ -177,32 +177,32 @@
         "file": "kf0.8_freight.jsonl",
         "kf_factor": 0.8,
         "estimator": "nominal",
-        "n": 17,
-        "false_alarms": 17,
+        "n": 20,
+        "false_alarms": 20,
         "rate": 1.0,
         "rate_ci95": [
-          0.8049356770309067,
+          0.8315665290169146,
           1.0
         ],
-        "D_hat_mean_pct": -5.72569951765951,
-        "D_hat_sd_pct": 0.595710276408244,
-        "se_median_pct": 0.2516243278621777,
+        "D_hat_mean_pct": -5.853911587924922,
+        "D_hat_sd_pct": 0.8137032595803768,
+        "se_median_pct": 0.25215728678455224,
         "all_converged": true
       },
       {
         "file": "kf0.8_freight.jsonl",
         "kf_factor": 0.8,
         "estimator": "coest",
-        "n": 17,
+        "n": 20,
         "false_alarms": 0,
         "rate": 0.0,
         "rate_ci95": [
           0.0,
-          0.19506432296909318
+          0.1684334709830853
         ],
-        "D_hat_mean_pct": 0.07690254786887536,
-        "D_hat_sd_pct": 0.23490553481455045,
-        "se_median_pct": 0.25154242100891144,
+        "D_hat_mean_pct": 0.07165228607623864,
+        "D_hat_sd_pct": 0.25209758614580063,
+        "se_median_pct": 0.25170250565329744,
         "all_converged": true
       }
     ],
@@ -460,10 +460,10 @@
     ]
   },
   "provenance": {
-    "git_commit": "c0ec663e71b6581d46f90f0811ff2d3d3fb11a41-dirty",
-    "timestamp_utc": "2026-10-16T16:29:45Z",
+    "git_commit": "dcb2461159dbc0b8598b45f8e83a3a00b9835e74-dirty",
+    "timestamp_utc": "2026-10-16T17:22:16Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 96.43359375,
+    "peak_cpu_memory_mb": 96.484375,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",
