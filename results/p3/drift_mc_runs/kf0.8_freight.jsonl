@@ -22,3 +22,4 @@
 {"estimator": "nominal", "rep": 17, "f": 0.8, "D_hat": -0.0603213357332919, "se": 0.0025473919834455867, "alarm": true, "converged": true, "wall_s": 1033.616281262999}
 {"estimator": "nominal", "rep": 11, "f": 0.8, "D_hat": -0.061044110515716454, "se": 0.002473941202232716, "alarm": true, "converged": true, "wall_s": 943.7304465490015}
 {"estimator": "coest", "rep": 3, "f": 0.8, "D_hat": -0.001908410225954782, "se": 0.0025186259029768344, "alarm": false, "converged": true, "wall_s": 3000.8561609149983}
+{"estimator": "coest", "rep": 11, "f": 0.8, "D_hat": 0.001361576637712858, "se": 0.002519658712454529, "alarm": false, "converged": true, "wall_s": 2935.1113606390027}
