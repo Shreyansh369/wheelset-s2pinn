@@ -1,0 +1,13 @@
+{"estimator": "nominal", "f": 1.0, "x": 0.0, "set": "base", "log_k_hat": 20.560747568684754, "crb_log": 0.0017083832308985442, "converged": true, "wall_s": 386.67615310899964}
+{"estimator": "nominal", "f": 0.8, "x": 0.0, "set": "later", "log_k_hat": 20.49836412126068, "crb_log": 0.0016975030655757145, "converged": true, "wall_s": 443.10568304700064}
+{"estimator": "nominal", "f": 0.8, "x": 0.05, "set": "later", "log_k_hat": 20.44231746515513, "crb_log": 0.001637139379388894, "converged": true, "wall_s": 452.9251051119991}
+{"estimator": "nominal", "f": 0.9, "x": 0.0, "set": "later", "log_k_hat": 20.532820388901637, "crb_log": 0.0016975030655757145, "converged": true, "wall_s": 398.09887441499995}
+{"estimator": "nominal", "f": 0.9, "x": 0.05, "set": "later", "log_k_hat": 20.479774585414717, "crb_log": 0.001637139379388894, "converged": true, "wall_s": 420.0730460880004}
+{"estimator": "nominal", "f": 1.1, "x": 0.0, "set": "later", "log_k_hat": 20.577714081864574, "crb_log": 0.0016975030655757145, "converged": true, "wall_s": 409.1706238959996}
+{"estimator": "nominal", "f": 1.1, "x": 0.05, "set": "later", "log_k_hat": 20.524880054976773, "crb_log": 0.001637139379388894, "converged": true, "wall_s": 437.8628428840002}
+{"estimator": "nominal", "f": 1.2, "x": 0.0, "set": "later", "log_k_hat": 20.57729071606489, "crb_log": 0.0016975030655757145, "converged": true, "wall_s": 487.8444842099998}
+{"estimator": "nominal", "f": 1.2, "x": 0.05, "set": "later", "log_k_hat": 20.516220799071064, "crb_log": 0.001637139379388894, "converged": true, "wall_s": 489.7471702289986}
+{"estimator": "coest", "f": 1.0, "x": 0.0, "set": "base", "log_k_hat": 20.56074689430085, "crb_log": 0.00181356071805103, "converged": true, "wall_s": 1612.5016985639995}
+{"estimator": "coest", "f": 0.8, "x": 0.0, "set": "later", "log_k_hat": 20.560746201779978, "crb_log": 0.001822047492404448, "converged": true, "wall_s": 1102.2061803799988}
+{"estimator": "coest", "f": 0.8, "x": 0.05, "set": "later", "log_k_hat": 20.509454516652546, "crb_log": 0.0017645878321738194, "converged": true, "wall_s": 1506.2373470529965}
+{"estimator": "coest", "f": 0.9, "x": 0.0, "set": "later", "log_k_hat": 20.56074695934723, "crb_log": 0.001822047492404448, "converged": true, "wall_s": 1047.7345788640014}

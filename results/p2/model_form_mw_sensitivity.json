@@ -2,7 +2,7 @@
   "name": "p2/model_form_mw_sensitivity",
   "seed": 31,
   "config": {
-    "model": "4 wheels (CT23 subset), BS113A Timoshenko rail, kf 154e6, eta_f 0.2, kH0 1.4e9",
+    "model": "4 wheels (freight wagon layout), nominal track of config/track.yaml (60E1, ballasted)",
     "N": 50,
     "speeds_kmh": [
       60.0,
@@ -12,9 +12,9 @@
     "method": "pseudo-true fit to expected periodograms (large-sample bias)",
     "likelihood": "debiased Whittle",
     "nominal": {
-      "kf": 154000000.0,
+      "kf": 333300000.0,
       "eta_f": 0.2,
-      "kH0": 1400000000.0,
+      "kH0": 1489000000.0,
       "unsprung_scale": 1.0,
       "axle_damp_scale": 1.0
     },
@@ -28,146 +28,90 @@
       {
         "estimator": "nominal",
         "param": "kf",
-        "sens_pct_per_10pct": 0.6019869123444044,
-        "bias_at_minus_1sigma_pct": -4.751516835037495,
-        "bias_at_plus_1sigma_pct": 2.370877949141814,
-        "sigma_log": 0.35,
-        "range_source": "CT23: in-situ ABA-derived kf 1.2-2.6x the lab value (Tables 2, 5 vs Sec. 5.1.1); section-to-section spread"
+        "sens_pct_per_10pct": 1.9969800998683118,
+        "bias_at_minus_1sigma_pct": -9.868037112481055,
+        "bias_at_plus_1sigma_pct": -18.81218136764816,
+        "sigma_log": 0.5957507412015728,
+        "range_source": "rail pad 80-800 MN/m per pad at 0.60-0.65 m spacing -> 123-1333 MN/m^2 (Thompson et al. 2007; EUROBOLT; snippets)"
       },
       {
         "estimator": "nominal",
         "param": "eta_f",
-        "sens_pct_per_10pct": 0.45941308861530694,
-        "bias_at_minus_1sigma_pct": -0.8618756911889291,
-        "bias_at_plus_1sigma_pct": 0.9740965941654967,
-        "sigma_log": 0.2,
-        "range_source": "CT23 Sec. 5.1.1: literature loss factor 0.2-0.3"
+        "sens_pct_per_10pct": -0.14034903776693475,
+        "bias_at_minus_1sigma_pct": 0.11774890859705955,
+        "bias_at_plus_1sigma_pct": -0.5502582676965351,
+        "sigma_log": 0.22907268296853878,
+        "range_source": "rail pad loss factor 0.1-0.25 (snippets)"
       },
       {
         "estimator": "nominal",
         "param": "kH0",
-        "sens_pct_per_10pct": 0.34755423241061845,
-        "bias_at_minus_1sigma_pct": -0.3407188225869717,
-        "bias_at_plus_1sigma_pct": 0.6709036160308157,
-        "sigma_log": 0.15,
-        "range_source": "assumption: Hertz constant C_H for freight wheel/60E1 profiles not sourced (CT23 value is metro); wheel load from WIM"
+        "sens_pct_per_10pct": -0.437265874923104,
+        "bias_at_minus_1sigma_pct": 0.6221823695578443,
+        "bias_at_plus_1sigma_pct": -0.4640485864149224,
+        "sigma_log": 0.12626131521262282,
+        "range_source": "linearised contact stiffness 1.388 GN/m (Hertz, S1002 transverse radius +0.5 m) to 2.3 GN/m (published spread, Hasan 2020)"
       },
       {
         "estimator": "nominal",
         "param": "unsprung_scale",
-        "sens_pct_per_10pct": -12.099685097239204,
-        "bias_at_minus_1sigma_pct": 3.622578733825721,
-        "bias_at_plus_1sigma_pct": -3.6188113301626412,
-        "sigma_log": 0.03,
-        "range_source": "assumption: design mass known; wear and fittings"
+        "sens_pct_per_10pct": -16.553381309213762,
+        "bias_at_minus_1sigma_pct": 7.099427792539714,
+        "bias_at_plus_1sigma_pct": -6.812832808256042,
+        "sigma_log": 0.04,
+        "range_source": "about 20 kg per axlebox, 4% of the wheelset unsprung mass, between axlebox designs (SKF Evolution, snippet)"
       },
       {
         "estimator": "nominal",
         "param": "axle_damp_scale",
-        "sens_pct_per_10pct": -0.16602351196680076,
-        "bias_at_minus_1sigma_pct": 0.5486331015611023,
-        "bias_at_plus_1sigma_pct": -0.5494351745353954,
-        "sigma_log": 0.5,
-        "range_source": "assumption: axle damping is a placeholder (1% at 80 Hz); factor ~1.65 either way"
-      },
-      {
-        "estimator": "coest",
-        "param": "kf",
-        "sens_pct_per_10pct": 2.3280733107977625e-05,
-        "bias_at_minus_1sigma_pct": 0.000154504271754341,
-        "bias_at_plus_1sigma_pct": -0.00010477004172004811,
-        "sigma_log": 0.35,
-        "range_source": "CT23: in-situ ABA-derived kf 1.2-2.6x the lab value (Tables 2, 5 vs Sec. 5.1.1); section-to-section spread"
-      },
-      {
-        "estimator": "coest",
-        "param": "eta_f",
-        "sens_pct_per_10pct": 0.4714086450108068,
-        "bias_at_minus_1sigma_pct": -0.8991785276285302,
-        "bias_at_plus_1sigma_pct": 0.9816155354548828,
-        "sigma_log": 0.2,
-        "range_source": "CT23 Sec. 5.1.1: literature loss factor 0.2-0.3"
-      },
-      {
-        "estimator": "coest",
-        "param": "kH0",
-        "sens_pct_per_10pct": -5.449284913305874e-05,
-        "bias_at_minus_1sigma_pct": -4.88448902435934e-05,
-        "bias_at_plus_1sigma_pct": -2.2202705474150264e-05,
-        "sigma_log": 0.15,
-        "range_source": "assumption: Hertz constant C_H for freight wheel/60E1 profiles not sourced (CT23 value is metro); wheel load from WIM"
-      },
-      {
-        "estimator": "coest",
-        "param": "unsprung_scale",
-        "sens_pct_per_10pct": -12.336020695663786,
-        "bias_at_minus_1sigma_pct": 3.654183964586233,
-        "bias_at_plus_1sigma_pct": -3.7169062832378197,
-        "sigma_log": 0.03,
-        "range_source": "assumption: design mass known; wear and fittings"
-      },
-      {
-        "estimator": "coest",
-        "param": "axle_damp_scale",
-        "sens_pct_per_10pct": -0.19289967328841584,
-        "bias_at_minus_1sigma_pct": 0.7856898622201403,
-        "bias_at_plus_1sigma_pct": -0.6021415150525788,
-        "sigma_log": 0.5,
-        "range_source": "assumption: axle damping is a placeholder (1% at 80 Hz); factor ~1.65 either way"
+        "sens_pct_per_10pct": 0.5700578940582568,
+        "bias_at_minus_1sigma_pct": -2.236267986442031,
+        "bias_at_plus_1sigma_pct": 4.751892453827522,
+        "sigma_log": 0.5756462732485115,
+        "range_source": "wheelset modal damping 0.1-1% (Chaar 2007; IPME paper; snippets)"
       }
     ],
     "budget": {
       "nominal": {
         "terms_pct_1sigma_worst_side": {
-          "kf": 4.751516835037495,
-          "eta_f": 0.9740965941654967,
-          "kH0": 0.6709036160308157,
-          "unsprung_scale": 3.622578733825721,
-          "axle_damp_scale": 0.5494351745353954
+          "kf": 18.81218136764816,
+          "eta_f": 0.5502582676965351,
+          "kH0": 0.6221823695578443,
+          "unsprung_scale": 7.099427792539714,
+          "axle_damp_scale": 4.751892453827522
         },
-        "rss_pct": 6.115622925278821,
-        "sum_abs_pct": 10.568530953594923
-      },
-      "coest": {
-        "terms_pct_1sigma_worst_side": {
-          "kf": 0.000154504271754341,
-          "eta_f": 0.9816155354548828,
-          "kH0": 4.88448902435934e-05,
-          "unsprung_scale": 3.7169062832378197,
-          "axle_damp_scale": 0.7856898622201403
-        },
-        "rss_pct": 3.9238080946539746,
-        "sum_abs_pct": 5.484415030074841
+        "rss_pct": 20.677775986446754,
+        "sum_abs_pct": 31.835942251269778
       }
     },
     "ranges": {
       "kf": [
-        0.35,
-        "CT23: in-situ ABA-derived kf 1.2-2.6x the lab value (Tables 2, 5 vs Sec. 5.1.1); section-to-section spread"
+        0.5957507412015728,
+        "rail pad 80-800 MN/m per pad at 0.60-0.65 m spacing -> 123-1333 MN/m^2 (Thompson et al. 2007; EUROBOLT; snippets)"
       ],
       "eta_f": [
-        0.2,
-        "CT23 Sec. 5.1.1: literature loss factor 0.2-0.3"
+        0.22907268296853878,
+        "rail pad loss factor 0.1-0.25 (snippets)"
       ],
       "kH0": [
-        0.15,
-        "assumption: Hertz constant C_H for freight wheel/60E1 profiles not sourced (CT23 value is metro); wheel load from WIM"
+        0.12626131521262282,
+        "linearised contact stiffness 1.388 GN/m (Hertz, S1002 transverse radius +0.5 m) to 2.3 GN/m (published spread, Hasan 2020)"
       ],
       "unsprung_scale": [
-        0.03,
-        "assumption: design mass known; wear and fittings"
+        0.04,
+        "about 20 kg per axlebox, 4% of the wheelset unsprung mass, between axlebox designs (SKF Evolution, snippet)"
       ],
       "axle_damp_scale": [
-        0.5,
-        "assumption: axle damping is a placeholder (1% at 80 Hz); factor ~1.65 either way"
+        0.5756462732485115,
+        "wheelset modal damping 0.1-1% (Chaar 2007; IPME paper; snippets)"
       ]
     }
   },
   "provenance": {
-    "git_commit": "fb4e67306304939c83011dd9a9340b0198685ab5-dirty",
-    "timestamp_utc": "2026-10-12T17:00:47Z",
-    "wall_seconds": 2656.636223761001,
-    "peak_cpu_memory_mb": 659.67578125,
+    "git_commit": "9179c28f8cd8145c9d18eeeb939618ee5a329596",
+    "timestamp_utc": "2026-10-16T01:20:57Z",
+    "wall_seconds": 1282.054089494999,
+    "peak_cpu_memory_mb": 1196.1328125,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",
