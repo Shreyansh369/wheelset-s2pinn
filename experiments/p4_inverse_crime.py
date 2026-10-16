@@ -144,6 +144,16 @@ def summarise():
         d = np.array([Rn[k]["err_log"] - Rl[k]["err_log"] for k in both]) * 100
         out["nl_minus_lin"] = {"n": len(both), "mean_pp": float(d.mean()), "sd_pp": float(d.std(ddof=1)) if len(d) > 1 else None,
                                "se_pp": float(d.std(ddof=1) / math.sqrt(len(d))) if len(d) > 1 else None, "max_abs_pp": float(np.max(np.abs(d)))}
+    # generator check: time-domain generator (linear / nonlinear contact) minus the frequency-domain
+    # generator (the estimator's data model) on the same keys
+    Rf = {tuple(r["key"]): r for r in _rows("fd")}
+    for name, Ra in (("lin_minus_fd", Rl), ("nl_minus_fd", Rn)):
+        ks = sorted(set(Ra) & set(Rf))
+        if len(ks) > 1:
+            dk = np.array([Ra[k]["err_log"] - Rf[k]["err_log"] for k in ks]) * 100
+            dc = np.array([Ra[k]["err_log_cB"] - Rf[k]["err_log_cB"] for k in ks]) * 100
+            out[name] = {"n": len(ks), "kB0_mean_pp": float(dk.mean()), "kB0_se_pp": float(dk.std(ddof=1) / math.sqrt(len(ks))),
+                         "cB_mean_pp": float(dc.mean()), "cB_se_pp": float(dc.std(ddof=1) / math.sqrt(len(ks)))}
     P = {}
     for r in _rows("pairs"):
         P.setdefault(r["key"][1], {})[r["key"][2]] = r

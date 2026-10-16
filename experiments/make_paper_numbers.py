@@ -429,6 +429,25 @@ def section4(m, miss):
         if "nl_minus_lin" in d:
             x = d["nl_minus_lin"]
             m["ICDiffMean"], m["ICDiffSE"], m["ICDiffMax"] = _f(x["mean_pp"], 3), _f(x["se_pp"] or 0, 3), _f(x["max_abs_pp"], 3)
+        if "fd" in d:
+            m["ICFDN"], m["ICFDBias"], m["ICFDcBBias"] = str(d["fd"]["n"]), _f(d["fd"]["bias_pct"]), _f(d["fd"]["cB_bias_pct"], 1)
+        for mode, w in (("nl", "NL"), ("lin", "Lin")):
+            if mode in d:
+                m[f"IC{w}cBBias"] = _f(d[mode]["cB_bias_pct"], 1)
+        if "lin_minus_fd" in d:
+            x = d["lin_minus_fd"]
+            m["GenN"], m["GenkB"], m["GenkBSE"] = str(x["n"]), _f(x["kB0_mean_pp"]), _f(x["kB0_se_pp"])
+            m["GencB"], m["GencBSE"] = _f(x["cB_mean_pp"], 0), _f(x["cB_se_pp"], 0)
+        gc = load("p4/generator_check.json")
+        if gc:
+            m["GenOpMisfitPct"] = _f(100 * gc["operator_max_rel_misfit_single_wheel"], 1)
+            m["GenRecMisfitPct"] = _f(100 * gc["rel_L2_misfit_record"], 2)
+            m["GenZetaHP"] = _f(gc["support_zeta_halfpower_td"], 3)
+        ge = load("p4/generator_expper.json")
+        if ge:
+            r = next(x for x in ge["rows"] if x["band_hz"] == [480, 550])
+            m["GenPgramN"] = str(ge["realisations"])
+            m["GenPgramDiff"], m["GenPgramDiffSE"] = _f(abs(100 * r["mean_log_ratio_td_fd"]), 1), _f(100 * r["log_ratio_se"], 1)
         if "pairs" in d:
             x = d["pairs"]
             m["ICPairsN"], m["ICPairsFA"], m["ICPairsFACal"] = str(x["n"]), str(x["false_alarms_raw"]), str(x["false_alarms_calibrated"])
