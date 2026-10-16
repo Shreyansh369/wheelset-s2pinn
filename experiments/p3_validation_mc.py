@@ -65,7 +65,7 @@ def _append(fp, row):
 
 T_START = time.perf_counter()
 DEADLINE_S = 110 * 60        # a chunk never starts a replicate it cannot finish inside this budget
-REP_MAX_S = [55 * 60]        # running estimate of the slowest replicate (initial: slowest seen so far, 53 min)
+REP_MAX_S = [80 * 60]        # running estimate of the slowest replicate (raised: replicates take up to ~75 min under load)
 
 
 def _time_left_for_rep() -> bool:
