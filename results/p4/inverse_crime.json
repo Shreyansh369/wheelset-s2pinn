@@ -1,0 +1,77 @@
+{
+  "name": "p4/inverse_crime",
+  "seed": 60,
+  "config": {
+    "generator": "nonlinear Hertz contact, frequency-domain operators, fixed-point iteration",
+    "estimator": "frozen linear (debiased Whittle, +-120 bins, K = 16, kB0 and cB)",
+    "N": 50,
+    "snr_db": 40.0,
+    "speeds_kmh": [
+      60.0,
+      110.0
+    ]
+  },
+  "payload": {
+    "nl": {
+      "n": 20,
+      "bias_pct": 0.15966572930801837,
+      "bias_se_pct": 0.041730010429258994,
+      "rmse_pct": 0.24156371567665796,
+      "se_median_pct": 0.16986597274917187,
+      "coverage_raw": 0.8,
+      "coverage_raw_ci95": [
+        0.5633859970033317,
+        0.9426660029499672
+      ],
+      "coverage_calibrated": 0.85,
+      "coverage_calibrated_ci95": [
+        0.621073173454686,
+        0.9679290628145363
+      ],
+      "cB_bias_pct": 13.849417969486828,
+      "contact_loss_max": 0.0052030456852791875,
+      "delta_min_ratio_min": -1.023494903034817,
+      "delta_rms_over_delta0_max": 0.28792244147488244,
+      "all_converged": false
+    },
+    "lin": {
+      "n": 7,
+      "bias_pct": 0.0646117004917568,
+      "bias_se_pct": 0.0695077251486206,
+      "rmse_pct": 0.18199429513079338,
+      "se_median_pct": 0.17206775808694136,
+      "coverage_raw": 0.8571428571428571,
+      "coverage_raw_ci95": [
+        0.4212768029568048,
+        0.9963897031380994
+      ],
+      "coverage_calibrated": 1.0,
+      "coverage_calibrated_ci95": [
+        0.5903836027749966,
+        1.0
+      ],
+      "cB_bias_pct": 16.90103042136053,
+      "contact_loss_max": 0.0,
+      "delta_min_ratio_min": 0.2538884570578599,
+      "delta_rms_over_delta0_max": 0.22189768171680851,
+      "all_converged": true
+    },
+    "nl_minus_lin": {
+      "n": 7,
+      "mean_pp": 0.04944953697975255,
+      "sd_pp": 0.018990571474637816,
+      "se_pp": 0.0071777613395555455,
+      "max_abs_pp": 0.07374788605716276
+    }
+  },
+  "provenance": {
+    "git_commit": "27c8e57c6961b4ce03669b4602d9b17e638898b4-dirty",
+    "timestamp_utc": "2026-10-16T05:06:11Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 95.9140625,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}
