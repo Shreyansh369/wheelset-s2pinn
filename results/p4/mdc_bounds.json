@@ -1,0 +1,82 @@
+{
+  "name": "p4/mdc_bounds",
+  "seed": 43,
+  "config": {
+    "model": "4-wheel rail-coupled, config nominal",
+    "speeds_kmh": [
+      60.0,
+      110.0
+    ],
+    "test": "one-sided decrease, alpha 0.05, detection 90%"
+  },
+  "payload": {
+    "rows": [
+      {
+        "N": 50,
+        "snr_db": 20.0,
+        "estimator": "nominal",
+        "crb_kB0_pct": 0.18418970458817643,
+        "mdc_pct": 0.7593825065379355
+      },
+      {
+        "N": 50,
+        "snr_db": 20.0,
+        "estimator": "coest",
+        "crb_kB0_pct": 0.20412245327861542,
+        "mdc_pct": 0.8412152265766002
+      },
+      {
+        "N": 50,
+        "snr_db": 40.0,
+        "estimator": "nominal",
+        "crb_kB0_pct": 0.1654636124607244,
+        "mdc_pct": 0.6824421192695793
+      },
+      {
+        "N": 50,
+        "snr_db": 40.0,
+        "estimator": "coest",
+        "crb_kB0_pct": 0.17633631179372128,
+        "mdc_pct": 0.7271223245801147
+      },
+      {
+        "N": 200,
+        "snr_db": 20.0,
+        "estimator": "nominal",
+        "crb_kB0_pct": 0.09201481466265342,
+        "mdc_pct": 0.3800848492980112
+      },
+      {
+        "N": 200,
+        "snr_db": 20.0,
+        "estimator": "coest",
+        "crb_kB0_pct": 0.1012343967155418,
+        "mdc_pct": 0.4180883852700479
+      },
+      {
+        "N": 200,
+        "snr_db": 40.0,
+        "estimator": "nominal",
+        "crb_kB0_pct": 0.08310272317679286,
+        "mdc_pct": 0.3433350177216279
+      },
+      {
+        "N": 200,
+        "snr_db": 40.0,
+        "estimator": "coest",
+        "crb_kB0_pct": 0.08911627867760406,
+        "mdc_pct": 0.3681339560258049
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "9162fa67c2b014cd3a278d9116d3c841a3ea6c52-dirty",
+    "timestamp_utc": "2026-10-16T03:21:56Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 7859.31640625,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

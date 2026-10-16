@@ -248,43 +248,43 @@
     "mdc": [
       {
         "N": 50,
-        "snr_db": 20,
-        "mdc_pct": 0.7115460474098612,
-        "source": "relative_intervals.json (CRB, no model-form term)",
+        "snr_db": 20.0,
+        "mdc_pct": 0.8412152265766002,
+        "source": "p4/mdc_bounds.json (coest, CRB, current config)",
         "inflation": 1.0,
-        "mdc_calibrated_pct": 0.7115460474098612
+        "mdc_calibrated_pct": 0.8412152265766002
       },
       {
         "N": 50,
-        "snr_db": 40,
-        "mdc_pct": 0.7201521436794321,
-        "source": "relative_coest_drift.json (coest, no drift)",
+        "snr_db": 40.0,
+        "mdc_pct": 0.7271223245801147,
+        "source": "p4/mdc_bounds.json (coest, CRB, current config)",
         "inflation": 1.0717297680962927,
-        "mdc_calibrated_pct": 0.7718084899396059
+        "mdc_calibrated_pct": 0.7792786402998836
       },
       {
         "N": 200,
-        "snr_db": 20,
-        "mdc_pct": 0.36001943930424884,
-        "source": "relative_intervals.json (CRB, no model-form term)",
+        "snr_db": 20.0,
+        "mdc_pct": 0.4180883852700479,
+        "source": "p4/mdc_bounds.json (coest, CRB, current config)",
         "inflation": 1.0,
-        "mdc_calibrated_pct": 0.36001943930424884
+        "mdc_calibrated_pct": 0.4180883852700479
       },
       {
         "N": 200,
-        "snr_db": 40,
-        "mdc_pct": 0.34269487665486986,
-        "source": "relative_intervals.json (CRB, no model-form term)",
+        "snr_db": 40.0,
+        "mdc_pct": 0.3681339560258049,
+        "source": "p4/mdc_bounds.json (coest, CRB, current config)",
         "inflation": 1.0717297680962927,
-        "mdc_calibrated_pct": 0.3672763006851113
+        "mdc_calibrated_pct": 0.3945401193199067
       }
     ]
   },
   "provenance": {
-    "git_commit": "9162fa67c2b014cd3a278d9116d3c841a3ea6c52-dirty",
-    "timestamp_utc": "2026-10-16T03:10:56Z",
+    "git_commit": "0daa280e8537414ad456081eec5d6576bd5e8601",
+    "timestamp_utc": "2026-10-16T03:22:11Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 95.34765625,
+    "peak_cpu_memory_mb": 95.3984375,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",
