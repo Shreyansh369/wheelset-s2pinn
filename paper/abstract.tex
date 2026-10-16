@@ -1,22 +1,21 @@
 \begin{abstract}
-Loss of the vertical support stiffness of a wheelset bearing, through loosening of the fits, degradation
-of the housing, adapter or pad, or growth of the bearing clearance, shifts the resonance of the axlebox
-on its support. On freight wagons this resonance lies in the band of axle-box acceleration excited by
-rail roughness, but any stiffness identified from that acceleration is confounded with the unknown
-roughness. We pool passes at different speeds and payloads in a single debiased Whittle likelihood:
-the support resonance stays fixed in frequency while the roughness excitation moves with speed, so the
-roughness levels can be left as free nuisance parameters. The forward model is a finite-element
-Timoshenko wheelset coupled to neighbouring wheels through an infinite Timoshenko rail. For a
-representative freight wagon (Y25 bogies, 22.5~t axle load, ballasted 60E1 track) and 50 passes at
-60--110~km/h, simulations give a bias of \HLTwentyBias\% (20~dB) and \HLFortyBias\% (40~dB) and a root-mean-square
-error of \HLTwentyRMSE--\HLFortyRMSE\% against a Cram\'er--Rao bound of \HLTwentyCRB\%; ignoring wheel-to-wheel coupling biases
-the estimate by \IgnoreCouplingForty\%. Because absolute values carry a model-form uncertainty of
-about \BudgetCoest\%, the method targets changes between periods. With the foundation and contact
-stiffness re-estimated in each period, a decrease of \MDCCalFiftyTwenty--\MDCCalFiftyForty\% is
-detectable from 50 passes per period and \MDCCalTwoHundredTwenty--\MDCCalTwoHundredForty\% from 200,
-and a 20\% change of the track foundation raises \DriftMCCoestFA{} false alarm in \DriftMCCoestN{}
-trials, against \DriftMCNomFA{} in \DriftMCNomN{} with the track held fixed. Intervals are
-simulation-calibrated for the stated design. Clearance growth alone changes the effective stiffness
-little (\EffPctTenEmpty\% per 10~\textmu m, empty), so the method reports support-stiffness loss
-rather than its mechanism.
+Loss of the vertical support stiffness of a wheelset bearing, through loose fits, a degraded housing,
+adapter or pad, or clearance growth, shifts the resonance of the axlebox on its support. On freight
+wagons this resonance lies in the band of axle-box acceleration excited by rail roughness, so a
+stiffness identified from it is confounded with the unknown roughness. We pool passes at
+different speeds and payloads in a single debiased Whittle likelihood: the resonance stays fixed in
+frequency while the roughness excitation moves with speed, so the roughness levels can be left as free
+nuisance parameters. A finite-element wheelset is coupled to neighbouring
+wheels through an infinite Timoshenko rail. For a representative freight wagon (Y25 bogies, ballasted
+60E1 track) and 50 passes at 60--110~km/h, simulations give a bias of at most \HLBiasAbsMax\% and a
+root-mean-square error of \HLRMSEMin--\HLRMSEMax\%, within \HLRatioCRBMax{} times the Cram\'er--Rao
+bound. Ignoring wheel-to-wheel coupling biases the estimate by \IgnoreCouplingForty\%; nonlinear
+Hertzian contact shifts it by only \ICDiffMean{} percentage points. Because absolute values carry a
+model-form uncertainty of about \BudgetCoest\%, the method targets changes between periods. With the
+foundation and contact stiffness re-estimated in each period, a decrease of
+\MDCCalFiftyMin--\MDCCalFiftyMax\% is detectable from 50 passes per period and
+\MDCCalTwoHundredMin--\MDCCalTwoHundredMax\% from 200, and a 20\% softer foundation, which appears as a
+\DriftSoftTwentyApparent\% change if the track is held fixed, causes no bias. Clearance growth changes the
+effective stiffness little (\EffPctTenEmpty\% per 10~\textmu m), so the method reports support-stiffness
+loss rather than its mechanism.
 \end{abstract}

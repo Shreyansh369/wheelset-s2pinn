@@ -42,7 +42,7 @@ def figure_order():
 def abstract_words():
     m = dict(re.findall(r"\\newcommand\{\\(\w+)\}\{([^}]*)\}", (PAPER / "generated/numbers.tex").read_text()))
     t = (PAPER / "abstract.tex").read_text()
-    t = re.sub(r"%.*", "", t)
+    t = re.sub(r"(?<!\\)%.*", "", t)
     t = re.sub(r"\\(begin|end)\{abstract\}", "", t)
     t = re.sub(r"\\(\w+)(\{\})?", lambda x: m.get(x.group(1), ""), t)
     return len(t.split())

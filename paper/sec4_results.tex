@@ -22,12 +22,18 @@ Section~\ref{sec:method}. The default design is $N=50$ passes with speeds unifor
 payloads uniform on \PayloadMin--\PayloadMax~t with a \WIMsigmaPct\% weigh-in-motion error, four
 rail-coupled wheels, and $K=16$ roughness levels per one-third octave drawn with a 3~dB spread. The
 frozen estimator uses the debiased likelihood with a $\pm\KernelHalfWidth$-bin kernel, own-sub-band
-scoring, $K=16$ and a fixed load exponent. Results in Sections~\ref{sec:res-multiwheel},
-\ref{sec:res-modelform}, \ref{sec:res-relative} and~\ref{sec:res-drift} were computed before the
-kernel was widened (with $\pm30$ bins); the change moves individual estimates of $k_{B0}$ by about
-0.06 percentage points (Section~\ref{sec:res-bias}), small against the effects reported there.
-Sections~\ref{sec:res-speed}, \ref{sec:res-wheel} and~\ref{sec:res-repeated} use a single wheelset on a
-rail oscillator, whose transfer function is smooth on the bin scale.
+scoring, $K=16$ and a fixed load exponent. Unless stated otherwise, results are for the representative wagon of Section~\ref{sec:model} with the
+values of Table~\ref{tab:table1_parameters}. The headline Monte Carlo study was started before the
+contact stiffness was computed from Hertz theory and the primary damping taken from the vehicle source,
+and uses $k_{H0} = 1.4$~GN/m and $c_p = 10$~kN\,s/m; both lie within the swept ranges of
+Table~\ref{tab:table15_sweep}, where they change the bound by a few hundredths of a percentage point.
+Four studies were run with an earlier configuration (a metro wheel layout, BS113A rail and a
+$\pm30$-bin kernel) and are reported for their qualitative conclusions only: the bias diagnosis
+(Section~\ref{sec:res-bias}), the multi-wheel Monte Carlo (Fig.~\ref{fig:mwbias}), the gain
+uncertainty of relative changes and its replicates (Section~\ref{sec:res-relative}), and the drift
+Monte Carlo (Section~\ref{sec:res-drift}). Sections~\ref{sec:res-speed}, \ref{sec:res-wheel}
+and~\ref{sec:res-repeated} use a single wheelset on a rail oscillator, whose transfer function is
+smooth on the bin scale, and Section~\ref{sec:res-p2} uses the setup of~\citep{carrigan2023}.
 
 \subsection{Headline Monte Carlo}\label{sec:res-headline}
 Table~\ref{tab:table3_headline} summarises \HLN{} datasets per noise level (five seeds of ten). At

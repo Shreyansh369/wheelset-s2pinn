@@ -156,6 +156,11 @@ def section4(m, miss):
             m[f"HL{w}CovLo"], m[f"HL{w}CovHi"] = _f(p["coverage90_wald_ci95"][0]), _f(p["coverage90_wald_ci95"][1])
             m[f"HL{w}cBBias"] = _f(100 * c[snr]["cB_pooled"]["bias_rel"], 1)
         m["HLN"] = str(c[20]["kB0_pooled"]["n"])
+        P = [c[x]["kB0_pooled"] for x in (20, 40)]
+        m["HLBiasAbsMax"] = _f(max(abs(100 * p["bias_rel"]) for p in P), 2)
+        m["HLRMSEMin"], m["HLRMSEMax"] = _f(min(100 * p["rmse_rel"] for p in P)), _f(max(100 * p["rmse_rel"] for p in P))
+        m["HLCRBMin"], m["HLCRBMax"] = _f(min(100 * p["crb_rel"] for p in P)), _f(max(100 * p["crb_rel"] for p in P))
+        m["HLRatioCRBMax"] = _f(max(p["rmse_over_crb"] for p in P))
     hl_src = "p3/headline_v2_kb120_attr_freight.json" if load("p3/headline_v2_kb120_attr_freight.json") else "p3/headline_v2_kb120_attr.json"
     block(hl_src, headline, [f"HL{w}{k}" for w in ("Twenty", "Forty") for k in
           ("Bias", "BiasSE", "RMSE", "CRB", "RatioCRB", "RatioSE", "Cov", "CovLo", "CovHi", "cBBias")] + ["HLN"])
@@ -176,6 +181,9 @@ def section4(m, miss):
         md = {(x["N"], x["snr_db"]): x for x in d["mdc"]}
         for (N, snr), w in (((50, 40), "FiftyForty"), ((50, 20), "FiftyTwenty"), ((200, 40), "TwoHundredForty"), ((200, 20), "TwoHundredTwenty")):
             m[f"MDC{w}"], m[f"MDCCal{w}"] = _f(md[(N, snr)]["mdc_pct"]), _f(md[(N, snr)]["mdc_calibrated_pct"])
+        for N, w in ((50, "Fifty"), (200, "TwoHundred")):
+            v = [md[(N, snr)]["mdc_calibrated_pct"] for snr in (20, 40)]
+            m[f"MDCCal{w}Min"], m[f"MDCCal{w}Max"] = _f(min(v)), _f(max(v))
     block("p3/calibrated.json", calib, ["CalBiasForty", "CalInflForty", "CalTwentyRawCov", "KapCalCovered", "KapCalN", "KapCalLo", "KapCalHi"]
           + [f"CalSplit{w}{k}" for w in "AB" for k in ("Cov", "k", "n", "Lo", "Hi", "Infl")]
           + [f"MDC{a}{w}" for a in ("", "Cal") for w in ("FiftyForty", "FiftyTwenty", "TwoHundredForty", "TwoHundredTwenty")])
@@ -258,6 +266,8 @@ def section4(m, miss):
         m["DriftStiffTwentyMDC"] = _f(dr[("nominal", 1.2)]["mdc_pct"], 1)
         if ("coest", 0.8) in dr:
             m["DriftCoestMDC"] = _f(dr[("coest", 0.8)]["mdc_pct"])
+            m["DriftCoestTwentyApparent"] = _f(abs(dr[("coest", 0.8)]["apparent_change_no_true_change_pct"]))
+            m["DriftCoestMaxAbsApparent"] = _f(max(abs(x["apparent_change_no_true_change_pct"]) for x in d["table"] if x["estimator"] == "coest"))
         m["DriftNoDriftCoestMDC"] = _f(d["no_drift_reference"]["coest"]["mdc_pct"]) if "coest" in d["no_drift_reference"] else "--"
     if load("p2/drift_freight.json"):
         block("p2/drift_freight.json", driftf, [])
