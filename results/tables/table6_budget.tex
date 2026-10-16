@@ -5,11 +5,11 @@
 \begin{tabular}{llllll}
 \toprule
 Parameter & 1$\sigma$ (log) & Range source & Bias per +10\% (\%) & Nominal: bias at $-$1$\sigma$ / +1$\sigma$ (\%) & k\_f, k\_H0 co-estimated: bias at $-$1$\sigma$ / +1$\sigma$ (\%) \\ \midrule
-kf & 0.35 & CT23: in-situ ABA-derived kf 1.2-2.6x the lab value (Tables 2, 5 vs Sec. 5.1.1); section-to-section spread & +0.60 & -4.75 / +2.37 & +0.00 / -0.00 \\
-eta\_f & 0.20 & CT23 Sec. 5.1.1: literature loss factor 0.2-0.3 & +0.46 & -0.86 / +0.97 & -0.90 / +0.98 \\
-kH0 & 0.15 & assumption: Hertz constant C\_H for freight wheel/60E1 profiles not sourced (CT23 value is metro); wheel load from WIM & +0.35 & -0.34 / +0.67 & -0.00 / -0.00 \\
-unsprung\_scale & 0.03 & assumption: design mass known; wear and fittings & -12.10 & +3.62 / -3.62 & +3.65 / -3.72 \\
-axle\_damp\_scale & 0.50 & assumption: axle damping is a placeholder (1\% at 80 Hz); factor \textasciitilde{}1.65 either way & -0.17 & +0.55 / -0.55 & +0.79 / -0.60 \\
+kf & 0.60 & rail pad 80-800 MN/m per pad at 0.60-0.65 m spacing -> 123-1333 MN/m\textasciicircum{}2 (Thompson et al. 2007; EUROBOLT; snippets) & +2.00 & -9.87 / -18.81 & +0.00 / -0.00 \\
+eta\_f & 0.23 & rail pad loss factor 0.1-0.25 (snippets) & -0.14 & +0.12 / -0.55 & +0.40 / -1.08 \\
+kH0 & 0.13 & linearised contact stiffness 1.388 GN/m (Hertz, S1002 transverse radius +0.5 m) to 2.3 GN/m (published spread, Hasan 2020) & -0.44 & +0.62 / -0.46 & -0.00 / +0.00 \\
+unsprung\_scale & 0.04 & about 20 kg per axlebox, 4\% of the wheelset unsprung mass, between axlebox designs (SKF Evolution, snippet) & -16.55 & +7.10 / -6.81 & +7.04 / -6.66 \\
+axle\_damp\_scale & 0.75 & wheelset modal damping 0.1-2\% (Chaar 2007: measured below 2\%; IPME paper 0.1-1\%; snippets) & +0.57 & -2.59 / +6.90 & -2.59 / +6.98 \\
 \bottomrule
 \end{tabular}
 

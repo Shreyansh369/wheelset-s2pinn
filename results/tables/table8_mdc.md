@@ -19,10 +19,10 @@
 
 | N per period | SNR (dB) | MDC (%) | SE inflation | Calibrated MDC (%) | Source |
 |---|---|---|---|---|---|
-| 50 | 20 | 0.71 | 1.00 | 0.71 | relative_intervals.json (CRB, no model-form term) |
-| 50 | 40 | 0.72 | 1.39 | 1.00 | relative_coest_drift.json (coest, no drift) |
-| 200 | 20 | 0.36 | 1.00 | 0.36 | relative_intervals.json (CRB, no model-form term) |
-| 200 | 40 | 0.34 | 1.39 | 0.48 | relative_intervals.json (CRB, no model-form term) |
+| 50 | 20.0 | 0.84 | 1.00 | 0.84 | p4/mdc_bounds.json (coest, CRB, current config) |
+| 50 | 40.0 | 0.73 | 1.07 | 0.78 | p4/mdc_bounds.json (coest, CRB, current config) |
+| 200 | 20.0 | 0.42 | 1.00 | 0.42 | p4/mdc_bounds.json (coest, CRB, current config) |
+| 200 | 40.0 | 0.37 | 1.07 | 0.39 | p4/mdc_bounds.json (coest, CRB, current config) |
 
 
 Source: `results/p2/relative_intervals.json`, `results/p3/calibrated.json`
