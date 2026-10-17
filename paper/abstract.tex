@@ -10,12 +10,10 @@ root-mean-square error of \HLRMSEMin--\HLRMSEMax\%, within \HLRatioCRBMax{} time
 bound. Ignoring wheel-to-wheel coupling biases the estimate by \IgnoreCouplingForty\%; nonlinear
 Hertzian contact shifts it by \ICDiffMean{} percentage points. Absolute values carry a model-form
 uncertainty of about \BudgetCoest\%, so the method targets changes between periods, and periods must be
-compared within one payload band: pooling mixed payloads is not supported without a payload-dependent
-suspension model. In the empty band, with the foundation and contact stiffness re-estimated in each
-period, a decrease of \BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\% is detectable from 50 passes per
+compared within one payload band: mixed-payload pooling would need a payload-dependent suspension model and is not supported. In the empty band, re-estimating the foundation and contact stiffness per period, a decrease of \BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\% is detectable from 50 passes per
 period (\BandEmptyMDCFiftyConsMin--\BandEmptyMDCFiftyConsMax\% allowing for simultaneous model errors) and
 \BandEmptyMDCTwoHundredMin--\BandEmptyMDCTwoHundredMax\% from 200, and a 20\% softer foundation causes no
-bias. Clearance growth changes the effective stiffness little (\EffPctTenEmpty\% per 10~\textmu m), so the
-method reports support-stiffness loss rather than its mechanism. A controlled rig or field test is needed
+bias. Clearance growth barely changes the effective stiffness (\EffPctTenEmpty\% per 10~\textmu m), so the
+method reports support-stiffness loss not its mechanism. A controlled rig or field test is needed
 before operational use.
 \end{abstract}

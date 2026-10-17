@@ -1,7 +1,7 @@
 # Wheelset bearing support stiffness from multi-pass axle-box acceleration
 
 Code, stored results and LaTeX source for the paper *Tracking the support stiffness of railway wheelset
-bearings from in-service axle-box acceleration without measuring rail roughness: a multi-pass debiased
+bearings from multi-speed axle-box acceleration without measuring rail roughness: a multi-pass debiased
 Whittle likelihood* (submitted to Mechanical Systems and Signal Processing).
 
 The method pools axle-box acceleration spectra of many passes at different speeds in one debiased
