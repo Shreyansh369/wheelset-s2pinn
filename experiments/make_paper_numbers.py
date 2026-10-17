@@ -211,14 +211,21 @@ def section4(m, miss):
             m[f"CalTwentySplit{w}Cov"], m[f"CalTwentySplit{w}k"], m[f"CalTwentySplit{w}n"] = _f(t["coverage"]), str(t["covered"]), str(t["n"])
             m[f"CalTwentySplit{w}Lo"], m[f"CalTwentySplit{w}Hi"] = _f(t["ci95"][0]), _f(t["ci95"][1])
         k = d["kappa_replicates"]
+        load("p3/validation_mc.json")     # attribution: the kappa replicates (earlier configuration), calibrated
         m["KapCalCovered"], m["KapCalN"] = str(k["calibrated_kappa"]["covered"]), str(k["calibrated_kappa"]["n"])
         m["KapCalLo"], m["KapCalHi"] = _f(k["calibrated_kappa"]["ci95"][0]), _f(k["calibrated_kappa"]["ci95"][1])
+        load("p3/calibrated.json")
         md = {(x["N"], x["snr_db"]): x for x in d["mdc"]}
         for (N, snr), w in (((50, 40), "FiftyForty"), ((50, 20), "FiftyTwenty"), ((200, 40), "TwoHundredForty"), ((200, 20), "TwoHundredTwenty")):
             m[f"MDC{w}"], m[f"MDCCal{w}"] = _f(md[(N, snr)]["mdc_pct"]), _f(md[(N, snr)]["mdc_calibrated_pct"])
         for N, w in ((50, "Fifty"), (200, "TwoHundred")):
             v = [md[(N, snr)]["mdc_calibrated_pct"] for snr in (20, 40)]
             m[f"MDCCal{w}Min"], m[f"MDCCal{w}Max"] = _f(min(v)), _f(max(v))
+        mb = load("p4/mdc_bounds.json")    # uncalibrated MDC straight from the bounds (frozen configuration)
+        if mb:
+            r = {(x["N"], x["snr_db"]): x for x in mb["rows"] if x["estimator"] == "coest"}
+            for (N, snr), w in (((50, 40), "FiftyForty"), ((50, 20), "FiftyTwenty"), ((200, 40), "TwoHundredForty"), ((200, 20), "TwoHundredTwenty")):
+                m[f"MDC{w}"] = _f(r[(N, float(snr))]["mdc_pct"])
     block("p3/calibrated.json", calib, ["CalBiasForty", "CalInflForty", "CalTwentyRawCov", "KapCalCovered", "KapCalN", "KapCalLo", "KapCalHi"]
           + [f"CalSplit{w}{k}" for w in "AB" for k in ("Cov", "k", "n", "Lo", "Hi", "Infl")]
           + [f"MDC{a}{w}" for a in ("", "Cal") for w in ("FiftyForty", "FiftyTwenty", "TwoHundredForty", "TwoHundredTwenty")])

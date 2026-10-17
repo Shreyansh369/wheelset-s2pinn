@@ -117,7 +117,7 @@ sub-bands and the corresponding Fisher matrix, so that its fixed point is the ex
 The default step is cheaper but its fixed point differs slightly from the exact maximum. Scoring stops
 when the largest step in any $\log g_s$ or $\log W_i$ is below $10^{-7}$ (at most 80 iterations); the
 outer Nelder--Mead search stops at a tolerance of $10^{-4}$ in the log globals and $10^{-3}$ in the
-negative log-likelihood. On the ten seed-123 datasets of the headline study, the exact step changes the
+negative log-likelihood. On the ten seed-123 datasets of the headline study (pinned headline configuration), the exact step changes the
 estimate of $k_{B0}$ by at most \ScoreExactMaxDiff{} percentage points (mean \ScoreExactMeanDiff) and
 the standard error by a factor of \ScoreExactSERatio{} on average (Section~\ref{sec:res-bias}).
 

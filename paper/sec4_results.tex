@@ -199,7 +199,8 @@ of a percentage point.
 
 \paragraph{Gain uncertainty of relative changes}\label{sec:res-gain}
 A model error that biases $\log\hat k_{B0}$ by a constant cancels in the change $D$; what remains
-scales with $D$ (Fig.~\ref{fig:relchange}, Table~\ref{tab:table7_gains}). With $k_f$ and $k_{H0}$
+scales with $D$. The gains were computed in the earlier configuration (metro wheel layout, BS113A rail;
+Fig.~\ref{fig:relchange}, Table~\ref{tab:table7_gains}). With $k_f$ and $k_{H0}$
 fixed, the gain uncertainty from one-at-a-time pseudo-true fits is $\kappa=\KappaNominal$, dominated by
 the foundation stiffness (\KappaKfTerm). On a fresh Monte Carlo with all five model errors drawn at
 random it under-covers: \KapNomCov{} [\KapNomLo, \KapNomHi], with an rms error of the change of
@@ -332,7 +333,7 @@ they are 10~dB above it, because the lines then carry information about $|H|$ at
 For a one-sided test at 5\% false alarm and 90\% detection,
 the MDC with $k_f$ and $k_{H0}$ re-estimated is \MDCFiftyForty\% for $N=50$ passes per period at
 40~dB and \MDCFiftyTwenty\% at 20~dB; with $N=200$ it is \MDCTwoHundredForty\% and
-\MDCTwoHundredTwenty\%. With the simulation calibration (40~dB only) these become
+\MDCTwoHundredTwenty\%. With the simulation calibration (40~dB only; calibration factor from the pinned headline configuration) these become
 \MDCCalFiftyForty\% ($N=50$) and \MDCCalTwoHundredForty\% ($N=200$); 20~dB is unchanged
 (Table~\ref{tab:table8_mdc}).
 

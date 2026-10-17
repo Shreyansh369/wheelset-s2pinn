@@ -34,8 +34,8 @@ corrugation (Section~\ref{sec:res-p2}); its intervals then under-cover, so on th
 screen per-pass estimates but does not yet give calibrated intervals.
 
 \subsection{Limitations}\label{sec:limitations}
-\paragraph{Residual bias and simulation-calibrated intervals.} For the representative wagon the frozen
-estimator has a bias of at most \HLBiasAbsMax\% (Table~\ref{tab:table3_headline}) and a scatter up to
+\paragraph{Residual bias and simulation-calibrated intervals.} For the representative wagon (pinned
+headline configuration) the frozen estimator has a bias of at most \HLBiasAbsMax\% (Table~\ref{tab:table3_headline}) and a scatter up to
 \HLRatioCRBMax{} times the Cram\'er--Rao bound, but the 40~dB Wald intervals still cover the truth
 slightly less often than nominal (\HLFortyCov). In the earlier configuration the bias reached
 \BDWideBias\% for one seed, and Section~\ref{sec:res-bias} ruled out the obvious causes: the
@@ -49,7 +49,8 @@ payload range, number of passes, roughness model and noise level), and must be r
 other design. The calibration was checked on held-out seeds (Section~\ref{sec:res-headline}); at
 20~dB, where no calibration is applied, the held-out coverage differed between the two splits, so the
 nominal 90\% should be read as approximate.
-For relative changes under random model errors, the calibrated interval still under-covers
+For relative changes under random model errors (earlier configuration), the calibrated interval still
+under-covers
 (\KapCalCovered/\KapCalN): the gain uncertainty $\kappa$ derived from one-at-a-time model errors is too
 small, and an interval for the change that holds under realistic model errors remains open.
 
