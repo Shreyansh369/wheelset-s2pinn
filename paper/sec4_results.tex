@@ -259,7 +259,11 @@ time-domain data are higher by \GenkB\,$\pm$\,\GenkBSE{} percentage points for $
 \GencB\,$\pm$\,\GencBSE{} percentage points for $c_B$ (frequency-domain data: \ICFDBias\% and
 \ICFDcBBias\%). The only systematic spectral difference found is a mean periodogram lower by
 \GenPgramDiff\,$\pm$\,\GenPgramDiffSE\% at 480--550~Hz over \GenPgramN{} noise-free realisations; its cause was not
-identified (refining the roughness grid and the estimator's frequency table did not remove it). This
+identified (refining the roughness grid and the estimator's frequency table did not remove it). A
+start-up transient is ruled out: the time-domain generator discards 0.8~s at each end of the record,
+far longer than the build-up time $1/(\zeta\omega)\approx\GenBuildupMs$~ms of the support resonance, and
+discarding 1.6~s instead left the difference unchanged (\GenPadkB\,$\pm$\,\GenPadkBSE{} percentage
+points for $k_{B0}$ and \GenPadcB\,$\pm$\,\GenPadcBSE{} for $c_B$, \GenPadN{} datasets). This
 dataset-level difference accounts for the whole of the linear-contact bias of $k_{B0}$ and for most of
 the $c_B$ bias. It cancels in the paired difference between nonlinear and linear
 contact, which uses the same generator, so the effect of the contact nonlinearity stated above is
@@ -283,19 +287,31 @@ suspension is therefore not used.
 band's fixed values (Section~\ref{sec:relative}), the same stress truth gives a large-sample bias of
 \BandEmptyPseudo\% (empty band) and \BandLadenPseudo\% (laden band). In \BandEmptyPairsN{} zero-change
 pairs in the empty band, $z$ ranged from \BandEmptyZMin{} to \BandEmptyZMax{} with \BandEmptyPairsFA{}
-false alarms (95\% interval of the rate \BandEmptyPairsFALo--\BandEmptyPairsFAHi), and the standard error
-of the change was \BandEmptySE\%, as without the stress; the apparent changes lean upwards (mean
-\BandEmptyMeanD\%, \BandEmptyZPos{} of \BandEmptyPairsN{} positive), which the one-sided test for a loss
-of stiffness does not flag. In \BandLadenPairsN{} laden pairs there was no false alarm either; in
-\BandLadenNSingular{} of them the observed information was singular because $c_B$ ran to its lower bound,
-and with the median standard error used for those, $z$ ranged from \BandLadenZMin{} to \BandLadenZMax{}
-(largest apparent change an increase of \BandLadenDMax\%). The detection limits per band, from
-the Cram\'er--Rao bound with $k_f$ and $k_{H0}$ re-estimated, are \BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\%
-($N=50$) and \BandEmptyMDCTwoHundredMin--\BandEmptyMDCTwoHundredMax\% ($N=200$) for the empty band, and
+false alarms (95\% interval of the rate \BandEmptyPairsFALo--\BandEmptyPairsFAHi). Over these pairs the
+mean apparent change is \LeanMean\,$\pm$\,\LeanMeanSE\%, $z$ has mean \LeanZMean{} and standard deviation
+\LeanZSD, and \LeanNPos{} of \LeanN{} changes are positive. The empirical standard deviation of the
+apparent change, \LeanSDPct\%, is \LeanSDOverSE{} times the mean reported standard error
+(\LeanSEPct\%): within the band the standard error of the change is calibrated, so the detection limits
+below need no simulation calibration. The two periods of a pair are drawn by the same procedure from
+independent seeds (speeds, payloads within the band, roughness levels and realisations, with the same
+stress truth), so the expected apparent change is zero by symmetry; the observed lean towards an increase
+does not follow the differences between the periods' mean payload, mean speed or mean roughness level
+($|r| \le \LeanCorrMax$) and is consistent with sampling variation. In the laden band, $c_B$ is not
+identified: with it free, the observed information was singular in \BandLadenNSingular{} of
+\BandLadenPairsN{} pairs. With $c_B$ fixed at its nominal value (and $k_f$, $k_{H0}$ still re-estimated
+in each period), \BandLadenFixPairsN{} zero-change pairs gave \BandLadenFixPairsFA{} false alarms, $z$
+from \BandLadenFixZMin{} to \BandLadenFixZMax{} (largest apparent change an increase of
+\BandLadenFixDMax\%) and a standard error of the change of \BandLadenFixSE\%. The large-sample bias of
+$k_{B0}$ in the laden band is then \BandLadenFixPseudoOne\% with $c_B$ fixed at its nominal value, and
+\BandLadenFixPseudoHalf\% and \BandLadenFixPseudoTwo\% with $c_B$ fixed at half and twice that value;
+this level bias is common to both periods and below the laden detection limit. The detection limits per
+band, from the Cram\'er--Rao bound with $k_f$ and $k_{H0}$ re-estimated, are
+\BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\% ($N=50$) and
+\BandEmptyMDCTwoHundredMin--\BandEmptyMDCTwoHundredMax\% ($N=200$) for the empty band, and
 \BandLadenMDCFiftyMin--\BandLadenMDCFiftyMax\% and \BandLadenMDCTwoHundredMin--\BandLadenMDCTwoHundredMax\%
-for the laden band, where the strongly damped laden suspension widens the support resonance; in the laden
-band the support damping $c_B$ is not resolved. Payload diversity therefore remains a lever only within
-a band, and the empty band is the preferred operating mode.
+for the laden band, where the strongly damped laden suspension widens the support resonance. Payload
+diversity therefore remains a lever only within a band, and the empty band is the preferred operating
+mode.
 
 \subsubsection{Measurement and operating conditions}\label{sec:res-budget-meas}
 Measurement noise enters through the signal-to-noise ratio: at 20~dB instead of 40~dB the detection limit

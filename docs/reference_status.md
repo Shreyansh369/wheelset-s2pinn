@@ -55,3 +55,9 @@ Dusza et al. 2024 (vehicle set) is full-text verified and not listed.
 | 8 | UIC60 crown radius 0.30 m | k_H0 from Hertz | EN 13674-1 60E1 profile drawing |
 | 9 | 60E1 section A = 76.70 cm², I = 3038.3 cm⁴ | rail receptance | ArcelorMittal / British Steel 60E1 datasheets (EN 13674-1) |
 | 10 | Wheelset modal damping < 2% (first torsion and bending) | axle damping; swept 0.1–2% | Chaar (2007), KTH thesis TRITA AVE 2007:17, Table 2-1 |
+
+## Added 2026-10-17 (novelty table), unverified
+
+| Key | Full reference | Status |
+|---|---|---|
+| li2019axlebox | Li, T., Sun, W., Meng, Z., Huo, J., Dong, J., Wang, L. (2019). Dynamic investigation on railway vehicle considering the dynamic effect from the axle box bearings. *Advances in Mechanical Engineering* 11(4), 1–13. doi:10.1177/1687814019840503 | DOI, authors and year from a DOAJ listing and a citing reference list (search snippets); full text not read |

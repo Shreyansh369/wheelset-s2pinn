@@ -26,6 +26,11 @@ def clean(s):
     return s.replace("{", "").replace("}", "").replace("\\&", "&").replace("--", "–").replace("$^2$", "²")
 
 
+UNVERIFIED_NEW = {  # entries added after the search-based status check; to be verified by hand
+    "li2019axlebox": "added 2026-10-17 for the novelty table; authors, volume and DOI from a DOAJ listing (search snippet), UNVERIFIED",
+}
+
+
 def main():
     bib = parse_bib((ROOT / "paper/refs.bib").read_text())
     order = re.findall(r"\\bibitem\{([^}]+)\}", (ROOT / "paper/main.bbl").read_text())
@@ -46,7 +51,8 @@ def main():
             ident = e["url"]
         else:
             ident = clean(e.get("note", "")) or "none found"
-        rows.append(f"| [{i}] | `{k}` | {who} ({e.get('year', '')}). {clean(e.get('title', ''))}. *{venue}* {vol} | {ident} | |")
+        flag = f" **{UNVERIFIED_NEW[k]}**" if k in UNVERIFIED_NEW else ""
+        rows.append(f"| [{i}] | `{k}` | {who} ({e.get('year', '')}). {clean(e.get('title', ''))}. *{venue}* {vol}{flag} | {ident} | |")
     hdr = ("# Reference check\n\nEvery reference of the manuscript in citation order (numbering of `paper/main.bbl`), with the "
            "identifier to check it against. Fill the last column by hand after checking author list, title, venue, volume, "
            "pages and year against the publisher's page. Search-based status of each entry: `docs/reference_status.md`. "

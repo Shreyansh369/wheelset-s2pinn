@@ -148,7 +148,8 @@ def summarise():
     # generator check: time-domain generator (linear / nonlinear contact) minus the frequency-domain
     # generator (the estimator's data model) on the same keys
     Rf = {tuple(r["key"]): r for r in _rows("fd")}
-    for name, Ra in (("lin_minus_fd", Rl), ("nl_minus_fd", Rn)):
+    Rp = {tuple(r["key"]): r for r in _rows("lin_pad1.6")}   # 1.6 s warm-up discarded at each end (start-up check)
+    for name, Ra in (("lin_minus_fd", Rl), ("nl_minus_fd", Rn), ("lin_pad1.6_minus_fd", Rp)):
         ks = sorted(set(Ra) & set(Rf))
         if len(ks) > 1:
             dk = np.array([Ra[k]["err_log"] - Rf[k]["err_log"] for k in ks]) * 100

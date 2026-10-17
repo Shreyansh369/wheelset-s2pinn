@@ -451,6 +451,26 @@ def section4(m, miss):
                 m[f"Band{w}LevelMean"], m[f"Band{w}LevelSD"] = _f(x["level_err_mean_pct"]), _f(x["level_err_sd_pct"])
     block("p4/banded.json", banded, ["BandEmptyMDCFiftyMin"])
 
+    def banded_extra(d):                  # laden band with c_B fixed; within-band calibration of the empty band
+        x = d.get("pairs_laden_cbfix")
+        if x:
+            m["BandLadenFixPairsN"], m["BandLadenFixPairsFA"] = str(x["n"]), str(x["false_alarms"])
+            m["BandLadenFixPairsFAHi"] = _f(x["rate_ci95"][1])
+            m["BandLadenFixZMin"], m["BandLadenFixZMax"] = _f(min(x["z"]), 1), _f(max(x["z"]), 1)
+            m["BandLadenFixDMax"], m["BandLadenFixSE"] = _f(max(x["D_pct"]), 1), _f(x["se_median_pct"])
+        ps = d.get("pseudo_laden_cbfix") or {}
+        for k, w in (("1.0", "One"), ("0.5", "Half"), ("2.0", "Two")):
+            if k in ps:
+                m[f"BandLadenFixPseudo{w}"] = _f(ps[k])
+        le = d.get("lean_empty")
+        if le:
+            m["LeanN"], m["LeanMean"], m["LeanMeanSE"] = str(le["n"]), _f(le["D_mean_pct"]), _f(le["D_mean_se_pct"])
+            m["LeanZMean"], m["LeanZSD"], m["LeanSDOverSE"] = _f(le["z_mean"]), _f(le["z_sd"]), _f(le["sd_over_mean_se"])
+            m["LeanNPos"] = str(le["n_positive"])
+            m["LeanCorrMax"] = _f(max(abs(le[k]) for k in ("corr_D_dW", "corr_D_dV", "corr_D_dg")))
+            m["LeanSDPct"], m["LeanSEPct"] = _f(le["D_sd_pct"]), _f(le["se_mean_pct"])
+    block("p4/banded.json", banded_extra, [])
+
     def bdy(d):                           # bias diagnosis on the headline datasets (pinned headline configuration)
         v = d.get("variants", {})
         if "exact" in v:
@@ -495,8 +515,13 @@ def section4(m, miss):
             x = d["lin_minus_fd"]
             m["GenN"], m["GenkB"], m["GenkBSE"] = str(x["n"]), _f(x["kB0_mean_pp"]), _f(x["kB0_se_pp"])
             m["GencB"], m["GencBSE"] = _f(x["cB_mean_pp"], 0), _f(x["cB_se_pp"], 0)
+        if "lin_pad1.6_minus_fd" in d:
+            x = d["lin_pad1.6_minus_fd"]
+            m["GenPadN"], m["GenPadkB"], m["GenPadkBSE"] = str(x["n"]), _f(x["kB0_mean_pp"]), _f(x["kB0_se_pp"])
+            m["GenPadcB"], m["GenPadcBSE"] = _f(x["cB_mean_pp"], 0), _f(x["cB_se_pp"], 0)
         gc = load("p4/generator_check.json")
         if gc:
+            m["GenBuildupMs"] = _f(1000 / (gc["support_mode_eig_zeta"] * 2 * math.pi * gc["support_mode_eig_hz"]), 0)
             m["GenOpMisfitPct"] = _f(100 * gc["operator_max_rel_misfit_single_wheel"], 1)
             m["GenRecMisfitPct"] = _f(100 * gc["rel_L2_misfit_record"], 2)
             m["GenZetaHP"] = _f(gc["support_zeta_halfpower_td"], 3)
