@@ -16,3 +16,4 @@
 2026-10-17T10:14:45Z python3 experiments/p4_bias_diag_y25.py --variant exact --j0 6 --j1 8 > results/p4/logs/bd_exact_6.log 2>&1
 2026-10-17T10:15:07Z python3 experiments/p4_bias_diag_y25.py --variant exact --j0 3 --j1 5 > results/p4/logs/bd_exact_3.log 2>&1
 2026-10-17T10:15:10Z timeout 6900 python3 experiments/p2_multiwheel.py --mc --tag _y25 --wheels 4 --j0 4 --n-data 6 > results/p4/logs/mw4_4.log 2>&1
+2026-10-17T10:16:51Z timeout 6900 python3 experiments/p2_multiwheel.py --mc --tag _y25 --wheels 4 --j0 6 --n-data 8 > results/p4/logs/mw4_6.log 2>&1
