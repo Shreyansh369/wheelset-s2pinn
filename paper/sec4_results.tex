@@ -93,30 +93,32 @@ on the wheel layout, and the coupled model is needed in either case.
 \inputtable{table5_multiwheel}
 
 \subsection{Estimator bias diagnosis}\label{sec:res-bias}
-This diagnosis was made in the earlier configuration. It uses the ten seed-123 datasets at 40~dB,
-where the bias is largest
-(\BDBaseFortyBias\% with the $\pm30$-bin kernel, RMSE/bound \BDBaseFortyRatio), and seed~42 as a
-contrast (\BDSFtwoFortyBias\%, \BDSFtwoFortyRatio); Table~\ref{tab:table14_validation}.
+The diagnosis uses the ten seed-123 datasets of the headline study at 40~dB (pinned headline
+configuration), which in an earlier configuration had the largest bias; each variant below refits
+exactly these datasets with one change, and seed~42 is a contrast (Table~\ref{tab:table14_validation}).
+With the frozen estimator the bias on these datasets is \BDYHeadBias\,$\pm$\,\BDYHeadBiasSE\% (RMSE/bound
+\BDYHeadRatio), and on seed~42 \BDYSFBias\% (RMSE/bound \BDYSFRatio).
 \begin{itemize}
-\item \emph{Noise.} The same datasets at 60~dB give \BDBaseSixtyBias\% (RMSE/bound \BDBaseSixtyRatio);
-  per dataset the estimates change by at most \BDMaxDiffSNR{} percentage points. The error is fixed by
-  the roughness, speed and payload realisation, not by sensor noise.
-\item \emph{Scoring and table resolution.} Exact sub-band scoring with a 0.25~Hz table gives
-  \BDExactBias\% (at most \BDMaxDiffExact{} percentage points from the default).
-\item \emph{Kernel truncation.} Widening the debiasing kernel from $\pm30$ to $\pm120$ bins lowers
-  every estimate, to \BDWideBias\% (RMSE/bound \BDWideRatio): about a fifth of the bias. The wide
-  kernel is the default.
-\item \emph{Number of roughness levels.} With the wide kernel, $K=4$ gives \BDKFourBias\% (RMSE/bound
-  \BDKFourRatio); $K=1$ cannot represent the 3~dB sub-band variation of the data and fails
-  (RMSE/bound \BDKOneRatio). Too many profiled nuisance levels is not the cause.
-\item \emph{Large-sample bias.} With the correct model, pseudo-true fits reproduce relative changes of
-  $-2$, $-5$ and $-10$\% with slope \CalSlope.
-\item \emph{Correlation between bins.} A sandwich standard error clustered on 61-bin blocks widens the
-  40~dB standard error from \RSEModelSEForty\% to \RSEBlockSEForty\% and raises the coverage only from
-  \RSEModelCovForty{} to \RSEBlockCovForty{} (fits with the $\pm30$-bin kernel).
-\item \emph{Pass design.} Across the 50 headline datasets, speed spread, payload spread, minimum speed
-  and the number of bins near the support resonance explain $R^2=\BRegRsq$ of the error (joint
-  $p=\BRegP$; payload spread alone $p=\BRegPayloadP$, not significant after four tests).
+\item \emph{Noise.} The same datasets at 60~dB change the estimates by at most \BDYSixtyMax{} percentage
+  points: the error is set by the roughness, speed and payload realisation, not by sensor noise.
+\item \emph{Scoring and table resolution.} Exact sub-band scoring with a 0.25~Hz table changes the
+  estimates by at most \ScoreExactMaxDiff{} percentage points and the standard errors by a factor of
+  \ScoreExactSERatio{} on average.
+\item \emph{Kernel truncation.} With a $\pm30$-bin debiasing kernel instead of $\pm120$ bins every
+  estimate is higher, by \BDYKbMean{} percentage points on average (at most \BDYKbMax); at this
+  configuration the truncation error is small, and the wide kernel is the default.
+\item \emph{Number of roughness levels.} $K=4$ levels per third octave gives RMSE/bound \BDYKFourRatio;
+  $K=1$ cannot represent the 3~dB sub-band variation of the data and fails (RMSE/bound \BDYKOneRatio,
+  Wald coverage \BDYKOneCov). Too many profiled nuisance levels is not a source of error.
+\item \emph{Large-sample bias.} In an earlier configuration (metro wheel layout), pseudo-true fits with
+  the correct model reproduced relative changes of $-2$, $-5$ and $-10$\% with slope \CalSlope.
+\item \emph{Correlation between bins.} Over the \RSEYN{} headline fits at 40~dB, a sandwich standard
+  error clustered on 61-bin blocks has a median of \RSEYBlockSE\%, against \RSEYModelSE\% from the expected
+  information, and the coverage stays at \RSEYBlockCov{} (\RSEYModelCov{} with the model standard error):
+  correlation between bins does not explain the under-coverage.
+\item \emph{Pass design.} Across the \BRegYN{} headline datasets at 40~dB, speed spread, payload spread,
+  minimum speed and the number of bins near the support resonance explain $R^2=\BRegYRsq$ of the error
+  (joint $p=\BRegYP$).
 \end{itemize}
 
 \inputtable{table14_validation}

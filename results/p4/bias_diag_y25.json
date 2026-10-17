@@ -1,0 +1,219 @@
+{
+  "name": "p4/bias_diag_y25",
+  "seed": 123,
+  "config": {
+    "config": "config/snapshots/headline_freight_v1 (headline datasets)",
+    "datasets": "keys (seed, 40, j), j < 10; variants on seed 123",
+    "variants": {
+      "kb30": {
+        "snr": 40.0,
+        "kb": 30
+      },
+      "snr60": {
+        "snr": 60.0
+      },
+      "exact": {
+        "snr": 40.0,
+        "exact": true
+      },
+      "K4": {
+        "snr": 40.0,
+        "ksub": 4
+      },
+      "K1": {
+        "snr": 40.0,
+        "ksub": 1
+      }
+    }
+  },
+  "payload": {
+    "headline_seed123": {
+      "n": 10,
+      "bias_pct": -0.02712681196065048,
+      "bias_se_pct": 0.05669936946615155,
+      "rmse_pct": 0.1722902239767269,
+      "rmse_over_crb": 0.9930269456186043,
+      "coverage90_wald": 1.0,
+      "cB_bias_pct": 10.561962706958088,
+      "all_converged": true
+    },
+    "headline_seed42": {
+      "n": 10,
+      "bias_pct": 0.08341404473364067,
+      "bias_se_pct": 0.04688604404463817,
+      "rmse_pct": 0.16335364227634427,
+      "rmse_over_crb": 0.9314296692511569,
+      "coverage90_wald": 0.9,
+      "cB_bias_pct": 6.765209239926835,
+      "all_converged": true
+    },
+    "variants": {
+      "kb30": {
+        "n": 10,
+        "bias_pct": 0.005421900744794206,
+        "bias_se_pct": 0.057848341370490296,
+        "rmse_pct": 0.17358940418025853,
+        "rmse_over_crb": 1.0019272102095256,
+        "coverage90_wald": 0.9,
+        "cB_bias_pct": 12.394147164659826,
+        "all_converged": true,
+        "max_abs_diff_vs_headline_pp": 0.05293280383991128,
+        "mean_diff_vs_headline_pp": 0.03254871270543913,
+        "n_lower_than_headline": 0,
+        "se_ratio_vs_headline_mean": 1.0009883983826793,
+        "se_ratio_vs_headline_range": [
+          1.0004779359040643,
+          1.0017975337129819
+        ]
+      },
+      "snr60": {
+        "n": 10,
+        "bias_pct": -0.028112882248551022,
+        "bias_se_pct": 0.05620951310497028,
+        "rmse_pct": 0.17101268125604907,
+        "rmse_over_crb": 0.9877577821162733,
+        "coverage90_wald": 1.0,
+        "cB_bias_pct": 10.599757629251036,
+        "all_converged": true,
+        "max_abs_diff_vs_headline_pp": 0.015859321874400756,
+        "mean_diff_vs_headline_pp": -0.0009860702879060934,
+        "n_lower_than_headline": 6,
+        "se_ratio_vs_headline_mean": 0.9978230085744375,
+        "se_ratio_vs_headline_range": [
+          0.9971325508655189,
+          0.9985216043974331
+        ]
+      },
+      "exact": {
+        "n": 10,
+        "bias_pct": -0.02632080342529597,
+        "bias_se_pct": 0.05685671260487516,
+        "rmse_pct": 0.1726301448498078,
+        "rmse_over_crb": 0.9950195596494134,
+        "coverage90_wald": 1.0,
+        "cB_bias_pct": 10.61157550418465,
+        "all_converged": true,
+        "max_abs_diff_vs_headline_pp": 0.0055164570679222535,
+        "mean_diff_vs_headline_pp": 0.0008060085353489566,
+        "n_lower_than_headline": 4,
+        "se_ratio_vs_headline_mean": 1.0005137141189904,
+        "se_ratio_vs_headline_range": [
+          1.000254108846138,
+          1.0015061221096868
+        ]
+      },
+      "K4": {
+        "n": 10,
+        "bias_pct": -0.07551418339023841,
+        "bias_se_pct": 0.07250310804809187,
+        "rmse_pct": 0.23030985847898003,
+        "rmse_over_crb": 1.331337795673774,
+        "coverage90_wald": 0.8,
+        "cB_bias_pct": 10.669927776178904,
+        "all_converged": true,
+        "max_abs_diff_vs_headline_pp": 0.28764300572697854,
+        "mean_diff_vs_headline_pp": -0.048387371429592374,
+        "n_lower_than_headline": 5,
+        "se_ratio_vs_headline_mean": 0.9965463267310183,
+        "se_ratio_vs_headline_range": [
+          0.9833244544846573,
+          1.0053718125461675
+        ]
+      },
+      "K1": {
+        "n": 10,
+        "bias_pct": -0.16393095078109043,
+        "bias_se_pct": 0.17076385632195457,
+        "rmse_pct": 0.5380297137398613,
+        "rmse_over_crb": 3.1860580518428514,
+        "coverage90_wald": 0.4,
+        "cB_bias_pct": 9.147977029144615,
+        "all_converged": true,
+        "max_abs_diff_vs_headline_pp": 1.240318589766054,
+        "mean_diff_vs_headline_pp": -0.1368041388204444,
+        "n_lower_than_headline": 7,
+        "se_ratio_vs_headline_mean": 0.9727202459996638,
+        "se_ratio_vs_headline_range": [
+          0.9339139646713239,
+          1.0449767878356824
+        ]
+      }
+    },
+    "robust_se_40db": {
+      "n": 50,
+      "model": {
+        "se_median_pct": 0.1743207713245638,
+        "coverage90": 0.84,
+        "coverage90_ci95": [
+          0.7088736934048891,
+          0.9282992328167138
+        ]
+      },
+      "bin": {
+        "se_median_pct": 0.17193414653083372,
+        "coverage90": 0.84,
+        "coverage90_ci95": [
+          0.7088736934048891,
+          0.9282992328167138
+        ]
+      },
+      "block8": {
+        "se_median_pct": 0.17465007859062245,
+        "coverage90": 0.82,
+        "coverage90_ci95": [
+          0.6856305887143497,
+          0.9142379218903364
+        ]
+      },
+      "block61": {
+        "se_median_pct": 0.17605580349429437,
+        "coverage90": 0.84,
+        "coverage90_ci95": [
+          0.7088736934048891,
+          0.9282992328167138
+        ]
+      }
+    },
+    "regression": {
+      "n": 50,
+      "r2": 0.01592758574783737,
+      "p_F": 0.9465141212307089,
+      "single_feature": {
+        "speed_sd_kmh": {
+          "r": -0.033458838015201595,
+          "p": 0.8175710214147113
+        },
+        "payload_sd_t": {
+          "r": 0.054506230666475614,
+          "p": 0.7069550824506655
+        },
+        "speed_min_kmh": {
+          "r": 0.0791091682483991,
+          "p": 0.5850007178265245
+        },
+        "bins_near_resonance": {
+          "r": 0.07816170653635343,
+          "p": 0.5895182615143572
+        }
+      },
+      "resonance_hz_at_W": {
+        "5.5": 441.75,
+        "14.0": 452.0,
+        "22.5": 456.5
+      }
+    }
+  },
+  "provenance": {
+    "git_commit": "7224ef69fdc252a7babd5f9f3f58de0f457b0337-dirty",
+    "config_dir": "/home/user/wheelset-s2pinn/config/snapshots/headline_freight_v1",
+    "config_hash": "10d9b91451c2",
+    "estimator_version": "multipass-whittle-2 (debiased, Kb=120 default, own-sub-band scoring, 0.5 Hz table)",
+    "timestamp_utc": "2026-10-17T11:04:09Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 98.39453125,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

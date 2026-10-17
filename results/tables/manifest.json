@@ -29,12 +29,9 @@
  },
  "table14_validation": {
   "sources": [
-   "results/p3/validation_mc.json",
-   "results/p3/bias_regression.json",
-   "results/p3/robust_se.json",
-   "results/p3/calibration.json"
+   "results/p4/bias_diag_y25.json"
   ],
-  "caption": "Validation: \u03ba revalidation, drift at k_f \u00d70.8, bias diagnosis, robust standard errors, calibration (earlier configuration: metro wheel layout, BS113A rail, +-30-bin kernel)"
+  "caption": "Bias diagnosis on the headline datasets (pinned headline configuration)"
  },
  "table15_sweep": {
   "sources": [

@@ -482,6 +482,26 @@ def section4(m, miss):
 
     def bdy(d):                           # bias diagnosis on the headline datasets (pinned headline configuration)
         v = d.get("variants", {})
+        h, h42 = d["headline_seed123"], d["headline_seed42"]
+        m["BDYHeadBias"], m["BDYHeadBiasSE"], m["BDYHeadRatio"] = _f(h["bias_pct"], 2), _f(h["bias_se_pct"], 2), _f(h["rmse_over_crb"])
+        m["BDYSFBias"], m["BDYSFRatio"] = _f(h42["bias_pct"], 2), _f(h42["rmse_over_crb"])
+        if "snr60" in v:
+            m["BDYSixtyMax"] = _f(v["snr60"]["max_abs_diff_vs_headline_pp"], 3)
+        if "kb30" in v:
+            m["BDYKbMean"], m["BDYKbMax"] = _f(v["kb30"]["mean_diff_vs_headline_pp"], 2), _f(v["kb30"]["max_abs_diff_vs_headline_pp"], 2)
+            m["BDYKbLower"] = str(v["kb30"]["n_lower_than_headline"])
+        if "K4" in v:
+            m["BDYKFourRatio"], m["BDYKFourBias"] = _f(v["K4"]["rmse_over_crb"]), _f(v["K4"]["bias_pct"], 2)
+        if "K1" in v:
+            m["BDYKOneRatio"], m["BDYKOneCov"] = _f(v["K1"]["rmse_over_crb"]), _f(v["K1"]["coverage90_wald"])
+        rs = d.get("robust_se_40db")
+        if rs:
+            m["RSEYN"] = str(rs["n"])
+            m["RSEYModelSE"], m["RSEYModelCov"] = _f(rs["model"]["se_median_pct"], 3), _f(rs["model"]["coverage90"])
+            m["RSEYBlockSE"], m["RSEYBlockCov"] = _f(rs["block61"]["se_median_pct"], 3), _f(rs["block61"]["coverage90"])
+        rg = d.get("regression")
+        if rg:
+            m["BRegYN"], m["BRegYRsq"], m["BRegYP"] = str(rg["n"]), _f(rg["r2"]), _f(rg["p_F"])
         if "exact" in v:
             e = v["exact"]
             m["ScoreExactMaxDiff"], m["ScoreExactMeanDiff"] = _f(e["max_abs_diff_vs_headline_pp"], 3), _f(e["mean_diff_vs_headline_pp"], 3)

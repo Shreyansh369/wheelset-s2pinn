@@ -191,7 +191,7 @@ def summarise():
         e = np.array([r["err_log"] for r in Rr])
         cov = {}
         for name in ["model"] + [c[0] for c in CL]:
-            s = np.array([r["se"][name] for r in Rr])
+            s = np.array([np.atleast_1d(r["se"][name])[0] for r in Rr])     # k_B0 component
             k = int(np.sum(np.abs(e) <= 1.6448536269514722 * s))
             cov[name] = {"se_median_pct": float(np.median(s) * 100), "coverage90": k / len(Rr), "coverage90_ci95": cp_interval(k, len(Rr))}
         out["robust_se_40db"] = {"n": len(Rr), **cov}

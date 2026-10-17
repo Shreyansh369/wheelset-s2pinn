@@ -74,7 +74,7 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | `results/p3/robust_se.json` | earlier | - | declared |
 | `results/p3/validation_mc.json` | earlier | e0a22f267362 | declared earlier, hash is frozen (declaration conservative) |
 | `results/p4/banded.json` | frozen | e0a22f267362 | hash verified |
-| `results/p4/bias_diag_y25.json` | pinned | - | declared |
+| `results/p4/bias_diag_y25.json` | pinned | 10d9b91451c2 | hash verified |
 | `results/p4/contact_hertz.json` | frozen | - | declared |
 | `results/p4/generator_check.json` | frozen | - | declared |
 | `results/p4/generator_expper.json` | frozen | - | declared |
@@ -93,7 +93,7 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | table | table3_headline | results/p3/headline_v2_kb120_attr_freight.json, results/p3/calibrated.json, results/p4/ignore_coupling.json | frozen/pinned | ok |
 | table | table4_speed_N | results/p1/fe_direct.json | earlier | ok |
 | table | table5_multiwheel | results/p2/multiwheel_bound.json, results/p2/multiwheel_mc.json | earlier/frozen | ok |
-| table | table14_validation | results/p3/validation_mc.json, results/p3/bias_regression.json, results/p3/robust_se.json, results/p3/calibration.json | earlier | ok |
+| table | table14_validation | results/p4/bias_diag_y25.json | pinned | ok |
 | table | table6_budget | results/p2/model_form_mw_sensitivity.json | frozen | ok |
 | table | table15_sweep | results/p4/sweep.json | frozen | ok |
 | table | table7_gains | results/p2/relative_intervals.json, results/p2/relative_coest_drift.json | earlier | ok |
@@ -118,23 +118,20 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 |---|---|---|---|---|
 | `\AxleboxMass` | config/params.yaml | frozen | sec2_model | ok |
 | `\AxleboxModeContactHz` | results/p3/bearing_clearance.json | frozen | sec2_model | ok |
-| `\BDBaseFortyBias` | results/p3/validation_mc.json | earlier | sec4_results | labelled |
-| `\BDBaseFortyRatio` | results/p3/validation_mc.json | earlier | sec4_results | labelled |
-| `\BDBaseSixtyBias` | results/p3/validation_mc.json | earlier | sec4_results | labelled |
-| `\BDBaseSixtyRatio` | results/p3/validation_mc.json | earlier | sec4_results | labelled |
-| `\BDExactBias` | results/p3/validation_mc.json | earlier | sec4_results | labelled |
-| `\BDKFourBias` | results/p3/validation_mc.json | earlier | sec4_results | labelled |
-| `\BDKFourRatio` | results/p3/validation_mc.json | earlier | sec4_results | labelled |
-| `\BDKOneRatio` | results/p3/validation_mc.json | earlier | sec4_results | labelled |
-| `\BDMaxDiffExact` | results/p3/bias_regression.json | earlier | sec5_discussion | labelled |
-| `\BDMaxDiffSNR` | results/p3/bias_regression.json | earlier | sec4_results | labelled |
-| `\BDSFtwoFortyBias` | results/p3/validation_mc.json | earlier | sec4_results | labelled |
-| `\BDSFtwoFortyRatio` | results/p3/validation_mc.json | earlier | sec4_results | labelled |
-| `\BDWideBias` | results/p3/validation_mc.json | earlier | sec5_discussion | labelled |
-| `\BDWideRatio` | results/p3/validation_mc.json | earlier | sec4_results | labelled |
-| `\BRegP` | results/p3/bias_regression.json | earlier | sec4_results | labelled |
-| `\BRegPayloadP` | results/p3/bias_regression.json | earlier | sec4_results | labelled |
-| `\BRegRsq` | results/p3/bias_regression.json | earlier | sec4_results | labelled |
+| `\BDYHeadBias` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BDYHeadBiasSE` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BDYHeadRatio` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BDYKFourRatio` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BDYKOneCov` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BDYKOneRatio` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BDYKbMax` | results/p4/bias_diag_y25.json | pinned | sec5_discussion | labelled |
+| `\BDYKbMean` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BDYSFBias` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BDYSFRatio` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BDYSixtyMax` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BRegYN` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BRegYP` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BRegYRsq` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
 | `\BandEmptyMDCFiftyConsMax` | results/p3/validation_mc.json | earlier | abstract | NOT FROZEN in abstract |
 | `\BandEmptyMDCFiftyConsMin` | results/p3/validation_mc.json | earlier | abstract | NOT FROZEN in abstract |
 | `\BandEmptyMDCFiftyMax` | results/p4/banded.json | frozen | sec6_conclusions | ok |
@@ -174,7 +171,7 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | `\BudgetNominalMassOne` | results/p2/model_form_mw_sensitivity.json | frozen | sec4_results | ok |
 | `\CalBiasForty` | results/p3/calibrated.json | pinned | sec4_results | labelled |
 | `\CalInflForty` | results/p3/calibrated.json | pinned | sec4_results | labelled |
-| `\CalSlope` | results/p3/calibration.json | earlier | sec5_discussion | labelled |
+| `\CalSlope` | results/p3/calibration.json | earlier | sec4_results | labelled |
 | `\CalSplitACov` | results/p3/calibrated.json | pinned | sec4_results | labelled |
 | `\CalSplitAHi` | results/p3/calibrated.json | pinned | sec4_results | labelled |
 | `\CalSplitAInfl` | results/p3/calibrated.json | pinned | sec4_results | labelled |
@@ -343,11 +340,19 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | `\LeanCorrMax` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\LeanMean` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\LeanMeanSE` | results/p4/banded.json | frozen | sec4_results | ok |
-| `\LeanN` | results/p4/banded.json | frozen | sec4_results | ok |
-| `\LeanNPos` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanMeanZ` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanOneMean` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanOneN` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanOnePos` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanOneSE` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\LeanSDOverSE` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\LeanSDPct` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\LeanSEPct` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanTwoMean` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanTwoN` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanTwoPos` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanTwoSE` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanTwoZ` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\LeanZMean` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\LeanZSD` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\LoadExp` | config/params.yaml | frozen | sec2_model | ok |
@@ -400,17 +405,18 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | `\PayloadMax` | config/params.yaml | frozen | sec5_discussion | ok |
 | `\PayloadMin` | config/params.yaml | frozen | sec5_discussion | ok |
 | `\PeffSeries` | results/p3/exponent_bound.json | frozen | sec2_model | ok |
-| `\RSEBlockCovForty` | results/p3/robust_se.json | earlier | sec4_results | labelled |
-| `\RSEBlockSEForty` | results/p3/robust_se.json | earlier | sec4_results | labelled |
-| `\RSEModelCovForty` | results/p3/robust_se.json | earlier | sec4_results | labelled |
-| `\RSEModelSEForty` | results/p3/robust_se.json | earlier | sec4_results | labelled |
+| `\RSEYBlockCov` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\RSEYBlockSE` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\RSEYModelCov` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\RSEYModelSE` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\RSEYN` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
 | `\RecordLength` | config/params.yaml | frozen | sec3_method | ok |
 | `\RollerLength` | results/p3/bearing_clearance.json | frozen | sec2_model | ok |
 | `\RollersPerRow` | results/p3/bearing_clearance.json | frozen | sec2_model | ok |
 | `\SampleRate` | config/params.yaml | frozen | sec3_method | ok |
-| `\ScoreExactMaxDiff` | results/p4/bias_diag_y25.json | pinned | sec3_method | labelled |
+| `\ScoreExactMaxDiff` | results/p4/bias_diag_y25.json | pinned | sec5_discussion | labelled |
 | `\ScoreExactMeanDiff` | results/p4/bias_diag_y25.json | pinned | sec3_method | labelled |
-| `\ScoreExactSERatio` | results/p4/bias_diag_y25.json | pinned | sec3_method | labelled |
+| `\ScoreExactSERatio` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
 | `\SensKf` | results/p2/model_form_mw_sensitivity.json | frozen | sec4_results | ok |
 | `\SensUnsprung` | results/p2/model_form_mw_sensitivity.json | frozen | sec4_results | ok |
 | `\SpeedCRBFixed` | results/p1/fe_direct.json | earlier | sec4_results | labelled |

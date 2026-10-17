@@ -37,13 +37,11 @@ screen per-pass estimates but does not yet give calibrated intervals.
 \paragraph{Residual bias and simulation-calibrated intervals.} For the representative wagon (pinned
 headline configuration) the frozen estimator has a bias of at most \HLBiasAbsMax\% (Table~\ref{tab:table3_headline}) and a scatter up to
 \HLRatioCRBMax{} times the Cram\'er--Rao bound, but the 40~dB Wald intervals still cover the truth
-slightly less often than nominal (\HLFortyCov). In the earlier configuration the bias reached
-\BDWideBias\% for one seed, and Section~\ref{sec:res-bias} ruled out the obvious causes: the
-large-sample (pseudo-true) bias is nil (slope \CalSlope), sensor noise does not change the error, exact
-sub-band scoring and a finer table change it by at most \BDMaxDiffExact{} percentage points, robust
-(sandwich) standard errors do not restore coverage, and fewer roughness levels do not remove it (no
-incidental-parameter effect). Truncation of the debiasing kernel explained about a fifth and is removed by
-the wider kernel; the remainder is unexplained and depends on the realisation of roughness, speeds and
+slightly less often than nominal (\HLFortyCov). Section~\ref{sec:res-bias} ruled out the obvious causes on the headline datasets: sensor
+noise does not change the error, exact sub-band scoring and a finer table change it by at most
+\ScoreExactMaxDiff{} percentage points, a narrower debiasing kernel by at most \BDYKbMax, robust
+(sandwich) standard errors do not restore coverage, fewer roughness levels do not remove it, and the pass
+design does not explain it. The remaining scatter depends on the realisation of roughness, speeds and
 payloads. The 40~dB intervals are therefore simulation-calibrated for the stated design (speed range,
 payload range, number of passes, roughness model and noise level), and must be re-calibrated for any
 other design. The calibration was checked on held-out seeds (Section~\ref{sec:res-headline}); at
