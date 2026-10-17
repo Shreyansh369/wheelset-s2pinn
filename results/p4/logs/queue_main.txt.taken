@@ -9,3 +9,4 @@
 2026-10-17T08:59:55Z python3 experiments/p4_bias_diag_y25.py --variant K4 --j0 5 --j1 10 > results/p4/logs/bd_K4_5.log 2>&1
 2026-10-17T09:17:45Z python3 experiments/p4_bias_diag_y25.py --variant K1 --j0 0 --j1 5 > results/p4/logs/bd_K1_0.log 2>&1
 2026-10-17T09:27:01Z python3 experiments/p4_bias_diag_y25.py --variant K1 --j0 5 --j1 10 > results/p4/logs/bd_K1_5.log 2>&1
+2026-10-17T09:37:33Z python3 experiments/p4_bias_diag_y25.py --robust --j0 0 --j1 50 > results/p4/logs/bd_rob.log 2>&1
