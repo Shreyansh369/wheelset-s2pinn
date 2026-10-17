@@ -47,6 +47,7 @@ T0, BUDGET = time.perf_counter(), 110 * 60
 Z = 1.6448536269514722
 TAG = [""]
 FAM_DF = [None]   # estimator table spacing (Hz); None = the frozen estimator's 0.5 Hz
+PAD = [0.8]       # time-domain padding (s) discarded at each end of the record (warm-up)
 
 
 def dataset(gen, rough, r0, key, contact):
@@ -74,7 +75,7 @@ def fit(passes, Wm, rough, fam):
 def run(mode, j0, j1):
     sm, thb, rough, _ = setup()
     mw = models(sm)[0]["4"]
-    gen = NonlinearContactGenerator(mw, dict(thb, **TRUTH))
+    gen = NonlinearContactGenerator(mw, dict(thb, **TRUTH), pad=PAD[0])
     fam = MultiWheelFamily(mw, thb, f_grid=np.arange(45.0, 702.0, FAM_DF[0]) if FAM_DF[0] else None)
     OUT.mkdir(parents=True, exist_ok=True)
     fp = OUT / f"{mode}{TAG[0]}.jsonl"
@@ -178,12 +179,14 @@ if __name__ == "__main__":
     ap.add_argument("--mode", choices=("nl", "lin", "pairs", "fd"))
     ap.add_argument("--fam-df", type=float, default=None, help="estimator frequency-table spacing (diagnostic)")
     ap.add_argument("--tag", default="", help="run-file suffix (e.g. _v2 after the roughness-grid fix)")
+    ap.add_argument("--pad", type=float, default=0.8, help="time-domain warm-up discarded at each end (s)")
     ap.add_argument("--j0", type=int, default=0)
     ap.add_argument("--j1", type=int, default=20)
     ap.add_argument("--summarise", action="store_true")
     a = ap.parse_args()
     TAG[0] = a.tag
     FAM_DF[0] = a.fam_df
+    PAD[0] = a.pad
     if a.summarise:
         summarise()
     else:

@@ -10,6 +10,8 @@ band's fixed primary values and change detection compares the same band across p
              linearly in axle load between Dusza's empty and laden values (evaluated within the band).
   --pairs --band B --j0 --j1 : zero-change pairs of periods under the same stress truth (co-estimating
              fit per period); false alarm if D < -1.645 se_D.
+  --cb-fixed F : with --pairs or --pseudo, c_B fixed at F x nominal in the fit (k_B0, k_f, k_H0 estimated);
+             rows to *_cbfix.jsonl (laden band, where c_B is not identified).
 Rows: results/p4/banded_runs/*.jsonl (resumable, 110-minute budget per process); --summarise ->
 results/p4/banded.json.
 """
@@ -37,7 +39,7 @@ import experiments.p2_multiwheel as pm  # noqa: E402
 from experiments.p1_fe_direct import TRUTH, cp_interval  # noqa: E402
 from experiments.p2_common import WIM, setup  # noqa: E402
 from experiments.p2_relative_change import gen  # noqa: E402
-from experiments.p2_relative_coest_drift import EST, SPEEDS, families, mdc_under, phi, truth  # noqa: E402
+from experiments.p2_relative_coest_drift import EST, NOM, SPEEDS, families, mdc_under, phi, truth  # noqa: E402
 from src.analysis.multiwheel import MultiWheelFamily  # noqa: E402
 from src.inverse.multipass import MultiPassWhittle  # noqa: E402
 from src.utils.results import RESULTS_DIR, save_result  # noqa: E402
@@ -89,23 +91,38 @@ def bounds():
                              "mdc_pct": mdc_under(0.0, 0.0, math.sqrt(2) * crb)})
 
 
-def pseudo(b):
-    fp = OUT / f"pseudo_{b}.jsonl"
-    if fp.exists() and fp.read_text().strip():
+CBFIX = ("kB0", "kf", "kH0")
+
+
+def fam_cbfix(mw, thb_b, F):
+    """Co-estimating family with c_B fixed at F x nominal."""
+    return MultiWheelFamily(mw, dict(thb_b, **{k: v for k, v in NOM.items() if k not in CBFIX}, cB=TRUTH["cB"] * F), names=CBFIX)
+
+
+def pseudo(b, cbf=None):
+    fp = OUT / (f"pseudo_{b}.jsonl" if cbf is None else f"pseudo_{b}_cbfix.jsonl")
+    if cbf is None and fp.exists() and fp.read_text().strip():
+        return
+    if cbf is not None and cbf in _done(fp, lambda r: r["cB_factor"]):
         return
     sm, thb_b, rough, mw, fams = _base(b)
     P, Wm, Ws, g = pm.dataset(sm, thb_b, rough, mw, (31, 0), N=50, speeds=SPEEDS, g_sd=0.0)
-    est = MultiPassWhittle(P, Ws, WIM, rough, fams["coest"], debias=True)
+    fam, names = (fams["coest"], EST["coest"]) if cbf is None else (fam_cbfix(mw, thb_b, cbf), CBFIX)
+    est = MultiPassWhittle(P, Ws, WIM, rough, fam, debias=True)
     true_all = dict(truth(thb_b, {}, TRUTH["kB0"]), primary_payload_law=True)
-    r = est.pseudo_true(MultiWheelFamily(mw, true_all, names=()), {}, np.zeros(est.S), np.log(Ws), phi(EST["coest"], start=True))
-    _append(fp, {"band": b, "bias_pct": (math.exp(r["phi"][0] - math.log(TRUTH["kB0"])) - 1) * 100, "phi_hat": r["phi"],
-                 "converged": r["converged"], "wall_fit_s": r["wall_fit_s"]})
+    r = est.pseudo_true(MultiWheelFamily(mw, true_all, names=()), {}, np.zeros(est.S), np.log(Ws), phi(names, start=True))
+    row = {"band": b, "bias_pct": (math.exp(r["phi"][0] - math.log(TRUTH["kB0"])) - 1) * 100, "phi_hat": r["phi"],
+           "converged": r["converged"], "wall_fit_s": r["wall_fit_s"]}
+    if cbf is not None:
+        row["cB_factor"] = cbf
+    _append(fp, row)
 
 
-def pairs(b, j0, j1):
-    fp = OUT / f"pairs_{b}.jsonl"
+def pairs(b, j0, j1, cbf=None):
+    fp = OUT / (f"pairs_{b}.jsonl" if cbf is None else f"pairs_{b}_cbfix.jsonl")
     done = _done(fp, lambda r: r["rep"])
     sm, thb_b, rough, mw, fams = _base(b)
+    fam, names = (fams["coest"], EST["coest"]) if cbf is None else (fam_cbfix(mw, thb_b, cbf), CBFIX)
     th = dict(truth(thb_b, {}, TRUTH["kB0"]), primary_payload_law=True)
     tmax = 30 * 60
     for j in range(j0, j1):
@@ -118,13 +135,52 @@ def pairs(b, j0, j1):
         res = {}
         for per in (0, 1):
             P, Wm, Ws, g = gen(sm, th, rough, mw, (49, j, per))
-            res[per] = MultiPassWhittle([dict(q) for q in P], Wm, WIM, rough, fams["coest"], debias=True).fit(phi(EST["coest"], start=True))
+            res[per] = MultiPassWhittle([dict(q) for q in P], Wm, WIM, rough, fam, debias=True).fit(phi(names, start=True))
         d = res[1]["phi"][0] - res[0]["phi"][0]
         se = math.hypot(res[0]["se_log"][0], res[1]["se_log"][0])
-        _append(fp, {"band": b, "rep": j, "D_hat": d, "se": se, "err_base": res[0]["phi"][0] - math.log(TRUTH["kB0"]),
+        _append(fp, {"band": b, "rep": j, "cB_factor": cbf, "D_hat": d, "se": se, "err_base": res[0]["phi"][0] - math.log(TRUTH["kB0"]),
                      "err_later": res[1]["phi"][0] - math.log(TRUTH["kB0"]),
                      "converged": res[0]["converged"] and res[1]["converged"], "wall_s": time.perf_counter() - t0})
         tmax = max(tmax, 1.3 * (time.perf_counter() - t0))
+
+
+def _design(b, key):
+    """Speeds and true payloads of a period, replaying the first draws of experiments.p2_relative_change.gen."""
+    from experiments.p1_fe_direct import G_SD_DB
+    from experiments.p2_relative_change import N as NP, SPEEDS as SP
+    rng = np.random.default_rng(np.random.SeedSequence(key))
+    g = 10 ** (rng.normal(0, G_SD_DB, _design.nsub) / 10)
+    Vs = rng.uniform(*SP, NP)
+    Ws = rng.uniform(*BANDS[b][0], NP)
+    return Vs, Ws, g
+
+
+def _lean(b, Pr):
+    """Within-band calibration and design check over the zero-change pairs: apparent change D, its SE,
+    z, the ratio of the empirical SD of D to the mean reported SE, and whether D follows the difference of
+    the periods' mean payload, mean speed or mean roughness level (both periods are drawn identically,
+    keys (49, j, 0) and (49, j, 1))."""
+    if len(Pr) < 3:
+        return None
+    _design.nsub = setup()[2].n_sub
+    D, se = np.array([r["D_hat"] for r in Pr]), np.array([r["se"] for r in Pr])
+    dW, dV, dg = [], [], []
+    for r in Pr:
+        a, c = _design(b, (49, r["rep"], 0)), _design(b, (49, r["rep"], 1))
+        dW.append(c[1].mean() - a[1].mean())
+        dV.append(c[0].mean() - a[0].mean())
+        dg.append(10 * np.log10(c[2]).mean() - 10 * np.log10(a[2]).mean())
+    z = D / se
+    corr = lambda x: float(np.corrcoef(x, D)[0, 1])
+    slope_W = float(np.polyfit(dW, D, 1)[0] * 100)
+    return {"n": len(Pr), "D_mean_pct": float(D.mean() * 100), "D_mean_se_pct": float(D.std(ddof=1) / math.sqrt(len(D)) * 100),
+            "D_sd_pct": float(D.std(ddof=1) * 100), "se_mean_pct": float(se.mean() * 100),
+            "sd_over_mean_se": float(D.std(ddof=1) / se.mean()), "z_mean": float(z.mean()), "z_sd": float(z.std(ddof=1)),
+            "n_positive": int((D > 0).sum()), "level_err_base_mean_pct": float(np.mean([r["err_base"] for r in Pr]) * 100),
+            "level_err_later_mean_pct": float(np.mean([r["err_later"] for r in Pr]) * 100),
+            "dW_mean_t": float(np.mean(dW)), "dW_sd_t": float(np.std(dW, ddof=1)), "dV_mean_kmh": float(np.mean(dV)),
+            "dg_mean_db": float(np.mean(dg)), "corr_D_dW": corr(dW), "corr_D_dV": corr(dV), "corr_D_dg": corr(dg),
+            "slope_D_per_t_pct": slope_W}
 
 
 def summarise():
@@ -151,6 +207,21 @@ def summarise():
                 "D_sd_pct": float(np.std(D, ddof=1) * 100) if len(D) > 1 else None, "se_median_pct": se_med * 100,
                 "level_err_mean_pct": float(np.mean(lev) * 100), "level_err_sd_pct": float(np.std(lev, ddof=1) * 100),
                 "all_converged": all(r["converged"] for r in Pr)}
+    lean = _lean("empty", rows("pairs_empty.jsonl"))
+    if lean:
+        out["lean_empty"] = lean
+    Pc = rows("pairs_laden_cbfix.jsonl")
+    if Pc:
+        D, se = np.array([r["D_hat"] for r in Pc]), np.array([r["se"] for r in Pc])
+        k = int(np.sum(D < -Z * se))
+        out["pairs_laden_cbfix"] = {"n": len(Pc), "false_alarms": k, "rate_ci95": cp_interval(k, len(Pc)),
+                                    "D_pct": [float(100 * x) for x in D], "z": [float(x) for x in D / se],
+                                    "D_mean_pct": float(np.mean(np.exp(D) - 1) * 100), "se_median_pct": float(np.median(se) * 100),
+                                    "level_err_pct": [float(100 * (math.exp(r[x]) - 1)) for r in Pc for x in ("err_base", "err_later")],
+                                    "all_converged": all(r["converged"] for r in Pc)}
+    Ps = rows("pseudo_laden_cbfix.jsonl")
+    if Ps:
+        out["pseudo_laden_cbfix"] = {str(r["cB_factor"]): r["bias_pct"] for r in Ps}
     save_result("p4/banded", out, cfg={"speeds_kmh": SPEEDS, "estimator": "coest (kB0, cB, kf, kH0), band's fixed primary values",
                                       "stress_truth": "k_p, c_p linear in axle load between empty and laden values"}, seed=48)
     print(json.dumps(out, indent=1))
@@ -165,12 +236,13 @@ if __name__ == "__main__":
     ap.add_argument("--band", choices=tuple(BANDS), default="empty")
     ap.add_argument("--j0", type=int, default=0)
     ap.add_argument("--j1", type=int, default=10)
+    ap.add_argument("--cb-fixed", type=float, default=None)
     a = ap.parse_args()
     if a.bounds:
         bounds()
     if a.pseudo:
-        pseudo(a.band)
+        pseudo(a.band, a.cb_fixed)
     if a.pairs:
-        pairs(a.band, a.j0, a.j1)
+        pairs(a.band, a.j0, a.j1, a.cb_fixed)
     if a.summarise:
         summarise()

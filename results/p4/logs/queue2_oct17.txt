@@ -1,0 +1,14 @@
+python3 experiments/p4_bias_diag_y25.py --variant kb30 --j0 0 --j1 5 > results/p4/logs/bd_kb30a.log 2>&1
+python3 experiments/p4_bias_diag_y25.py --variant kb30 --j0 5 --j1 10 > results/p4/logs/bd_kb30b.log 2>&1
+python3 experiments/p4_bias_diag_y25.py --variant exact --j0 0 --j1 5 > results/p4/logs/bd_exa.log 2>&1
+python3 experiments/p4_bias_diag_y25.py --variant exact --j0 5 --j1 10 > results/p4/logs/bd_exb.log 2>&1
+python3 experiments/p4_bias_diag_y25.py --variant snr60 --j0 0 --j1 5 > results/p4/logs/bd_60a.log 2>&1
+python3 experiments/p4_bias_diag_y25.py --variant snr60 --j0 5 --j1 10 > results/p4/logs/bd_60b.log 2>&1
+python3 experiments/p4_bias_diag_y25.py --variant K4 --j0 0 --j1 5 > results/p4/logs/bd_k4a.log 2>&1
+python3 experiments/p4_bias_diag_y25.py --variant K4 --j0 5 --j1 10 > results/p4/logs/bd_k4b.log 2>&1
+python3 experiments/p4_bias_diag_y25.py --variant K1 --j0 0 --j1 5 > results/p4/logs/bd_k1a.log 2>&1
+python3 experiments/p4_bias_diag_y25.py --variant K1 --j0 5 --j1 10 > results/p4/logs/bd_k1b.log 2>&1
+python3 experiments/p4_bias_diag_y25.py --robust --j0 0 --j1 50 > results/p4/logs/bd_rob1.log 2>&1; python3 experiments/p4_bias_diag_y25.py --robust --j0 0 --j1 50 > results/p4/logs/bd_rob2.log 2>&1
+timeout 6900 python3 experiments/p2_multiwheel.py --mc --n-data 10 --tag _y25 --wheels 4 > results/p4/logs/mw4a.log 2>&1; timeout 6900 python3 experiments/p2_multiwheel.py --mc --n-data 10 --tag _y25 --wheels 4 > results/p4/logs/mw4b.log 2>&1; timeout 6900 python3 experiments/p2_multiwheel.py --mc --n-data 10 --tag _y25 --wheels 4 > results/p4/logs/mw4c.log 2>&1
+timeout 6900 python3 experiments/p2_multiwheel.py --mc --n-data 10 --tag _y25 --wheels 2 > results/p4/logs/mw2a.log 2>&1; timeout 6900 python3 experiments/p2_multiwheel.py --mc --n-data 10 --tag _y25 --wheels 2 > results/p4/logs/mw2b.log 2>&1; timeout 6900 python3 experiments/p2_multiwheel.py --mc --n-data 10 --tag _y25 --wheels 2 > results/p4/logs/mw2c.log 2>&1
+timeout 6900 python3 experiments/p2_multiwheel.py --mc --n-data 10 --tag _y25 --wheels 8 > results/p4/logs/mw8a.log 2>&1; timeout 6900 python3 experiments/p2_multiwheel.py --mc --n-data 10 --tag _y25 --wheels 8 > results/p4/logs/mw8b.log 2>&1; timeout 6900 python3 experiments/p2_multiwheel.py --mc --n-data 10 --tag _y25 --wheels 8 > results/p4/logs/mw8c.log 2>&1

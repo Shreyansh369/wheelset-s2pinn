@@ -106,7 +106,7 @@ def mc(args):
     for nw in args.wheels:
         mw = mws[str(nw)]
         fam = MultiWheelFamily(mw, thb)
-        fp = RUN_DIR / f"wheels{nw}_{args.speeds}.jsonl"
+        fp = RUN_DIR / f"wheels{nw}_{args.speeds}{args.tag}.jsonl"
         done = {tuple(json.loads(l)["seed_key"]) for l in fp.read_text().splitlines()} if fp.exists() else set()
         for j in range(args.n_data):
             key = (args.seed_base, nw, j)
@@ -133,7 +133,7 @@ def mc(args):
 
 def aggregate(args):
     cells = []
-    for fp in sorted(RUN_DIR.glob("*.jsonl")):
+    for fp in sorted(RUN_DIR.glob(f"wheels*_{args.speeds}{args.tag}.jsonl")):
         rows = [json.loads(l) for l in fp.read_text().splitlines() if l.strip()]
         crb = np.array([r["correct"]["crb_log"][0] for r in rows])
         cell = {"file": fp.name, "wheels": rows[0]["wheels"], "speeds": rows[0]["speeds"], "n": len(rows),
@@ -156,8 +156,9 @@ def aggregate(args):
         cell["correct"]["coverage90_profile_ci95"] = cp_interval(kp, len(rows))
         cells.append(cell)
         print(json.dumps(cell), flush=True)
-    save_result("p2/multiwheel_mc", {"cells": cells}, cfg={"truth": TRUTH, "N": 50, "snr_db": 40, "wim_sigma": WIM,
-                                                          "track": "BS113A, kf 154 MN/m^2, eta 0.2", "layout": "CT23"},
+    cfg = ({"truth": TRUTH, "N": 50, "snr_db": 40, "wim_sigma": WIM, "track": "BS113A, kf 154 MN/m^2, eta 0.2", "layout": "CT23"}
+           if not args.tag else {"truth": TRUTH, "N": 50, "snr_db": 40, "wim_sigma": WIM, "config": "current (Y25/Eanos, 60E1)"})
+    save_result(f"p2/multiwheel_mc{args.tag}", {"cells": cells}, cfg=cfg,
                 seed=20261012)
 
 
@@ -170,6 +171,7 @@ if __name__ == "__main__":
     ap.add_argument("--speeds", default="uniform_60_110")
     ap.add_argument("--n-data", type=int, default=20)
     ap.add_argument("--seed-base", type=int, default=20261012)
+    ap.add_argument("--tag", default="", help="run-file suffix (e.g. _y25 for the current configuration)")
     a = ap.parse_args()
     if a.bound:
         bound(a)

@@ -1,0 +1,10 @@
+python3 experiments/p4_inverse_crime.py --mode lin --pad 1.6 --tag _pad1.6 --j0 0 --j1 10 > results/p4/logs/td_pad.log 2>&1
+python3 experiments/p4_banded.py --pseudo --band laden --cb-fixed 1.0 > results/p4/logs/cbfix_ps1.log 2>&1; python3 experiments/p4_banded.py --pseudo --band laden --cb-fixed 0.5 > results/p4/logs/cbfix_ps05.log 2>&1; python3 experiments/p4_banded.py --pseudo --band laden --cb-fixed 2.0 > results/p4/logs/cbfix_ps2.log 2>&1
+python3 experiments/p4_banded.py --pairs --band laden --cb-fixed 1.0 --j0 0 --j1 2 > results/p4/logs/cbfix_p0.log 2>&1
+python3 experiments/p4_banded.py --pairs --band empty --j0 10 --j1 12 > results/p4/logs/empty_10.log 2>&1
+python3 experiments/p4_banded.py --pairs --band empty --j0 12 --j1 14 > results/p4/logs/empty_12.log 2>&1
+python3 experiments/p4_banded.py --pairs --band laden --cb-fixed 1.0 --j0 2 --j1 4 > results/p4/logs/cbfix_p2.log 2>&1
+python3 experiments/p4_banded.py --pairs --band empty --j0 14 --j1 16 > results/p4/logs/empty_14.log 2>&1
+python3 experiments/p4_banded.py --pairs --band empty --j0 16 --j1 18 > results/p4/logs/empty_16.log 2>&1
+python3 experiments/p4_banded.py --pairs --band empty --j0 18 --j1 20 > results/p4/logs/empty_18.log 2>&1
+python3 experiments/p4_banded.py --pairs --band laden --cb-fixed 1.0 --j0 4 --j1 5 > results/p4/logs/cbfix_p4.log 2>&1
