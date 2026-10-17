@@ -1,0 +1,144 @@
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 0 --j1 10 > results/p4/logs/hl10_0.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 10 --j1 20 > results/p4/logs/hl10_10.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 20 --j1 30 > results/p4/logs/hl10_20.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 30 --j1 40 > results/p4/logs/hl10_30.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 40 --j1 50 > results/p4/logs/hl10_40.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 50 --j1 60 > results/p4/logs/hl10_50.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 60 --j1 70 > results/p4/logs/hl10_60.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 70 --j1 80 > results/p4/logs/hl10_70.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 80 --j1 90 > results/p4/logs/hl10_80.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 90 --j1 100 > results/p4/logs/hl10_90.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 100 --j1 110 > results/p4/logs/hl10_100.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 110 --j1 120 > results/p4/logs/hl10_110.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 120 --j1 130 > results/p4/logs/hl10_120.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 130 --j1 140 > results/p4/logs/hl10_130.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 140 --j1 150 > results/p4/logs/hl10_140.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 150 --j1 160 > results/p4/logs/hl10_150.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 160 --j1 170 > results/p4/logs/hl10_160.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 170 --j1 180 > results/p4/logs/hl10_170.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 180 --j1 190 > results/p4/logs/hl10_180.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 190 --j1 200 > results/p4/logs/hl10_190.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 0 --j1 1 > results/p4/logs/kap_0.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 1 --j1 2 > results/p4/logs/kap_1.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 2 --j1 3 > results/p4/logs/kap_2.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 3 --j1 4 > results/p4/logs/kap_3.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 4 --j1 5 > results/p4/logs/kap_4.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 5 --j1 6 > results/p4/logs/kap_5.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 6 --j1 7 > results/p4/logs/kap_6.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 7 --j1 8 > results/p4/logs/kap_7.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 8 --j1 9 > results/p4/logs/kap_8.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 9 --j1 10 > results/p4/logs/kap_9.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 10 --j1 11 > results/p4/logs/kap_10.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 11 --j1 12 > results/p4/logs/kap_11.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 12 --j1 13 > results/p4/logs/kap_12.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 13 --j1 14 > results/p4/logs/kap_13.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 14 --j1 15 > results/p4/logs/kap_14.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 15 --j1 16 > results/p4/logs/kap_15.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 16 --j1 17 > results/p4/logs/kap_16.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 17 --j1 18 > results/p4/logs/kap_17.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 18 --j1 19 > results/p4/logs/kap_18.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 19 --j1 20 > results/p4/logs/kap_19.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 20 --j1 21 > results/p4/logs/kap_20.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 21 --j1 22 > results/p4/logs/kap_21.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 22 --j1 23 > results/p4/logs/kap_22.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 23 --j1 24 > results/p4/logs/kap_23.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 24 --j1 25 > results/p4/logs/kap_24.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 25 --j1 26 > results/p4/logs/kap_25.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 26 --j1 27 > results/p4/logs/kap_26.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 27 --j1 28 > results/p4/logs/kap_27.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 28 --j1 29 > results/p4/logs/kap_28.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 29 --j1 30 > results/p4/logs/kap_29.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 30 --j1 31 > results/p4/logs/kap_30.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 31 --j1 32 > results/p4/logs/kap_31.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 32 --j1 33 > results/p4/logs/kap_32.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 33 --j1 34 > results/p4/logs/kap_33.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 34 --j1 35 > results/p4/logs/kap_34.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 35 --j1 36 > results/p4/logs/kap_35.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 36 --j1 37 > results/p4/logs/kap_36.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 37 --j1 38 > results/p4/logs/kap_37.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 38 --j1 39 > results/p4/logs/kap_38.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 39 --j1 40 > results/p4/logs/kap_39.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators nominal --cases control > results/p4/logs/gain_nominal_control.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators nominal --cases kf_x0.8 > results/p4/logs/gain_nominal_kf_x0.8.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators nominal --cases kf_x1.2 > results/p4/logs/gain_nominal_kf_x1.2.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators nominal --cases eta_f_x0.82 > results/p4/logs/gain_nominal_eta_f_x0.82.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators nominal --cases eta_f_x1.22 > results/p4/logs/gain_nominal_eta_f_x1.22.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators nominal --cases kH0_x0.85 > results/p4/logs/gain_nominal_kH0_x0.85.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators nominal --cases kH0_x1.15 > results/p4/logs/gain_nominal_kH0_x1.15.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators nominal --cases unsprung_x0.95 > results/p4/logs/gain_nominal_unsprung_x0.95.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators nominal --cases unsprung_x1.05 > results/p4/logs/gain_nominal_unsprung_x1.05.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators nominal --cases axle_damp_x0.5 > results/p4/logs/gain_nominal_axle_damp_x0.5.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators nominal --cases axle_damp_x2 > results/p4/logs/gain_nominal_axle_damp_x2.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators coest --cases control > results/p4/logs/gain_coest_control.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators coest --cases kf_x0.8 > results/p4/logs/gain_coest_kf_x0.8.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators coest --cases kf_x1.2 > results/p4/logs/gain_coest_kf_x1.2.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators coest --cases eta_f_x0.82 > results/p4/logs/gain_coest_eta_f_x0.82.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators coest --cases eta_f_x1.22 > results/p4/logs/gain_coest_eta_f_x1.22.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators coest --cases kH0_x0.85 > results/p4/logs/gain_coest_kH0_x0.85.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators coest --cases kH0_x1.15 > results/p4/logs/gain_coest_kH0_x1.15.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators coest --cases unsprung_x0.95 > results/p4/logs/gain_coest_unsprung_x0.95.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators coest --cases unsprung_x1.05 > results/p4/logs/gain_coest_unsprung_x1.05.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators coest --cases axle_damp_x0.5 > results/p4/logs/gain_coest_axle_damp_x0.5.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators coest --cases axle_damp_x2 > results/p4/logs/gain_coest_axle_damp_x2.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 0 --j1 10 > results/p4/logs/hl10b_0.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 10 --j1 20 > results/p4/logs/hl10b_10.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 20 --j1 30 > results/p4/logs/hl10b_20.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 30 --j1 40 > results/p4/logs/hl10b_30.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 40 --j1 50 > results/p4/logs/hl10b_40.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 50 --j1 60 > results/p4/logs/hl10b_50.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 60 --j1 70 > results/p4/logs/hl10b_60.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 70 --j1 80 > results/p4/logs/hl10b_70.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 80 --j1 90 > results/p4/logs/hl10b_80.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 90 --j1 100 > results/p4/logs/hl10b_90.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 100 --j1 110 > results/p4/logs/hl10b_100.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 110 --j1 120 > results/p4/logs/hl10b_110.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 120 --j1 130 > results/p4/logs/hl10b_120.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 130 --j1 140 > results/p4/logs/hl10b_130.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 140 --j1 150 > results/p4/logs/hl10b_140.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 150 --j1 160 > results/p4/logs/hl10b_150.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 160 --j1 170 > results/p4/logs/hl10b_160.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 170 --j1 180 > results/p4/logs/hl10b_170.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 180 --j1 190 > results/p4/logs/hl10b_180.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 190 --j1 200 > results/p4/logs/hl10b_190.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 0 --j1 1 > results/p4/logs/kapb_0.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 1 --j1 2 > results/p4/logs/kapb_1.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 2 --j1 3 > results/p4/logs/kapb_2.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 3 --j1 4 > results/p4/logs/kapb_3.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 4 --j1 5 > results/p4/logs/kapb_4.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 5 --j1 6 > results/p4/logs/kapb_5.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 6 --j1 7 > results/p4/logs/kapb_6.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 7 --j1 8 > results/p4/logs/kapb_7.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 8 --j1 9 > results/p4/logs/kapb_8.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 9 --j1 10 > results/p4/logs/kapb_9.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 10 --j1 11 > results/p4/logs/kapb_10.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 11 --j1 12 > results/p4/logs/kapb_11.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 12 --j1 13 > results/p4/logs/kapb_12.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 13 --j1 14 > results/p4/logs/kapb_13.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 14 --j1 15 > results/p4/logs/kapb_14.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 15 --j1 16 > results/p4/logs/kapb_15.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 16 --j1 17 > results/p4/logs/kapb_16.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 17 --j1 18 > results/p4/logs/kapb_17.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 18 --j1 19 > results/p4/logs/kapb_18.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 19 --j1 20 > results/p4/logs/kapb_19.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 20 --j1 21 > results/p4/logs/kapb_20.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 21 --j1 22 > results/p4/logs/kapb_21.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 22 --j1 23 > results/p4/logs/kapb_22.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 23 --j1 24 > results/p4/logs/kapb_23.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 24 --j1 25 > results/p4/logs/kapb_24.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 25 --j1 26 > results/p4/logs/kapb_25.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 26 --j1 27 > results/p4/logs/kapb_26.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 27 --j1 28 > results/p4/logs/kapb_27.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 28 --j1 29 > results/p4/logs/kapb_28.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 29 --j1 30 > results/p4/logs/kapb_29.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 30 --j1 31 > results/p4/logs/kapb_30.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 31 --j1 32 > results/p4/logs/kapb_31.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 32 --j1 33 > results/p4/logs/kapb_32.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 33 --j1 34 > results/p4/logs/kapb_33.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 34 --j1 35 > results/p4/logs/kapb_34.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 35 --j1 36 > results/p4/logs/kapb_35.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 36 --j1 37 > results/p4/logs/kapb_36.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 37 --j1 38 > results/p4/logs/kapb_37.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 38 --j1 39 > results/p4/logs/kapb_38.log 2>&1
+python3 experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 39 --j1 40 > results/p4/logs/kapb_39.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators nominal > results/p4/logs/gainb_nominal.log 2>&1
+python3 experiments/p4_gain_y25.py --run --estimators coest > results/p4/logs/gainb_coest.log 2>&1

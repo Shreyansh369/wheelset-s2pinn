@@ -48,7 +48,10 @@ from src.utils.results import RESULTS_DIR, save_result  # noqa: E402
 OUT = RESULTS_DIR / "p3"
 N_KAPPA = 40
 KF_STRESS = (2.0, 2.3, 2.6, 3.0)  # replicates 40-43: k_f fixed beyond the stratified range, reported separately
-KAPPA_COEST = 0.044      # results/p2/relative_coest_drift.json coest_relative.kappa_coest (rounded as stated)
+KAPPA_COEST = 0.044      # results/p2/relative_coest_drift.json coest_relative.kappa_coest (rounded as stated); earlier configuration
+_GAIN = Path(__file__).resolve().parents[1] / "results" / "p4" / "gain_y25.json"
+if _GAIN.exists() and json.loads(_GAIN.read_text())["payload"]["estimators"]["coest"].get("kappa"):
+    KAPPA_COEST = json.loads(_GAIN.read_text())["payload"]["estimators"]["coest"]["kappa"]   # frozen configuration, empty band
 KAPPA_NOMINAL = 0.26
 
 
@@ -91,9 +94,15 @@ def kappa_draw(j):
     return mis, float(rng.uniform(0.02, 0.10))
 
 
-def kappa(j0, j1):
+BAND = [None]      # --band empty: passes within the empty payload band (5.5-7 t, the band's primary values)
+
+
+def kappa(j0, j1, tag=""):
+    if BAND[0]:
+        from experiments.p4_banded import set_band
+        set_band(BAND[0])
     sm, thb, rough, mw, fams, _ = setup_all()
-    fp = OUT / "kappa_coest_runs" / "rows.jsonl"
+    fp = OUT / "kappa_coest_runs" / f"rows{tag}.jsonl"
     done = _done(fp, lambda r: r["rep"])
     for j in range(j0, j1):
         if j in done:
@@ -110,7 +119,7 @@ def kappa(j0, j1):
         d = res["later"]["phi"][0] - res["base"]["phi"][0]
         dt = math.log(1 - x)
         se = math.hypot(res["base"]["se_log"][0], res["later"]["se_log"][0])
-        _append(fp, {"rep": j, "misspec": mis, "x": x, "D_hat": d, "D_true": dt, "se": se,
+        _append(fp, {"rep": j, "band": BAND[0], "misspec": mis, "x": x, "D_hat": d, "D_true": dt, "se": se,
                      "abs_err_base": res["base"]["phi"][0] - math.log(TRUTH["kB0"]),
                      "phi_base": res["base"]["phi"], "phi_later": res["later"]["phi"],
                      "converged": res["base"]["converged"] and res["later"]["converged"],
@@ -182,7 +191,9 @@ def _rows(fp):
 
 def summarise():
     out = {}
-    Rall = _rows(OUT / "kappa_coest_runs" / "rows.jsonl")
+    KR = OUT / "kappa_coest_runs" / "rows_frozen.jsonl"          # frozen configuration, empty band, when present
+    Rall = _rows(KR) if KR.exists() else _rows(OUT / "kappa_coest_runs" / "rows.jsonl")
+    out["kappa_rows"] = KR.name if KR.exists() else "rows.jsonl"
     R = [r for r in Rall if r["rep"] < N_KAPPA]
     if Rall:
         out["kappa_coest_stress"] = [{"rep": r["rep"], "kf": r["misspec"]["kf"], "true_change_pct": -100 * r["x"],
@@ -275,6 +286,7 @@ if __name__ == "__main__":
     ap.add_argument("--f", type=float, default=0.8)
     ap.add_argument("--tag", default="", help="run-file suffix, e.g. _freight for the current configuration")
     ap.add_argument("--snr", type=float, default=60.0)
+    ap.add_argument("--band", choices=("empty", "laden"), default=None, help="--kappa within a payload band")
     ap.add_argument("--refined", action="store_true")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--kb", type=int, default=None, help="debiasing kernel half-width in bins")
@@ -282,7 +294,8 @@ if __name__ == "__main__":
     ap.add_argument("--smooth", type=float, default=None, help="random-walk prior step sigma on log sub-band levels (dB)")
     a = ap.parse_args()
     if a.kappa:
-        kappa(a.j0, a.j1)
+        BAND[0] = a.band
+        kappa(a.j0, a.j1, a.tag)
     if a.drift:
         drift(a.j0, a.j1, a.f, a.tag)
     if a.bias:

@@ -31,12 +31,18 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from experiments.p1_fe_direct import cp_interval  # noqa: E402
 from src.utils.results import RESULTS_DIR, save_result  # noqa: E402
 
-# freight rerun (sourced nominals) when complete, else the earlier headline
-HEADLINE_RUNS = "kb120_attr_freight.jsonl" if (RESULTS_DIR / "p3/headline_v2_runs/kb120_attr_freight.jsonl").exists() else "kb120_attr.jsonl"
+# 10-seed rerun at the frozen configuration when present, else the pinned 5-seed headline, else the earlier one
+_HD = RESULTS_DIR / "p3/headline_v2_runs"
+HEADLINE_RUNS = next(f for f in ("kb120_attr_frozen10.jsonl", "kb120_attr_freight.jsonl", "kb120_attr.jsonl") if (_HD / f).exists())
+TEN = HEADLINE_RUNS == "kb120_attr_frozen10.jsonl"
 
 Z = 1.6448536269514722
-KAPPA = 0.044
-SPLITS = {"A": ((42, 123, 456), (789, 1024)), "B": ((789, 1024), (42, 123, 456))}
+_G = RESULTS_DIR / "p4/gain_y25.json"        # kappa of the co-estimating fit at the frozen configuration (gain study)
+_GK = json.loads(_G.read_text())["payload"]["estimators"]["coest"]["kappa"] if _G.exists() else None
+KAPPA = _GK if _GK else 0.044
+KAPPA_ROWS = "rows_frozen.jsonl" if (RESULTS_DIR / "p3/kappa_coest_runs/rows_frozen.jsonl").exists() else "rows.jsonl"
+SPLITS = ({"A": ((42, 123, 456, 789, 1024), (2048, 3141, 5772, 8128, 9973)), "B": ((2048, 3141, 5772, 8128, 9973), (42, 123, 456, 789, 1024))}
+          if TEN else {"A": ((42, 123, 456), (789, 1024)), "B": ((789, 1024), (42, 123, 456))})
 THRESH = 0.85
 
 
@@ -74,7 +80,7 @@ def main():
         cell["used"] = {"bias_log": use[snr][0], "inflation": use[snr][1]}
         out["headline"].append(cell)
     r40 = use[40][1]
-    K = [x for x in rows(RESULTS_DIR / "p3" / "kappa_coest_runs" / "rows.jsonl") if x["rep"] < 20]
+    K = [x for x in rows(RESULTS_DIR / "p3" / "kappa_coest_runs" / KAPPA_ROWS) if x["rep"] < (40 if KAPPA_ROWS == "rows_frozen.jsonl" else 20)]
 
     def kcov(f, kap):
         k = int(sum(abs(x["D_hat"] - x["D_true"]) <= Z * math.sqrt((f * x["se"]) ** 2 + (kap * x["D_hat"]) ** 2) for x in K))
@@ -82,7 +88,8 @@ def main():
     out["kappa_replicates"] = {"snr_db": 40, "inflation": r40, "kappa": KAPPA, "uncalibrated_stat": kcov(1.0, 0.0),
                                "uncalibrated_kappa": kcov(1.0, KAPPA), "calibrated_stat": kcov(r40, 0.0),
                                "calibrated_kappa": kcov(r40, KAPPA),
-                               "note": "replicates not used for calibration; fitted with the earlier +-30-bin kernel and the co-estimating family"}
+                               "rows": KAPPA_ROWS, "kappa_source": "results/p4/gain_y25.json" if _GK else "earlier one-at-a-time study",
+                               "note": "replicates not used for calibration; co-estimating family"}
     mb = RESULTS_DIR / "p4" / "mdc_bounds.json"
     if mb.exists():              # current configuration: co-estimating fit, bound-based
         mdc = [{"N": r["N"], "snr_db": r["snr_db"], "mdc_pct": r["mdc_pct"], "source": "p4/mdc_bounds.json (coest, CRB, current config)"}

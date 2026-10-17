@@ -34,6 +34,8 @@ from src.inverse.multipass import MultiPassWhittle  # noqa: E402
 from src.utils.results import RESULTS_DIR, save_result  # noqa: E402
 
 RUN_DIR = RESULTS_DIR / "p3" / "headline_v2_runs"
+SEEDS_USED = list(SEEDS)    # --seeds overrides (10-seed rerun at the frozen configuration: SEEDS + SEEDS_EXTRA)
+SEEDS_EXTRA = (2048, 3141, 5772, 8128, 9973)
 KEYS = [(seed, snr, j) for snr in (20, 40) for seed in SEEDS for j in range(10)]
 T0, BUDGET = time.perf_counter(), 110 * 60
 FIT_MAX = [12 * 60]   # updated to the slowest fit seen in this process
@@ -84,7 +86,7 @@ def aggregate(kb, smooth, exact=True):
             continue
         pooled = summ([r["err_log"][0] for r in Rs], [r["se_log"][0] for r in Rs], [r["crb_log"][0] for r in Rs])
         per_seed = [{"seed": s, **summ([r["err_log"][0] for r in Rs if r["seed"] == s], [r["se_log"][0] for r in Rs if r["seed"] == s],
-                                       [r["crb_log"][0] for r in Rs if r["seed"] == s])} for s in SEEDS if any(r["seed"] == s for r in Rs)]
+                                       [r["crb_log"][0] for r in Rs if r["seed"] == s])} for s in SEEDS_USED if any(r["seed"] == s for r in Rs)]
         e = np.array([r["err_log"][0] for r in Rs])
         se = np.array([r["se_log"][0] for r in Rs])
         cells.append({"snr_db": snr, "kB0_pooled": pooled, "kB0_per_seed": per_seed,
@@ -94,7 +96,7 @@ def aggregate(kb, smooth, exact=True):
                       "cB_pooled": summ([r["err_log"][1] for r in Rs], [r["se_log"][1] for r in Rs], [r["crb_log"][1] for r in Rs]),
                       "all_converged": all(r["converged"] for r in Rs), "fit_s_median": float(np.median([r["wall_s"] for r in Rs]))})
     save_result(f"p3/headline_v2_{tag}", {"cells": cells}, cfg={"kernel_half_width_bins": kb, "smooth_sigma_db": smooth,
-                                                                 "exact_subband": exact, "data": "p2 headline keys", "N": 50}, seed=SEEDS[0])
+                                                                 "exact_subband": exact, "data": "keys (seed, snr, j), j < 10", "seeds": SEEDS_USED, "N": 50}, seed=SEEDS_USED[0])
     print(json.dumps(cells, indent=1)[:3000])
 
 
@@ -107,6 +109,11 @@ if __name__ == "__main__":
     ap.add_argument("--attributed", action="store_true", help="default (own-sub-band) scoring instead of exact; 5x faster at Kb=120")
     ap.add_argument("--aggregate", action="store_true")
     ap.add_argument("--label", default="", help="suffix of the run tag, e.g. _freight")
+    ap.add_argument("--seeds", type=int, nargs="+", default=None, help="seeds (default 42 123 456 789 1024); 'ten' set via --ten")
+    ap.add_argument("--ten", action="store_true", help="10 seeds: the 5 defaults and 2048 3141 5772 8128 9973")
     a = ap.parse_args()
     LABEL[0] = a.label
+    if a.ten or a.seeds:
+        SEEDS_USED[:] = list(SEEDS) + list(SEEDS_EXTRA) if a.ten else a.seeds
+        KEYS[:] = [(seed, snr, j) for snr in (20, 40) for seed in SEEDS_USED for j in range(10)]
     aggregate(a.kb, a.smooth, not a.attributed) if a.aggregate else run(a.j0, a.j1, a.kb, a.smooth, not a.attributed)
