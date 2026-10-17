@@ -35,9 +35,9 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 - `results/p2/wheel_lines_bound.json`: single wheelset on a rail oscillator
 - `results/p2/wheel_lines_mc.json`: single wheelset on a rail oscillator
 - `results/p3/bias_regression.json`: metro wheel layout, BS113A rail, +-30-bin kernel
-- `results/p3/calibration.json`: metro wheel layout, BS113A rail
+- `results/p3/calibration.json`: metro wheel layout, BS113A rail, +-30-bin kernel
 - `results/p3/robust_se.json`: metro wheel layout, BS113A rail, +-30-bin kernel
-- `results/p3/validation_mc.json`: kappa replicates and bias diagnosis: metro wheel layout
+- `results/p3/validation_mc.json`: metro wheel layout, BS113A rail, +-30-bin kernel
 
 ## Result files
 
@@ -68,17 +68,18 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | `results/p3/bias_regression.json` | earlier | - | declared |
 | `results/p3/calibrated.json` | pinned | - | declared |
 | `results/p3/calibration.json` | earlier | - | declared |
+| `results/p3/drift_mc_freight.json` | frozen | e0a22f267362 | hash verified |
 | `results/p3/exponent_bound.json` | frozen | - | declared |
 | `results/p3/headline_v2_kb120_attr_freight.json` | pinned | - | declared |
 | `results/p3/robust_se.json` | earlier | - | declared |
 | `results/p3/validation_mc.json` | earlier | e0a22f267362 | declared earlier, hash is frozen (declaration conservative) |
-| `results/p4/banded.json` | frozen | - | declared |
+| `results/p4/banded.json` | frozen | e0a22f267362 | hash verified |
 | `results/p4/bias_diag_y25.json` | pinned | - | declared |
 | `results/p4/contact_hertz.json` | frozen | - | declared |
 | `results/p4/generator_check.json` | frozen | - | declared |
 | `results/p4/generator_expper.json` | frozen | - | declared |
 | `results/p4/ignore_coupling.json` | frozen | - | declared |
-| `results/p4/inverse_crime.json` | frozen | - | declared |
+| `results/p4/inverse_crime.json` | frozen | e0a22f267362 | hash verified |
 | `results/p4/mdc_bounds.json` | frozen | - | declared |
 | `results/p4/primary_damping.json` | frozen | - | declared |
 | `results/p4/sweep.json` | frozen | - | declared |
@@ -96,7 +97,8 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | table | table6_budget | results/p2/model_form_mw_sensitivity.json | frozen | ok |
 | table | table15_sweep | results/p4/sweep.json | frozen | ok |
 | table | table7_gains | results/p2/relative_intervals.json, results/p2/relative_coest_drift.json | earlier | ok |
-| table | table11_drift | results/p2/drift_freight.json | frozen | ok |
+| table | table16_kappa | results/p3/validation_mc.json, results/p3/robust_se.json, results/p3/calibration.json | earlier | ok |
+| table | table11_drift | results/p2/drift_freight.json, results/p3/drift_mc_freight.json | frozen | ok |
 | table | table9_wheel_lines | results/p2/wheel_lines_bound.json, results/p2/wheel_lines_mc.json | earlier | ok |
 | table | table8_mdc | results/p4/mdc_bounds.json, results/p3/calibrated.json | frozen/pinned | ok |
 | table | table13_health | results/p3/bearing_clearance.json, results/p3/exponent_bound.json | frozen | ok |
@@ -141,18 +143,23 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | `\BandEmptyMDCTwoHundredConsMin` | results/p3/validation_mc.json | earlier | sec4_results | labelled |
 | `\BandEmptyMDCTwoHundredMax` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandEmptyMDCTwoHundredMin` | results/p4/banded.json | frozen | sec4_results | ok |
-| `\BandEmptyMeanD` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandEmptyPairsFA` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandEmptyPairsFAHi` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandEmptyPairsFALo` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandEmptyPairsN` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandEmptyPseudo` | results/p4/banded.json | frozen | sec4_results | ok |
-| `\BandEmptySE` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandEmptyZMax` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandEmptyZMin` | results/p4/banded.json | frozen | sec4_results | ok |
-| `\BandEmptyZPos` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandHi` | config/params.yaml | frozen | sec3_method | ok |
-| `\BandLadenDMax` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\BandLadenFixDMax` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\BandLadenFixPairsFA` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\BandLadenFixPairsN` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\BandLadenFixPseudoHalf` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\BandLadenFixPseudoOne` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\BandLadenFixPseudoTwo` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\BandLadenFixSE` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\BandLadenFixZMax` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\BandLadenFixZMin` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandLadenMDCFiftyMax` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandLadenMDCFiftyMin` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandLadenMDCTwoHundredMax` | results/p4/banded.json | frozen | sec4_results | ok |
@@ -160,8 +167,6 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | `\BandLadenNSingular` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandLadenPairsN` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandLadenPseudo` | results/p4/banded.json | frozen | sec4_results | ok |
-| `\BandLadenZMax` | results/p4/banded.json | frozen | sec4_results | ok |
-| `\BandLadenZMin` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandLo` | config/params.yaml | frozen | sec3_method | ok |
 | `\BudgetCoest` | results/p2/model_form_mw_sensitivity.json | frozen | sec6_conclusions | ok |
 | `\BudgetCoestMassOne` | results/p2/model_form_mw_sensitivity.json | frozen | sec4_results | ok |
@@ -234,8 +239,14 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | `\ExpMDCTwoHundred` | results/p3/exponent_bound.json | frozen | sec5_discussion | ok |
 | `\ExpShiftTen` | results/p3/exponent_bound.json | frozen | sec5_discussion | ok |
 | `\ExpShiftTwenty` | results/p3/exponent_bound.json | frozen | sec5_discussion | ok |
+| `\GenBuildupMs` | results/p4/generator_check.json | frozen | sec4_results | ok |
 | `\GenN` | results/p4/inverse_crime.json | frozen | sec4_results | ok |
 | `\GenOpMisfitPct` | results/p4/generator_check.json | frozen | sec4_results | ok |
+| `\GenPadN` | results/p4/inverse_crime.json | frozen | sec4_results | ok |
+| `\GenPadcB` | results/p4/inverse_crime.json | frozen | sec4_results | ok |
+| `\GenPadcBSE` | results/p4/inverse_crime.json | frozen | sec4_results | ok |
+| `\GenPadkB` | results/p4/inverse_crime.json | frozen | sec4_results | ok |
+| `\GenPadkBSE` | results/p4/inverse_crime.json | frozen | sec4_results | ok |
 | `\GenPgramDiff` | results/p4/generator_expper.json | frozen | sec4_results | ok |
 | `\GenPgramDiffSE` | results/p4/generator_expper.json | frozen | sec4_results | ok |
 | `\GenPgramN` | results/p4/generator_expper.json | frozen | sec4_results | ok |
@@ -329,6 +340,16 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | `\KernelHalfWidth` | results/p3/exponent_bound.json | frozen | sec4_results | ok |
 | `\LambdaMaxM` | config/params.yaml | frozen | sec3_method | ok |
 | `\LambdaMinCM` | config/params.yaml | frozen | sec3_method | ok |
+| `\LeanCorrMax` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanMean` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanMeanSE` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanN` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanNPos` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanSDOverSE` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanSDPct` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanSEPct` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanZMean` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\LeanZSD` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\LoadExp` | config/params.yaml | frozen | sec2_model | ok |
 | `\MDCCalFiftyForty` | results/p3/calibrated.json | pinned | sec4_results | labelled |
 | `\MDCCalTwoHundredForty` | results/p3/calibrated.json | pinned | sec4_results | labelled |

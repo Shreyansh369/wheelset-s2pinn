@@ -395,12 +395,18 @@ def table11():
         rows.append([e, "×1.0 (no drift)", "0", "0", f"{v['sd_change_pct']:.2f}", "0.050", f"{v['mdc_pct']:.2f}"])
     body = md(["Estimator", "Later-period k_f", "Apparent change, true Δ = 0 (%)", "Bias at true Δ = −5% (pp)", "SD of Δ (%)",
                "False-alarm rate (nominal 5%)", "MDC (%)"], rows)
+    dm = load("p3/drift_mc_freight.json") if f else None
+    if dm:
+        body += "\n**Monte Carlo check (later k_f ×0.8, true change 0)**\n\n" + md(
+            ["Estimator", "n", "False alarms", "Rate [95% CI]", "Mean Δ̂ (%)", "SD Δ̂ (%)", "Median SE (%)"],
+            [[x["estimator"], x["n"], x["false_alarms"], f"{x['rate']:.2f} {ci(x['rate_ci95'])}", f"{x['D_hat_mean_pct']:+.2f}",
+              "–" if x["D_hat_sd_pct"] is None else f"{x['D_hat_sd_pct']:.2f}", f"{x['se_median_pct']:.2f}"] for x in dm["drift_mc"]])
     if c.get("drift_mc"):
         body += "\n**Monte Carlo check (k_f ×1.2)**\n\n" + md(["Estimator", "n", "False alarms", "Rate [95% CI]", "Mean Δ̂ (%)"],
                                                                [[m["estimator"], m["n"], m["false_alarms"], f"{m['rate']:.2f} {ci(m['rate_ci95'])}",
                                                                  f"{m['D_hat_mean_pct']:+.2f}"] for m in c["drift_mc"]])
     write("table11_drift", "Table 11. Seasonal foundation-stiffness drift between baseline and later period", body,
-          ["results/p2/drift_freight.json"] if f else ["results/p2/relative_coest_drift.json"],
+          (["results/p2/drift_freight.json"] + (["results/p3/drift_mc_freight.json"] if dm else [])) if f else ["results/p2/relative_coest_drift.json"],
           ["N = 50 passes per period, 40 dB. 'nominal' fits (k_B0, c_B) with k_f, k_H0 at nominal values; 'coest' "
            "co-estimates k_f and k_H0 per period."])
 
@@ -463,7 +469,79 @@ def table13():
 
 
 # ----------------------------------------------------------------------------- Table 14
+def table14_y25(b):
+    rows = [["Headline (frozen estimator)", "123", "40", _bd(b["headline_seed123"])], ["Headline (frozen estimator)", "42", "40", _bd(b["headline_seed42"])]]
+    lab = {"kb30": "±30-bin kernel", "snr60": "same data at 60 dB", "exact": "exact sub-band scoring, 0.25 Hz table",
+           "K4": "K = 4 roughness levels", "K1": "K = 1 roughness level"}
+    for k, x in b.get("variants", {}).items():
+        rows.append([lab.get(k, k), "123", "60" if k == "snr60" else "40", _bd(x) + [f"{x['max_abs_diff_vs_headline_pp']:.3f}",
+                     f"{x['se_ratio_vs_headline_mean']:.3f}"]])
+    rows = [r[:3] + r[3] + ([] if len(r[3]) > 6 else ["–", "–"]) for r in rows]
+    body = "**(a) Bias diagnosis on the ten seed-123 headline datasets (variants change one thing each)**\n\n" + md(
+        ["Estimator / data", "Seed", "SNR (dB)", "n", "Bias (%) ± SE", "RMSE (%)", "RMSE/CRB", "Wald cov.", "c_B bias (%)",
+         "Max |Δ| vs headline (pp)", "SE ratio vs headline"], rows)
+    rs = b.get("robust_se_40db")
+    if rs:
+        names = [("model", "expected information"), ("bin", "sandwich, bin clusters"), ("block8", "sandwich, 8-bin blocks"),
+                 ("block61", "sandwich, 61-bin blocks")]
+        body += f"\n**(b) Wald 90% coverage of k_B0 on the {rs['n']} headline fits at 40 dB, by standard error**\n\n" + md(
+            ["Standard error", "Median SE (%)", "Coverage [95% CI]"],
+            [[lab, f"{rs[k]['se_median_pct']:.3f}", f"{rs[k]['coverage90']:.2f} {ci(rs[k]['coverage90_ci95'])}"] for k, lab in names if k in rs])
+    rg = b.get("regression")
+    if rg:
+        body += f"\n**(c) Regression of the {rg['n']} headline errors (40 dB) on pass-design features**\n\n" + md(
+            ["Feature", "r alone (p)"], [[f, f"{v['r']:+.2f} ({v['p']:.3f})"] for f, v in rg["single_feature"].items()]
+            + [["Joint R² / F-test p", f"{rg['r2']:.2f} / {rg['p_F']:.3f}"]])
+    write("table14_validation", "Table 14. Bias diagnosis on the headline datasets", body, ["results/p4/bias_diag_y25.json"],
+          ["Same datasets (roughness, speeds, payloads, noise draw) for every variant; the headline row is the frozen estimator "
+           "(debiased, ±120-bin kernel, own-sub-band scoring, 0.5 Hz table, K = 16)."])
+
+
+def _bd(x):
+    return [x["n"], f"{x['bias_pct']:+.3f} ± {x['bias_se_pct']:.3f}", f"{x['rmse_pct']:.3f}", f"{x['rmse_over_crb']:.2f}",
+            f"{x['coverage90_wald']:.2f}", f"{x['cB_bias_pct']:+.1f}"]
+
+
+def table16():
+    v, rs, cal = load("p3/validation_mc.json"), load("p3/robust_se.json"), load("p3/calibration.json")
+    k = (v or {}).get("kappa_coest")
+    if not k:
+        return missing("table16_kappa", "Table 16. κ replicates", "results/p3/validation_mc.json")
+    rows = [["n (stratified k_f draws)", k["n"]], ["k_f range drawn", f"×{k['kf_draw_range'][0]:.2f} – ×{k['kf_draw_range'][1]:.2f}"],
+            [f"Coverage, κ = {k['kappa']}", f"{k['coverage']:.2f} {ci(k['coverage_ci95'])}"],
+            ["Coverage, statistical only", f"{k['coverage_statistical_only']:.2f} {ci(k['coverage_statistical_only_ci95'])}"],
+            ["Interval inflation for 90% coverage", f"{k['inflation_for_90pct']:.2f}"],
+            ["rms change error (fraction of Δ)", f"{k['rms_change_error_frac']:.3f}"],
+            ["mean change error (fraction of Δ)", f"{k['mean_change_error_frac']:+.3f}"],
+            ["rms absolute k_B0 bias, base period (%)", f"{k['abs_bias_base_pct_rms']:.2f}"]]
+    body = "**(a) Relative change under simultaneous model errors, co-estimating fit**\n\n" + md(["Quantity", "Value"], rows)
+    body += "\n**Worst cases**\n\n" + md(["Rep", "k_f", "η_f", "k_H0", "Unsprung", "Axle damping", "True change (%)", "Estimated (%)",
+                                             "Error (fraction of Δ)", "Covered"],
+                                            [[w["rep"]] + [f"×{w['misspec'][p]:.2f}" for p in ("kf", "eta_f", "kH0", "unsprung_scale", "axle_damp_scale")]
+                                             + [f"{w['true_change_pct']:.2f}", f"{w['est_change_pct']:.2f}", f"{w['error_frac']:+.3f}", "yes" if w["covered"] else "no"]
+                                             for w in k["worst"]])
+    src = ["results/p3/validation_mc.json"]
+    if rs and rs.get("kappa"):
+        kc = rs["kappa"]
+        names = [("model", "expected information"), ("bin", "sandwich, bin clusters"), ("block8", "sandwich, 8-bin blocks"), ("block61", "sandwich, 61-bin blocks")]
+        body += "\n**(b) Coverage of the change by standard error (κ = 0.044; slope correction {:.5f})**\n\n".format(kc["slope_correction"]) + md(
+            ["SE of the change", "Median SE (%)", "Statistical only", "With κ", "With κ and slope correction"],
+            [[lab, f"{kc[k2 + '_se_D_median_pct']:.3f}", f"{kc[k2 + '_kappa0.0']['covered']}/{kc['n']}", f"{kc[k2 + '_kappa0.044']['covered']}/{kc['n']} {ci(kc[k2 + '_kappa0.044']['ci95'])}",
+              f"{kc[k2 + '_slopecorr_kappa0.044']['covered']}/{kc['n']}"] for k2, lab in [("stored", "stored (fit)")] + names])
+        src.append("results/p3/robust_se.json")
+    if cal:
+        body += "\n**(c) Calibration of the change, correct model (pseudo-true, k_f and k_H0 co-estimated)**\n\n" + md(
+            ["True change (%)", "Estimated change (%)"], [[f"{q['true_change_pct']:.1f}", f"{q['est_change_pct']:.4f}"] for q in cal["coest"]["points"]]
+            + [["Slope", f"{cal['coest']['slope']:.5f}"]])
+        src.append("results/p3/calibration.json")
+    write("table16_kappa", "Table 16. Relative change under simultaneous model errors (κ replicates)", body, src,
+          ["All five uncertain model parameters drawn at random from their 1σ ranges in every replicate; true change 2–10% decrease."])
+
+
 def table14():
+    b = load("p4/bias_diag_y25.json")
+    if b and b.get("variants"):
+        return table14_y25(b)
     v = load("p3/validation_mc.json")
     if v is None:
         return missing("table14_validation", "Table 14. Validation Monte Carlo", "results/p3/validation_mc.json")
@@ -557,5 +635,5 @@ def table15():
 
 if __name__ == "__main__":
     for fn in (table1, table2, table3, table4, table5, table6, table7, table8, table9, table10, table11, table12, table13, table14,
-               table15):
+               table15, table16):
         fn()

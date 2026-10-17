@@ -13,7 +13,14 @@
 | nominal | ×1.0 (no drift) | 0 | 0 | 0.24 | 0.050 | 0.70 |
 | coest | ×1.0 (no drift) | 0 | 0 | 0.26 | 0.050 | 0.75 |
 
+**Monte Carlo check (later k_f ×0.8, true change 0)**
+
+| Estimator | n | False alarms | Rate [95% CI] | Mean Δ̂ (%) | SD Δ̂ (%) | Median SE (%) |
+|---|---|---|---|---|---|---|
+| nominal | 20 | 20 | 1.00 [0.83, 1.00] | -5.85 | 0.81 | 0.25 |
+| coest | 20 | 0 | 0.00 [0.00, 0.17] | +0.07 | 0.25 | 0.25 |
+
 
 N = 50 passes per period, 40 dB. 'nominal' fits (k_B0, c_B) with k_f, k_H0 at nominal values; 'coest' co-estimates k_f and k_H0 per period.
 
-Source: `results/p2/drift_freight.json`
+Source: `results/p2/drift_freight.json`, `results/p3/drift_mc_freight.json`

@@ -1,0 +1,59 @@
+{
+  "name": "p3/drift_mc_freight",
+  "seed": 45,
+  "config": {
+    "true_change": 0,
+    "N_per_period": 50,
+    "snr_db": 40,
+    "rows": "results/p3/drift_mc_runs/kf0.8_freight.jsonl"
+  },
+  "payload": {
+    "drift_mc": [
+      {
+        "file": "kf0.8_freight.jsonl",
+        "kf_factor": 0.8,
+        "estimator": "nominal",
+        "n": 20,
+        "false_alarms": 20,
+        "rate": 1.0,
+        "rate_ci95": [
+          0.8315665290169146,
+          1.0
+        ],
+        "D_hat_mean_pct": -5.853911587924922,
+        "D_hat_sd_pct": 0.8137032595803768,
+        "se_median_pct": 0.25215728678455224,
+        "all_converged": true
+      },
+      {
+        "file": "kf0.8_freight.jsonl",
+        "kf_factor": 0.8,
+        "estimator": "coest",
+        "n": 20,
+        "false_alarms": 0,
+        "rate": 0.0,
+        "rate_ci95": [
+          0.0,
+          0.1684334709830853
+        ],
+        "D_hat_mean_pct": 0.07165228607623864,
+        "D_hat_sd_pct": 0.25209758614580063,
+        "se_median_pct": 0.25170250565329744,
+        "all_converged": true
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "c16f5433c8c53c8603f83295dee006f54c1c5b88-dirty",
+    "config_dir": "config",
+    "config_hash": "e0a22f267362",
+    "estimator_version": "multipass-whittle-2 (debiased, Kb=120 default, own-sub-band scoring, 0.5 Hz table)",
+    "timestamp_utc": "2026-10-17T06:07:23Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 96.7734375,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}

@@ -1,4 +1,4 @@
-# Table 14. Validation: κ revalidation, drift at k_f ×0.8, bias diagnosis, robust standard errors, calibration (earlier configuration: kappa replicates and bias diagnosis: metro wheel layout; metro wheel layout, BS113A rail; metro wheel layout, BS113A rail, +-30-bin kernel)
+# Table 14. Validation: κ revalidation, drift at k_f ×0.8, bias diagnosis, robust standard errors, calibration (earlier configuration: metro wheel layout, BS113A rail, +-30-bin kernel)
 
 **(a) κ revalidation, co-estimating fit**
 

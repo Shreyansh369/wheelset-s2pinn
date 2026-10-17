@@ -35,13 +35,13 @@ files:
   results/p2/relative_coest_drift.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
   results/p3/bearing_clearance.json: {config: frozen, estimator: none}
   results/p3/exponent_bound.json: {config: frozen, estimator: "bound only"}
-  results/p3/calibration.json: {config: earlier, setup: "metro wheel layout, BS113A rail", estimator: "pseudo-true, multipass-whittle-1"}
+  results/p3/calibration.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "pseudo-true, multipass-whittle-1"}
   results/p3/bias_regression.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
   results/p3/robust_se.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
   results/p3/headline_v2_kb120_attr_freight.json: {config: pinned}
   results/p3/calibrated.json: {config: pinned, note: "calibration from the pinned headline; MDCs from results/p4/mdc_bounds.json (frozen)"}
   # mixed file: drift Monte Carlo at the frozen config (kf0.8_freight), kappa replicates and bias diagnosis earlier
-  results/p3/validation_mc.json: {config: earlier, setup: "kappa replicates and bias diagnosis: metro wheel layout", macro_overrides: {DriftMC: frozen}}
+  results/p3/validation_mc.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", macro_overrides: {DriftMC: frozen}}
   results/p4/banded.json: {config: frozen}
   results/p4/contact_hertz.json: {config: frozen, estimator: none}
   results/p4/generator_check.json: {config: frozen, estimator: none}
@@ -51,4 +51,5 @@ files:
   results/p4/primary_damping.json: {config: frozen}
   results/p4/sweep.json: {config: frozen, estimator: "bound only"}
   results/p4/mdc_bounds.json: {config: frozen, estimator: "bound only"}
+  results/p3/drift_mc_freight.json: {config: frozen}
   results/p4/bias_diag_y25.json: {config: pinned, note: "bias diagnosis on the headline datasets (pinned headline configuration)"}

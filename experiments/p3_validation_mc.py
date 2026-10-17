@@ -251,6 +251,10 @@ def summarise():
                      "coverage90_wald": k / len(R), "cB_bias_pct": float(np.mean([math.exp(r["err_log"][1]) - 1 for r in R]) * 100),
                      "datasets": sorted(r["j"] for r in R)})
     out["bias_diag"] = diag
+    fr = [x for x in out.get("drift_mc", []) if x.get("file", "").endswith("_freight.jsonl")]
+    if fr:                                # drift Monte Carlo at the frozen configuration, on its own
+        save_result("p3/drift_mc_freight", {"drift_mc": fr}, cfg={"true_change": 0, "N_per_period": 50, "snr_db": 40,
+                                                                  "rows": "results/p3/drift_mc_runs/kf0.8_freight.jsonl"}, seed=45)
     save_result("p3/validation_mc", out, cfg={
         "kappa": {"N_per_period": 50, "estimator": "coest (kB0, cB, kf, kH0)", "kappa": KAPPA_COEST, "ranges": RANGES,
                   "kf_sampling": "stratified log-normal sigma 0.35", "x": "U(2%, 10%) decrease"},
