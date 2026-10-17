@@ -1,19 +1,21 @@
 \begin{abstract}
 Loss of the vertical support stiffness of a wheelset bearing (loose fits, degraded housing, adapter or
 pad, clearance growth) shifts the axlebox resonance, which on freight wagons lies in the band of
-axle-box acceleration excited by rail roughness. We pool passes at different
-speeds in a single debiased Whittle likelihood: the resonance stays fixed in frequency while the
-roughness excitation moves with speed, so the roughness spectrum levels become nuisance parameters. A finite-element wheelset is coupled to neighbouring wheels through an infinite Timoshenko
-rail. For a representative freight wagon (Y25 bogies, ballasted 60E1 track) and 50 passes at
-60--110~km/h, the matched-model simulation accuracy is a bias of at most \HLBiasAbsMax\% and a
-root-mean-square error of \HLRMSEMin--\HLRMSEMax\%, within \HLRatioCRBMax{} times the Cram\'er--Rao
-bound. Ignoring wheel-to-wheel coupling biases the estimate by \IgnoreCouplingForty\%; nonlinear
-Hertzian contact shifts it by \ICDiffMean{} percentage points. Absolute values carry a model-form
-uncertainty of about \BudgetCoest\%, so the method targets changes between periods, and periods must be
-compared within one payload band: mixed-payload pooling would need a payload-dependent suspension model and is not supported. In the empty band, re-estimating the foundation and contact stiffness per period, a decrease of \BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\% is detectable from 50 passes per
-period (\BandEmptyMDCFiftyConsMin--\BandEmptyMDCFiftyConsMax\% allowing for simultaneous model errors) and
+axle-box acceleration excited by rail roughness. We pool passes at different speeds in a single debiased
+Whittle likelihood: the resonance stays fixed in frequency while the roughness excitation moves with
+speed, so the roughness spectrum levels become nuisance parameters. A finite-element wheelset is coupled
+to neighbouring wheels through an infinite Timoshenko rail. For a representative freight wagon (Y25
+bogies, ballasted 60E1 track) and 50 passes at 60--110~km/h, the matched-model simulation accuracy is a
+bias of at most \HLBiasAbsMax\% and a root-mean-square error of \HLRMSEMin--\HLRMSEMax\%, within
+\HLRatioCRBMax{} times the Cram\'er--Rao bound. Ignoring wheel-to-wheel coupling biases the estimate by
+\IgnoreCouplingForty\%; nonlinear Hertzian contact shifts it by \ICDiffMean{} percentage points. Absolute
+values carry a model-form uncertainty of about \BudgetCoest\%, so the method targets changes between
+periods within one payload band: mixed-payload pooling would need a payload-dependent suspension model
+and is not supported. In the empty band, re-estimating the foundation and contact stiffness per period,
+a decrease of \BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\% is detectable from 50 passes per period
+(\BandEmptyMDCFiftyConsMin--\BandEmptyMDCFiftyConsMax\% allowing for simultaneous model errors) and
 \BandEmptyMDCTwoHundredMin--\BandEmptyMDCTwoHundredMax\% from 200, and a 20\% softer foundation causes no
-bias. Clearance growth barely changes the effective stiffness (\EffPctTenEmpty\% per 10~\textmu m), so the
-method reports support-stiffness loss not its mechanism. A controlled rig or field test is needed
+bias. Clearance growth barely changes the effective stiffness (\EffPctTenEmpty\% per 10~\textmu m), so
+the method reports support-stiffness loss, not its mechanism. A controlled rig or field test is needed
 before operational use.
 \end{abstract}
