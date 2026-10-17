@@ -108,7 +108,7 @@ def mc(args):
         fam = MultiWheelFamily(mw, thb)
         fp = RUN_DIR / f"wheels{nw}_{args.speeds}{args.tag}.jsonl"
         done = {tuple(json.loads(l)["seed_key"]) for l in fp.read_text().splitlines()} if fp.exists() else set()
-        for j in range(args.n_data):
+        for j in range(args.j0, args.n_data):
             key = (args.seed_base, nw, j)
             if key in done:
                 continue
@@ -172,6 +172,7 @@ if __name__ == "__main__":
     ap.add_argument("--n-data", type=int, default=20)
     ap.add_argument("--seed-base", type=int, default=20261012)
     ap.add_argument("--tag", default="", help="run-file suffix (e.g. _y25 for the current configuration)")
+    ap.add_argument("--j0", type=int, default=0, help="first dataset index (chunking)")
     a = ap.parse_args()
     if a.bound:
         bound(a)
