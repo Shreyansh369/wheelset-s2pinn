@@ -81,7 +81,7 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | `results/p4/ignore_coupling.json` | frozen | - | declared |
 | `results/p4/inverse_crime.json` | frozen | e0a22f267362 | hash verified |
 | `results/p4/mdc_bounds.json` | frozen | - | declared |
-| `results/p4/primary_damping.json` | frozen | - | declared |
+| `results/p4/primary_damping.json` | frozen | e0a22f267362 | hash verified |
 | `results/p4/sweep.json` | frozen | - | declared |
 
 ## Tables and figures
