@@ -21,13 +21,27 @@ from src.utils.results import RESULTS_DIR  # noqa: E402
 OUT = ROOT / "paper" / "generated" / "numbers.tex"
 
 
+LAST = ["config/params.yaml"]      # most recently loaded source: macros set after a load are attributed to it
+
+
+class Macros(dict):
+    def __init__(self):
+        super().__init__()
+        self.src = {}
+
+    def __setitem__(self, k, v):
+        super().__setitem__(k, v)
+        self.src[k] = LAST[0]
+
+
 def load(rel):
+    LAST[0] = f"results/{rel}"
     fp = RESULTS_DIR / rel
     return json.loads(fp.read_text())["payload"] if fp.exists() else None
 
 
 def main():
-    m: dict[str, str] = {}
+    m = Macros()
     miss = lambda f: rf"\missing{{{f}}}"  # noqa: E731
     P = Params(load_raw())
     v = P.v
@@ -128,6 +142,7 @@ def main():
              r"\providecommand{\missing}[1]{\textbf{[missing: \texttt{#1}]}}"]
     lines += [rf"\newcommand{{\{k}}}{{{val}}}" for k, val in sorted(m.items())]
     OUT.write_text("\n".join(lines) + "\n")
+    (OUT.parent / "macro_sources.json").write_text(json.dumps(dict(sorted(m.src.items())), indent=0))
     print(OUT.read_text())
 
 
@@ -228,14 +243,11 @@ def section4(m, miss):
     block("p2/relative_intervals.json", bud, ["BudgetNominal", "BudgetNominalMassOne", "BudgetCoest", "BudgetCoestMassOne", "KappaNominal", "KappaKfTerm"])
 
     def budf(d):                          # current configuration: overrides the absolute budget above
-        b = d["budget"]
-        sig_m = d["ranges"]["unsprung_scale"][0] if isinstance(d["ranges"]["unsprung_scale"], list) else d["ranges"]["unsprung_scale"]
+        from experiments.budget import budget
+        b = budget(d)
         for e, w in (("nominal", "Nominal"), ("coest", "Coest")):
-            t = dict(b[e]["terms_pct_1sigma_worst_side"])
-            m[f"Budget{w}"] = _f(b[e]["rss_pct"], 1)
-            t["unsprung_scale"] *= 0.01 / sig_m      # unsprung mass known to 1% (linear scaling of the 1-sigma term)
-            m[f"Budget{w}MassOne"] = _f(math.sqrt(sum(v**2 for v in t.values())), 1)
-        m["BudgetMassSigmaPct"] = _f(100 * sig_m, 0)
+            m[f"Budget{w}"], m[f"Budget{w}MassOne"] = _f(b[e]["rss_pct"], 1), _f(b[e]["rss_mass1_pct"], 1)
+        m["BudgetMassSigmaPct"] = _f(b["mass_sigma_pct"], 0)
     if (load("p2/model_form_mw_sensitivity.json") or {}).get("budget"):
         block("p2/model_form_mw_sensitivity.json", budf, [])
 

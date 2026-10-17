@@ -89,6 +89,10 @@ def write(name, title, body, sources, notes=()):
            + "".join(r"\par\smallskip{\footnotesize " + tex_escape(n) + "}\n" for n in notes)
            + r"\end{minipage}}" + "\n" + r"\end{table}" + "\n")
     (OUT / f"{name}.tex").write_text(tex)
+    mf = OUT / "manifest.json"
+    man = json.loads(mf.read_text()) if mf.exists() else {}
+    man[name] = {"sources": list(sources), "caption": cap}
+    mf.write_text(json.dumps(dict(sorted(man.items())), indent=1))
     print("wrote", name)
 
 
@@ -237,7 +241,7 @@ def table5():
 
 # ----------------------------------------------------------------------------- Table 6
 def table6():
-    s, r = load("p2/model_form_mw_sensitivity.json"), load("p2/relative_intervals.json")
+    s = load("p2/model_form_mw_sensitivity.json")
     if s is None:
         return missing("table6_budget", "Table 6. Model-form budget", "results/p2/model_form_mw_sensitivity.json")
     names = ["kf", "eta_f", "kH0", "unsprung_scale", "axle_damp_scale"]
@@ -249,15 +253,17 @@ def table6():
                      f"{t['coest']['bias_at_minus_1sigma_pct']:+.2f} / {t['coest']['bias_at_plus_1sigma_pct']:+.2f}"])
     body = md(["Parameter", "1σ (log)", "Range source", "Bias per +10% (%)", "Nominal: bias at −1σ / +1σ (%)",
                "k_f, k_H0 co-estimated: bias at −1σ / +1σ (%)"], rows)
-    if r:
-        b = r["abs_budget_mass"]
-        body += "\n" + md(["Budget (RSS of worst-side 1σ terms)", "Unsprung mass ±3%", "Unsprung mass ±1%"],
-                          [["Nominal fit", f"{b['nominal_mass3pct']['rss_pct']:.1f}%", f"{b['nominal_mass1pct']['rss_pct']:.1f}%"],
-                           ["k_f, k_H0 co-estimated", f"{b['coest_mass3pct']['rss_pct']:.1f}%", f"{b['coest_mass1pct']['rss_pct']:.1f}%"]])
+    from experiments.budget import budget
+    if s.get("budget"):
+        b = budget(s)
+        ms = f"{b['mass_sigma_pct']:.0f}"
+        body += "\n" + md(["Budget (RSS of worst-side 1σ terms)", f"Unsprung mass 1σ = {ms}%", "Unsprung mass known to 1%"],
+                          [["Nominal fit", f"{b['nominal']['rss_pct']:.1f}%", f"{b['nominal']['rss_mass1_pct']:.1f}%"],
+                           ["k_f, k_H0 co-estimated", f"{b['coest']['rss_pct']:.1f}%", f"{b['coest']['rss_mass1_pct']:.1f}%"]])
     write("table6_budget", "Table 6. Model-form sensitivity and absolute bias budget (rail-coupled model)", body,
-          ["results/p2/model_form_mw_sensitivity.json", "results/p2/relative_intervals.json"],
-          ["Large-sample (pseudo-true) biases. The ±3% unsprung-mass range is an assumption with no source; ±1% "
-           "corresponds to mass known from drawings."])
+          ["results/p2/model_form_mw_sensitivity.json"],
+          ["Large-sample (pseudo-true) biases at the current configuration. The 1σ ranges and their sources are "
+           "listed in the table; the 1% mass case scales the unsprung-mass term linearly."])
 
 
 # ----------------------------------------------------------------------------- Table 7

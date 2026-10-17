@@ -1,0 +1,54 @@
+# Configuration and estimator behind every result file used by a table, figure or macro of the paper.
+# config: frozen  = config/params.yaml + config/track.yaml as frozen (hash checked by make_provenance_check.py)
+#         pinned  = config/snapshots/headline_freight_v1 (frozen wagon, but k_H0 1.4 GN/m, c_p 10 kN s/m)
+#         earlier = an earlier configuration or a different setup; anything that uses it must say so
+#                   ("earlier configuration") in the caption or paragraph
+# Files written after the hash was introduced carry provenance.config_hash / estimator_version, which the
+# check compares with this declaration. Older files are classified here from their run date against the
+# last configuration change (2026-10-15 22:33 UTC) and the setup recorded in their "config" block.
+frozen_estimator: "multipass-whittle-2 (debiased, Kb=120 default, own-sub-band scoring, 0.5 Hz table)"
+labels:
+  earlier: "earlier configuration"
+  pinned: "pinned headline configuration"
+files:
+  config/params.yaml: {config: frozen}
+  config/track.yaml: {config: frozen}
+  results/p1/verification.json: {config: frozen, estimator: none}
+  results/gates/G1.json: {config: frozen, estimator: none}
+  results/p2/fig1_transfer.json: {config: frozen, estimator: none}
+  results/p1/bound_speed_subband.json: {config: earlier, setup: "single wheelset on a rail oscillator", estimator: "bound only"}
+  results/p1/fe_direct.json: {config: earlier, setup: "single wheelset on a rail oscillator", estimator: "whittle-1 (single wheelset)"}
+  results/p2/debias_check.json: {config: earlier, setup: "CT23 12-wheel lumped vehicle, resilient track", estimator: "periodogram check"}
+  results/p2/wheel_lines_bound.json: {config: earlier, setup: "single wheelset on a rail oscillator", estimator: "bound only"}
+  results/p2/wheel_lines_mc.json: {config: earlier, setup: "single wheelset on a rail oscillator", estimator: "whittle-1 (single wheelset)"}
+  results/p2/partial_coherence_bound.json: {config: earlier, setup: "single wheelset on a rail oscillator", estimator: "bound only"}
+  results/p2/partial_coherence_mc.json: {config: earlier, setup: "single wheelset on a rail oscillator", estimator: "whittle-1 (single wheelset)"}
+  results/p2/partial_indep.json: {config: earlier, setup: "single wheelset on a rail oscillator", estimator: "whittle-1 (single wheelset)"}
+  results/p2/scope_p2_hysteretic.json: {config: earlier, setup: "Carrigan and Talbot (2023) vehicle and track", estimator: "multipass-whittle-1"}
+  results/p2/multiwheel_bound.json: {config: frozen, estimator: "bound only"}
+  results/p2/multiwheel_mc.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
+  results/p2/multiwheel_mc_y25.json: {config: frozen}
+  results/p2/model_form_mw_sensitivity.json: {config: frozen, estimator: "pseudo-true, multipass-whittle-2"}
+  results/p2/drift_freight.json: {config: frozen, estimator: "pseudo-true, multipass-whittle-2"}
+  results/p2/relative_change.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
+  results/p2/relative_intervals.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
+  results/p2/relative_coest_drift.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
+  results/p3/bearing_clearance.json: {config: frozen, estimator: none}
+  results/p3/exponent_bound.json: {config: frozen, estimator: "bound only"}
+  results/p3/calibration.json: {config: earlier, setup: "metro wheel layout, BS113A rail", estimator: "pseudo-true, multipass-whittle-1"}
+  results/p3/bias_regression.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
+  results/p3/robust_se.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
+  results/p3/headline_v2_kb120_attr_freight.json: {config: pinned}
+  results/p3/calibrated.json: {config: pinned, note: "calibration from the pinned headline; MDCs from results/p4/mdc_bounds.json (frozen)"}
+  # mixed file: drift Monte Carlo at the frozen config (kf0.8_freight), kappa replicates and bias diagnosis earlier
+  results/p3/validation_mc.json: {config: earlier, setup: "kappa replicates and bias diagnosis: metro wheel layout", macro_overrides: {DriftMC: frozen}}
+  results/p4/banded.json: {config: frozen}
+  results/p4/contact_hertz.json: {config: frozen, estimator: none}
+  results/p4/generator_check.json: {config: frozen, estimator: none}
+  results/p4/generator_expper.json: {config: frozen, estimator: none}
+  results/p4/ignore_coupling.json: {config: frozen}
+  results/p4/inverse_crime.json: {config: frozen}
+  results/p4/primary_damping.json: {config: frozen}
+  results/p4/sweep.json: {config: frozen, estimator: "bound only"}
+  results/p4/mdc_bounds.json: {config: frozen, estimator: "bound only"}
+  results/p4/bias_diag_y25.json: {config: pinned, note: "bias diagnosis on the headline datasets (pinned headline configuration)"}

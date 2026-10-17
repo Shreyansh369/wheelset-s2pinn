@@ -31,6 +31,10 @@ from scipy.stats import chi2
 
 from src.inverse.whittle import F_HI, F_LO, FS, N_REVS, NOISE_BAND, Roughness  # noqa: F401  (re-exported)
 
+# frozen estimator (recorded in every result file): debiased Whittle with a +-120-bin kernel by default,
+# own-sub-band scoring, 0.5 Hz model table, K roughness levels per third octave profiled
+ESTIMATOR_VERSION = "multipass-whittle-2 (debiased, Kb=120 default, own-sub-band scoring, 0.5 Hz table)"
+
 
 # --------------------------------------------------------------------------- transfer families
 @dataclass

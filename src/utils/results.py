@@ -22,6 +22,23 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 RESULTS_DIR = REPO_ROOT / "results"
 
 
+def config_hash(config_dir: Path | None = None) -> str:
+    """sha256 (12 hex) of the vehicle and track configuration actually loaded (params.yaml + track.yaml)."""
+    import hashlib
+    d = Path(os.environ.get("WHEELSET_CONFIG_DIR", REPO_ROOT / "config")) if config_dir is None else Path(config_dir)
+    h = hashlib.sha256()
+    for f in ("params.yaml", "track.yaml"):
+        fp = d / f
+        h.update(fp.read_bytes() if fp.exists() else b"")
+    return h.hexdigest()[:12]
+
+
+def _estimator_version() -> str | None:
+    import sys
+    mod = sys.modules.get("src.inverse.multipass")
+    return getattr(mod, "ESTIMATOR_VERSION", None) if mod else None
+
+
 def _git_commit() -> str:
     try:
         out = subprocess.run(
@@ -97,6 +114,9 @@ def save_result(
         "payload": payload,
         "provenance": {
             "git_commit": _git_commit(),
+            "config_dir": os.environ.get("WHEELSET_CONFIG_DIR", "config"),
+            "config_hash": config_hash(),
+            "estimator_version": _estimator_version(),
             "timestamp_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "wall_seconds": wall_seconds,
             "peak_cpu_memory_mb": peak_cpu_memory_mb(),

@@ -8,12 +8,12 @@
 | unsprung_scale | 0.04 | about 20 kg per axlebox, 4% of the wheelset unsprung mass, between axlebox designs (SKF Evolution, snippet) | -16.55 | +7.10 / -6.81 | +7.04 / -6.66 |
 | axle_damp_scale | 0.75 | wheelset modal damping 0.1-2% (Chaar 2007: measured below 2%; IPME paper 0.1-1%; snippets) | +0.57 | -2.59 / +6.90 | -2.59 / +6.98 |
 
-| Budget (RSS of worst-side 1σ terms) | Unsprung mass ±3% | Unsprung mass ±1% |
+| Budget (RSS of worst-side 1σ terms) | Unsprung mass 1σ = 4% | Unsprung mass known to 1% |
 |---|---|---|
-| Nominal fit | 6.1% | 5.1% |
-| k_f, k_H0 co-estimated | 3.9% | 1.8% |
+| Nominal fit | 21.3% | 20.1% |
+| k_f, k_H0 co-estimated | 10.0% | 7.3% |
 
 
-Large-sample (pseudo-true) biases. The ±3% unsprung-mass range is an assumption with no source; ±1% corresponds to mass known from drawings.
+Large-sample (pseudo-true) biases at the current configuration. The 1σ ranges and their sources are listed in the table; the 1% mass case scales the unsprung-mass term linearly.
 
-Source: `results/p2/model_form_mw_sensitivity.json`, `results/p2/relative_intervals.json`
+Source: `results/p2/model_form_mw_sensitivity.json`

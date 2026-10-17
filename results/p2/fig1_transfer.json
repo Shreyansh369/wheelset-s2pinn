@@ -23443,10 +23443,13 @@
     }
   },
   "provenance": {
-    "git_commit": "e6b7ae6ec4106fffc60c02a3b67a40fc4d4992e1-dirty",
-    "timestamp_utc": "2026-10-16T07:15:38Z",
+    "git_commit": "ba3bf49ec587cf143c40698de9159c4cbc67caa6-dirty",
+    "config_dir": "config",
+    "config_hash": "e0a22f267362",
+    "estimator_version": "multipass-whittle-2 (debiased, Kb=120 default, own-sub-band scoring, 0.5 Hz table)",
+    "timestamp_utc": "2026-10-17T05:31:41Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 142.3125,
+    "peak_cpu_memory_mb": 141.4921875,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

@@ -39,7 +39,12 @@ plt.rcParams.update({"font.size": 8.5, "axes.titlesize": 9, "axes.labelsize": 8.
                      "savefig.dpi": 300, "figure.dpi": 110})
 
 
+USED: list[str] = []          # result files loaded since the last saved figure
+MANIFEST: dict[str, list[str]] = {}
+
+
 def load(rel):
+    USED.append(f"results/{rel}")
     fp = RESULTS_DIR / rel
     return json.loads(fp.read_text())["payload"] if fp.exists() else None
 
@@ -49,6 +54,9 @@ def save(fig, name):
     fig.savefig(OUT / f"{name}.pdf", bbox_inches="tight")
     fig.savefig(OUT / f"{name}.png", bbox_inches="tight")
     plt.close(fig)
+    MANIFEST[name] = sorted(set(USED))
+    USED.clear()
+    (OUT / "manifest.json").write_text(json.dumps(MANIFEST, indent=1))
     print("wrote", name)
 
 
@@ -70,8 +78,8 @@ def fig1_data():
         for V in (60.0, 110.0):
             H = (G * np.exp(1j * w[:, None] * mws[nw].d[None, :] / (V / 3.6))).sum(1)
             out["curves"][f"{nw}_{int(V)}"] = (20 * np.log10(np.abs(H))).tolist()
-    save_result("p2/fig1_transfer", out, cfg={"truth": TRUTH, "W_t": 14.0, "track": "BS113A, kf 154e6, eta 0.2",
-                                               "layout": "CT23 subsets", "quantity": "20 log10 |H|, left-axlebox accel per unit roughness"},
+    save_result("p2/fig1_transfer", out, cfg={"truth": TRUTH, "W_t": 14.0, "track": "config nominal (60E1, ballasted freight)",
+                                               "layout": "config nominal (Y25/Eanos wagon), subsets of 1/2/4/8 wheels", "quantity": "20 log10 |H|, left-axlebox accel per unit roughness"},
                 seed=0)
     return load("p2/fig1_transfer.json")
 

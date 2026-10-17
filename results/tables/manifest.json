@@ -1,0 +1,106 @@
+{
+ "table10_partial": {
+  "sources": [
+   "results/p2/partial_indep.json",
+   "results/p2/partial_coherence_bound.json",
+   "results/p2/partial_coherence_mc.json"
+  ],
+  "caption": "Repeated passes over one section with partial coherence (k_B0)"
+ },
+ "table11_drift": {
+  "sources": [
+   "results/p2/relative_coest_drift.json"
+  ],
+  "caption": "Seasonal foundation-stiffness drift between baseline and later period"
+ },
+ "table12_p2": {
+  "sources": [
+   "results/p2/scope_p2_hysteretic.json"
+  ],
+  "caption": "P2 track-stiffness validation against the CT23 per-pass failure mode (true k_f = 7.7 MN/m\u00b2)"
+ },
+ "table13_health": {
+  "sources": [
+   "results/p3/bearing_clearance.json",
+   "results/p3/exponent_bound.json"
+  ],
+  "caption": "Health relevance: clearance growth, effective support stiffness and the load exponent"
+ },
+ "table14_validation": {
+  "sources": [
+   "results/p3/validation_mc.json",
+   "results/p3/bias_regression.json",
+   "results/p3/robust_se.json",
+   "results/p3/calibration.json"
+  ],
+  "caption": "Validation: \u03ba revalidation, drift at k_f \u00d70.8, bias diagnosis, robust standard errors, calibration"
+ },
+ "table15_sweep": {
+  "sources": [
+   "results/p4/sweep.json"
+  ],
+  "caption": "Bound and detection limit over the published (or assumed) range of each parameter"
+ },
+ "table1_parameters": {
+  "sources": [
+   "config/params.yaml",
+   "config/track.yaml"
+  ],
+  "caption": "Representative freight wagon and track: model parameters and sources"
+ },
+ "table2_verification": {
+  "sources": [
+   "results/p1/verification.json",
+   "results/gates/G1.json"
+  ],
+  "caption": "Verification of the reference model"
+ },
+ "table3_headline": {
+  "sources": [
+   "results/p3/headline_v2_kb120_attr_freight.json",
+   "results/p3/calibrated.json",
+   "results/p4/ignore_coupling.json"
+  ],
+  "caption": "Headline Monte Carlo, 4-wheel rail-coupled model, frozen estimator (k_B0)"
+ },
+ "table4_speed_N": {
+  "sources": [
+   "results/p1/fe_direct.json"
+  ],
+  "caption": "Effect of speed spread and number of passes (single wheelset, k_B0)"
+ },
+ "table5_multiwheel": {
+  "sources": [
+   "results/p2/multiwheel_bound.json",
+   "results/p2/multiwheel_mc.json"
+  ],
+  "caption": "Multi-wheel coupling through the rail (k_B0)"
+ },
+ "table6_budget": {
+  "sources": [
+   "results/p2/model_form_mw_sensitivity.json"
+  ],
+  "caption": "Model-form sensitivity and absolute bias budget (rail-coupled model)"
+ },
+ "table7_gains": {
+  "sources": [
+   "results/p2/relative_intervals.json",
+   "results/p2/relative_coest_drift.json"
+  ],
+  "caption": "Relative change \u0394k_B0/k_B0: model-form gains, \u03ba and interval coverage"
+ },
+ "table8_mdc": {
+  "sources": [
+   "results/p2/relative_intervals.json",
+   "results/p3/calibrated.json"
+  ],
+  "caption": "Minimum detectable decrease of k_B0 (5% false alarm, 90% detection)"
+ },
+ "table9_wheel_lines": {
+  "sources": [
+   "results/p2/wheel_lines_bound.json",
+   "results/p2/wheel_lines_mc.json"
+  ],
+  "caption": "Wheel roughness at rotation orders: notch vs tachometer nuisance lines"
+ }
+}

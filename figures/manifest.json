@@ -1,0 +1,24 @@
+{
+ "fig1_transfer_functions": [
+  "results/p2/fig1_transfer.json"
+ ],
+ "fig2_crb_vs_speed_spread": [
+  "results/p1/bound_speed_subband.json"
+ ],
+ "fig3_debiased_periodogram": [
+  "results/p2/debias_check.json"
+ ],
+ "fig4_multiwheel_bias": [
+  "results/p2/multiwheel_mc.json"
+ ],
+ "fig5_model_form_tornado": [
+  "results/p2/model_form_mw_sensitivity.json"
+ ],
+ "fig6_relative_change": [
+  "results/p2/relative_change.json",
+  "results/p2/relative_intervals.json"
+ ],
+ "fig7_p2_validation": [
+  "results/p2/scope_p2_hysteretic.json"
+ ]
+}
