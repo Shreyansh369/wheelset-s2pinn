@@ -295,9 +295,11 @@ apparent change, \LeanSDPct\%, is \LeanSDOverSE{} times the mean reported standa
 (\LeanSEPct\%): within the band the standard error of the change is calibrated, so the detection limits
 below need no simulation calibration. The two periods of a pair are drawn by the same procedure from
 independent seeds (speeds, payloads within the band, roughness levels and realisations, with the same
-stress truth), so the expected apparent change is zero by symmetry; the observed lean towards an increase
-does not follow the differences between the periods' mean payload, mean speed or mean roughness level
-($|r| \le \LeanCorrMax$) and is consistent with sampling variation. In the laden band, $c_B$ is not
+stress truth), so the expected apparent change is zero by symmetry. The observed mean lies
+\LeanMeanZ{} standard errors above zero (two-sided $p = \LeanMeanP$ for a zero mean), towards an increase,
+which the one-sided test for a loss does not flag; it does not follow the differences between the
+periods' mean payload, mean speed or mean roughness level ($|r| \le \LeanCorrMax$), and with the design
+symmetric by construction it is a fluctuation of these \LeanN{} pairs rather than a systematic effect. In the laden band, $c_B$ is not
 identified: with it free, the observed information was singular in \BandLadenNSingular{} of
 \BandLadenPairsN{} pairs. With $c_B$ fixed at its nominal value (and $k_f$, $k_{H0}$ still re-estimated
 in each period), \BandLadenFixPairsN{} zero-change pairs gave \BandLadenFixPairsFA{} false alarms, $z$

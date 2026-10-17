@@ -469,6 +469,9 @@ def section4(m, miss):
             m["LeanNPos"] = str(le["n_positive"])
             m["LeanCorrMax"] = _f(max(abs(le[k]) for k in ("corr_D_dW", "corr_D_dV", "corr_D_dg")))
             m["LeanSDPct"], m["LeanSEPct"] = _f(le["D_sd_pct"]), _f(le["se_mean_pct"])
+            m["LeanMeanZ"] = _f(le["D_mean_pct"] / le["D_mean_se_pct"], 1)
+            from scipy.stats import t as _t
+            m["LeanMeanP"] = _f(2 * _t.sf(abs(le["D_mean_pct"] / le["D_mean_se_pct"]), le["n"] - 1), 2)
     block("p4/banded.json", banded_extra, [])
 
     def bdy(d):                           # bias diagnosis on the headline datasets (pinned headline configuration)
