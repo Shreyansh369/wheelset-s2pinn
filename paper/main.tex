@@ -4,8 +4,9 @@
 % none is typed by hand. Submission folder: `make -C paper submission`.
 \documentclass[a4paper,fleqn]{cas-sc}
 \usepackage[numbers,square,compress]{natbib}
-\usepackage{bm,graphicx,longtable}
+\usepackage{bm,graphicx,longtable,booktabs}
 \usepackage{lineno}
+\input{doi}  % \ZenodoDOI: the single place to fill in the archive DOI
 \graphicspath{{figures/}{../figures/}}
 \IfFileExists{tables/table1_parameters.tex}{\def\tabdir{tables}}{\def\tabdir{../results/tables}}
 \newcommand{\inputtable}[1]{\input{\tabdir/#1}}

@@ -1,4 +1,4 @@
-# Table 10. Repeated passes over one section with partial coherence (k_B0)
+# Table 10. Repeated passes over one section with partial coherence (k_B0) (earlier configuration: single wheelset on a rail oscillator)
 
 **(a) Independent-pass estimator on partially coherent data**
 

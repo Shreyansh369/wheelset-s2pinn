@@ -1,7 +1,7 @@
 Highlights
 
-- Wheelset-bearing support stiffness identified from in-service axle-box acceleration
-- Rail roughness enters as free nuisance levels; no roughness measurement is needed
+- Bearing support stiffness identified from axle-box acceleration in simulation
+- Rail roughness spectrum levels are nuisance parameters; roughness is not measured
 - Passes at different speeds separate the support resonance from the roughness
 - Ignoring wheel-to-wheel coupling through the rail biases the stiffness by 5.6%
-- Payload-banded comparison and track re-estimation keep false alarms low
+- Periods are compared within one payload band; mixed-payload pooling is not supported

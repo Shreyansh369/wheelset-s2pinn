@@ -1,4 +1,4 @@
-# Table 5. Multi-wheel coupling through the rail (k_B0)
+# Table 5. Multi-wheel coupling through the rail (k_B0) (partly earlier configuration: metro wheel layout, BS113A rail, +-30-bin kernel)
 
 **(a) Bound**
 

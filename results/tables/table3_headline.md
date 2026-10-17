@@ -1,4 +1,4 @@
-# Table 3. Headline Monte Carlo, 4-wheel rail-coupled model, frozen estimator (k_B0)
+# Table 3. Headline Monte Carlo, 4-wheel rail-coupled model, frozen estimator (k_B0) (pinned headline configuration)
 
 | SNR (dB) | n | Bias (%) ± SE | RMSE (%) | CRB (%) | RMSE/CRB | RMSE/SE | Wald 90% coverage [95% CI] | Simulation calibration: bias b, inflation r; held-out coverage | Ignore coupling (seed 42, 10 datasets): bias (%) ± SE |
 |---|---|---|---|---|---|---|---|---|---|

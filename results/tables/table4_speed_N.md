@@ -1,4 +1,4 @@
-# Table 4. Effect of speed spread and number of passes (single wheelset, k_B0)
+# Table 4. Effect of speed spread and number of passes (single wheelset, k_B0) (earlier configuration: single wheelset on a rail oscillator)
 
 | N | SNR (dB) | Speeds (km/h) | Datasets | Bias (%) ± SE | RMSE (%) | CRB (%) | RMSE/CRB | Wald 90% cov. [95% CI] |
 |---|---|---|---|---|---|---|---|---|

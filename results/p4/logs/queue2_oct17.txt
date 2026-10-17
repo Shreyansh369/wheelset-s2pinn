@@ -1,3 +1,4 @@
+python3 experiments/p4_inverse_crime.py --mode lin --pad 1.6 --tag _pad1.6 --j0 8 --j1 10 > results/p4/logs/td_pad2.log 2>&1
 python3 experiments/p4_bias_diag_y25.py --variant kb30 --j0 0 --j1 5 > results/p4/logs/bd_kb30a.log 2>&1
 python3 experiments/p4_bias_diag_y25.py --variant kb30 --j0 5 --j1 10 > results/p4/logs/bd_kb30b.log 2>&1
 python3 experiments/p4_bias_diag_y25.py --variant exact --j0 0 --j1 5 > results/p4/logs/bd_exa.log 2>&1

@@ -1,4 +1,4 @@
-# Table 9. Wheel roughness at rotation orders: notch vs tachometer nuisance lines
+# Table 9. Wheel roughness at rotation orders: notch vs tachometer nuisance lines (earlier configuration: single wheelset on a rail oscillator)
 
 **(a) Bound, N = 50, 40 dB**
 

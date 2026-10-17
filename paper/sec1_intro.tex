@@ -40,10 +40,42 @@ in a frequency-domain likelihood. It is statistically efficient, but it assumes 
 spectrum near each mode and, in its standard form, a single record, so it does not separate a vehicle
 resonance from a roughness spectrum that is itself unknown and changes from pass to pass.
 
+\paragraph{Closest work and literature search.} Table~\ref{tab:novelty} compares the method with the
+closest work on axle-box acceleration~\citep{carrigan2023,shen2023,pieringer2022} and with axlebox
+bearing-response models~\citep{li2019axlebox,guan2023}, which predict bearing loads and vibration for
+a given excitation but do not identify the support. The search covered 11--16 October 2026 and used a
+general web search engine; bibliographic databases (Scopus, Web of Science, Google Scholar) could not be
+queried directly from the computing environment, and full texts were read where they were accessible,
+otherwise abstracts. Search terms combined ``axle box acceleration'' or ``axlebox bearing'' with rail
+roughness, track stiffness, bearing stiffness or support stiffness, identification, unknown excitation and
+speed; further searches covered joint identification of vehicle parameters and road or track
+irregularity, operational modal analysis with unknown excitation spectra, drive-by monitoring at several
+speeds, and the debiased Whittle likelihood. No lower date limit was set. Only English-language sources
+were searched; Chinese- and Japanese-language work on axlebox bearings was not covered.
+
+\begin{table}[tbp]\centering\scriptsize
+\caption{Comparison with the closest work. Entries for other work are taken from the cited papers as far as
+they could be read (n.r.: not reported in the parts read).}\label{tab:novelty}
+\resizebox{\textwidth}{!}{\begin{tabular}{p{2.2cm}p{2.0cm}p{2.1cm}p{1.8cm}p{2.1cm}p{1.6cm}p{2.0cm}p{1.9cm}p{1.9cm}}
+\toprule
+Work & Target parameter & Excitation assumption & Speed pooling & Roughness treatment & Wheel coupling &
+Measurements needed & Validation type & Uncertainty calibration \\
+\midrule
+Pieringer and Kropp~\citep{pieringer2022} & Rail roughness & Contact force recovered from ABA; track dynamics known & No (single pass) & Estimated output, via a Hertzian contact model & n.r. & ABA, known track parameters & Simulation & Sensitivity to rail-pad stiffness; no intervals \\
+Carrigan and Talbot~\citep{carrigan2023} & Track stiffness, then rail roughness & Unknown roughness, removed after the stiffness fit & No (per pass, along the track) & Deconvolution after a P2 peak fit & Several wheels on one rail & ABA, speed, wheel angle (comb filter) & Simulation and metro field trials & Per-pass scatter; no intervals \\
+Shen et al.~\citep{shen2023} & Rail-pad and ballast stiffness, irregularity level & Irregularity as a single level parameter & No (three speeds estimated separately) & One level parameter & n.r. & ABA & n.r. & n.r. \\
+Li et al.~\citep{li2019axlebox} & None (forward model of bearing loads) & Prescribed track irregularity & -- & Prescribed input & Vehicle model & -- & Wheelset test rig & -- \\
+Guan et al.~\citep{guan2023} & None (forward model of bearing response) & Prescribed wheel polygon and irregularity & -- & Prescribed input & Flexible wheelset & -- & Simulation & -- \\
+This paper & Bearing support stiffness $k_{B0}$ (and $c_B$) and its change & Unknown roughness, spectrum with free sub-band levels & Yes, many passes in one likelihood & Nuisance levels shared by a period, profiled & Neighbouring wheels via an infinite Timoshenko rail & ABA, speed, WIM payload, distance-aligned records & Matched-model simulation, with model-error and nonlinear-contact checks & CRB, Wald and profile intervals, simulation calibration, inflation for simultaneous model errors \\
+\bottomrule
+\end{tabular}}
+\end{table}
+
 \paragraph{Motivation.} The support resonance of a freight wheelset, the axlebox vibrating on its
 support, lies at a few hundred hertz, inside the band in which ABA is excited by rail roughness. ABA is
 already recorded in service for track monitoring, so the support stiffness could be tracked from data
-that are collected anyway, without a dedicated sensor or test. None of the families above provides
+that are collected anyway, without a dedicated test, provided the records meet requirements on bandwidth,
+calibration, speed and record alignment (Section~\ref{sec:requirements}). None of the families above provides
 this: fault diagnostics do not see stiffness, the track methods assume the vehicle, and the
 joint-identification methods need the excitation or work below the support band. The work is
 motivated by condition monitoring of freight wagons on Indian Railways. The vehicle and track values
@@ -78,23 +110,29 @@ sub-band a free nuisance parameter and payload from a weigh-in-motion measuremen
 \item a forward model in which the instrumented wheelset is coupled to its neighbours through an
 infinite Timoshenko rail with the phase factors between wheels kept, and evidence that ignoring this
 coupling biases the support stiffness by \IgnoreCouplingForty\%;
-\item an error budget for a representative freight wagon: Cram\'er--Rao bounds and their dependence on
-speed spread and number of passes, Monte Carlo bias and coverage, model-form sensitivity, sweeps over
-the published parameter ranges, simulation-calibrated intervals, and a check against nonlinear
-Hertzian contact;
-\item a procedure for detecting changes between monitoring periods within payload bands that
-re-estimates the track foundation and contact stiffness in each period, with detection limits, false-alarm rates under track
-drift, and the bearing clearance growth that the detection limit corresponds to.
+\item an uncertainty budget for a representative freight wagon, separating statistical error
+(Cram\'er--Rao bounds, matched-model Monte Carlo bias and coverage), parameter error (model-form
+sensitivity, sweeps over the published parameter ranges, simultaneous model errors), model-structure error
+(nonlinear Hertzian contact, payload-dependent primary suspension, wheel coupling) and measurement and
+operating conditions;
+\item a procedure for detecting changes between monitoring periods that re-estimates the track
+foundation and contact stiffness in each period, with detection limits (nominal and allowing for
+simultaneous model errors), false-alarm rates under track drift, and the bearing clearance growth that
+the detection limit corresponds to. Periods must be compared within one payload band (empty or laden):
+pooling passes of mixed payload is not supported by the present model, because the primary suspension
+changes with payload.
 \end{enumerate}
 
 \paragraph{Importance and impact.} A loss of support stiffness changes the load path of the bearing and
 the dynamic loads on it, and it can develop without the temperature rise or impacts that existing
-bearing monitoring detects. Detecting it from data
-that operators already record would add a monitoring channel at no hardware cost. The method needs only
-the in-service passes of an instrumented wagon over ordinary track at varying speeds, and its
-statistical basis gives detection limits and false-alarm rates that can be stated in advance for a
-given monitoring design. The same likelihood applies to other vehicle--track resonances excited by
-unmeasured roughness.
+bearing monitoring detects. Detecting it from axle-box records that instrumented wagons already collect
+would add a monitoring channel without new hardware on the wheelset. The statistical basis of the method
+gives detection limits and false-alarm rates that can be stated in advance for a given monitoring
+design. All results in this paper are from matched-model simulations, in which data and estimator share
+the vehicle--track model apart from the deliberate perturbations studied; they establish the method and
+its error budget, not its operational performance, which requires a controlled rig or field test with a
+known change of support stiffness. The same likelihood applies to other vehicle--track resonances excited
+by unmeasured roughness.
 
 Section~\ref{sec:model} describes the vehicle--track model and Section~\ref{sec:method} the
 estimator. Section~\ref{sec:results} verifies and demonstrates the method in simulation,

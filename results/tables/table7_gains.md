@@ -1,4 +1,4 @@
-# Table 7. Relative change Δk_B0/k_B0: model-form gains, κ and interval coverage
+# Table 7. Relative change Δk_B0/k_B0: model-form gains, κ and interval coverage (earlier configuration: metro wheel layout, BS113A rail, +-30-bin kernel)
 
 | Parameter | Gain γ per unit log error (nominal) | γ at Δ = −2/−5/−10% | κ term (1σ) | γ with k_f, k_H0 co-estimated |
 |---|---|---|---|---|

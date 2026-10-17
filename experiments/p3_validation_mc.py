@@ -198,8 +198,12 @@ def summarise():
         k0, _ = cov(0.0)
         ge = [(r["D_hat"] - r["D_true"]) / abs(r["D_true"]) for r in R]
         worst = sorted(R, key=lambda r: -abs((r["D_hat"] - r["D_true"]) / r["D_true"]))[:5]
+        # inflation of the combined interval needed for 90% coverage under simultaneous model errors: the
+        # smallest r with |D_hat - D_true| <= 1.645 r sqrt(se^2 + (kappa D_hat)^2) in at least 90% of replicates
+        ratio = sorted(abs(r["D_hat"] - r["D_true"]) / (1.645 * math.sqrt(r["se"] ** 2 + (KAPPA_COEST * r["D_hat"]) ** 2)) for r in R)
+        r90 = float(ratio[math.ceil(0.9 * n) - 1])
         out["kappa_coest"] = {
-            "n": n, "kappa": KAPPA_COEST, "coverage": ks / n, "coverage_ci95": cp_interval(ks, n),
+            "n": n, "kappa": KAPPA_COEST, "inflation_for_90pct": r90, "ratio_sorted": [float(x) for x in ratio], "coverage": ks / n, "coverage_ci95": cp_interval(ks, n),
             "coverage_statistical_only": k0 / n, "coverage_statistical_only_ci95": cp_interval(k0, n),
             "rms_change_error_frac": float(np.sqrt(np.mean(np.square(ge)))),
             "mean_change_error_frac": float(np.mean(ge)),

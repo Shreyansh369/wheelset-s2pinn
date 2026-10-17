@@ -7,7 +7,9 @@ excitation is fixed in wavenumber. Speed spread is therefore the design variable
 spread of 60--110~km/h, typical of a mixed freight route, brings the bound to a fraction of a per cent
 with 50 passes. Payload variation and a weigh-in-motion measurement add the load dependence of the
 contact and support stiffness. Neither requires a dedicated test: the passes are those a wagon makes
-in service, and the roughness never has to be measured.
+in service, and the roughness never has to be measured. The records must, however, meet the
+requirements of Section~\ref{sec:requirements} on sensor bandwidth, calibration, speed, record alignment,
+payload and record selection.
 
 \paragraph{Absolute level and relative change.} The absolute level of $k_{B0}$ inherits the error of
 every other model parameter, above all the unsprung mass and the foundation stiffness
@@ -99,8 +101,10 @@ were not found for a freight axlebox and are swept over plausible ranges
 than at a single value. A specific vehicle requires its own values, above all the unsprung mass.
 
 \paragraph{Roughness and operating model.} Roughness is modelled as a stationary Gaussian process
-with a level per sub-band that differs between passes but is common to the wheels of one pass, and
-speed is constant within a pass. Non-stationary features (joints, welds, switches) and speed changes
+whose spectrum has the ISO~3095 reference shape times free sub-band levels shared by all passes of a
+period, with an independent realisation on each pass that is common to the wheels of that pass
+(Section~\ref{sec:obs}); speed is constant within a pass. A roughness spectrum whose shape changes
+between passes within a period, beyond what the free levels absorb, is not modelled. Non-stationary features (joints, welds, switches) and speed changes
 within a record are not modelled and would have to be excluded or windowed out in practice.
 Environmental effects on the support, for example the temperature dependence of elastomeric pads,
 would appear as changes of $k_B$ and must be separated by comparing like conditions.

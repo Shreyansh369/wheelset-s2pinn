@@ -5,11 +5,11 @@
    "results/p2/partial_coherence_bound.json",
    "results/p2/partial_coherence_mc.json"
   ],
-  "caption": "Repeated passes over one section with partial coherence (k_B0)"
+  "caption": "Repeated passes over one section with partial coherence (k_B0) (earlier configuration: single wheelset on a rail oscillator)"
  },
  "table11_drift": {
   "sources": [
-   "results/p2/relative_coest_drift.json"
+   "results/p2/drift_freight.json"
   ],
   "caption": "Seasonal foundation-stiffness drift between baseline and later period"
  },
@@ -17,7 +17,7 @@
   "sources": [
    "results/p2/scope_p2_hysteretic.json"
   ],
-  "caption": "P2 track-stiffness validation against the CT23 per-pass failure mode (true k_f = 7.7 MN/m\u00b2)"
+  "caption": "P2 track-stiffness validation against the CT23 per-pass failure mode (true k_f = 7.7 MN/m\u00b2) (earlier configuration: Carrigan and Talbot (2023) vehicle and track)"
  },
  "table13_health": {
   "sources": [
@@ -33,7 +33,7 @@
    "results/p3/robust_se.json",
    "results/p3/calibration.json"
   ],
-  "caption": "Validation: \u03ba revalidation, drift at k_f \u00d70.8, bias diagnosis, robust standard errors, calibration"
+  "caption": "Validation: \u03ba revalidation, drift at k_f \u00d70.8, bias diagnosis, robust standard errors, calibration (earlier configuration: kappa replicates and bias diagnosis: metro wheel layout; metro wheel layout, BS113A rail; metro wheel layout, BS113A rail, +-30-bin kernel)"
  },
  "table15_sweep": {
   "sources": [
@@ -61,20 +61,20 @@
    "results/p3/calibrated.json",
    "results/p4/ignore_coupling.json"
   ],
-  "caption": "Headline Monte Carlo, 4-wheel rail-coupled model, frozen estimator (k_B0)"
+  "caption": "Headline Monte Carlo, 4-wheel rail-coupled model, frozen estimator (k_B0) (pinned headline configuration)"
  },
  "table4_speed_N": {
   "sources": [
    "results/p1/fe_direct.json"
   ],
-  "caption": "Effect of speed spread and number of passes (single wheelset, k_B0)"
+  "caption": "Effect of speed spread and number of passes (single wheelset, k_B0) (earlier configuration: single wheelset on a rail oscillator)"
  },
  "table5_multiwheel": {
   "sources": [
    "results/p2/multiwheel_bound.json",
    "results/p2/multiwheel_mc.json"
   ],
-  "caption": "Multi-wheel coupling through the rail (k_B0)"
+  "caption": "Multi-wheel coupling through the rail (k_B0) (partly earlier configuration: metro wheel layout, BS113A rail, +-30-bin kernel)"
  },
  "table6_budget": {
   "sources": [
@@ -87,20 +87,20 @@
    "results/p2/relative_intervals.json",
    "results/p2/relative_coest_drift.json"
   ],
-  "caption": "Relative change \u0394k_B0/k_B0: model-form gains, \u03ba and interval coverage"
+  "caption": "Relative change \u0394k_B0/k_B0: model-form gains, \u03ba and interval coverage (earlier configuration: metro wheel layout, BS113A rail, +-30-bin kernel)"
  },
  "table8_mdc": {
   "sources": [
-   "results/p2/relative_intervals.json",
+   "results/p4/mdc_bounds.json",
    "results/p3/calibrated.json"
   ],
-  "caption": "Minimum detectable decrease of k_B0 (5% false alarm, 90% detection)"
+  "caption": "Minimum detectable decrease of k_B0 (5% false alarm, 90% detection), mixed payloads (pinned headline configuration)"
  },
  "table9_wheel_lines": {
   "sources": [
    "results/p2/wheel_lines_bound.json",
    "results/p2/wheel_lines_mc.json"
   ],
-  "caption": "Wheel roughness at rotation orders: notch vs tachometer nuisance lines"
+  "caption": "Wheel roughness at rotation orders: notch vs tachometer nuisance lines (earlier configuration: single wheelset on a rail oscillator)"
  }
 }

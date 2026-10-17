@@ -172,6 +172,7 @@ def summarise():
     out = {"headline_seed123": _stats([dict(r, j=r["seed_key"][2]) for r in headline(40, 123) if r["seed_key"][2] < 10]),
            "headline_seed42": _stats([dict(r, j=r["seed_key"][2]) for r in headline(40, 42) if r["seed_key"][2] < 10])}
     base = {r["seed_key"][2]: 100 * (math.exp(r["err_log"][0]) - 1) for r in headline(40, 123)}
+    base_se = {r["seed_key"][2]: r["se_log"][0] for r in headline(40, 123)}
     out["variants"] = {}
     for name in VARIANTS:
         R = list({r["j"]: r for r in _rows(OUT / f"{name}.jsonl")}.values())     # one row per dataset
@@ -181,6 +182,9 @@ def summarise():
             s["max_abs_diff_vs_headline_pp"] = float(max(abs(x) for x in d)) if d else None
             s["mean_diff_vs_headline_pp"] = float(np.mean(d)) if d else None
             s["n_lower_than_headline"] = int(sum(x < 0 for x in d))
+            q = [r["se_log"][0] / base_se[r["j"]] for r in R if r["j"] in base_se]
+            s["se_ratio_vs_headline_mean"] = float(np.mean(q)) if q else None
+            s["se_ratio_vs_headline_range"] = [float(min(q)), float(max(q))] if q else None
             out["variants"][name] = s
     Rr = list({tuple(r["seed_key"]): r for r in _rows(OUT / "robust.jsonl")}.values())
     if Rr:

@@ -78,8 +78,25 @@ def md_to_tex(body: str) -> str:
     return "\n".join(out)
 
 
+_REG = yaml.safe_load((ROOT / "config/provenance.yaml").read_text())
+
+
+def provenance_label(sources):
+    """Caption label from config/provenance.yaml for sources not at the frozen configuration."""
+    cfg = {s: (_REG["files"].get(s) or {}) for s in sources}
+    early = sorted({e.get("setup", "") for e in cfg.values() if e.get("config") == "earlier"})
+    lab = []
+    if any(e.get("config") == "pinned" for e in cfg.values()):
+        lab.append(_REG["labels"]["pinned"])
+    if early:
+        part = "" if all(e.get("config") == "earlier" for e in cfg.values()) else "partly "
+        lab.append(part + _REG["labels"]["earlier"] + ": " + "; ".join(x for x in early if x))
+    return f" ({'; '.join(lab)})" if lab else ""
+
+
 def write(name, title, body, sources, notes=()):
     OUT.mkdir(parents=True, exist_ok=True)
+    title = title + provenance_label(sources)
     txt = f"# {title}\n\n{body}\n" + "".join(f"\n{n}\n" for n in notes) + "\nSource: " + ", ".join(f"`{s}`" for s in sources) + "\n"
     (OUT / f"{name}.md").write_text(txt)
     cap = title.split(". ", 1)[1] if title.startswith("Table") and ". " in title else title
@@ -301,20 +318,22 @@ def table7():
 
 # ----------------------------------------------------------------------------- Table 8
 def table8():
-    r = load("p2/relative_intervals.json")
+    r = load("p4/mdc_bounds.json")
     if r is None:
-        return missing("table8_mdc", "Table 8. Minimum detectable change", "results/p2/relative_intervals.json")
-    rows = [[m["N"], m["snr_db"], m["kappa"], f"{m['sd_D0_pct']:.2f}", f"{m['mdc_pct_crb']:.2f}", f"{m['mdc_pct_inflated']:.2f}",
-             f"{m['inflation']:.2f}"] for m in r["mdc"]]
-    body = md(["N per period", "SNR (dB)", "Model-form term", "SD of Δ at Δ = 0 (%)", "MDC from CRB (%)", "MDC with RMSE/CRB inflation (%)",
-               "Inflation"], rows)
+        return missing("table8_mdc", "Table 8. Minimum detectable change", "results/p4/mdc_bounds.json")
+    lab = {"nominal": "k_B0, c_B (k_f, k_H0 fixed)", "coest": "k_B0, c_B, k_f, k_H0"}
+    rows = [[x["N"], f"{x['snr_db']:.0f}", lab[x["estimator"]], f"{x['crb_kB0_pct']:.3f}", f"{x['mdc_pct']:.2f}"] for x in r["rows"]]
+    body = md(["N per period", "SNR (dB)", "Estimated globals", "CRB of k_B0 (%)", "MDC from CRB (%)"], rows)
+    src = ["results/p4/mdc_bounds.json"]
     c = load("p3/calibrated.json")
     if c:
-        body += "\n**Simulation-calibrated MDC (frozen estimator; 40 dB only)**\n\n" + md(
-            ["N per period", "SNR (dB)", "MDC (%)", "SE inflation", "Calibrated MDC (%)", "Source"],
-            [[x["N"], x["snr_db"], f"{x['mdc_pct']:.2f}", f"{x['inflation']:.2f}", f"{x['mdc_calibrated_pct']:.2f}", x["source"]] for x in c["mdc"]])
-    write("table8_mdc", "Table 8. Minimum detectable decrease of k_B0 (5% false alarm, 90% detection)", body,
-          ["results/p2/relative_intervals.json", "results/p3/calibrated.json"])
+        body += "\n**Simulation-calibrated MDC (k_f, k_H0 re-estimated; calibration factor from the headline study, 40 dB only)**\n\n" + md(
+            ["N per period", "SNR (dB)", "MDC (%)", "SE inflation", "Calibrated MDC (%)"],
+            [[x["N"], f"{x['snr_db']:.0f}", f"{x['mdc_pct']:.2f}", f"{x['inflation']:.2f}", f"{x['mdc_calibrated_pct']:.2f}"] for x in c["mdc"]])
+        src.append("results/p3/calibrated.json")
+    write("table8_mdc", "Table 8. Minimum detectable decrease of k_B0 (5% false alarm, 90% detection), mixed payloads", body, src,
+          ["MDC = (1.645 + 1.282) √2 · CRB for two periods of N passes, 60–110 km/h, payload 5.5–22.5 t. Payload-band limits: "
+           "Section 4 (results/p4/banded.json)."])
 
 
 # ----------------------------------------------------------------------------- Table 9
@@ -381,7 +400,7 @@ def table11():
                                                                [[m["estimator"], m["n"], m["false_alarms"], f"{m['rate']:.2f} {ci(m['rate_ci95'])}",
                                                                  f"{m['D_hat_mean_pct']:+.2f}"] for m in c["drift_mc"]])
     write("table11_drift", "Table 11. Seasonal foundation-stiffness drift between baseline and later period", body,
-          ["results/p2/relative_coest_drift.json"],
+          ["results/p2/drift_freight.json"] if f else ["results/p2/relative_coest_drift.json"],
           ["N = 50 passes per period, 40 dB. 'nominal' fits (k_B0, c_B) with k_f, k_H0 at nominal values; 'coest' "
            "co-estimates k_f and k_H0 per period."])
 

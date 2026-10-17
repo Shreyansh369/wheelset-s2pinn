@@ -1,4 +1,4 @@
-# Table 12. P2 track-stiffness validation against the CT23 per-pass failure mode (true k_f = 7.7 MN/m²)
+# Table 12. P2 track-stiffness validation against the CT23 per-pass failure mode (true k_f = 7.7 MN/m²) (earlier configuration: Carrigan and Talbot (2023) vehicle and track)
 
 | Roughness | Per-pass median (MN/m²) | Per-pass outside ×0.7–×1.43 | Per-pass range | Per-pass no peak | Multi-pass median | Multi-pass range | Multi-pass profile 90% covers truth |
 |---|---|---|---|---|---|---|---|

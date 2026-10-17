@@ -4,6 +4,7 @@
 \usepackage[margin=22mm]{geometry}
 \usepackage{parskip}
 \pagestyle{empty}
+\IfFileExists{doi.tex}{\input{doi}}{\input{../doi}}
 \begin{document}
 \noindent{}[Corresponding author name]\\{}
 {}[Department, Institution, full postal address, Country]\\{}
@@ -30,11 +31,12 @@ Passes at different speeds and payloads are pooled in one debiased Whittle likel
 roughness levels are free nuisance parameters. The forward model couples the instrumented wheelset to
 its neighbours through the rail; ignoring that coupling biases the estimate by 5.6\%, far outside its
 confidence interval.
-For a representative freight wagon (Y25 bogies, ballasted UIC60 track) we give a complete simulation
-error budget: Cram\'er--Rao bounds, Monte Carlo bias and coverage, model-form sensitivity, sweeps over
-published parameter ranges, a check against nonlinear Hertzian contact, detection limits for changes
-between monitoring periods within payload bands, and false-alarm rates under track drift and
-payload-dependent suspension.
+For a representative freight wagon (Y25 bogies, ballasted UIC60 track) we give a matched-model
+simulation study with an uncertainty budget: Cram\'er--Rao bounds, Monte Carlo bias and coverage,
+parameter and model-structure errors (including simultaneous model errors and nonlinear Hertzian
+contact), and detection limits and false-alarm rates for changes between monitoring periods. Periods must
+be compared within one payload band; mixed-payload pooling is not supported. The results are from
+simulation; a controlled rig or field test is the next step before operational use.
 
 \textbf{Fit to MSSP.} The work combines system identification, statistical signal processing of
 spectra and vehicle--track dynamics for condition monitoring, and builds on recent MSSP papers on
@@ -42,7 +44,7 @@ axle-box acceleration (Carrigan \& Talbot 2023; Shen et al.\ 2023). Suggested su
 [subject area as listed in the submission system].
 
 The code that produces every number, table and figure is openly available
-(\texttt{https://github.com/Shreyansh369/wheelset-s2pinn}; Zenodo DOI [to be added]). The manuscript has
+(\texttt{https://github.com/Shreyansh369/wheelset-s2pinn}; Zenodo DOI \ZenodoDOI). The manuscript has
 not been published and is not under consideration elsewhere. All authors have approved the manuscript
 and its submission to \emph{Mechanical Systems and Signal Processing}.
 

@@ -8,17 +8,46 @@ pass speed $V_i$. The DFT coefficient $c_{ik}$ at bin $k$ belongs to the frequen
 and to the same wavenumber $\gamma_k = 2\pi k/L$ on every pass. The analysis band is fixed in
 frequency.
 
-Rail roughness is a stationary Gaussian process with one-sided wavenumber spectrum
+\paragraph{Roughness model.} Rail roughness enters at two levels. Its \emph{spectrum} is
 \begin{equation}
   G(\gamma) = G_\mathrm{ISO}(\gamma)\,g_{s(\gamma)},
 \end{equation}
-where $G_\mathrm{ISO}$ has the shape of the ISO~3095 limit spectrum~\citep{iso3095} and
-$g_s$ is a free level in sub-band $s$, with $K$ sub-bands per one-third octave. The levels are
-nuisance parameters: the method never measures roughness. The axle load of each pass, $W_i$, is a
-nuisance with a Gaussian prior on $\log W_i$ centred on a weigh-in-motion reading with standard
-deviation \WIMsigmaPct\%. The sensor noise is white with level $e_i$, estimated from an
-out-of-band part of the same record. The globals $\bm\theta$ are the health parameters
-$(k_{B0}, c_B)$, optionally with track parameters such as $k_f$ and $k_{H0}$.
+a one-sided power spectral density in angular wavenumber $\gamma$, where $G_\mathrm{ISO}$ is a fixed
+reference shape and $g_s$ is a free level in sub-band $s$, with $K$ sub-bands per one-third octave. The
+levels are unknown, shared by all passes of one monitoring period, and estimated with the globals; the
+method never measures roughness. The \emph{realisation} on each pass is random: a zero-mean
+stationary Gaussian profile with spectrum $G$, drawn independently for every pass, because successive
+passes run over different stretches of track or with different lateral wheel positions. All wheels of
+one pass run over the same rail profile, shifted by their distance along the wagon; this is what produces
+the phase factors between wheels in~\eqref{eq:H}. Passes that repeat over the same section share part
+of the realisation; Section~\ref{sec:res-repeated} quantifies the effect and gives the robust standard
+error used for that case. The data generator, the likelihood~\eqref{eq:whittle}, the expected Fisher
+information and every Monte Carlo study of Section~\ref{sec:results} use this model: one level vector
+per period (drawn with a 3~dB spread around the reference in the simulations), an independent Gaussian
+realisation per pass, and the same profile under all wheels of a pass.
+
+\paragraph{Reference spectrum.} $G_\mathrm{ISO}$ has the shape of the rail roughness limit for the
+reference track of ISO~3095:2013, Clause~6.2.5, Figure~2~\citep{iso3095}: one-third-octave roughness
+levels $L_r$ in dB re 1~\textmu m at \ISONBands{} centre wavelengths $\lambda_c$ from \ISOLambdaMax~m to
+\ISOLambdaMinMM~mm. Each band level is converted to a mean-square roughness
+$10^{-12}\,10^{L_r/10}$~m$^2$ and divided by the band width in angular wavenumber,
+$\gamma_c(2^{1/6}-2^{-1/6})$ with $\gamma_c = 2\pi/\lambda_c$, to give the density at $\gamma_c$ in
+m$^2$/(rad/m); $G_\mathrm{ISO}$ interpolates these densities linearly in $\log G$ against $\log\gamma$,
+so that its band integrals reproduce the tabulated levels. Over 60--110~km/h the analysis band
+\BandLo--\BandHi~Hz covers wavelengths from \LambdaMinCM~cm to \LambdaMaxM~m; bins whose wavenumber
+lies outside the tabulated range are not used. Only the shape matters, since the levels $g_s$ are free.
+
+\paragraph{Payload and noise.} The axle load of each pass, $W_i$, is a nuisance with a Gaussian prior on
+$\log W_i$ centred on a weigh-in-motion reading with standard deviation \WIMsigmaPct\%. The sensor
+noise is white with level $e_i$. It is estimated for each pass as the mean $|c_{ik}|^2$ over the
+\NoiseLo--\NoiseHi~Hz bins of the same record, above the analysis band and below the anti-alias limit,
+where the response to roughness is negligible; with \NoiseBinsMin--\NoiseBinsMax{} bins per record its
+relative standard error is at most about \NoiseRelSEMax\%. The estimate is used as a fixed plug-in value
+and its uncertainty is not propagated; at the signal-to-noise ratios studied the noise is small against
+the signal near the support resonance, which carries the information on $k_{B0}$. The estimator can
+instead profile $e_i$ jointly from the in-band and noise-only bins; this option was not used for the
+results reported. The globals $\bm\theta$ are the health parameters $(k_{B0}, c_B)$, optionally with
+track parameters such as $k_f$ and $k_{H0}$.
 
 Under this model the coefficients are approximately independent complex Gaussians with variance
 \begin{equation}
@@ -39,12 +68,13 @@ resonance of the axlebox on its support is fixed in frequency. A pass at speed $
 wavenumber $\gamma$ to frequency $V_i\gamma/2\pi$, so passes at different speeds see the same
 roughness sub-band through different parts of $|H|^2$. With a single speed, a change of $|H|^2$ and
 a change of roughness level are indistinguishable sub-band by sub-band; with a spread of speeds
-they separate. Figure~\ref{fig:crb-speed} shows the Cram\'er--Rao bound of $k_{B0}$ falling with
-the speed spread for several sub-band resolutions $K$.
+they separate. Figure~\ref{fig:crb-speed} shows, for an earlier configuration with a single wheelset on
+a rail oscillator, the Cram\'er--Rao bound of $k_{B0}$ falling with the speed spread for several sub-band
+resolutions $K$.
 
 \begin{figure}[tbp]\centering
 \includegraphics[width=0.55\textwidth]{fig2_crb_vs_speed_spread}
-\caption{Effect of speed spread on identifiability. Cram\'er--Rao bound of $k_{B0}$ against the speed spread across passes, for $K$ roughness
+\caption{Effect of speed spread on identifiability (earlier configuration: a single wheelset on a rail oscillator). Cram\'er--Rao bound of $k_{B0}$ against the speed spread across passes, for $K$ roughness
 levels per one-third octave ($N=50$, 40~dB, payload spread). Data:
 \texttt{results/p1/bound\_speed\_subband.json}.}
 \label{fig:crb-speed}
@@ -64,13 +94,14 @@ replace $v_{ik}$ by the exact expected periodogram,
 \end{equation}
 with the sum over a grid $M=\KernelFine$ times finer than the bins, truncated at $\pm\KernelHalfWidth$ bins
 (a narrower truncation at $\pm30$ bins leaves a measurable bias; Section~\ref{sec:res-bias}). On the
-simulated 12-wheel setup of~\citep{carrigan2023}, the bin-sampled model differs from the mean of
+simulated 12-wheel setup of~\citep{carrigan2023} (an earlier configuration in the sense of
+Section~\ref{sec:results}), the bin-sampled model differs from the mean of
 \DebiasRecords{} periodograms by an rms log-ratio of \DebiasBin{}; the debiased model differs by
 \DebiasDeb{}, against \DebiasNoise{} expected from sampling alone (Fig.~\ref{fig:debias}).
 
 \begin{figure}[tbp]\centering
 \includegraphics[width=\textwidth]{fig3_debiased_periodogram}
-\caption{Check of the debiased likelihood. Mean periodogram of \DebiasRecords{} records against the bin-sampled and the debiased
+\caption{Check of the debiased likelihood (earlier configuration: the 12-wheel setup of~\citep{carrigan2023}). Mean periodogram of \DebiasRecords{} records against the bin-sampled and the debiased
 (Fej\'er-convolved) models (top) and their ratio (bottom). Data:
 \texttt{results/p2/debias\_check.json}.}
 \label{fig:debias}
@@ -83,7 +114,12 @@ the profile likelihood. With the debiased variance~\eqref{eq:debiased} the kerne
 neighbouring roughness sub-bands. The default scoring step attributes each bin's variance to its
 own sub-band; the exact step uses the full derivative $\partial v_{ik}/\partial\log g_s$ over all
 sub-bands and the corresponding Fisher matrix, so that its fixed point is the exact profile maximum.
-Section~\ref{sec:res-bias} compares the two.
+The default step is cheaper but its fixed point differs slightly from the exact maximum. Scoring stops
+when the largest step in any $\log g_s$ or $\log W_i$ is below $10^{-7}$ (at most 80 iterations); the
+outer Nelder--Mead search stops at a tolerance of $10^{-4}$ in the log globals and $10^{-3}$ in the
+negative log-likelihood. On the ten seed-123 datasets of the headline study, the exact step changes the
+estimate of $k_{B0}$ by at most \ScoreExactMaxDiff{} percentage points (mean \ScoreExactMeanDiff) and
+the standard error by a factor of \ScoreExactSERatio{} on average (Section~\ref{sec:res-bias}).
 
 The transfer functions are computed directly from the finite-element and rail models (no
 surrogate): a table of the coupled components $G_k(f;\bm\theta,W)$ over payload nodes, built from an
@@ -101,6 +137,26 @@ Where the Wald intervals under-cover in simulation (Section~\ref{sec:res-headlin
 simulation-calibrated for the design: the mean bias of $\log\hat k_{B0}$ found by simulation is
 subtracted and the standard error is multiplied by the simulated ratio of RMSE to standard error,
 checked on held-out simulation seeds.
+
+\subsection{Measurement requirements}\label{sec:requirements}
+The method uses the axle-box accelerometer and the speed and load data that an instrumented freight
+wagon for track monitoring typically records, but it places requirements on them.
+\emph{Sensor and sampling:} a vertical accelerometer on the axlebox with a flat response over at least
+\BandLo--\NoiseHi~Hz (the analysis band and the noise band), sampled at \SampleRate~Hz or more with an
+anti-alias filter above the noise band. \emph{Calibration:} a constant sensitivity error cancels in the
+relative change of two periods measured with the same sensor, but a change of sensitivity between periods
+does not, so the sensor must be calibrated or checked at the start of each period; the absolute level of
+$k_{B0}$ additionally needs the absolute calibration. \emph{Speed:} the speed of each pass must be known,
+since it sets the mapping between wavenumber and frequency, and approximately constant over the record;
+records with braking, traction transients or speed changes of more than a few per cent would be
+excluded. \emph{Record alignment:} each record covers a fixed distance (\NumRevs{} wheel revolutions,
+\RecordLength~m), so it must be cut on a distance or wheel-angle reference (tachometer or odometry), not
+on a fixed duration. \emph{Payload:} an axle load per pass from weigh-in-motion or from the suspension
+deflection, with an error of about \WIMsigmaPct\%, both for the likelihood and to assign each pass to
+its payload band. \emph{Record selection:} records over plain line with no joints, welds,
+switches, crossings or bridges, which the stationary roughness model does not represent, and passes
+with the same instrumented wheelset and sensor in both periods. No sensor beyond what such a wagon
+carries is needed, but the record handling above is part of the method.
 
 \subsection{Relative change and detection}\label{sec:relative}
 The monitoring output is the change of support stiffness between a baseline period and a later
@@ -141,7 +197,8 @@ found to fail for large parameter errors and is not used.
 The simulation and estimation code was developed with the assistance of an AI coding tool, Claude Code
 (developer: Anthropic; model: Claude Opus 5.5). It was used to write the code (the finite-element and
 rail models, the simulation and estimation scripts, and the scripts that generate tables, figures and
-the numbers quoted in the text) and to assist the literature search. All code was reviewed, tested and
+the numbers quoted in the text), to assist the literature search, and to draft and edit the manuscript
+text. All code and text were reviewed, tested and
 verified by the authors: unit tests cover the finite-element and rail models, the model is verified
 against closed-form solutions (Table~\ref{tab:table2_verification}), and every result in this paper is
 regenerated by script from stored, version-controlled result files.
