@@ -5,3 +5,4 @@
 2026-10-17T08:22:11Z python3 experiments/p4_bias_diag_y25.py --variant exact --j0 5 --j1 10 > results/p4/logs/bd_exact_5.log 2>&1
 2026-10-17T08:24:57Z python3 experiments/p4_bias_diag_y25.py --variant snr60 --j0 0 --j1 5 > results/p4/logs/bd_snr60_0.log 2>&1
 2026-10-17T08:26:11Z python3 experiments/p4_bias_diag_y25.py --variant snr60 --j0 5 --j1 10 > results/p4/logs/bd_snr60_5.log 2>&1
+2026-10-17T08:52:41Z python3 experiments/p4_bias_diag_y25.py --variant K4 --j0 0 --j1 5 > results/p4/logs/bd_K4_0.log 2>&1
