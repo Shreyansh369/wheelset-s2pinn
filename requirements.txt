@@ -1,7 +1,8 @@
-torch>=2.0
-numpy
-scipy
-matplotlib
-pyyaml
-chaospy
-pytest
+# Pinned versions used for every result of the paper (Python 3.13.16).
+numpy==2.5.3
+scipy==1.18.1
+matplotlib==3.11.2
+pyyaml==6.0.1
+python-docx==1.2.0
+pytest==9.1.1
+# LaTeX (for the PDF): TeX Live 2023 with the Elsevier cas-sc class, natbib, booktabs, lmodern, cm-super.

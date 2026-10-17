@@ -5,15 +5,14 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "wheelset-s2pinn"
 version = "0.1.0"
-description = "Stochastic separable PINN for wheelset bearing-support identification (parent paper)"
+description = "Wheelset bearing support stiffness from multi-pass axle-box acceleration: debiased Whittle likelihood (MSSP paper code)"
 requires-python = ">=3.10"
 dependencies = [
-  "torch>=2.0",
-  "numpy",
-  "scipy",
-  "matplotlib",
-  "pyyaml",
-  "chaospy",
+  "numpy==2.5.3",
+  "scipy==1.18.1",
+  "matplotlib==3.11.2",
+  "pyyaml==6.0.1",
+  "python-docx==1.2.0",
 ]
 
 [project.optional-dependencies]

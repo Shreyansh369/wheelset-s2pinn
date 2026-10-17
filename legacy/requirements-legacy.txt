@@ -1,0 +1,3 @@
+# Only for the legacy code (not part of the paper): stochastic separable PINN, gPC and moment matching.
+torch>=2.0
+chaospy
