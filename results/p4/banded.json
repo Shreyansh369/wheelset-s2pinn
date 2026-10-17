@@ -210,6 +210,26 @@
       }
     },
     "lean_empty": {
+      "first_run": {
+        "reps": [
+          0,
+          9
+        ],
+        "n": 10,
+        "D_mean_pct": 0.17684475864861326,
+        "D_mean_se_pct": 0.08866309285677645,
+        "n_positive": 6
+      },
+      "replication": {
+        "reps": [
+          10,
+          19
+        ],
+        "n": 10,
+        "D_mean_pct": 0.07891464971013562,
+        "D_mean_se_pct": 0.06316932644071488,
+        "n_positive": 7
+      },
       "n": 20,
       "D_mean_pct": 0.12787970417937444,
       "D_mean_se_pct": 0.05415832629271663,
@@ -274,13 +294,13 @@
     }
   },
   "provenance": {
-    "git_commit": "1071164bac7e477492c1c1488cda6260fc1b8738-dirty",
+    "git_commit": "c3af1609e1d759023792e1794c7051e1a9d02157-dirty",
     "config_dir": "config",
     "config_hash": "e0a22f267362",
     "estimator_version": "multipass-whittle-2 (debiased, Kb=120 default, own-sub-band scoring, 0.5 Hz table)",
-    "timestamp_utc": "2026-10-17T06:43:15Z",
+    "timestamp_utc": "2026-10-17T07:48:49Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 97.625,
+    "peak_cpu_memory_mb": 95.96484375,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

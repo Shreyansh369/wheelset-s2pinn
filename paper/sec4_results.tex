@@ -288,18 +288,22 @@ suspension is therefore not used.
 band's fixed values (Section~\ref{sec:relative}), the same stress truth gives a large-sample bias of
 \BandEmptyPseudo\% (empty band) and \BandLadenPseudo\% (laden band). In \BandEmptyPairsN{} zero-change
 pairs in the empty band, $z$ ranged from \BandEmptyZMin{} to \BandEmptyZMax{} with \BandEmptyPairsFA{}
-false alarms (95\% interval of the rate \BandEmptyPairsFALo--\BandEmptyPairsFAHi). Over these pairs the
-mean apparent change is \LeanMean\,$\pm$\,\LeanMeanSE\%, $z$ has mean \LeanZMean{} and standard deviation
-\LeanZSD, and \LeanNPos{} of \LeanN{} changes are positive. The empirical standard deviation of the
-apparent change, \LeanSDPct\%, is \LeanSDOverSE{} times the mean reported standard error
-(\LeanSEPct\%): within the band the standard error of the change is calibrated, so the detection limits
-below need no simulation calibration. The two periods of a pair are drawn by the same procedure from
+false alarms (95\% interval of the rate \BandEmptyPairsFALo--\BandEmptyPairsFAHi). The empirical
+standard deviation of the apparent change over these pairs, \LeanSDPct\%, is \LeanSDOverSE{} times the
+mean reported standard error (\LeanSEPct\%), and $z$ has mean \LeanZMean{} and standard deviation
+\LeanZSD: within the band the standard error of the change is calibrated, so the detection limits below
+need no simulation calibration. The first \LeanOneN{} pairs leaned towards an apparent increase (mean
+\LeanOneMean\,$\pm$\,\LeanOneSE\%, \LeanOnePos{} of \LeanOneN{} positive). The pairs were then extended by
+an independent replication of \LeanTwoN{} pairs with new seeds, which gave \LeanTwoMean\,$\pm$\,\LeanTwoSE\%
+(\LeanTwoPos{} of \LeanTwoN{} positive, \LeanTwoZ{} standard errors from zero); pooled, the mean is
+\LeanMean\,$\pm$\,\LeanMeanSE\% (\LeanMeanZ{} standard errors). A lean towards an increase is not flagged
+by the one-sided test for a loss. The estimator treats the two periods identically: each period is fitted
+separately from the same starting values, with no warm start or setting carried over from the baseline, so
+exchanging the period labels gives exactly $-D$. The two periods are drawn by the same procedure from
 independent seeds (speeds, payloads within the band, roughness levels and realisations, with the same
-stress truth), so the expected apparent change is zero by symmetry. The observed mean lies
-\LeanMeanZ{} standard errors above zero (two-sided $p = \LeanMeanP$ for a zero mean), towards an increase,
-which the one-sided test for a loss does not flag; it does not follow the differences between the
-periods' mean payload, mean speed or mean roughness level ($|r| \le \LeanCorrMax$), and with the design
-symmetric by construction it is a fluctuation of these \LeanN{} pairs rather than a systematic effect. In the laden band, $c_B$ is not
+stress truth), so the expected apparent change is zero; the apparent changes do not follow the differences
+between the periods' mean payload, mean speed or mean roughness level ($|r| \le \LeanCorrMax$), and the
+replication does not confirm the lean of the first run. In the laden band, $c_B$ is not
 identified: with it free, the observed information was singular in \BandLadenNSingular{} of
 \BandLadenPairsN{} pairs. With $c_B$ fixed at its nominal value (and $k_f$, $k_{H0}$ still re-estimated
 in each period), \BandLadenFixPairsN{} zero-change pairs gave \BandLadenFixPairsFA{} false alarms, $z$

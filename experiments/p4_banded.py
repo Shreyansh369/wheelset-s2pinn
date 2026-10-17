@@ -173,7 +173,14 @@ def _lean(b, Pr):
     z = D / se
     corr = lambda x: float(np.corrcoef(x, D)[0, 1])
     slope_W = float(np.polyfit(dW, D, 1)[0] * 100)
-    return {"n": len(Pr), "D_mean_pct": float(D.mean() * 100), "D_mean_se_pct": float(D.std(ddof=1) / math.sqrt(len(D)) * 100),
+    def block(lo, hi):                    # pairs 0-9 (first run) and 10-19 (replication run after the lean was noticed)
+        Dx = np.array([r["D_hat"] for r in Pr if lo <= r["rep"] < hi])
+        if len(Dx) < 2:
+            return None
+        return {"reps": [lo, hi - 1], "n": int(len(Dx)), "D_mean_pct": float(Dx.mean() * 100),
+                "D_mean_se_pct": float(Dx.std(ddof=1) / math.sqrt(len(Dx)) * 100), "n_positive": int((Dx > 0).sum())}
+    return {"first_run": block(0, 10), "replication": block(10, 20),
+            "n": len(Pr), "D_mean_pct": float(D.mean() * 100), "D_mean_se_pct": float(D.std(ddof=1) / math.sqrt(len(D)) * 100),
             "D_sd_pct": float(D.std(ddof=1) * 100), "se_mean_pct": float(se.mean() * 100),
             "sd_over_mean_se": float(D.std(ddof=1) / se.mean()), "z_mean": float(z.mean()), "z_sd": float(z.std(ddof=1)),
             "n_positive": int((D > 0).sum()), "level_err_base_mean_pct": float(np.mean([r["err_base"] for r in Pr]) * 100),
