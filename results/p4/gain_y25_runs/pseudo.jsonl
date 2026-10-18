@@ -7,3 +7,4 @@
 {"case": "kf_x0.8", "estimator": "nominal", "x": 0.05, "log_k_hat": 20.45240939228478, "converged": true, "wall_s": 373.4830924449925}
 {"case": "kf_x1.2", "estimator": "nominal", "x": 0.0, "log_k_hat": 20.538865282242966, "converged": true, "wall_s": 434.968936448}
 {"case": "kf_x0.8", "estimator": "nominal", "x": 0.1, "log_k_hat": 20.403478520227292, "converged": true, "wall_s": 482.64697663301195}
+{"case": "kf_x1.2", "estimator": "nominal", "x": 0.02, "log_k_hat": 20.524097440374746, "converged": true, "wall_s": 419.84934028200223}
