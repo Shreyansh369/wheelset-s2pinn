@@ -13,7 +13,7 @@ material:
   kappa:  {value: null,    unit: "-",     source: "Cowper circular section 6(1+nu)/(7+6nu), computed"}
 
 axle:   # symmetric about xi = 0; sections listed outward from the centre (half axle)
-  length:       {value: 2.180, unit: m, range: [2.180, 2.1876], source: "verified (fetch 19 Oct 2026): axle length 2180 mm (Interpipe, Railway axles, BA 002/BA 302, EN 13261); upper end 2187.6 mm: Type D axle, vendor listing (unverified search result)"}
+  length:       {value: 2.180, unit: m, source: "verified (fetch 19 Oct 2026): axle length 2180 mm (Interpipe, Railway axles, BA 002/BA 302, EN 13261)"}
   sections:     # [outer |xi| end, diameter]
     value: [[0.640, 0.173], [0.860, 0.200], [0.900, 0.160], [1.090, 0.130]]
     unit: [m, m]
@@ -52,9 +52,9 @@ bearing_geometry:   # main health case (roller-contact model, wheelset doc Eqs. 
   K_contact_coeff:   {value: 8.06e4, unit: "N mm^-10/9 per mm^(8/9)", source: "doc Eq. (13): K_i,o ~ 8.06e4 l^(8/9) (steel line contact)"}
 
 bearing_geometry_tapered:   # secondary health case: double-row tapered roller unit (proxy, high-speed sources)
-  rollers_per_row:   {value: 21,    unit: "-", range: [17, 23], source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): number of rollers (single row) 21; range ends 17 and 23 (other units) unverified; proxy, freight 130 mm unit not found"}
+  rollers_per_row:   {value: 21,    unit: "-", source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): number of rollers (single row) 21; proxy, freight 130 mm unit not found"}
   roller_length:     {value: 45.0,  unit: mm,   source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): effective contact length of rollers 45 mm; proxy"}
-  roller_diameter:   {value: 23.0,  unit: mm,   range: [21.4, 26.5], source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): mean diameter of rollers 23 mm; range ends 21.4 mm (353130B unit) and 26.5 mm (Zhao et al. 2024) unverified"}
+  roller_diameter:   {value: 23.0,  unit: mm,   source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): mean diameter of rollers 23 mm"}
   pitch_diameter:    {value: 180.5, unit: mm,   source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): pitch diameter 180.5 mm; proxy"}
   contact_angle:     {value: 10.0,  unit: deg,  source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): contact angle of the inner ring 7.75 deg, outer ring 10 deg (outer used)"}
   clearance_d0:      {value: 20.0,  unit: um, range: [0.0, 50.0], source: "assumed, swept (mounted axial endplay 0.025-0.381 mm in the Timken AP manual, unverified; conversion to radial clearance not sourced)"}
@@ -68,7 +68,7 @@ primary:   # axlebox -> fixed bogie frame (Zener element dropped)
   cp: {value: 7.0e3, unit: N s/m, range: [7.0e3, 1.233e5], source: "full text verified: Y25 primary equivalent vertical damping 7 kN s/m empty / 123.3 kN s/m laden (Dusza et al. 2024, Table A1); nominal = empty value, paired with kp"}
 
 payload:   # axle load W, uniform per pass; enters only through kB = kB0 (W/W0)^(1/10)
-  W_min: {value: 5.5,  unit: t, range: [5.8, 6.6], source: "design value 5.5 t; verified (fetch 19 Oct 2026): Eanos tare 23,100 kg +-2% (Wascosa, Eanos datasheet), 22.6-25.3 t (Rail Cargo Group, Eanos fact sheet), i.e. empty axle load 5.65-6.3 t; swept 5.6-6.6 t in results/p4/sweep.json (range field kept at 5.8-6.6 t: values-v2 hash)"}
+  W_min: {value: 5.5,  unit: t, range: [5.6, 6.6], source: "design value 5.5 t; verified (fetch 19 Oct 2026): Eanos tare 23,100 kg +-2% (Wascosa, Eanos datasheet), 22.6-25.3 t (Rail Cargo Group, Eanos fact sheet), i.e. empty axle load 5.65-6.3 t; swept 5.6-6.6 t in results/p4/sweep.json"}
   W_max: {value: 22.5, unit: t, source: "verified (fetch 19 Oct 2026): Y25 axle load 22.5 t (Tatravagonka, Y25Lssi(f)-D data page; Wascosa, Eanos datasheet)"}
   W0:    {value: 22.5, unit: t, source: "reference load for kB0 (loaded)"}
 

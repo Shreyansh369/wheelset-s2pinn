@@ -38,11 +38,16 @@ ALIASES = (yaml.safe_load(_AL.read_text()) or {}).get("aliases", {}) if _AL.exis
 
 
 def hash_match(rec, want):
-    """'v2' when the recorded hash is the values-v2 hash, 'alias' when it is a byte hash aliased to it, else None."""
+    """'v2' when the recorded hash is the values-v2 hash, 'alias' when its alias chain (byte -> values-v2 -> ...,
+    each link proven by scripts/check_config_values.py) ends at it, else None."""
     if rec == want:
         return "v2"
-    if ALIASES.get(rec) == want:
-        return "alias"
+    h, seen = rec, {rec}
+    while h in ALIASES and ALIASES[h] not in seen:
+        h = ALIASES[h]
+        seen.add(h)
+        if h == want:
+            return "alias"
     return None
 TEX = ["abstract", "sec1_intro", "sec2_model", "sec3_method", "sec4_results", "sec5_discussion", "sec6_conclusions", "backmatter"]
 STRICT = ("abstract", "sec6_conclusions")
@@ -97,7 +102,7 @@ def main():
                 elif not want and hash_match(rec_h, FROZEN):
                     note = "declared earlier, hash is frozen (declaration conservative)"
                 elif how == "alias":
-                    note = f"hash verified (byte hash, alias of {want})"
+                    note = f"hash verified (alias chain to {want})"
                 else:
                     note = "hash verified (values-v2)"
             if rec_e != "-" and e["config"] in ("frozen", "pinned", "sensitivity") and rec_e != REG["frozen_estimator"] and "estimator" not in e:

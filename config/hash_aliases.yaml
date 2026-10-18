@@ -1,9 +1,10 @@
-# Byte config hashes (recorded before values-v2) -> values-v2 hash of the same values.
-# Written by scripts/check_config_values.py --write after it found no numeric or structural
-# difference; make_provenance_check.py accepts an aliased recorded hash. Do not edit by hand.
+# Config hashes recorded by results -> the values-v2 hash they are valid for (chains are followed).
+# Written by scripts/check_config_values.py --write after it proved each link; make_provenance_check.py
+# accepts a recorded hash whose chain ends at the current values-v2 hash. Do not edit by hand.
 aliases:
   "e0a22f267362": "b8adde501aa3"
   "10d9b91451c2": "77c60818b705"
+  "b8adde501aa3": "601c1afdbb42"
 proof:
   "e0a22f267362":
     config_dir: "config"
@@ -17,3 +18,13 @@ proof:
     values_v2: "77c60818b705"
     checked_against: "working tree at 4c2df46804d09b12f614977aeb933d6c5858f9ab"
     date: "2026-10-18T21:55:13Z"
+  "b8adde501aa3":
+    type: "range-only"
+    config_dir: "config"
+    from_commit: "8e0b790c1b559c3bdb7455a52c313a11c6558a76"
+    values_v2: "601c1afdbb42"
+    allowed: ["config/params.yaml:/axle/length/range", "config/params.yaml:/payload/W_min/range", "config/params.yaml:/bearing_geometry_tapered/rollers_per_row/range", "config/params.yaml:/bearing_geometry_tapered/roller_diameter/range"]
+    proving_commit: "29268018d464b30965fbefd818dfa4bd9876320b"
+    checked_against: "working tree at 29268018d464b30965fbefd818dfa4bd9876320b"
+    note: "the allowed range fields are read by no computation (Table 1 display only)"
+    date: "2026-10-18T22:21:32Z"
