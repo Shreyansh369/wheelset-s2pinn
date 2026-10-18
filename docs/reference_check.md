@@ -31,5 +31,6 @@ Every reference of the manuscript in citation order (numbering of `paper/main.bb
 | [25] | `hasan2020` | Hasan (2020). Hertzian contact stiffness under Eisenmann assumptions. *International Conference on Transportation and Development 2020*  | doi: [10.1061/9780784483176.010](https://doi.org/10.1061/9780784483176.010) | |
 | [26] | `iso3095` | ISO (2013). ISO 3095:2013 Acoustics – Railway applications – Measurement of noise emitted by railbound vehicles. *International Organization for Standardization, Geneva*  | Edition used: rail roughness limit of Clause 6.2.5, Figure 2. Withdrawn and replaced by ISO 3095:2025 | |
 | [27] | `whittle1953` | Whittle (1953). Estimation and information in stationary time series. *Ark. Mat.* 2(5), 423–434 | doi: [10.1007/BF02590998](https://doi.org/10.1007/BF02590998) | |
+| [new; number at next build] | `zheng2025` | Zheng, Song, Zhang, Xu, Ma & Cui (2025). Dynamic response analysis of high-speed train axle box bearing by considering time-varying dynamic parameters. *Mech. Syst. Signal Process.* 224, 112119 | doi: [10.1016/j.ymssp.2024.112119](https://doi.org/10.1016/j.ymssp.2024.112119) (bib entry taken from the article PDF) | |
 
 Entries in refs.bib not cited in the manuscript (not printed): `li2026s2pinn`.

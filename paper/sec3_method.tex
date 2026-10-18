@@ -151,7 +151,13 @@ since it sets the mapping between wavenumber and frequency, and approximately co
 records with braking, traction transients or speed changes of more than a few per cent would be
 excluded. \emph{Record alignment:} each record covers a fixed distance (\NumRevs{} wheel revolutions,
 \RecordLength~m), so it must be cut on a distance or wheel-angle reference (tachometer or odometry), not
-on a fixed duration. \emph{Payload:} an axle load per pass from weigh-in-motion or from the suspension
+on a fixed duration. \emph{Bearing orders:} varying-compliance vibration of the roller bearing puts
+lines at the outer-race roller-pass order, about 7.7 times the rotation frequency for the assumed bearing
+geometry (18 rollers of 27.5~mm on a 185~mm pitch circle; a non-integer order), and at its harmonics,
+inside the analysis band~\citep{zheng2025}. Like roughness, these lines are tied to the wheel angle, so
+they sit at fixed bins of the angle-synchronous record; they are therefore confounded with the sub-band
+roughness levels, not with the support resonance, and can be notched at the known bearing orders if
+needed. \emph{Payload:} an axle load per pass from weigh-in-motion or from the suspension
 deflection, with an error of about \WIMsigmaPct\%, both for the likelihood and to assign each pass to
 its payload band. \emph{Record selection:} records over plain line with no joints, welds,
 switches, crossings or bridges, which the stationary roughness model does not represent, and passes

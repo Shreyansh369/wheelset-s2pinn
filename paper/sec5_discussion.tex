@@ -102,7 +102,10 @@ than at a single value. A specific vehicle requires its own values, above all th
 \paragraph{Roughness and operating model.} Roughness is modelled as a stationary Gaussian process
 whose spectrum has the ISO~3095 reference shape times free sub-band levels shared by all passes of a
 period, with an independent realisation on each pass that is common to the wheels of that pass
-(Section~\ref{sec:obs}); speed is constant within a pass. A roughness spectrum whose shape changes
+(Section~\ref{sec:obs}); speed is constant within a pass. Pooling speeds assumes that the support
+stiffness and damping do not depend on speed over 60--110~km/h. Bearing contact damping does depend on
+speed and load~\citep{zheng2025}, but the support damping is dominated by the housing, adapter and pad;
+a speed-dependent $c_B$ is not tested here. A roughness spectrum whose shape changes
 between passes within a period, beyond what the free levels absorb, is not modelled. Non-stationary features (joints, welds, switches) and speed changes
 within a record are not modelled and would have to be excluded or windowed out in practice.
 Environmental effects on the support, for example the temperature dependence of elastomeric pads,
