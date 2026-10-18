@@ -100,6 +100,18 @@ with the gross ones listed (`\KapGrossN`, `\KapGrossReps`); the Spearman correla
 axle damping (`\KapAttrAxleSpearman`) and the median |error_frac| (`\KapCoestMedAbs`) use all replicates.
 Gross replicates keep their stored values in every pre-registered statistic.
 
+**Restart diagnostic and conditional follow-up (recorded 18 Oct 2026, before any result of the diagnostic).**
+The 16 κ replicates with c_B at its lower bound in either period are refitted from (a) the other period's
+solution moved to this period's k_B0 truth, when that period's c_B is interior, and (b) the stored solution
+with log c_B reset to nominal (`p3_validation_mc.py --kappa-diag-cb`, run order: singular 2, 8, 17, 20, 21,
+36, then 30, then the rest). A replicate is a local optimum when a refit has a profile NLL lower than the
+stored solution by more than 10 in either period. If the diagnostic finds at least 3 local optima among
+the 16, a two-start sensitivity is run on all 40 κ replicates: each period refitted from the other period's
+estimate (k_B0 moved to its own truth), the lower-NLL solution kept, and coverage and the inflation factor
+reported from it in a block labelled post-hoc sensitivity. A runtime estimate is given before it starts. If
+fewer than 3, it is not run and the text reports the count (`\KapLocalOptN`). In either case the
+pre-registered coverage and inflation keep the stored replicates.
+
 ## Section-by-section map
 
 | § | Content | Figure / table | Script → result |
