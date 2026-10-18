@@ -45,8 +45,10 @@ def _git_commit() -> str:
             ["git", "-C", str(REPO_ROOT), "rev-parse", "HEAD"],
             capture_output=True, text=True, check=True,
         )
+        # -dirty when code, config or docs differ from HEAD; result files written meanwhile (rows landing, or an
+        # earlier save_result of the same script) do not make the code that produced this result dirty
         dirty = subprocess.run(
-            ["git", "-C", str(REPO_ROOT), "status", "--porcelain", "--untracked-files=no"],
+            ["git", "-C", str(REPO_ROOT), "status", "--porcelain", "--untracked-files=no", "--", ".", ":!results"],
             capture_output=True, text=True, check=True,
         ).stdout.strip()
         return out.stdout.strip() + ("-dirty" if dirty else "")
