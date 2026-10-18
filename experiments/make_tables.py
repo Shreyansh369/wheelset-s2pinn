@@ -240,7 +240,8 @@ def table4():
 
 # ----------------------------------------------------------------------------- Table 5
 def table5():
-    b, m = load("p2/multiwheel_bound.json"), load("p2/multiwheel_mc.json")
+    mw_src = "p2/multiwheel_mc_y25.json" if load("p2/multiwheel_mc_y25.json") else "p2/multiwheel_mc.json"   # current wagon when present
+    b, m = load("p2/multiwheel_bound.json"), load(mw_src)
     if b is None:
         return missing("table5_multiwheel", "Table 5. Multi-wheel coupling", "results/p2/multiwheel_bound.json")
     rows = [[r["rail"], r["wheels"], r["speeds"], r["N"], f"{r['snr_db']:.0f}", pct(r["crb_rel_kB0"], 3), pct(r["crb_rel_cB"], 1)]
@@ -256,8 +257,18 @@ def table5():
         body += "\n**(b) Monte Carlo, 60–110 km/h, N = 50, 40 dB**\n\n" + md(
             ["Wheels", "Fitted model", "Datasets", "Bias (%) ± SE", "RMSE (%)", "RMSE/CRB", "Wald 90% cov. [95% CI]"], rows)
     write("table5_multiwheel", "Table 5. Multi-wheel coupling through the rail (k_B0)", body,
-          ["results/p2/multiwheel_bound.json", "results/p2/multiwheel_mc.json"],
-          ["The 2-wheel rail-coupled bias is an open item (docs/paper1_outline.md)."])
+          ["results/p2/multiwheel_bound.json", f"results/{mw_src}"], _mw_note(m))
+
+
+def _mw_note(m):
+    """Open-item note for the rail-coupled bias, from the data: any wheel count whose bias exceeds 2 SE."""
+    if not m:
+        return []
+    out = [f"{c['wheels']}-wheel {100 * c['correct']['bias_rel_kB0']:+.2f} ± {100 * c['correct']['bias_rel_kB0_se']:.2f}% "
+           f"({c['correct']['bias_rel_kB0'] / c['correct']['bias_rel_kB0_se']:.1f} SE)"
+           for c in sorted(m["cells"], key=lambda c: c["wheels"])
+           if abs(c["correct"]["bias_rel_kB0"]) > 2 * c["correct"]["bias_rel_kB0_se"]]
+    return [f"Rail-coupled bias beyond 2 SE: {'; '.join(out)}; not explained (open item, docs/paper1_outline.md)."] if out else []
 
 
 # ----------------------------------------------------------------------------- Table 6

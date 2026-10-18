@@ -257,7 +257,9 @@ def section4(m, miss):
             m[f"MWSingleBias{w}"] = _f(100 * c[nw]["single_wheelset"]["bias_rel_kB0"], 1)
             m[f"MWCorrectBias{w}"] = _f(100 * c[nw]["correct"]["bias_rel_kB0"], 2)
             m[f"MWCorrectBiasSE{w}"] = _f(100 * c[nw]["correct"]["bias_rel_kB0_se"], 2)
-    block("p2/multiwheel_mc.json", mwmc, [f"MW{a}{w}" for a in ("SingleBias", "CorrectBias", "CorrectBiasSE") for w in ("Two", "Four", "Eight")])
+            m[f"MWCorrectZ{w}"] = _f(c[nw]["correct"]["bias_rel_kB0"] / c[nw]["correct"]["bias_rel_kB0_se"], 1)
+    mw_src = "p2/multiwheel_mc_y25.json" if load("p2/multiwheel_mc_y25.json") else "p2/multiwheel_mc.json"   # current wagon when present
+    block(mw_src, mwmc, [f"MW{a}{w}" for a in ("SingleBias", "CorrectBias", "CorrectBiasSE", "CorrectZ") for w in ("Two", "Four", "Eight")])
 
     def fed(d):
         c = {x["cell"]: x for x in d["cells"]}

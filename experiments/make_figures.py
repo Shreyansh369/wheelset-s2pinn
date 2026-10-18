@@ -154,7 +154,7 @@ def fig3():
 
 # ----------------------------------------------------------------------------- Fig. 4
 def fig4():
-    d = load("p2/multiwheel_mc.json")
+    d = load("p2/multiwheel_mc_y25.json") or load("p2/multiwheel_mc.json")   # current wagon when present
     if d is None:
         return print("skip fig4")
     cells = sorted(d["cells"], key=lambda c: c["wheels"])

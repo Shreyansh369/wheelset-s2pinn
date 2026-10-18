@@ -72,21 +72,21 @@ and the wide spread it falls to \SpeedCRBWideTwoHundred\%.
 With 60--110~km/h, the bound on $k_{B0}$ is \MWCRBMin--\MWCRBMax\% for one to eight coupled wheels of
 the representative wagon (Table~\ref{tab:table5_multiwheel}); the coupling neither helps nor hurts
 identifiability (\MWCRBFixedMin--\MWCRBFixedMax\% at a single speed). It does matter for bias
-(Fig.~\ref{fig:mwbias}). In a Monte Carlo study with the earlier configuration (a metro wheel
-layout, BS113A rail and a $\pm30$-bin kernel), fitting multi-wheel data with a single-wheelset model
-biased $k_{B0}$ by \MWSingleBiasTwo\%, \MWSingleBiasFour\% and \MWSingleBiasEight\% for 2, 4 and 8
-wheels, while the coupled model gave \MWCorrectBiasTwo\,$\pm$\,\MWCorrectBiasSETwo\%,
-\MWCorrectBiasFour\,$\pm$\,\MWCorrectBiasSEFour\% and \MWCorrectBiasEight\,$\pm$\,\MWCorrectBiasSEEight\%.
-With the Y25/Eanos layout of the representative wagon, the
-four-wheel bias of the single-wheelset model is \IgnoreCouplingForty\% (Section~\ref{sec:res-headline}):
-smaller, but still far outside the statistical error. The size of the coupling bias therefore depends
-on the wheel layout, and the coupled model is needed in either case.
+(Fig.~\ref{fig:mwbias}). In a Monte Carlo study with the Y25/Eanos wheel layout of the representative
+wagon, fitting multi-wheel data with a single-wheelset model biased $k_{B0}$ by \MWSingleBiasTwo\%,
+\MWSingleBiasFour\% and \MWSingleBiasEight\% for 2, 4 and 8 wheels, far outside the statistical error;
+the four-wheel value agrees with the separate check of Section~\ref{sec:res-headline}
+(\IgnoreCouplingForty\%). The coupled model gave \MWCorrectBiasTwo\,$\pm$\,\MWCorrectBiasSETwo\%,
+\MWCorrectBiasFour\,$\pm$\,\MWCorrectBiasSEFour\% and \MWCorrectBiasEight\,$\pm$\,\MWCorrectBiasSEEight\%:
+no bias for four and eight wheels, and for two wheels a small positive bias of \MWCorrectZTwo{} standard
+errors that is not explained. The size of the coupling bias depends on the number of coupled wheels,
+and the coupled model is needed in every case.
 
 \begin{figure}[tbp]\centering
 \includegraphics[width=0.5\textwidth]{fig4_multiwheel_bias}
 \caption{Effect of ignoring wheel-to-wheel coupling. Bias of $k_{B0}$ with the rail-coupled model and with a single-wheelset model, for 2, 4 and
-8 coupled wheels (95\% intervals), earlier configuration (metro wheel layout). Data:
-\texttt{results/p2/multiwheel\_mc.json}.}
+8 coupled wheels (95\% intervals), Y25/Eanos wheel layout of the representative wagon. Data:
+\texttt{results/p2/multiwheel\_mc\_y25.json}.}
 \label{fig:mwbias}
 \end{figure}
 
