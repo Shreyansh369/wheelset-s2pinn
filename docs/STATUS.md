@@ -1,4 +1,4 @@
-# Status (updated 18 Oct 2026, 22:05 UTC)
+# Status (updated 18 Oct 2026, 23:00 UTC)
 
 Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until the authors' review. Submission target
 24 Oct 2026 (25–30 Oct reserve); all compute to finish by 21 Oct 20:00 IST.
@@ -20,15 +20,27 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 
 ## Table 1 sources
 
-- Verified by full-text fetch (19 Oct 2026) and applied as source text only to the config, Table 1, Table 6
-  (range sources), §2 citations, `refs.bib`, `docs/parameter_sources.md` and `docs/table1_sources_candidates.md`.
+- Verified by full-text fetch (19 Oct 2026). Verbatim quotes and URLs are in `docs/table1_sources_candidates.md`.
+  Applied as source text only to the config, Tables 1, 6 and 15, the §2 and §4 citations, `refs.bib`,
+  `docs/parameter_sources.md` and `docs/reference_check.md`.
 - No "[snippet]" label remains in `paper/`, `results/tables/` or `config/`.
-- Deleted as unverified: k_B0 indications, Bustos 2025, Hasan 2020 (also from §2), Mu 2021, EUROBOLT, and
-  Thompson 2007 as a value source.
-- Open: k_B0, wheel diametral inertia, WJ/WJP internal geometry, mounted clearance, collar/section boundaries, the
-  tapered-unit geometry. Also the bibliographic gaps flagged in `docs/reference_check.md`: Jin 2016 authors and
-  title, the SKF Evolution 2022 title, author initials for Han et al. 2025, and missing URLs.
-- W_min text now gives an empty axle load of 5.65–6.3 t. The sweep was not rerun and covers 5.8–6.6 t.
+- Deleted as unverified: k_B0 indications, Bustos 2025, Hasan 2020, Mu 2021, EUROBOLT, and Thompson 2007 as a value
+  source.
+- Tapered-unit geometry: now from Li et al. 2019 Table 3 (CHR380 EMU TRB), replacing Guan et al. 2023 in the config
+  and in §4. Guan et al. stays cited in §1 as related work.
+- Range ends:
+  - Axlebox mass 158.4 kg: assumed (+58%).
+  - k_H0: Hertz 1.388–1.576 GN/m; the 2.3 GN/m sweep end is assumed.
+  - **Axle-length range field [2.180, 2.1876] m: not changed. No result sweeps it, but dropping it changes the
+    values-v2 hash, so `check_config_values.py` would fail. This needs the authors' decision.**
+- W_min: the bound sweep is extended to 5.6–6.6 t (new 5.6 t point; the stored 6.6 t point recomputed bit-identical).
+  The CRB at 5.6 t is 0.16616% (it was 0.16629% at 5.8 t); the macros are unchanged at two decimals. The config range
+  field stays 5.8–6.6 t, since changing it would change the hash; the text says 5.65–6.3 t, swept 5.6–6.6 t.
+- Open:
+  - k_B0, wheel diametral inertia, WJ/WJP internal geometry, mounted clearance, collar/section boundaries.
+  - Tapered-geometry range ends (z 17/23, D 21.4/26.5 mm; labelled unverified).
+  - Bibliography: the Unirail BA004 and railwayspare-parts URLs (not found by search); li2019axlebox volume/issue
+    11(4) to confirm.
 
 ## Monte Carlo queue (detached workers, 4 cores)
 

@@ -66,7 +66,7 @@ Frozen configuration hash `b8adde501aa3` (config/params.yaml + config/track.yaml
 | `results/p4/inverse_crime.json` | frozen | e0a22f267362 | hash verified (byte hash, alias of b8adde501aa3) |
 | `results/p4/mdc_bounds.json` | frozen | - | declared |
 | `results/p4/primary_damping.json` | frozen | e0a22f267362 | hash verified (byte hash, alias of b8adde501aa3) |
-| `results/p4/sweep.json` | frozen | - | declared |
+| `results/p4/sweep.json` | frozen | b8adde501aa3 | hash verified (values-v2) |
 
 ## Tables and figures
 
@@ -451,6 +451,8 @@ Frozen configuration hash `b8adde501aa3` (config/params.yaml + config/track.yaml
 | `\SweepNomMode` | results/p4/sweep.json | frozen | sec4_results | ok |
 | `\SweepWminCRBHi` | results/p4/sweep.json | frozen | sec4_results | ok |
 | `\SweepWminCRBLo` | results/p4/sweep.json | frozen | sec4_results | ok |
+| `\SweepWminHi` | results/p4/sweep.json | frozen | sec4_results | ok |
+| `\SweepWminLo` | results/p4/sweep.json | frozen | sec4_results | ok |
 | `\SweepWsJournalsCRBHi` | results/p4/sweep.json | frozen | sec4_results | ok |
 | `\SweepWsJournalsCRBLo` | results/p4/sweep.json | frozen | sec4_results | ok |
 | `\SweepWsJournalsModeLo` | results/p4/sweep.json | frozen | sec4_results | ok |

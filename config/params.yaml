@@ -52,23 +52,23 @@ bearing_geometry:   # main health case (roller-contact model, wheelset doc Eqs. 
   K_contact_coeff:   {value: 8.06e4, unit: "N mm^-10/9 per mm^(8/9)", source: "doc Eq. (13): K_i,o ~ 8.06e4 l^(8/9) (steel line contact)"}
 
 bearing_geometry_tapered:   # secondary health case: double-row tapered roller unit (proxy, high-speed sources)
-  rollers_per_row:   {value: 21,    unit: "-", range: [17, 23], source: "unverified search result: 130 mm-bore double-row TRB: z = 21 (Guan et al. 2023, Sci. Rep. 13; Liu & Du 2020, IJAV 25(4)); 23 for the 150 mm 353130B freight unit (Sun et al. 2026); proxy, freight 130 mm unit not found"}
-  roller_length:     {value: 45.0,  unit: mm,   source: "unverified search result: effective length 45 mm (Guan et al. 2023), proxy"}
-  roller_diameter:   {value: 23.0,  unit: mm,   range: [21.4, 26.5], source: "unverified search result: 23 mm (Guan et al. 2023; Liu & Du 2020); 21.384 mm (353130B); 26.5 mm (Zhao et al. 2024)"}
-  pitch_diameter:    {value: 180.5, unit: mm,   source: "unverified search result: 180.5 mm (Guan et al. 2023; Liu & Du 2020), proxy"}
-  contact_angle:     {value: 10.0,  unit: deg,  source: "unverified search result: outer-race contact angle 10 deg (Liu & Du 2020; Zhao et al. 2024)"}
-  clearance_d0:      {value: 20.0,  unit: um, range: [0.0, 50.0], source: "assumed, swept (mounted axial endplay 0.025-0.381 mm, Timken AP manual, unverified search result; conversion to radial clearance not sourced)"}
+  rollers_per_row:   {value: 21,    unit: "-", range: [17, 23], source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): number of rollers (single row) 21; range ends 17 and 23 (other units) unverified; proxy, freight 130 mm unit not found"}
+  roller_length:     {value: 45.0,  unit: mm,   source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): effective contact length of rollers 45 mm; proxy"}
+  roller_diameter:   {value: 23.0,  unit: mm,   range: [21.4, 26.5], source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): mean diameter of rollers 23 mm; range ends 21.4 mm (353130B unit) and 26.5 mm (Zhao et al. 2024) unverified"}
+  pitch_diameter:    {value: 180.5, unit: mm,   source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): pitch diameter 180.5 mm; proxy"}
+  contact_angle:     {value: 10.0,  unit: deg,  source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): contact angle of the inner ring 7.75 deg, outer ring 10 deg (outer used)"}
+  clearance_d0:      {value: 20.0,  unit: um, range: [0.0, 50.0], source: "assumed, swept (mounted axial endplay 0.025-0.381 mm in the Timken AP manual, unverified; conversion to radial clearance not sourced)"}
   K_contact_coeff:   {value: 8.06e4, unit: "N mm^-10/9 per mm^(8/9)", source: "doc Eq. (13): K_i,o ~ 8.06e4 l^(8/9) (steel line contact)"}
 
 axlebox:
-  mass: {value: 100.0, unit: kg, range: [100.0, 158.4], source: "full text verified: axlebox 100 kg (Dusza et al. 2024, Table A1); indication: SKF Y25 axlebox housing 80 kg (SKF Evolution, 26 Sep 2022); upper sweep end 158.4 kg has no verified source"}
+  mass: {value: 100.0, unit: kg, range: [100.0, 158.4], source: "full text verified: axlebox 100 kg (Dusza et al. 2024, Table A1); indication: SKF Y25 axlebox housing 80 kg (SKF Evolution, 26 Sep 2022); upper sweep end 158.4 kg assumed (+58%)"}
 
 primary:   # axlebox -> fixed bogie frame (Zener element dropped)
   kp: {value: 1.017e6, unit: N/m, range: [1.017e6, 2.28e6], source: "full text verified: Y25 primary vertical stiffness 1017 kN/m empty / 2280 kN/m loaded per axlebox (Dusza et al. 2024, Table A1; springs on each axle box, Dusza 2023); nominal = empty value"}
   cp: {value: 7.0e3, unit: N s/m, range: [7.0e3, 1.233e5], source: "full text verified: Y25 primary equivalent vertical damping 7 kN s/m empty / 123.3 kN s/m laden (Dusza et al. 2024, Table A1); nominal = empty value, paired with kp"}
 
 payload:   # axle load W, uniform per pass; enters only through kB = kB0 (W/W0)^(1/10)
-  W_min: {value: 5.5,  unit: t, range: [5.8, 6.6], source: "design value 5.5 t; verified (fetch 19 Oct 2026): Eanos tare 23,100 kg +-2% (Wascosa, Eanos datasheet), 22.6-25.3 t (Rail Cargo Group, Eanos fact sheet), i.e. empty axle load 5.65-6.3 t; the sweep covers 5.8-6.6 t (results/p4/sweep.json)"}
+  W_min: {value: 5.5,  unit: t, range: [5.8, 6.6], source: "design value 5.5 t; verified (fetch 19 Oct 2026): Eanos tare 23,100 kg +-2% (Wascosa, Eanos datasheet), 22.6-25.3 t (Rail Cargo Group, Eanos fact sheet), i.e. empty axle load 5.65-6.3 t; swept 5.6-6.6 t in results/p4/sweep.json (range field kept at 5.8-6.6 t: values-v2 hash)"}
   W_max: {value: 22.5, unit: t, source: "verified (fetch 19 Oct 2026): Y25 axle load 22.5 t (Tatravagonka, Y25Lssi(f)-D data page; Wascosa, Eanos datasheet)"}
   W0:    {value: 22.5, unit: t, source: "reference load for kB0 (loaded)"}
 

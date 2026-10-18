@@ -27,10 +27,10 @@ Bearing (health check) & roller\_diameter & 27.5 & -- & mm & assumed, (240 - 130
 Bearing (health check) & pitch\_diameter & 185 & -- & mm & envelope: (130 + 240)/2 mm of the WJ/WJP 130x240 bearings on Y25 (Schaeffler WL 07519, verified (fetch 19 Oct 2026)) \\
 Bearing (health check) & contact\_angle & 0 & -- & deg & cylindrical roller bearing \\
 Bearing (health check) & clearance\_d0 & 130 & 0--180 & um & verified (fetch 19 Oct 2026): radial clearance of WJ/WJP 130x240 P before mounting 130-180 um (SKF Railway Technical Handbook Vol. 1, ch. 4, p. 89, extract, (c) SKF 2012); mounted/operating clearance not found: nominal = lower unmounted value, swept 0-180 um \\
-Axlebox & mass & 100 & 100--158.4 & kg & full text verified: axlebox 100 kg (Dusza et al. 2024, Table A1); indication: SKF Y25 axlebox housing 80 kg (SKF Evolution, 26 Sep 2022); upper sweep end 158.4 kg has no verified source \\
+Axlebox & mass & 100 & 100--158.4 & kg & full text verified: axlebox 100 kg (Dusza et al. 2024, Table A1); indication: SKF Y25 axlebox housing 80 kg (SKF Evolution, 26 Sep 2022); upper sweep end 158.4 kg assumed (+58\%) \\
 Primary & kp & 1.017e+06 & 1.017e+06--2.28e+06 & N/m & full text verified: Y25 primary vertical stiffness 1017 kN/m empty / 2280 kN/m loaded per axlebox (Dusza et al. 2024, Table A1; springs on each axle box, Dusza 2023); nominal = empty value \\
 Primary & cp & 7000 & 7000--1.233e+05 & N s/m & full text verified: Y25 primary equivalent vertical damping 7 kN s/m empty / 123.3 kN s/m laden (Dusza et al. 2024, Table A1); nominal = empty value, paired with kp \\
-Payload & W\_min & 5.5 & 5.8--6.6 & t & design value 5.5 t; verified (fetch 19 Oct 2026): Eanos tare 23,100 kg +-2\% (Wascosa, Eanos datasheet), 22.6-25.3 t (Rail Cargo Group, Eanos fact sheet), i.e. empty axle load 5.65-6.3 t; the sweep covers 5.8-6.6 t (results/p4/sweep.json) \\
+Payload & W\_min & 5.5 & 5.8--6.6 & t & design value 5.5 t; verified (fetch 19 Oct 2026): Eanos tare 23,100 kg +-2\% (Wascosa, Eanos datasheet), 22.6-25.3 t (Rail Cargo Group, Eanos fact sheet), i.e. empty axle load 5.65-6.3 t; swept 5.6-6.6 t in results/p4/sweep.json (range field kept at 5.8-6.6 t: values-v2 hash) \\
 Payload & W\_max & 22.5 & -- & t & verified (fetch 19 Oct 2026): Y25 axle load 22.5 t (Tatravagonka, Y25Lssi(f)-D data page; Wascosa, Eanos datasheet) \\
 Payload & W0 & 22.5 & -- & t & reference load for kB0 (loaded) \\
 Rail 60E1 & A & 0.00767 & -- & m\textasciicircum{}2 & verified (fetch 19 Oct 2026): 76.70 cm\textasciicircum{}2 (TSTG Schienen Technik, rail profile catalogue, 60E1; Knuth et al. 2025, Table 1: 7.7e-3 m\textasciicircum{}2) \\
@@ -40,12 +40,12 @@ Track (ballasted) & pad\_stiffness & 2e+08 & 8e+07--8e+08 & N/m & verified (fetc
 Track (ballasted) & sleeper\_spacing & 0.6 & 0.6--0.65 & m & verified (fetch 19 Oct 2026): 0.6 m (Sanudo et al. 2022, Infrastructures 7(6) 83, doi 10.3390/infrastructures7060083); 0.65 m (Thompson et al., Southampton eprint 436918, Table 1) \\
 Track (ballasted) & kf & 3.333e+08 & 1.23e+08--1.333e+09 & N/m\textasciicircum{}2 & derived: pad stiffness / sleeper spacing (pad modulus, PWI Guide to Track Stiffness definition) from the sourced ranges above; ballast compliance in series not modelled \\
 Track (ballasted) & eta\_f & 0.2 & 0.1--0.25 & - & verified (fetch 19 Oct 2026): rail pad loss factor 0.25 / 0.2 (Thompson et al., Southampton eprint 436918, Table 1), 0.15 (Knuth et al. 2025, Table 2), 0.1-0.3 (Jones \& Edwards, Internoise 1996) \\
-Contact & kH0 & 1.489e+09 & 1.388e+09--2.3e+09 & N/m & Hertz theory at W0 = 22.5 t (F0 = 110 kN), results/p4/contact\_hertz.json; 1.388-1.576e9 for S1002 tread transverse radius +0.5 m to -1.0 m; upper sweep end 2.3e9 N/m kept from an earlier, unverified literature range \\
+Contact & kH0 & 1.489e+09 & 1.388e+09--2.3e+09 & N/m & Hertz theory at W0 = 22.5 t (F0 = 110 kN), results/p4/contact\_hertz.json: 1.388-1.576 GN/m Hertz (S1002 transverse radius +0.5 m to -1.0 m); upper sweep end 2.3 GN/m assumed \\
 Contact & C\_H & 9.413e+10 & -- & N/m\textasciicircum{}1.5 & Hertz theory (Johnson 1985): S1002 wheel, rolling radius 0.46 m (Dusza et al. 2024, full text verified), on UIC60 rail, crown radius 0.30 m (R300 head radius of the 60E1 profile, EN 13674-1; drawing in the TSTG rail profile catalogue, verified (fetch 19 Oct 2026)); wheel transverse radius infinite (assumed); results/p4/contact\_hertz.json \\
 Layout & wheel positions & [0.0,1.8,10.7,12.5,15.74,17.54,26.44,28.24] & -- & m & derived from Y25 wheelbase 1800 mm (Tatravagonka, Y25Lssi(f)-D data page) and Eanos bogie pivot pitch 10.70 m, length over buffers 15.74 m (Rail Cargo Group, Eanos fact sheet; Wascosa: length over buffers 15,740 mm, outer axle base 12,500 mm), verified (fetch 19 Oct 2026): overhang (15.74 - 12.5)/2 per wagon end \\
 \bottomrule
 \end{tabular}
 
-\par\smallskip{\footnotesize 7 of 38 entries were not found in the literature (marked 'assumed, swept'); their effect is in Table 15. 'Verified (fetch 19 Oct 2026)' = checked against the source document; quotes, URLs and the status of each source are in docs/table1\_sources\_candidates.md and docs/parameter\_sources.md.}
+\par\smallskip{\footnotesize 9 of 38 entries were not found in the literature (marked 'assumed, swept'); their effect is in Table 15. 'Verified (fetch 19 Oct 2026)' = checked against the source document; quotes, URLs and the status of each source are in docs/table1\_sources\_candidates.md and docs/parameter\_sources.md.}
 \end{minipage}}
 \end{table}

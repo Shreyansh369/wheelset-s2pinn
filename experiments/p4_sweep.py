@@ -44,7 +44,7 @@ Z = 1.6448536269514722 + 1.2815515655446004
 # (name, kind, path or key, low, high, source label)
 SWEEP = [
     ("kB0", "truth", "kB0", 0.5e9, 3.0e9, "assumed, swept"),
-    ("axlebox_mass", "param", ("axlebox", "mass"), 100.0, 158.4, "sourced range"),
+    ("axlebox_mass", "param", ("axlebox", "mass"), 100.0, 158.4, "100 kg full text (Dusza et al. 2024); upper end assumed (+58%)"),
     ("kp", "param", ("primary", "kp"), 1.017e6, 2.28e6, "full text: empty / loaded (Dusza et al. 2024)"),
     ("cp", "param", ("primary", "cp"), 7.0e3, 1.233e5, "full text: empty / laden (Dusza et al. 2024)"),
     ("wheel_diametral_inertia", "param", ("wheel", "diametral_inertia"), 10.0, 30.0, "assumed, swept"),
@@ -53,11 +53,11 @@ SWEEP = [
     ("cB", "truth", "cB", 3.0e3, 1.2e4, "assumed, swept (factor 2 about the sourced 6740 N s/m)"),
     ("kf", "track", "kf", 123.0e6, 1333.0e6, "sourced range (derived)"),
     ("eta_f", "track", "eta_f", 0.10, 0.25, "sourced range"),
-    ("kH0", "contact", "kH0", 1.388e9, 2.3e9, "Hertz, S1002 transverse radius +0.5 m (low); published spread up to 2.3e9 (high)"),
+    ("kH0", "contact", "kH0", 1.388e9, 2.3e9, "1.388-1.576 GN/m Hertz (S1002 transverse radius); upper sweep end 2.3 GN/m assumed"),
     ("kB0_ext", "truth", "kB0", 0.5e9, 5.0e9, "extension to the EMU bearing-only vertical stiffness 4.96e9 N/m"),
     ("wheelset_mass_wheels", "wsmass", "wheel", 1400.0, 1526.0, "wheelset mass 1400 kg (Dusza et al. 2024) and 1526 kg (Y25 MBS model); nominal 1005 kg bare (vendor 998 kg); extra mass on the wheels"),
     ("wheelset_mass_journals", "wsmass", "journal", 1400.0, 1526.0, "as above, extra mass lumped on the journals"),
-    ("W_min", "design", "W_min", 5.8, 6.6, "sourced range (empty axle load = Eanos tare 23.1-26.5 t / 4); design value 5.5 t"),
+    ("W_min", "design", "W_min", 5.6, 6.6, "empty axle load 5.65-6.3 t (Eanos tare 23,100 kg +-2%, Wascosa; 22.6-25.3 t, Rail Cargo; / 4), swept 5.6-6.6 t; design value 5.5 t"),
 ]
 
 

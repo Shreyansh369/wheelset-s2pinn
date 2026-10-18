@@ -44,7 +44,7 @@ vehicle_CT23:  # London Underground 2009-stock (metro) values, for the scope che
 
 contact_freight:
   C_H: {value: 94.13e9, unit: N/m^1.5, source: "Hertz theory (Johnson 1985): S1002 wheel, rolling radius 0.46 m (Dusza et al. 2024, full text verified), on UIC60 rail, crown radius 0.30 m (R300 head radius of the 60E1 profile, EN 13674-1; drawing in the TSTG rail profile catalogue, verified (fetch 19 Oct 2026)); wheel transverse radius infinite (assumed); results/p4/contact_hertz.json"}
-  kH0: {value: 1.489e9, unit: N/m, range: [1.388e9, 2.3e9], source: "Hertz theory at W0 = 22.5 t (F0 = 110 kN), results/p4/contact_hertz.json; 1.388-1.576e9 for S1002 tread transverse radius +0.5 m to -1.0 m; upper sweep end 2.3e9 N/m kept from an earlier, unverified literature range"}
+  kH0: {value: 1.489e9, unit: N/m, range: [1.388e9, 2.3e9], source: "Hertz theory at W0 = 22.5 t (F0 = 110 kN), results/p4/contact_hertz.json: 1.388-1.576 GN/m Hertz (S1002 transverse radius +0.5 m to -1.0 m); upper sweep end 2.3 GN/m assumed"}
 
 layout_CT23:   # wheel positions along the rail (m), 2009 Victoria line stock; instrumented wheel = wheel 5
   positions: {value: [0.0, 2.05, 6.52, 8.57, 16.62, 18.67, 23.14, 25.19, 33.24, 35.29, 39.76, 41.81], unit: m,

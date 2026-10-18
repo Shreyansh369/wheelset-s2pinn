@@ -506,6 +506,8 @@
 "SweepNomMode": "results/p4/sweep.json",
 "SweepWminCRBHi": "results/p4/sweep.json",
 "SweepWminCRBLo": "results/p4/sweep.json",
+"SweepWminHi": "results/p4/sweep.json",
+"SweepWminLo": "results/p4/sweep.json",
 "SweepWminMDCHi": "results/p4/sweep.json",
 "SweepWminMDCLo": "results/p4/sweep.json",
 "SweepWminModeHi": "results/p4/sweep.json",

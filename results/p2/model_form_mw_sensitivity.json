@@ -50,7 +50,7 @@
         "bias_at_minus_1sigma_pct": 0.6221823695578443,
         "bias_at_plus_1sigma_pct": -0.4640485864149224,
         "sigma_log": 0.12626131521262282,
-        "range_source": "linearised contact stiffness 1.388 GN/m (Hertz, S1002 transverse radius +0.5 m) to 2.3 GN/m (upper end kept from an earlier, unverified literature range)"
+        "range_source": "linearised contact stiffness 1.388-1.576 GN/m Hertz (S1002 transverse radius); upper sweep end 2.3 GN/m assumed"
       },
       {
         "estimator": "nominal",
@@ -95,7 +95,7 @@
         "bias_at_minus_1sigma_pct": -8.184044260062251e-05,
         "bias_at_plus_1sigma_pct": 0.00015170301312927847,
         "sigma_log": 0.12626131521262282,
-        "range_source": "linearised contact stiffness 1.388 GN/m (Hertz, S1002 transverse radius +0.5 m) to 2.3 GN/m (upper end kept from an earlier, unverified literature range)"
+        "range_source": "linearised contact stiffness 1.388-1.576 GN/m Hertz (S1002 transverse radius); upper sweep end 2.3 GN/m assumed"
       },
       {
         "estimator": "coest",
@@ -151,7 +151,7 @@
       ],
       "kH0": [
         0.12626131521262282,
-        "linearised contact stiffness 1.388 GN/m (Hertz, S1002 transverse radius +0.5 m) to 2.3 GN/m (upper end kept from an earlier, unverified literature range)"
+        "linearised contact stiffness 1.388-1.576 GN/m Hertz (S1002 transverse radius); upper sweep end 2.3 GN/m assumed"
       ],
       "unsprung_scale": [
         0.04,
@@ -164,7 +164,7 @@
     }
   },
   "provenance": {
-    "git_commit": "aadfc005f7cd343feaabfdc5fc0175ebd1befcb9-dirty",
+    "git_commit": "0504224b5088743212b27d2e82c8074b19edde8e-dirty",
     "config_dir": "config",
     "config_hash": "b8adde501aa3",
     "config_hash_version": "values-v2",
@@ -181,9 +181,9 @@
       "results/p2/model_form_mw_runs_freight/nominal__kf.jsonl": "f06cc20546545fa951c377f670ff38b781f6d348bca05bd308bccb803b548ee6",
       "results/p2/model_form_mw_runs_freight/nominal__unsprung_scale.jsonl": "be0f4683d888a05258e3c9214616b99ddc5c005b0deb609b239494e18804186e"
     },
-    "timestamp_utc": "2026-10-18T22:01:26Z",
+    "timestamp_utc": "2026-10-18T22:13:35Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 95.46875,
+    "peak_cpu_memory_mb": 95.21484375,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

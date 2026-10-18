@@ -4,7 +4,7 @@
 |---|---|---|---|---|---|---|
 | Nominal | – | – | 407 | 0.17 | 0.69 | – |
 | Effective support stiffness k_B0 (N/m) | 5e+08 | 3e+09 | 358 / 666 | 0.12 / 0.43 | 0.50 / 1.77 | assumed, swept |
-| Axlebox mass (kg) | 100 | 158.4 | 407 / 367 | 0.17 / 0.14 | 0.69 / 0.57 | sourced range |
+| Axlebox mass (kg) | 100 | 158.4 | 407 / 367 | 0.17 / 0.14 | 0.69 / 0.57 | 100 kg full text (Dusza et al. 2024); upper end assumed (+58%) |
 | Primary stiffness k_p (N/m) | 1.017e+06 | 2.28e+06 | 407 / 407 | 0.17 / 0.17 | 0.69 / 0.69 | full text: empty / loaded (Dusza et al. 2024) |
 | Primary damping c_p (N s/m) | 7000 | 1.233e+05 | 407 / 407 | 0.17 / 0.42 | 0.69 / 1.75 | full text: empty / laden (Dusza et al. 2024) |
 | Wheel diametral inertia (kg m²) | 10 | 30 | 407 / 407 | 0.21 / 0.13 | 0.86 / 0.55 | assumed, swept |
@@ -13,11 +13,11 @@
 | Support damping c_B (N s/m) | 3000 | 1.2e+04 | 407 / 407 | 0.16 / 0.18 | 0.66 / 0.74 | assumed, swept (factor 2 about the sourced 6740 N s/m) |
 | Foundation stiffness k_f (N/m²) | 1.23e+08 | 1.333e+09 | 407 / 407 | 0.17 / 0.15 | 0.71 / 0.61 | sourced range (derived) |
 | Foundation loss factor | 0.1 | 0.25 | 407 / 407 | 0.17 / 0.17 | 0.69 / 0.69 | sourced range |
-| Contact stiffness k_H0 (N/m) | 1.388e+09 | 2.3e+09 | 407 / 407 | 0.17 / 0.17 | 0.69 / 0.69 | Hertz, S1002 transverse radius +0.5 m (low); published spread up to 2.3e9 (high) |
+| Contact stiffness k_H0 (N/m) | 1.388e+09 | 2.3e+09 | 407 / 407 | 0.17 / 0.17 | 0.69 / 0.69 | 1.388-1.576 GN/m Hertz (S1002 transverse radius); upper sweep end 2.3 GN/m assumed |
 | k_B0, extended to bearing-only stiffness (N/m) | 5e+08 | 5e+09 | 358 / 702 | 0.12 / 1.27 | 0.50 / 5.27 | extension to the EMU bearing-only vertical stiffness 4.96e9 N/m |
 | wheelset_mass_wheels | 1400 | 1526 | 400 / 399 | 0.18 / 0.19 | 0.76 / 0.77 | wheelset mass 1400 kg (Dusza et al. 2024) and 1526 kg (Y25 MBS model); nominal 1005 kg bare (vendor 998 kg); extra mass on the wheels |
 | wheelset_mass_journals | 1400 | 1526 | 498 / 495 | 0.15 / 0.14 | 0.63 / 0.60 | as above, extra mass lumped on the journals |
-| Empty axle load (t; design 5.5) | 5.8 | 6.6 | 407 / 407 | 0.17 / 0.17 | 0.69 / 0.69 | sourced range (empty axle load = Eanos tare 23.1-26.5 t / 4); design value 5.5 t |
+| Empty axle load (t; design 5.5) | 5.6 | 6.6 | 407 / 407 | 0.17 / 0.17 | 0.69 / 0.69 | empty axle load 5.65-6.3 t (Eanos tare 23,100 kg +-2%, Wascosa; 22.6-25.3 t, Rail Cargo; / 4), swept 5.6-6.6 t; design value 5.5 t |
 
 
 One parameter at a time; data generated and fitted with the same model (bound, not misspecification). 4-wheel design, N = 50, 60–110 km/h, 40 dB. MDC = (1.645 + 1.282) √2 CRB, uncalibrated. Support mode at 14 t.

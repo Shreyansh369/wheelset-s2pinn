@@ -61,7 +61,7 @@ ESTIMATORS = {"nominal": ("kB0", "cB"), "coest": ("kB0", "cB", "kf", "kH0"), "co
 RANGES = {
     "kf": (math.log(1333.0 / 123.0) / 4, "rail pad swept 80-800 MN/m per pad (published 105-800: Knuth et al. 2025; Thompson et al., Southampton eprint 436918) at 0.60-0.65 m spacing (Sanudo et al. 2022; Thompson et al.) -> 123-1333 MN/m^2"),
     "eta_f": (math.log(0.25 / 0.10) / 4, "rail pad loss factor 0.1-0.25 (Jones & Edwards 1996: 0.1-0.3; Knuth et al. 2025: 0.15; Thompson et al., eprint 436918: 0.2/0.25)"),
-    "kH0": (math.log(2.3 / 1.388) / 4, "linearised contact stiffness 1.388 GN/m (Hertz, S1002 transverse radius +0.5 m) to 2.3 GN/m (upper end kept from an earlier, unverified literature range)"),
+    "kH0": (math.log(2.3 / 1.388) / 4, "linearised contact stiffness 1.388-1.576 GN/m Hertz (S1002 transverse radius); upper sweep end 2.3 GN/m assumed"),
     "unsprung_scale": (0.04, "about 20 kg per axlebox, around 4% of the wheelset unsprung weight, between axlebox designs (SKF Evolution, New axlebox concept for heavy loads, 8 Dec 2005)"),
     "axle_damp_scale": (math.log(0.02 / 0.001) / 4, "wheelset modal damping 0.1-2% (Chaar 2007: measured less than 2%; Jin 2016 via Ahmedov & Mirsaidov 2023: 0.1-1%)"),
 }

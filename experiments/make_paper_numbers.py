@@ -462,6 +462,8 @@ def section4(m, miss):
                     m[f"Sweep{w}MDC{Q}"] = _f(R[key][f"mdc_pct_{q}"])
                     m[f"Sweep{w}Mode{Q}"] = _f(R[key][f"support_mode_hz_{q}"], 0)
                     m[f"Sweep{w}CRB{Q}"] = _f(R[key][f"crb_kB0_pct_{q}"])
+        if "W_min" in R:                       # swept range of the empty axle load (t)
+            m["SweepWminLo"], m["SweepWminHi"] = f"{R['W_min']['low']:g}", f"{R['W_min']['high']:g}"
     block("p4/sweep.json", sweep, ["SweepNomMode", "SweepNomCRB", "SweepNomMDC", "SweepCRBMin", "SweepCRBMax", "SweepMDCMin", "SweepMDCMax",
                                    "SweepModeMin", "SweepModeMax"])
 
