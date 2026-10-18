@@ -9,7 +9,6 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 - `results/p1/bound_speed_subband.json`: single wheelset on a rail oscillator
 - `results/p1/fe_direct.json`: single wheelset on a rail oscillator
 - `results/p2/debias_check.json`: CT23 12-wheel lumped vehicle, resilient track
-- `results/p2/multiwheel_mc.json`: metro wheel layout, BS113A rail, +-30-bin kernel
 - `results/p2/partial_coherence_bound.json`: single wheelset on a rail oscillator
 - `results/p2/partial_coherence_mc.json`: single wheelset on a rail oscillator
 - `results/p2/partial_indep.json`: single wheelset on a rail oscillator
@@ -38,7 +37,7 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | `results/p2/fig1_transfer.json` | frozen | e0a22f267362 | hash verified |
 | `results/p2/model_form_mw_sensitivity.json` | frozen | - | declared |
 | `results/p2/multiwheel_bound.json` | frozen | - | declared |
-| `results/p2/multiwheel_mc.json` | earlier | - | declared |
+| `results/p2/multiwheel_mc_y25.json` | frozen | e0a22f267362 | hash verified |
 | `results/p2/partial_coherence_bound.json` | earlier | - | declared |
 | `results/p2/partial_coherence_mc.json` | earlier | - | declared |
 | `results/p2/partial_indep.json` | earlier | - | declared |
@@ -77,7 +76,7 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | table | table2_verification | results/p1/verification.json, results/gates/G1.json | frozen | ok |
 | table | table3_headline | results/p3/headline_v2_kb120_attr_frozen10.json, results/p3/calibrated.json, results/p4/ignore_coupling.json | frozen | ok |
 | table | table4_speed_N | results/p1/fe_direct.json | earlier | ok |
-| table | table5_multiwheel | results/p2/multiwheel_bound.json, results/p2/multiwheel_mc.json | earlier/frozen | ok |
+| table | table5_multiwheel | results/p2/multiwheel_bound.json, results/p2/multiwheel_mc_y25.json | frozen | ok |
 | table | table14_validation | results/p4/bias_diag_y25.json | pinned | ok |
 | table | table6_budget | results/p2/model_form_mw_sensitivity.json | frozen | ok |
 | table | table15_sweep | results/p4/sweep.json | frozen | ok |
@@ -92,7 +91,7 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | figure | fig1_transfer_functions | results/p2/fig1_transfer.json | frozen | ok |
 | figure | fig2_crb_vs_speed_spread | results/p1/bound_speed_subband.json | earlier | ok |
 | figure | fig3_debiased_periodogram | results/p2/debias_check.json | earlier | ok |
-| figure | fig4_multiwheel_bias | results/p2/multiwheel_mc.json | earlier | ok |
+| figure | fig4_multiwheel_bias | results/p2/multiwheel_mc_y25.json | frozen | ok |
 | figure | fig5_model_form_tornado | results/p2/model_form_mw_sensitivity.json | frozen | ok |
 | figure | fig6_relative_change | results/p2/relative_change.json, results/p2/relative_intervals.json | earlier | ok |
 | figure | fig7_p2_validation | results/p2/scope_p2_hysteretic.json | earlier | ok |
@@ -376,15 +375,16 @@ Frozen configuration hash `e0a22f267362` (config/params.yaml + config/track.yaml
 | `\MWCRBFixedMin` | results/p2/multiwheel_bound.json | frozen | sec4_results | ok |
 | `\MWCRBMax` | results/p2/multiwheel_bound.json | frozen | sec4_results | ok |
 | `\MWCRBMin` | results/p2/multiwheel_bound.json | frozen | sec4_results | ok |
-| `\MWCorrectBiasEight` | results/p2/multiwheel_mc.json | earlier | sec4_results | labelled |
-| `\MWCorrectBiasFour` | results/p2/multiwheel_mc.json | earlier | sec4_results | labelled |
-| `\MWCorrectBiasSEEight` | results/p2/multiwheel_mc.json | earlier | sec4_results | labelled |
-| `\MWCorrectBiasSEFour` | results/p2/multiwheel_mc.json | earlier | sec4_results | labelled |
-| `\MWCorrectBiasSETwo` | results/p2/multiwheel_mc.json | earlier | sec4_results | labelled |
-| `\MWCorrectBiasTwo` | results/p2/multiwheel_mc.json | earlier | sec4_results | labelled |
-| `\MWSingleBiasEight` | results/p2/multiwheel_mc.json | earlier | sec4_results | labelled |
-| `\MWSingleBiasFour` | results/p2/multiwheel_mc.json | earlier | sec4_results | labelled |
-| `\MWSingleBiasTwo` | results/p2/multiwheel_mc.json | earlier | sec4_results | labelled |
+| `\MWCorrectBiasEight` | results/p2/multiwheel_mc_y25.json | frozen | sec4_results | ok |
+| `\MWCorrectBiasFour` | results/p2/multiwheel_mc_y25.json | frozen | sec4_results | ok |
+| `\MWCorrectBiasSEEight` | results/p2/multiwheel_mc_y25.json | frozen | sec4_results | ok |
+| `\MWCorrectBiasSEFour` | results/p2/multiwheel_mc_y25.json | frozen | sec4_results | ok |
+| `\MWCorrectBiasSETwo` | results/p2/multiwheel_mc_y25.json | frozen | sec4_results | ok |
+| `\MWCorrectBiasTwo` | results/p2/multiwheel_mc_y25.json | frozen | sec4_results | ok |
+| `\MWCorrectZTwo` | results/p2/multiwheel_mc_y25.json | frozen | sec4_results | ok |
+| `\MWSingleBiasEight` | results/p2/multiwheel_mc_y25.json | frozen | sec4_results | ok |
+| `\MWSingleBiasFour` | results/p2/multiwheel_mc_y25.json | frozen | sec4_results | ok |
+| `\MWSingleBiasTwo` | results/p2/multiwheel_mc_y25.json | frozen | sec4_results | ok |
 | `\NElements` | results/p1/verification.json | frozen | sec2_model | ok |
 | `\NoiseBinsMax` | config/params.yaml | frozen | sec3_method | ok |
 | `\NoiseBinsMin` | config/params.yaml | frozen | sec3_method | ok |

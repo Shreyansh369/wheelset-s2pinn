@@ -1,4 +1,4 @@
-# Table 5. Multi-wheel coupling through the rail (k_B0) (partly earlier configuration: metro wheel layout, BS113A rail, +-30-bin kernel)
+# Table 5. Multi-wheel coupling through the rail (k_B0)
 
 **(a) Bound**
 
@@ -21,14 +21,14 @@
 
 | Wheels | Fitted model | Datasets | Bias (%) ± SE | RMSE (%) | RMSE/CRB | Wald 90% cov. [95% CI] |
 |---|---|---|---|---|---|---|
-| 2 | rail-coupled | 10 | 0.24 ± 0.07 | 0.32 | 1.91 | 0.50 [0.19, 0.81] |
-| 2 | single wheelset | 10 | -13.34 ± 0.08 | 14.32 | 85.89 | 0.10 [0.00, 0.45] |
-| 4 | rail-coupled | 10 | 0.12 ± 0.04 | 0.17 | 0.98 | 0.90 [0.55, 1.00] |
-| 4 | single wheelset | 10 | -13.85 ± 0.07 | 14.91 | 87.88 | 0.00 [0.00, 0.31] |
-| 8 | rail-coupled | 10 | 0.04 ± 0.04 | 0.14 | 0.81 | 0.90 [0.55, 1.00] |
-| 8 | single wheelset | 10 | -8.60 ± 0.09 | 9.00 | 52.86 | 0.00 [0.00, 0.31] |
+| 2 | rail-coupled | 10 | 0.11 ± 0.05 | 0.18 | 1.10 | 0.80 [0.44, 0.97] |
+| 2 | single wheelset | 10 | -5.09 ± 0.16 | 5.25 | 31.80 | 0.00 [0.00, 0.31] |
+| 4 | rail-coupled | 10 | 0.02 ± 0.06 | 0.18 | 1.07 | 0.90 [0.55, 1.00] |
+| 4 | single wheelset | 10 | -5.38 ± 0.21 | 5.57 | 33.19 | 0.00 [0.00, 0.31] |
+| 8 | rail-coupled | 10 | -0.02 ± 0.06 | 0.18 | 1.09 | 0.90 [0.55, 1.00] |
+| 8 | single wheelset | 10 | -2.80 ± 0.22 | 2.91 | 17.29 | 0.00 [0.00, 0.31] |
 
 
-The 2-wheel rail-coupled bias is an open item (docs/paper1_outline.md).
+Rail-coupled bias beyond 2 SE: 2-wheel +0.11 ± 0.05% (2.2 SE); not explained (open item, docs/paper1_outline.md).
 
-Source: `results/p2/multiwheel_bound.json`, `results/p2/multiwheel_mc.json`
+Source: `results/p2/multiwheel_bound.json`, `results/p2/multiwheel_mc_y25.json`
