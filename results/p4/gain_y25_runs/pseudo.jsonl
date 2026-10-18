@@ -86,3 +86,4 @@
 {"case": "unsprung_x1.05", "estimator": "coest", "x": 0.1, "log_k_hat": 20.37592469427114, "converged": true, "wall_s": 1535.9150589760102}
 {"case": "axle_damp_x2", "estimator": "coest", "x": 0.1, "log_k_hat": 20.484912839237428, "converged": true, "wall_s": 1232.8762776560034}
 {"case": "axle_damp_x0.5", "estimator": "coest", "x": 0.05, "log_k_hat": 20.499288822220095, "converged": true, "wall_s": 2035.2093908739917}
+{"case": "axle_damp_x0.5", "estimator": "coest", "x": 0.1, "log_k_hat": 20.449166608089563, "converged": true, "wall_s": 2423.1303338240104}
