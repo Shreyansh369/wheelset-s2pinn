@@ -171,6 +171,38 @@ def kappa_sing_se(tag="", reps=None):
                      "wall_s": time.perf_counter() - t0})
 
 
+def kappa_diag(j, tag=""):
+    """Diagnostic for one kappa replicate whose base period landed far from the later one (gross failure).
+
+    Regenerates the base-period data (seeds (45, j, 0) as kappa()), evaluates the profile negative
+    log-likelihood of the co-estimating fit at the stored base solution and at the later-period solution moved
+    to the base truth's k_B0 (phi_later with phi[0] -= log(1 - x)), then refits the base period from that start
+    (same estimator settings as _fit, only the start differs). The stored replicate is not changed.
+    Row: results/p3/kappa_coest_runs/diag_rep<j><tag>.jsonl.
+    """
+    from src.utils.results import _git_commit
+    commit = _git_commit()
+    if BAND[0]:
+        from experiments.p4_banded import set_band
+        set_band(BAND[0])
+    sm, thb, rough, mw, fams, _ = setup_all()
+    r = next(x for x in _rows(OUT / "kappa_coest_runs" / f"rows{tag}.jsonl") if x["rep"] == j)
+    t0 = time.perf_counter()
+    P, Wm, Ws, g = gen(sm, truth(thb, r["misspec"], TRUTH["kB0"]), rough, mw, (45, j, 0))
+    est = MultiPassWhittle([dict(q) for q in P], Wm, WIM, rough, fams["coest"], debias=True)
+    phi_alt = np.asarray(r["phi_later"], float).copy()
+    phi_alt[0] -= math.log(1 - r["x"])
+    nll_stored = float(est.profile_nll(np.asarray(r["phi_base"], float)))
+    nll_alt = float(est.profile_nll(phi_alt))
+    ref = est.fit(phi_alt)
+    _append(OUT / "kappa_coest_runs" / f"diag_rep{j}{tag}.jsonl", {
+        "rep": j, "x": r["x"], "misspec": r["misspec"], "phi_base_stored": r["phi_base"], "phi_alt_start": phi_alt.tolist(),
+        "nll_stored": nll_stored, "nll_alt_start": nll_alt, "nll_lower": "stored" if nll_stored < nll_alt else "alt_start",
+        "phi_refit": ref["phi"], "nll_refit": ref["nll"], "se_refit": ref["se_log"], "converged_refit": ref["converged"],
+        "D_hat_stored": r["D_hat"], "D_hat_refit": r["phi_later"][0] - ref["phi"][0], "D_true": r["D_true"],
+        "band": BAND[0], "tag": tag, "git_commit": commit, "wall_s": time.perf_counter() - t0})
+
+
 # ----------------------------------------------------------------------------- (3) drift MC
 def drift(j0, j1, f, tag=""):
     sm, thb, rough, mw, fams, _ = setup_all()
@@ -396,6 +428,7 @@ if __name__ == "__main__":
     ap.add_argument("--summarise", action="store_true")
     ap.add_argument("--kappa-sing-se", action="store_true", help="sensitivity SE (c_B fixed) for the singular kappa replicates")
     ap.add_argument("--reps", type=int, nargs="+", default=None, help="--kappa-sing-se on these replicates (check file)")
+    ap.add_argument("--kappa-diag", type=int, default=None, help="likelihood diagnostic for one kappa replicate (rep number)")
     ap.add_argument("--j0", type=int, default=0)
     ap.add_argument("--j1", type=int, default=1)
     ap.add_argument("--f", type=float, default=0.8)
@@ -414,6 +447,9 @@ if __name__ == "__main__":
     if a.kappa_sing_se:
         BAND[0] = a.band
         kappa_sing_se(a.tag, a.reps)
+    if a.kappa_diag is not None:
+        BAND[0] = a.band
+        kappa_diag(a.kappa_diag, a.tag)
     if a.drift:
         drift(a.j0, a.j1, a.f, a.tag)
     if a.bias:
