@@ -25,7 +25,7 @@ the publisher page. Check each DOI resolves before submission.
 | lebel2019 | title, JSV 458:158–176, DOI seen | – |
 | lebelhal | hal-01876763 (Railways 2018, Barcelona) chosen as the HAL statistical-inverse paper; hal-01876753 is the WCCM Bayesian-calibration variant | proceedings publisher and pages not seen |
 | jin2021 | DOI, volume, article number seen (ScienceDirect) | – |
-| thompson2007 | title, 68(1) 43–57, DOI seen (Southampton ePrints) | – |
+| thompson2007 | title, 68(1) 43–57, DOI seen (Southampton ePrints) | removed 19 Oct 2026 (not verified by the full-text check; no longer cited) |
 | dusza2023 | title, DOI seen; 1017/2280 kN/m empty/loaded seen | per axlebox vs per spring set |
 | dusza2024 | title, 14(11) 4545, DOI seen (MDPI/DOAJ) | axlebox 100 kg seen in preprint table only |
 | bizic2021 | venue Mechanics Transport Communications 19(3) art. 2113 | page numbers |
@@ -34,7 +34,7 @@ the publisher page. Check each DOI resolves before submission.
 | randall2011 | 25(2) 485–520, DOI seen in two independent reference lists | – |
 | pieringer2022 | Appl. Acoust. 193, 108760, DOI, authors seen (Chalmers repository record and full-text PDF listing) | – |
 | johnson1985 | Contact Mechanics, CUP 1985, ISBN 0521255767 seen in library catalogues | DOI (Cambridge Core) not confirmed, so not given |
-| hasan2020 | ICTD 2020, ASCE, DOI seen | – |
+| hasan2020 | ICTD 2020, ASCE, DOI seen | removed 19 Oct 2026 (not verified by the full-text check; no longer cited) |
 | li2026s2pinn | title, authors, arXiv:2610.03303 read from the PDF in docs/ (not committed) | – |
 | nielsen2015 | title, 3(1) 17–39 seen (RePEc); author order differs between listings; DOI from round-1 snippet only | first-author order, DOI |
 

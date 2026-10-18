@@ -1,6 +1,8 @@
+# Pinned snapshot (values frozen 16 Oct 2026). Source strings are those of the snapshot date; the verified
+# sources (full-text fetch, 19 Oct 2026) are in config/params.yaml and config/track.yaml.
 # L1-lin reference model parameters: a representative 22.5 t-axle-load freight wagon (Y25 bogie, 920 mm
 # wheels) on ballasted 60E1 track. Every entry: value, unit, source; "range" where sources differ.
-# Source labels: "[snippet]" = value seen in a web-search result snippet (2026-10-15 sourcing round;
+# Source labels: "[search result]" = value seen in a web-search result (2026-10-15 sourcing round;
 # full text not checked); "assumed, swept" = not found in the literature, varied over the stated range in
 # results/p4/sweep.json. Full citations: docs/parameter_sources.md.
 
@@ -11,25 +13,25 @@ material:
   kappa:  {value: null,    unit: "-",     source: "Cowper circular section 6(1+nu)/(7+6nu), computed"}
 
 axle:   # symmetric about xi = 0; sections listed outward from the centre (half axle)
-  length:       {value: 2.180, unit: m, range: [2.180, 2.1876], source: "[snippet] BA004 freight wheelset (Y25), total axle length 2180 mm (railwayspare-parts.com listing); 2187.6 mm Type D axle (same vendor)"}
+  length:       {value: 2.180, unit: m, range: [2.180, 2.1876], source: "[search result] BA004 freight wheelset (Y25), total axle length 2180 mm (railwayspare-parts.com listing); 2187.6 mm Type D axle (same vendor)"}
   sections:     # [outer |xi| end, diameter]
     value: [[0.640, 0.173], [0.860, 0.200], [0.900, 0.160], [1.090, 0.130]]
     unit: [m, m]
-    source: "diameters [snippet]: body 173 mm, wheel seat 200 mm, journal 130 mm (BA004 listings; Unirail BA004, EN 13261 130x191 mm); dust-guard collar 160 mm and section boundaries assumed, swept"
-  wheel_xi:     {value: 0.750, unit: m, source: "[snippet] 2s = 1500 mm between nominal rolling circles (Bizic & Petrovic 2021, Mechanics Transport Communications 19(3), art. 2113)"}
-  journal_xi:   {value: 1.000, unit: m, source: "[snippet] 2b = 2000 mm between axle-box centres (Bizic & Petrovic 2021)"}
+    source: "diameters [search result]: body 173 mm, wheel seat 200 mm, journal 130 mm (BA004 listings; Unirail BA004, EN 13261 130x191 mm); dust-guard collar 160 mm and section boundaries assumed, swept"
+  wheel_xi:     {value: 0.750, unit: m, source: "[search result] 2s = 1500 mm between nominal rolling circles (Bizic & Petrovic 2021, Mechanics Transport Communications 19(3), art. 2113)"}
+  journal_xi:   {value: 1.000, unit: m, source: "[search result] 2b = 2000 mm between axle-box centres (Bizic & Petrovic 2021)"}
   n_elements:   {value: 32,    unit: "-", source: "brief: 20-40 elements; convergence checked at 20/30/40"}
-  damping_zeta: {value: 0.01,  unit: "-", range: [0.001, 0.02], source: "[snippet] measured damping ratios of the first torsion and first and second bending modes below 2% (Chaar 2007, KTH doctoral thesis TRITA AVE 2007:17, Table 2-1); 0.1-1.0% (IPME paper, citation incomplete); swept"}
-  damping_fref: {value: 96.0,  unit: Hz,  range: [96.0, 115.0], source: "[snippet] first wheelset bending mode of a freight wagon 96 Hz (Sci. Rep. 2025, s41598-025-15781-4); 115 Hz (Mu et al. 2021, Shock Vib. 4677851)"}
+  damping_zeta: {value: 0.01,  unit: "-", range: [0.001, 0.02], source: "[search result] measured damping ratios of the first torsion and first and second bending modes below 2% (Chaar 2007, KTH doctoral thesis TRITA AVE 2007:17, Table 2-1); 0.1-1.0% (IPME paper, citation incomplete); swept"}
+  damping_fref: {value: 96.0,  unit: Hz,  range: [96.0, 115.0], source: "[search result] first wheelset bending mode of a freight wagon 96 Hz (Sci. Rep. 2025, s41598-025-15781-4); 115 Hz (Mu et al. 2021, Shock Vib. 4677851)"}
 
 wheel:
-  mass:              {value: 304.0, unit: kg,     source: "[snippet] 920 mm ER7 wheel, nominal weight 304 kg (Unirail BA004 and BA 092 wheelset pages)"}
+  mass:              {value: 304.0, unit: kg,     source: "[search result] 920 mm ER7 wheel, nominal weight 304 kg (Unirail BA004 and BA 092 wheelset pages)"}
   diametral_inertia: {value: 20.0,  unit: kg m^2, range: [10.0, 30.0], source: "assumed, swept (single-wheel inertia not found; disc estimate m r^2/4)"}
-  r0:                {value: 0.46, unit: m, range: [0.42, 0.46], source: "[snippet] new wheel 920 mm (Y25 bogie data, railway-technology.com; Bizic & Petrovic 2021), worn limit 840 mm (Unirail)"}
+  r0:                {value: 0.46, unit: m, range: [0.42, 0.46], source: "[search result] new wheel 920 mm (Y25 bogie data, railway-technology.com; Bizic & Petrovic 2021), worn limit 840 mm (Unirail)"}
 
 bearing:   # journal -> axlebox spring-damper; health parameters theta
-  kB0:       {value: 1.0e9, unit: N/m, range: [0.5e9, 5.0e9], source: "assumed, swept (effective support stiffness of a freight axlebox not found; indications [snippet]: equivalent vertical stiffness of an EMU axle-box bearing 4.96e9 N/m, bearing only (J. Mech. Eng. 2023, 10.3901/JME.2023.14.179); adapter-pad vertical stiffness 8.8e8-5.3e9 N/m, three-piece-truck patent US 9,580,087)"}
-  cB:        {value: 6.74e3, unit: N s/m, range: [3.0e3, 1.2e4], source: "assumed, swept (round-1 snippet attributed 6740 N s/m to Li et al. 2019, Adv. Mech. Eng. 11(4), 10.1177/1687814019840503; round 2 found the parameter defined there but not the value)"}
+  kB0:       {value: 1.0e9, unit: N/m, range: [0.5e9, 5.0e9], source: "assumed, swept (effective support stiffness of a freight axlebox not found; indications [search result]: equivalent vertical stiffness of an EMU axle-box bearing 4.96e9 N/m, bearing only (J. Mech. Eng. 2023, 10.3901/JME.2023.14.179); adapter-pad vertical stiffness 8.8e8-5.3e9 N/m, three-piece-truck patent US 9,580,087)"}
+  cB:        {value: 6.74e3, unit: N s/m, range: [3.0e3, 1.2e4], source: "assumed, swept (round-1 search result attributed 6740 N s/m to Li et al. 2019, Adv. Mech. Eng. 11(4), 10.1177/1687814019840503; round 2 found the parameter defined there but not the value)"}
   prior_log_halfwidth: {value: 0.6931471805599453, unit: "-", source: "placeholder: factor-2 prior on kB0 and cB (log-uniform)"}
   load_exponent: {value: 0.1, unit: "-", source: "doc Eq. (12): Q ~ delta^(10/9) gives k ~ Q^(1/10)"}
   stiffness_law: {value: power, unit: "-", source: "switch: power = kB0 (W/W0)^load_exponent (default; all results to date) | series = roller contacts (bearing_geometry) in series with housing/adapter, k_housing set so the total at W0 and c_d0 equals kB0 (placeholder)"}
@@ -38,26 +40,26 @@ bearing:   # journal -> axlebox spring-damper; health parameters theta
 bearing_geometry:   # roller-contact model (wheelset doc Eqs. 10-14); used only for the health-relevance check
   # Proxy geometry of a 130 mm-bore double-row tapered roller unit (high-speed sources). Y25 bogies in DB
   # service run on cylindrical roller bearings WJ/WJP 130x240 (Schaeffler; Novotny & Babka 2025), radial
-  # clearance 130-180 um unmounted (SKF Railway Technical Handbook; Schaeffler TPI 256) [snippet]: the
+  # clearance 130-180 um unmounted (SKF Railway Technical Handbook; Schaeffler TPI 256) [search result]: the
   # health check also reports a cylindrical variant (contact angle 0) at those clearances.
-  rollers_per_row:   {value: 21,    unit: "-", range: [17, 23], source: "[snippet] 130 mm-bore double-row TRB: z = 21 (Guan et al. 2023, Sci. Rep. 13; Liu & Du 2020, IJAV 25(4)); 23 for the 150 mm 353130B freight unit (Sun et al. 2026); proxy, freight 130 mm unit not found"}
-  roller_length:     {value: 45.0,  unit: mm,   source: "[snippet] effective length 45 mm (Guan et al. 2023), proxy"}
-  roller_diameter:   {value: 23.0,  unit: mm,   range: [21.4, 26.5], source: "[snippet] 23 mm (Guan et al. 2023; Liu & Du 2020); 21.384 mm (353130B); 26.5 mm (Zhao et al. 2024)"}
-  pitch_diameter:    {value: 180.5, unit: mm,   source: "[snippet] 180.5 mm (Guan et al. 2023; Liu & Du 2020), proxy"}
-  contact_angle:     {value: 10.0,  unit: deg,  source: "[snippet] outer-race contact angle 10 deg (Liu & Du 2020; Zhao et al. 2024)"}
-  clearance_d0:      {value: 20.0,  unit: um, range: [0.0, 50.0], source: "assumed, swept (mounted axial endplay 0.025-0.381 mm [snippet], Timken AP manual; conversion to radial clearance not sourced)"}
+  rollers_per_row:   {value: 21,    unit: "-", range: [17, 23], source: "[search result] 130 mm-bore double-row TRB: z = 21 (Guan et al. 2023, Sci. Rep. 13; Liu & Du 2020, IJAV 25(4)); 23 for the 150 mm 353130B freight unit (Sun et al. 2026); proxy, freight 130 mm unit not found"}
+  roller_length:     {value: 45.0,  unit: mm,   source: "[search result] effective length 45 mm (Guan et al. 2023), proxy"}
+  roller_diameter:   {value: 23.0,  unit: mm,   range: [21.4, 26.5], source: "[search result] 23 mm (Guan et al. 2023; Liu & Du 2020); 21.384 mm (353130B); 26.5 mm (Zhao et al. 2024)"}
+  pitch_diameter:    {value: 180.5, unit: mm,   source: "[search result] 180.5 mm (Guan et al. 2023; Liu & Du 2020), proxy"}
+  contact_angle:     {value: 10.0,  unit: deg,  source: "[search result] outer-race contact angle 10 deg (Liu & Du 2020; Zhao et al. 2024)"}
+  clearance_d0:      {value: 20.0,  unit: um, range: [0.0, 50.0], source: "assumed, swept (mounted axial endplay 0.025-0.381 mm [search result], Timken AP manual; conversion to radial clearance not sourced)"}
   K_contact_coeff:   {value: 8.06e4, unit: "N mm^-10/9 per mm^(8/9)", source: "doc Eq. (13): K_i,o ~ 8.06e4 l^(8/9) (steel line contact)"}
 
 axlebox:
-  mass: {value: 100.0, unit: kg, range: [100.0, 158.4], source: "[snippet] axlebox 100 kg in a Y25 multibody model (Dusza et al. 2024, Appl. Sci. 14(11) 4545); 158.42 kg (Bustos et al. 2025, Y21 bogie rig model)"}
+  mass: {value: 100.0, unit: kg, range: [100.0, 158.4], source: "[search result] axlebox 100 kg in a Y25 multibody model (Dusza et al. 2024, Appl. Sci. 14(11) 4545); 158.42 kg (Bustos et al. 2025, Y21 bogie rig model)"}
 
 primary:   # axlebox -> fixed bogie frame (Zener element dropped)
-  kp: {value: 1.017e6, unit: N/m, range: [0.98e6, 2.6e6], source: "[snippet] Y25 primary vertical stiffness 1017 kN/m empty / 2280 kN/m loaded (Dusza 2023, Rail Vehicles 2023(3-4) 13-24, 10.53502/RAIL-175725; per axlebox or per spring set not resolved); spring-set rate 980 (tare) to 2600 N/mm (laden), EP 1484228 A1"}
-  cp: {value: 1.0e4, unit: N s/m, range: [7.0e3, 1.233e5], source: "[snippet] Y25 primary equivalent vertical damping 7 kN s/m (empty) and 123.3 kN s/m (laden), identified from measured car responses (Dusza, Golofit-Stawinska & Zboinski 2024, Appl. Sci. 14(11) 4545, Table A1; per axlebox not stated); swept"}
+  kp: {value: 1.017e6, unit: N/m, range: [0.98e6, 2.6e6], source: "[search result] Y25 primary vertical stiffness 1017 kN/m empty / 2280 kN/m loaded (Dusza 2023, Rail Vehicles 2023(3-4) 13-24, 10.53502/RAIL-175725; per axlebox or per spring set not resolved); spring-set rate 980 (tare) to 2600 N/mm (laden), EP 1484228 A1"}
+  cp: {value: 1.0e4, unit: N s/m, range: [7.0e3, 1.233e5], source: "[search result] Y25 primary equivalent vertical damping 7 kN s/m (empty) and 123.3 kN s/m (laden), identified from measured car responses (Dusza, Golofit-Stawinska & Zboinski 2024, Appl. Sci. 14(11) 4545, Table A1; per axlebox not stated); swept"}
 
 payload:   # axle load W, uniform per pass; enters only through kB = kB0 (W/W0)^(1/10)
-  W_min: {value: 5.5,  unit: t, range: [5.8, 6.6], source: "design value 5.5 t; [snippet] Eanos tare 23.1 t (Wascosa), 23.5 t (DB Cargo), 24.0 t (Greenbrier), 24.5-26.5 t (VTG, Tatravagonka, Transwagon), i.e. empty axle load 5.8-6.6 t; effect of 5.8-6.6 t on the bound in results/p4/sweep.json"}
-  W_max: {value: 22.5, unit: t, source: "[snippet] Y25 bogie axle load 22.5 t (railway-technology.com, Y25 bogie)"}
+  W_min: {value: 5.5,  unit: t, range: [5.8, 6.6], source: "design value 5.5 t; [search result] Eanos tare 23.1 t (Wascosa), 23.5 t (DB Cargo), 24.0 t (Greenbrier), 24.5-26.5 t (VTG, Tatravagonka, Transwagon), i.e. empty axle load 5.8-6.6 t; effect of 5.8-6.6 t on the bound in results/p4/sweep.json"}
+  W_max: {value: 22.5, unit: t, source: "[search result] Y25 bogie axle load 22.5 t (railway-technology.com, Y25 bogie)"}
   W0:    {value: 22.5, unit: t, source: "reference load for kB0 (loaded)"}
 
 operation:

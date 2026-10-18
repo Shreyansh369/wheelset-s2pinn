@@ -166,7 +166,8 @@ def table1():
     write("table1_parameters", "Table 1. Representative freight wagon and track: model parameters and sources",
           md(["Group", "Parameter", "Value", "Range", "Unit", "Source"], rows), ["config/params.yaml", "config/track.yaml"],
           [f"{n_as} of {len(rows)} entries were not found in the literature (marked 'assumed, swept'); their effect is in Table 15. "
-           "[snippet] = value seen in search results; the full-text status of each source is in docs/parameter_sources.md."])
+           "'Verified (fetch 19 Oct 2026)' = checked against the source document; quotes, URLs and the status of each "
+           "source are in docs/table1_sources_candidates.md and docs/parameter_sources.md."])
 
 
 # ----------------------------------------------------------------------------- Table 2

@@ -27,7 +27,28 @@ def clean(s):
 
 
 UNVERIFIED_NEW = {  # entries added after the search-based status check; to be verified by hand
-    "li2019axlebox": "added 2026-10-17 for the novelty table; authors, volume and DOI from a DOAJ listing (search snippet), UNVERIFIED",
+    "li2019axlebox": "added 2026-10-17 for the novelty table; c_B 6740 N s/m in Table 3 verified by full-text fetch 19 Oct 2026; check the remaining bibliographic fields",
+    "bizic2024": "Table 1 source, content verified by full-text fetch 19 Oct 2026; title and DOI from a search result: check",
+    "jin2016": "Table 1 source, content verified by full-text fetch 19 Oct 2026 (via Ahmedov & Mirsaidov 2023); AUTHORS AND TITLE NOT KNOWN: fill from the DOI",
+    "ahmedov2023": "Table 1 source, content verified by full-text fetch 19 Oct 2026; title and pages from a search result: check",
+    "han2025": "Table 1 source, content verified by full-text fetch 19 Oct 2026; author initials not known, title from a search result: check",
+    "knuth2025": "Table 1 source, content verified by full-text fetch 19 Oct 2026; title from a search result: check",
+    "deman2000": "Table 1 source, content verified by full-text fetch 19 Oct 2026; title from the TU Delft repository copy, pages not known: check",
+    "thompson_eprint436918": "Table 1 source, content verified by full-text fetch 19 Oct 2026; accepted manuscript, journal version and year not known: check",
+    "jones1996": "Table 1 source, content verified by full-text fetch 19 Oct 2026; title from the IOA proceedings file name: check",
+    "sanudo2022": "Table 1 source, content verified by full-text fetch 19 Oct 2026; title and authors from a search result: check",
+    "unirail_ba004": "Table 1 source, content verified by full-text fetch 19 Oct 2026; vendor datasheet, add URL and access date",
+    "interpipe_axles": "Table 1 source, content verified by full-text fetch 19 Oct 2026; manufacturer page, add URL and access date",
+    "railwayspares_ba004": "Table 1 source, content verified by full-text fetch 19 Oct 2026; vendor listing, add URL and access date",
+    "skf_rth2012": "Table 1 source, content verified by full-text fetch 19 Oct 2026; extract of ch. 4, p. 89 (c) SKF 2012; full title from a search result: check",
+    "schaeffler_wl07519": "Table 1 source, content verified by full-text fetch 19 Oct 2026; add year and URL",
+    "skf_evol2005": "Table 1 source, content verified by full-text fetch 19 Oct 2026; add URL",
+    "skf_evol2022": "Table 1 source, content verified by full-text fetch 19 Oct 2026; TITLE NOT KNOWN: fill in; add URL",
+    "tatravagonka_y25": "Table 1 source, content verified by full-text fetch 19 Oct 2026; add URL and access date",
+    "wascosa_eanos": "Table 1 source, content verified by full-text fetch 19 Oct 2026; add access date",
+    "railcargo_eanos": "Table 1 source, content verified by full-text fetch 19 Oct 2026; add year and URL",
+    "tstg_rails": "Table 1 source, content verified by full-text fetch 19 Oct 2026; add year and URL",
+    "britishsteel_rails": "Table 1 source, content verified by full-text fetch 19 Oct 2026; add year and URL",
 }
 
 

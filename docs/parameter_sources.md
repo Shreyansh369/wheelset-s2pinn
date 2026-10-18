@@ -1,10 +1,50 @@
 # Parameter sources: representative freight wagon (Y25, 22.5 t) on ballasted 60E1 track
 
-Sourcing round 1: 2026-10-15, four web-search agents; round 2 (full-text checks) is recorded at the end.
+Sourcing round 1: 2026-10-15, four web-search agents; round 2 is recorded at the end. **Round 3 (19 Oct 2026, full-text
+check) comes first and supersedes both:** rounds 1 and 2 are kept below as history.
 Rules: a value counts as sourced only if it was seen in a search result or fetched page. In round 1 no
-page could be fetched (DNS failures, proxy refusals), so **every value below was seen in a search-result
+page could be fetched (DNS failures, proxy refusals), so **every round-1 value was seen in a search-result
 snippet only**, not checked against the full text. "Assumed, swept" = not found; varied over the stated
 range in `results/p4/sweep.json`. Used values are in `config/params.yaml` and `config/track.yaml`.
+
+## Round 3 (19 Oct 2026): full-text check. This section supersedes rounds 1 and 2 below.
+
+The authors checked the Table 1 sources by full-text fetch (Claude, 19 Oct 2026). Statements, URLs and the
+per-row status are in `docs/table1_sources_candidates.md`. The source tags in `config/params.yaml` and
+`config/track.yaml` now read "verified (fetch 19 Oct 2026)". Only source text changed: every number and range is
+as before (`scripts/check_config_values.py`; values-v2 config hash b8adde501aa3 unchanged).
+
+| Parameter | Used | Verified source |
+|---|---|---|
+| c_B | 6740 N s/m, swept 3000–12000 | Li, Sun, Meng, Huo, Dong & Wang 2019, Adv. Mech. Eng. 11(4), doi 10.1177/1687814019840503, Table 3 (CHR380 EMU axlebox bearing; no freight value found) |
+| Wheel mass; wheel Ø new/worn; axle; wheelset | 304 kg; 920/840 mm; axle 130×191 mm, 390 kg; 998 kg | Unirail, Wheelset type BA004 datasheet (unirail.bg) |
+| Axle length; body diameter | 2180 mm; 173 mm | Interpipe, Railway axles (BA 002/BA 302, EN 13261) |
+| Wheel-seat diameter | 200 mm | BA004 wheel hub bore 200 mm (vendor listing, railwayspare-parts.com) |
+| Journal diameter | 130 mm | Unirail BA004 (EN 13261 130×191) |
+| 2s; 2b | 1500 mm; 2000 mm (between the axle-box cases, as defined in the source) | Bižić & Petrović 2021 (MTC 19(3) art. 2113); Bižić & Petrović 2024 (Acta Polytech. Hung. 21(1) 153–166) |
+| Wheelset modal damping | 1%, swept 0.1–2% | Chaar 2007, TRITA AVE 2007:17, §2.1 p. 8 ("less than 2%"); 0.1–1.0% from Jin 2016, Proc IMechE F 230(3) 643–661, doi 10.1177/0954409714554964, as reported by Ahmedov & Mirsaidov 2023, MPM 51(2), doi 10.18149/MPM.5122023_4 |
+| First bending mode (damping reference) | 96 Hz; swept 96–115 | Han, Li, Zhang & Zhang 2025, Sci. Rep. 15, 33484, doi 10.1038/s41598-025-15781-4 (C70 wagon, K6 bogies). Mu et al. 2021 deleted |
+| Radial clearance WJ/WJP 130×240 P | 130 µm, swept 0–180 | SKF Railway Technical Handbook Vol. 1, ch. 4, p. 89 (extract, ©SKF 2012) |
+| Bearing type on Y25 | WJ/WJP 130×240 | Schaeffler WL 07519 |
+| 60E1 A; I; crown radius | 76.70 cm²; 3038.3 cm⁴; 0.30 m | TSTG Schienen Technik catalogue (60E1) and Knuth et al. 2025 Table 1 (7.7e-3 m²); British Steel, Rail profiles and grades (EN 13674-1); R300 head radius of the 60E1 profile (EN 13674-1; drawing in the TSTG catalogue) |
+| Rail shear coefficient | 0.40 (0.34–0.40) | 0.393 UIC60 vertical (Knuth, Squicciarini & Thompson 2025, JSV 618B 119323, doi 10.1016/j.jsv.2025.119323, Table 1, from Kostovasilis et al.); 0.4 (de Man 2000, HERON 45(1), 133-FB ≈ UIC54); 0.34 (Grassie et al., via de Man) |
+| Rail pad stiffness | 200 MN/m, swept 80–800 | within the published 105–800 MN/m: Knuth et al. 2025 Table 2 (105); Thompson, Zhang, Ntotsios & Squicciarini, accepted manuscript, Southampton eprint 436918, Table 1 (800/120) |
+| Pad loss factor | 0.2 (0.1–0.25) | 0.25/0.2 (Thompson et al., eprint 436918, Table 1); 0.15 (Knuth et al. 2025 Table 2); 0.1–0.3 (Jones & Edwards, Internoise 1996) |
+| Sleeper spacing | 0.60 m (0.60–0.65) | 0.6 m (Sañudo et al. 2022, Infrastructures 7(6) 83, doi 10.3390/infrastructures7060083); 0.65 m (Thompson et al., eprint 436918, Table 1) |
+| W_max; Y25 wheelbase | 22.5 t; 1800 mm | Tatravagónka Y25Lssi(f)-D data page; Wascosa Eanos datasheet (axle load 22.5 t) |
+| Pivot pitch; length over buffers | 10.70 m; 15.74 m | Rail Cargo Group Eanos fact sheet; Wascosa (length over buffers 15,740 mm; outer axle base 12,500 mm) |
+| W_min | 5.5 t design | tare 23,100 kg ±2% (Wascosa), 22.6–25.3 t (Rail Cargo): empty axle load 5.65–6.3 t. The sweep (5.8–6.6 t) was not rerun |
+| Unsprung-mass 1σ (Table 6) | 4% | SKF Evolution, "New axlebox concept for heavy loads", 8 Dec 2005 ("around 20 kg per axlebox … unsprung weight of the wheelset by around 4 %") |
+| Axlebox mass | 100 kg (Dusza et al. 2024, full text) | indication: SKF Y25 axlebox housing 80 kg (SKF Evolution, 26 Sep 2022); the swept upper end 158.4 kg has no verified source |
+
+**Deleted (not verified):** the k_B0 "indications" (US 9,580,087 has no vertical stiffness; J. Mech. Eng. 2023 not
+reachable); Bustos et al. 2025 158.42 kg (not in the paper; Y21 bogie); the Hasan 2020 k_H0 cross-check (also
+removed from §2 and Table 6; the 2.3e9 N/m sweep end stays, marked unverified); Mu et al. 2021; EUROBOLT;
+Thompson et al. 2007 as a value source (no longer cited).
+
+**Still open:** k_B0, wheel diametral inertia, WJ/WJP roller count, length and diameter, mounted clearance, the
+dust-guard collar and section boundaries, the 2187.6 mm axle-length upper end, the tapered (secondary) bearing
+geometry ("unverified search result" in the config; Guan et al. 2023 is cited in §4 for that unit).
 
 ## Wheelset and axle
 
