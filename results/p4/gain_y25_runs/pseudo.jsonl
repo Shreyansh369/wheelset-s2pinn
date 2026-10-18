@@ -19,3 +19,4 @@
 {"case": "kH0_x0.85", "estimator": "nominal", "x": 0.0, "log_k_hat": 20.573302987368283, "converged": true, "wall_s": 337.49456333799753}
 {"case": "eta_f_x0.82", "estimator": "nominal", "x": 0.1, "log_k_hat": 20.464250740795702, "converged": true, "wall_s": 442.7970004969975}
 {"case": "eta_f_x1.22", "estimator": "nominal", "x": 0.1, "log_k_hat": 20.443939332249037, "converged": true, "wall_s": 402.6700903040037}
+{"case": "kH0_x0.85", "estimator": "nominal", "x": 0.02, "log_k_hat": 20.55128083708918, "converged": true, "wall_s": 391.75391498199315}
