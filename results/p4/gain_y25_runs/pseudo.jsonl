@@ -54,3 +54,4 @@
 {"case": "kf_x0.8", "estimator": "coest", "x": 0.05, "log_k_hat": 20.509452836766997, "converged": true, "wall_s": 1563.4797924059967}
 {"case": "eta_f_x0.82", "estimator": "coest", "x": 0.02, "log_k_hat": 20.54848966098099, "converged": true, "wall_s": 1043.5165522919997}
 {"case": "control", "estimator": "coest", "x": 0.1, "log_k_hat": 20.455385406595575, "converged": true, "wall_s": 1128.6411283980124}
+{"case": "kf_x1.2", "estimator": "coest", "x": 0.1, "log_k_hat": 20.45538650248005, "converged": true, "wall_s": 1104.7773620149965}
