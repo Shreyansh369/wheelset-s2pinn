@@ -14,3 +14,4 @@
 {"case": "eta_f_x0.82", "estimator": "nominal", "x": 0.02, "log_k_hat": 20.54446451609425, "converged": true, "wall_s": 374.3465670309961}
 {"case": "eta_f_x1.22", "estimator": "nominal", "x": 0.02, "log_k_hat": 20.533391218495332, "converged": true, "wall_s": 356.4088692600053}
 {"case": "kf_x1.2", "estimator": "nominal", "x": 0.1, "log_k_hat": 20.4068911858552, "converged": true, "wall_s": 448.7405377480027}
+{"case": "eta_f_x0.82", "estimator": "nominal", "x": 0.05, "log_k_hat": 20.515121358319234, "converged": true, "wall_s": 384.3298947590083}
