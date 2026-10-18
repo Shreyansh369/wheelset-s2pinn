@@ -1,0 +1,19 @@
+# Byte config hashes (recorded before values-v2) -> values-v2 hash of the same values.
+# Written by scripts/check_config_values.py --write after it found no numeric or structural
+# difference; make_provenance_check.py accepts an aliased recorded hash. Do not edit by hand.
+aliases:
+  "e0a22f267362": "b8adde501aa3"
+  "10d9b91451c2": "77c60818b705"
+proof:
+  "e0a22f267362":
+    config_dir: "config"
+    byte_hash_commit: "f965b56e60e8adcf050fa8330680ee2a01d9b466"
+    values_v2: "b8adde501aa3"
+    checked_against: "working tree at 4c2df46804d09b12f614977aeb933d6c5858f9ab"
+    date: "2026-10-18T21:55:13Z"
+  "10d9b91451c2":
+    config_dir: "config/snapshots/headline_freight_v1"
+    byte_hash_commit: "f965b56e60e8adcf050fa8330680ee2a01d9b466"
+    values_v2: "77c60818b705"
+    checked_against: "working tree at 4c2df46804d09b12f614977aeb933d6c5858f9ab"
+    date: "2026-10-18T21:55:13Z"
