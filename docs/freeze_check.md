@@ -6,15 +6,17 @@ Every number in the abstract, highlights, conclusions and cover letter, with the
 
 | Macro | Value | Source | Configuration |
 |---|---|---|---|
-| `\HLBiasAbsMax` | 0.07 | results/p3/headline_v2_kb120_attr_freight.json | current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
-| `\HLRMSEMin` | 0.19 | results/p3/headline_v2_kb120_attr_freight.json | current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
-| `\HLRMSEMax` | 0.20 | results/p3/headline_v2_kb120_attr_freight.json | current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
-| `\HLRatioCRBMax` | 1.08 | results/p3/headline_v2_kb120_attr_freight.json | current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
+| `\HLBiasAbsMax` | 0.05 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
+| `\HLRMSEMin` | 0.18 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
+| `\HLRMSEMax` | 0.21 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
+| `\HLRatioCRBMax` | 1.13 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
 | `\IgnoreCouplingForty` | -5.6 | results/p4/ignore_coupling.json | current (representative wagon, Table 1) |
 | `\ICDiffMean` | 0.059 | results/p4/inverse_crime.json | current (representative wagon, Table 1) |
 | `\BudgetCoest` | 10.0 | results/p2/model_form_mw_sensitivity.json | current (representative wagon, Table 1) |
 | `\BandEmptyMDCFiftyMin` | 0.75 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCFiftyMax` | 0.83 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
+| `\BandEmptyMDCFiftyConsMin` | 0.94 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
+| `\BandEmptyMDCFiftyConsMax` | 1.03 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCTwoHundredMin` | 0.35 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCTwoHundredMax` | 0.39 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\EffPctTenEmpty` | -0.74 | results/p3/bearing_clearance.json | current (representative wagon, Table 1) |
@@ -23,15 +25,17 @@ Every number in the abstract, highlights, conclusions and cover letter, with the
 
 | Macro | Value | Source | Configuration |
 |---|---|---|---|
-| `\HLBiasAbsMax` | 0.07 | results/p3/headline_v2_kb120_attr_freight.json | current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
-| `\HLRMSEMin` | 0.19 | results/p3/headline_v2_kb120_attr_freight.json | current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
-| `\HLRMSEMax` | 0.20 | results/p3/headline_v2_kb120_attr_freight.json | current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
-| `\HLRatioCRBMax` | 1.08 | results/p3/headline_v2_kb120_attr_freight.json | current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config) |
+| `\HLBiasAbsMax` | 0.05 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
+| `\HLRMSEMin` | 0.18 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
+| `\HLRMSEMax` | 0.21 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
+| `\HLRatioCRBMax` | 1.13 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
 | `\IgnoreCouplingForty` | -5.6 | results/p4/ignore_coupling.json | current (representative wagon, Table 1) |
 | `\ICDiffMean` | 0.059 | results/p4/inverse_crime.json | current (representative wagon, Table 1) |
 | `\BudgetCoest` | 10.0 | results/p2/model_form_mw_sensitivity.json | current (representative wagon, Table 1) |
 | `\BandEmptyMDCFiftyMin` | 0.75 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCFiftyMax` | 0.83 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
+| `\BandEmptyMDCFiftyConsMin` | 0.94 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
+| `\BandEmptyMDCFiftyConsMax` | 1.03 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 
 ## Numbers typed by hand (highlights, cover letter)
 

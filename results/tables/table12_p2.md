@@ -6,6 +6,6 @@
 | Corrugation near P2 | 9.36 | 46% | 4.3–613 | 6% | 7.74 | 7.58–7.89 | 0.45 |
 
 
-With corrugation the multi-pass point estimate stays within 2% of the truth, but its profile interval under-covers (0.45 of 90%); the cause is not yet diagnosed (open item).
+With corrugation the multi-pass median stays within 0.6% of the truth, but its profile interval under-covers (0.45 of 90%); the cause is not yet diagnosed (open item).
 
 Source: `results/p2/scope_p2_hysteretic.json`

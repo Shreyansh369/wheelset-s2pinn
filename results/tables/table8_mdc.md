@@ -1,4 +1,4 @@
-# Table 8. Minimum detectable decrease of k_B0 (5% false alarm, 90% detection), mixed payloads (pinned headline configuration)
+# Table 8. Minimum detectable decrease of k_B0 (5% false alarm, 90% detection), mixed payloads
 
 | N per period | SNR (dB) | Estimated globals | CRB of k_B0 (%) | MDC from CRB (%) |
 |---|---|---|---|---|
@@ -16,9 +16,9 @@
 | N per period | SNR (dB) | MDC (%) | SE inflation | Calibrated MDC (%) |
 |---|---|---|---|---|
 | 50 | 20 | 0.84 | 1.00 | 0.84 |
-| 50 | 40 | 0.73 | 1.07 | 0.78 |
+| 50 | 40 | 0.73 | 1.08 | 0.79 |
 | 200 | 20 | 0.42 | 1.00 | 0.42 |
-| 200 | 40 | 0.37 | 1.07 | 0.39 |
+| 200 | 40 | 0.37 | 1.08 | 0.40 |
 
 
 MDC = (1.645 + 1.282) √2 · CRB for two periods of N passes, 60–110 km/h, payload 5.5–22.5 t. Payload-band limits: Section 4 (results/p4/banded.json).
