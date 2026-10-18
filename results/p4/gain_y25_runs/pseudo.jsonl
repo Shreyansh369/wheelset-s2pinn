@@ -24,3 +24,4 @@
 {"case": "unsprung_x1.05", "estimator": "nominal", "x": 0.0, "log_k_hat": 20.477878272506253, "converged": true, "wall_s": 421.00873103699996}
 {"case": "unsprung_x0.95", "estimator": "nominal", "x": 0.0, "log_k_hat": 20.651928834664975, "converged": true, "wall_s": 537.3460375519935}
 {"case": "kH0_x0.85", "estimator": "nominal", "x": 0.05, "log_k_hat": 20.519605256721842, "converged": true, "wall_s": 484.5753825950087}
+{"case": "kH0_x1.15", "estimator": "nominal", "x": 0.02, "log_k_hat": 20.532605104469614, "converged": true, "wall_s": 459.51833591100876}
