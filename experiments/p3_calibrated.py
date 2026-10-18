@@ -82,9 +82,15 @@ def main():
     r40 = use[40][1]
     K = [x for x in rows(RESULTS_DIR / "p3" / "kappa_coest_runs" / KAPPA_ROWS) if x["rep"] < (40 if KAPPA_ROWS == "rows_frozen.jsonl" else 20)]
 
+    # replicates with singular information (se = inf) have no interval: coverage on the finite-SE replicates,
+    # with the singular ones also counted as not covered as a sensitivity line (as p4_banded)
+    Kf = [x for x in K if math.isfinite(x["se"])]
+
     def kcov(f, kap):
-        k = int(sum(abs(x["D_hat"] - x["D_true"]) <= Z * math.sqrt((f * x["se"]) ** 2 + (kap * x["D_hat"]) ** 2) for x in K))
-        return {"covered": k, "n": len(K), "coverage": k / len(K), "ci95": cp_interval(k, len(K))}
+        k = int(sum(abs(x["D_hat"] - x["D_true"]) <= Z * math.sqrt((f * x["se"]) ** 2 + (kap * x["D_hat"]) ** 2) for x in Kf))
+        return {"covered": k, "n": len(Kf), "coverage": k / len(Kf), "ci95": cp_interval(k, len(Kf)),
+                "n_all": len(K), "singular_reps": sorted(x["rep"] for x in K if not math.isfinite(x["se"])),
+                "coverage_singular_as_not_covered": k / len(K), "ci95_singular_as_not_covered": cp_interval(k, len(K))}
     out["kappa_replicates"] = {"snr_db": 40, "inflation": r40, "kappa": KAPPA, "uncalibrated_stat": kcov(1.0, 0.0),
                                "uncalibrated_kappa": kcov(1.0, KAPPA), "calibrated_stat": kcov(r40, 0.0),
                                "calibrated_kappa": kcov(r40, KAPPA),

@@ -189,6 +189,13 @@ def _rows(fp):
     return [json.loads(l) for l in fp.read_text().splitlines() if l.strip()] if fp.exists() else []
 
 
+def _covered(r, k):
+    """Interval coverage of one replicate; None when the information was singular (se = inf, c_B at its bound)."""
+    if not math.isfinite(r["se"]):
+        return None
+    return abs(r["D_hat"] - r["D_true"]) <= 1.645 * math.sqrt(r["se"] ** 2 + (k * r["D_hat"]) ** 2)
+
+
 def summarise():
     out = {}
     KR = OUT / "kappa_coest_runs" / "rows_frozen.jsonl"          # frozen configuration, empty band, when present
@@ -199,33 +206,42 @@ def summarise():
         out["kappa_coest_stress"] = [{"rep": r["rep"], "kf": r["misspec"]["kf"], "true_change_pct": -100 * r["x"],
                                       "est_change_pct": 100 * (math.exp(r["D_hat"]) - 1),
                                       "error_frac": (r["D_hat"] - r["D_true"]) / abs(r["D_true"]),
-                                      "covered": abs(r["D_hat"] - r["D_true"]) <= 1.645 * math.sqrt(r["se"] ** 2 + (KAPPA_COEST * r["D_hat"]) ** 2)}
+                                      "covered": _covered(r, KAPPA_COEST)}
                                      for r in sorted(Rall, key=lambda r: r["rep"]) if r["rep"] >= N_KAPPA]
     if R:
+        # replicates with singular information (se = inf) have no interval: coverage, inflation and the
+        # empirical kappa use the finite-SE replicates only (as the banded pairs, p4_banded); the singular
+        # replicates are listed and also counted as not covered in a sensitivity line
+        Rf = [r for r in R if math.isfinite(r["se"])]
+        sing = sorted(r["rep"] for r in R if not math.isfinite(r["se"]))
+
         def cov(k):
-            c = [abs(r["D_hat"] - r["D_true"]) <= 1.645 * math.sqrt(r["se"] ** 2 + (k * r["D_hat"]) ** 2) for r in R]
+            c = [_covered(r, k) for r in Rf]
             return sum(c), len(c)
         ks, n = cov(KAPPA_COEST)
         k0, _ = cov(0.0)
         ge = [(r["D_hat"] - r["D_true"]) / abs(r["D_true"]) for r in R]
+        gef = [(r["D_hat"] - r["D_true"]) / abs(r["D_true"]) for r in Rf]
         worst = sorted(R, key=lambda r: -abs((r["D_hat"] - r["D_true"]) / r["D_true"]))[:5]
         # inflation of the combined interval needed for 90% coverage under simultaneous model errors: the
         # smallest r with |D_hat - D_true| <= 1.645 r sqrt(se^2 + (kappa D_hat)^2) in at least 90% of replicates
-        ratio = sorted(abs(r["D_hat"] - r["D_true"]) / (1.645 * math.sqrt(r["se"] ** 2 + (KAPPA_COEST * r["D_hat"]) ** 2)) for r in R)
+        ratio = sorted(abs(r["D_hat"] - r["D_true"]) / (1.645 * math.sqrt(r["se"] ** 2 + (KAPPA_COEST * r["D_hat"]) ** 2)) for r in Rf)
         r90 = float(ratio[math.ceil(0.9 * n) - 1])
         out["kappa_coest"] = {
-            "n": n, "kappa": KAPPA_COEST, "inflation_for_90pct": r90, "ratio_sorted": [float(x) for x in ratio], "coverage": ks / n, "coverage_ci95": cp_interval(ks, n),
+            "n": n, "n_all": len(R), "n_finite_se": n, "singular_reps": sing,
+            "kappa": KAPPA_COEST, "inflation_for_90pct": r90, "ratio_sorted": [float(x) for x in ratio], "coverage": ks / n, "coverage_ci95": cp_interval(ks, n),
             "coverage_statistical_only": k0 / n, "coverage_statistical_only_ci95": cp_interval(k0, n),
+            "coverage_singular_as_not_covered": ks / len(R), "coverage_singular_as_not_covered_ci95": cp_interval(ks, len(R)),
             "rms_change_error_frac": float(np.sqrt(np.mean(np.square(ge)))),
             "mean_change_error_frac": float(np.mean(ge)),
-            "kappa_empirical_rms": float(np.sqrt(max(np.mean(np.square(ge)) - np.mean([(r["se"] / r["D_true"]) ** 2 for r in R]), 0.0))),
+            "kappa_empirical_rms": float(np.sqrt(max(np.mean(np.square(gef)) - np.mean([(r["se"] / r["D_true"]) ** 2 for r in Rf]), 0.0))),
             "kf_draw_range": [min(r["misspec"]["kf"] for r in R), max(r["misspec"]["kf"] for r in R)],
             "n_kf_ge_2": sum(r["misspec"]["kf"] >= 2 for r in R),
             "abs_bias_base_pct_rms": float(np.sqrt(np.mean([(math.exp(r["abs_err_base"]) - 1) ** 2 for r in R])) * 100),
             "worst": [{"rep": r["rep"], "misspec": r["misspec"], "true_change_pct": -100 * r["x"],
                        "est_change_pct": 100 * (math.exp(r["D_hat"]) - 1),
                        "error_frac": (r["D_hat"] - r["D_true"]) / abs(r["D_true"]),
-                       "covered": abs(r["D_hat"] - r["D_true"]) <= 1.645 * math.sqrt(r["se"] ** 2 + (KAPPA_COEST * r["D_hat"]) ** 2)}
+                       "covered": _covered(r, KAPPA_COEST)}
                       for r in worst],
             "all_converged": all(r["converged"] for r in R),
             "wall_s_median": float(np.median([r["wall_s"] for r in R]))}
