@@ -45,7 +45,7 @@
    "results/p3/robust_se.json",
    "results/p3/calibration.json"
   ],
-  "caption": "Relative change under simultaneous model errors (\u03ba replicates) (earlier configuration: metro wheel layout, BS113A rail, +-30-bin kernel)"
+  "caption": "Relative change under simultaneous model errors (\u03ba replicates) (partly earlier configuration: metro wheel layout, BS113A rail, +-30-bin kernel)"
  },
  "table1_parameters": {
   "sources": [
