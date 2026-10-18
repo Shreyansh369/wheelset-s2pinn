@@ -49,9 +49,10 @@ It keeps the Whittle form but replaces v_ik by the exact expected periodogram:
 
   v_ik = Σ_m sinc²((f_m − f_ik)T)/M · |H(f_m)|² · 2G(γ_m) Δγ · g(m) + e_i.
 
-The sum runs over a grid M = 4 times finer than the bins, truncated at ±30 bins, over the analysis
-band. With this, the P2 estimates are consistent: 7.64–7.79 MN/m² against a truth of 7.7, with an
-SE of about 0.5%. For a single wheelset with smooth H, the two forms agree, and the bin-sampled
+The sum runs over a grid M = 4 times finer than the bins, truncated at ±120 bins (the frozen default
+of `MultiPassWhittle`; the earlier ±30-bin truncation biased k_B0 upwards by about 0.03 pp, see the
+bias diagnosis), over the analysis band. With this, the P2 estimates are consistent: 7.64–7.79 MN/m²
+against a truth of 7.7, with an SE of about 0.5% (that P2 check was run with the ±30-bin kernel). For a single wheelset with smooth H, the two forms agree, and the bin-sampled
 one is used there.
 
 Correlation between neighbouring bins is still ignored, as in Sykulski et al. Their analysis
