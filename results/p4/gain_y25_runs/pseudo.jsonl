@@ -1,3 +1,4 @@
 {"case": "control", "estimator": "nominal", "x": 0.0, "log_k_hat": 20.560747568684754, "converged": true, "wall_s": 321.45228330900136}
 {"case": "control", "estimator": "nominal", "x": 0.02, "log_k_hat": 20.540543861816168, "converged": true, "wall_s": 345.18072559300344}
 {"case": "control", "estimator": "nominal", "x": 0.05, "log_k_hat": 20.509453935473942, "converged": true, "wall_s": 410.2236127799988}
+{"case": "kf_x0.8", "estimator": "nominal", "x": 0.0, "log_k_hat": 20.51389528239933, "converged": true, "wall_s": 456.9211434730096}
