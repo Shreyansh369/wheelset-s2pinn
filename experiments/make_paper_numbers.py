@@ -214,6 +214,8 @@ def section4(m, miss):
         load("p3/validation_mc.json")     # attribution: the kappa replicates (earlier configuration), calibrated
         m["KapCalCovered"], m["KapCalN"] = str(k["calibrated_kappa"]["covered"]), str(k["calibrated_kappa"]["n"])
         m["KapCalLo"], m["KapCalHi"] = _f(k["calibrated_kappa"]["ci95"][0]), _f(k["calibrated_kappa"]["ci95"][1])
+        kc = k["calibrated_kappa"]
+        m["KapCalNAll"], m["KapCalNSing"] = str(kc.get("n_all", kc["n"])), str(len(kc.get("singular_reps", [])))
         load("p3/calibrated.json")
         md = {(x["N"], x["snr_db"]): x for x in d["mdc"]}
         for (N, snr), w in (((50, 40), "FiftyForty"), ((50, 20), "FiftyTwenty"), ((200, 40), "TwoHundredForty"), ((200, 20), "TwoHundredTwenty")):
@@ -226,7 +228,8 @@ def section4(m, miss):
             r = {(x["N"], x["snr_db"]): x for x in mb["rows"] if x["estimator"] == "coest"}
             for (N, snr), w in (((50, 40), "FiftyForty"), ((50, 20), "FiftyTwenty"), ((200, 40), "TwoHundredForty"), ((200, 20), "TwoHundredTwenty")):
                 m[f"MDC{w}"] = _f(r[(N, float(snr))]["mdc_pct"])
-    block("p3/calibrated.json", calib, ["CalBiasForty", "CalInflForty", "CalTwentyRawCov", "KapCalCovered", "KapCalN", "KapCalLo", "KapCalHi"]
+    block("p3/calibrated.json", calib, ["CalBiasForty", "CalInflForty", "CalTwentyRawCov", "KapCalCovered", "KapCalN", "KapCalLo", "KapCalHi",
+                                        "KapCalNAll", "KapCalNSing"]
           + [f"CalSplit{w}{k}" for w in "AB" for k in ("Cov", "k", "n", "Lo", "Hi", "Infl")]
           + [f"MDC{a}{w}" for a in ("", "Cal") for w in ("FiftyForty", "FiftyTwenty", "TwoHundredForty", "TwoHundredTwenty")])
 
@@ -317,6 +320,18 @@ def section4(m, miss):
         m["KapCoestLo"], m["KapCoestHi"] = _f(k["coverage_ci95"][0]), _f(k["coverage_ci95"][1])
         m["KapCoestRMS"], m["KapCoestMean"] = _f(k["rms_change_error_frac"], 3), _f(k["mean_change_error_frac"], 3)
         m["KapCoestKfMin"], m["KapCoestKfMax"] = _f(k["kf_draw_range"][0]), _f(k["kf_draw_range"][1])
+        m["KapCoestNAll"], m["KapCoestNSing"] = str(k.get("n_all", k["n"])), str(len(k.get("singular_reps", [])))
+        sm = k.get("coverage_singular_as_not_covered_ci95", k["coverage_ci95"])
+        m["KapCoestCovSingMiss"] = _f(k.get("coverage_singular_as_not_covered", k["coverage"]))
+        m["KapCoestCovSingMissLo"], m["KapCoestCovSingMissHi"] = _f(sm[0]), _f(sm[1])
+        m["KapInflRank"], m["KapInflOf"] = str(math.ceil(0.9 * k["n"])), str(k["n"])
+        at = d.get("kappa_coest_attribution")
+        if at:
+            m["KapAttrAxleCorr"] = _f(at["pearson_error_frac_vs_log_factor"]["axle_damp_scale"])
+            m["KapAttrAxleRsq"], m["KapAttrAllRsq"] = _f(at["r2_axle_damp_only"]), _f(at["r2_all_five"])
+            m["KapAttrAxleSlope"] = _f(at["slope_axle_damp_per_log"])
+            m["KapAttrResidRMS"] = _f(at["resid_rms_error_frac_after_axle_damp"], 3)
+            m["KapCBBoundN"] = str(at["cb_lower_bound_n"])
         cur = any(x.get("file", "").endswith("_freight.jsonl") for x in d["drift_mc"])   # current config if present
         dm = {(x["estimator"], x["kf_factor"]): x for x in d["drift_mc"]
               if (x.get("file", "").endswith("_freight.jsonl") if cur else not x.get("file", "").endswith("_freight.jsonl"))}
@@ -333,7 +348,12 @@ def section4(m, miss):
             if (sd, v, snr) in bd:
                 m[f"BD{w}Bias"], m[f"BD{w}Ratio"] = _f(bd[(sd, v, snr)]["bias_pct"], 3), _f(bd[(sd, v, snr)]["rmse_over_crb"])
     block("p3/validation_mc.json", vmc, ["KapCoestCovered", "KapCoestN", "KapCoestLo", "KapCoestHi", "KapCoestRMS", "KapCoestMean", "KapCoestKfMin",
-                                         "KapCoestKfMax"] + [f"DriftMC{w}{k}" for w in ("Nom", "Coest") for k in ("FA", "N", "Lo", "Hi", "Mean")])
+                                         "KapCoestKfMax", "KapCoestNAll", "KapCoestNSing", "KapCoestCovSingMiss", "KapCoestCovSingMissLo",
+                                         "KapCoestCovSingMissHi", "KapInflRank", "KapInflOf"]
+          + [f"DriftMC{w}{k}" for w in ("Nom", "Coest") for k in ("FA", "N", "Lo", "Hi", "Mean")])
+    for k in ("KapAttrAxleCorr", "KapAttrAxleRsq", "KapAttrAllRsq", "KapAttrAxleSlope", "KapAttrResidRMS", "KapCBBoundN"):
+        if k not in m:
+            m[k] = miss("p3/validation_mc.json (kappa_coest_attribution)")
 
     def breg(d):
         j = d["joint_ols"]
@@ -513,8 +533,12 @@ def section4(m, miss):
 
     def conservative(v):                  # detection limits allowing for simultaneous model errors
         bd = load("p4/banded.json")
-        r = load("p3/validation_mc.json")["kappa_coest"]["inflation_for_90pct"]     # attribution: kappa replicates
+        kc = load("p3/validation_mc.json")["kappa_coest"]                           # attribution: kappa replicates
+        # pre-registered rule (docs/paper1_outline.md): max(finite-SE inflation, inflation over all replicates with
+        # the c_B-fixed sensitivity SEs); the finite-SE value alone when the sensitivity SEs are missing
+        r = kc.get("inflation_conservative", kc["inflation_for_90pct"])
         m["KapInflNinety"] = _f(r)
+        m["KapInflIncludesSing"] = "1" if kc.get("inflation_conservative_includes_singular") else "0"
         for b, w in (("empty", "Empty"), ("laden", "Laden")):
             for N, n in ((50, "Fifty"), (200, "TwoHundred")):
                 v = [r * x["mdc_pct"] for x in bd["bounds"] if x["band"] == b and x["N"] == N]

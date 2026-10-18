@@ -82,6 +82,16 @@ intervals: SE × 1.39 at 40 dB plus κ = 0.044; κ-replicate coverage stays 14/2
 (N = 50): 1.00% at 40 dB, 0.71% at 20 dB; N = 200: 0.48% / 0.36%. Sources: `results/p3/headline_v2_kb120_attr.json`,
 `results/p3/calibrated.json`. No further estimator changes; §4 is drafted in `paper/sec4_results.tex`.
 
+**Pre-registered rule for the conservative detection-limit factor (recorded 18 Oct 2026, before the
+frozen-configuration κ replicates reached 40/40).** Some replicates have singular information (c_B runs to
+its lower bound, se = inf). The factor `\KapInflNinety` is max(`inflation_for_90pct`,
+`inflation_for_90pct_all`): the first over the finite-SE replicates only (the ⌈0.9 n⌉-th ordered ratio of
+error to interval half-width), the second over all replicates with the singular ones given the
+expected-information SE of Δ at c_B fixed at its stored estimate (`p3_validation_mc.py --kappa-sing-se`).
+If the sensitivity SEs are not available for every singular replicate, the factor is
+`inflation_for_90pct` and the text states that the singular replicates were excluded. The rule is also in
+the code (`p3_validation_mc.summarise`, `make_paper_numbers.conservative`).
+
 ## Section-by-section map
 
 | § | Content | Figure / table | Script → result |

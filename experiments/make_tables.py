@@ -518,7 +518,7 @@ def table16():
     body += "\n**Worst cases**\n\n" + md(["Rep", "k_f", "η_f", "k_H0", "Unsprung", "Axle damping", "True change (%)", "Estimated (%)",
                                              "Error (fraction of Δ)", "Covered"],
                                             [[w["rep"]] + [f"×{w['misspec'][p]:.2f}" for p in ("kf", "eta_f", "kH0", "unsprung_scale", "axle_damp_scale")]
-                                             + [f"{w['true_change_pct']:.2f}", f"{w['est_change_pct']:.2f}", f"{w['error_frac']:+.3f}", "yes" if w["covered"] else "no"]
+                                             + [f"{w['true_change_pct']:.2f}", f"{w['est_change_pct']:.2f}", f"{w['error_frac']:+.3f}", "singular" if w["covered"] is None else ("yes" if w["covered"] else "no")]
                                              for w in k["worst"]])
     src = ["results/p3/validation_mc.json"]
     if rs and rs.get("kappa"):
@@ -558,7 +558,7 @@ def table14():
         body += "\n**Worst cases**\n\n" + md(["Rep", "k_f", "η_f", "k_H0", "Unsprung", "Axle damping", "True change (%)", "Estimated (%)",
                                                  "Error (fraction of Δ)", "Covered"],
                                                 [[w["rep"]] + [f"×{w['misspec'][p]:.2f}" for p in ("kf", "eta_f", "kH0", "unsprung_scale", "axle_damp_scale")]
-                                                 + [f"{w['true_change_pct']:.2f}", f"{w['est_change_pct']:.2f}", f"{w['error_frac']:+.3f}", "yes" if w["covered"] else "no"]
+                                                 + [f"{w['true_change_pct']:.2f}", f"{w['est_change_pct']:.2f}", f"{w['error_frac']:+.3f}", "singular" if w["covered"] is None else ("yes" if w["covered"] else "no")]
                                                  for w in k["worst"]])
     if v.get("drift_mc"):
         body += "\n**(b) Drift Monte Carlo (true change 0)**\n\n" + md(
