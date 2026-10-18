@@ -33,7 +33,7 @@ import time  # noqa: E402
 from pathlib import Path  # noqa: E402
 
 import numpy as np  # noqa: E402
-from scipy.stats import norm  # noqa: E402
+from scipy.stats import norm, spearmanr  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -266,6 +266,13 @@ def summarise():
         k0, _ = cov(0.0)
         ge = [(r["D_hat"] - r["D_true"]) / abs(r["D_true"]) for r in R]
         gef = [(r["D_hat"] - r["D_true"]) / abs(r["D_true"]) for r in Rf]
+        # gross-failure rule (recorded 18 Oct 2026, docs/paper1_outline.md): |error_frac| > 1, i.e. a change error
+        # larger than the change itself. Coverage and inflation keep these replicates (each counts as a miss); the
+        # rms and mean change error and the attribution regression use the non-gross replicates, and the gross
+        # ones are listed
+        Rng = [r for r in R if abs((r["D_hat"] - r["D_true"]) / r["D_true"]) <= 1]
+        gross = sorted(r["rep"] for r in R if abs((r["D_hat"] - r["D_true"]) / r["D_true"]) > 1)
+        gng = [(r["D_hat"] - r["D_true"]) / abs(r["D_true"]) for r in Rng]
         worst = sorted(R, key=lambda r: -abs((r["D_hat"] - r["D_true"]) / r["D_true"]))[:5]
         # inflation of the combined interval needed for 90% coverage under simultaneous model errors: the
         # smallest r with |D_hat - D_true| <= 1.645 r sqrt(se^2 + (kappa D_hat)^2) in at least 90% of replicates
@@ -295,8 +302,11 @@ def summarise():
             "ratio_sorted": [float(x) for x in ratio], "coverage": ks / n, "coverage_ci95": cp_interval(ks, n),
             "coverage_statistical_only": k0 / n, "coverage_statistical_only_ci95": cp_interval(k0, n),
             "coverage_singular_as_not_covered": ks / len(R), "coverage_singular_as_not_covered_ci95": cp_interval(ks, len(R)),
-            "rms_change_error_frac": float(np.sqrt(np.mean(np.square(ge)))),
-            "mean_change_error_frac": float(np.mean(ge)),
+            "rms_change_error_frac": float(np.sqrt(np.mean(np.square(gng)))),
+            "mean_change_error_frac": float(np.mean(gng)),
+            "change_error_frac_n": len(Rng), "gross_reps": gross, "n_gross": len(gross),
+            "rms_change_error_frac_all": float(np.sqrt(np.mean(np.square(ge)))),
+            "median_abs_change_error_frac_all": float(np.median(np.abs(ge))),
             "kappa_empirical_rms": float(np.sqrt(max(np.mean(np.square(gef)) - np.mean([(r["se"] / r["D_true"]) ** 2 for r in Rf]), 0.0))),
             "kf_draw_range": [min(r["misspec"]["kf"] for r in R), max(r["misspec"]["kf"] for r in R)],
             "n_kf_ge_2": sum(r["misspec"]["kf"] >= 2 for r in R),
@@ -308,10 +318,12 @@ def summarise():
                       for r in worst],
             "all_converged": all(r["converged"] for r in R),
             "wall_s_median": float(np.median([r["wall_s"] for r in R]))}
-        # diagnostic: which model error drives the change error (all replicates; error_frac does not need se)
+        # diagnostic: which model error drives the change error (error_frac does not need se); the regression on
+        # the non-gross replicates, the rank correlation on all
         names = list(RANGES)
-        X = np.array([[math.log(r["misspec"][p]) for p in names] for r in R])
-        y = np.array(ge)
+        X = np.array([[math.log(r["misspec"][p]) for p in names] for r in Rng])
+        y = np.array(gng)
+        Xa = np.array([[math.log(r["misspec"][p]) for p in names] for r in R])
 
         def ols(Xc):
             A = np.column_stack([np.ones(len(y)), Xc])
@@ -323,7 +335,9 @@ def summarise():
         _, r2_all, _ = ols(X)
         cb_bound = sorted(r["rep"] for r in R if r["phi_base"][1] < 0 or r["phi_later"][1] < 0)
         out["kappa_coest_attribution"] = {
-            "n": len(R), "pearson_error_frac_vs_log_factor": {p: float(np.corrcoef(X[:, i], y)[0, 1]) for i, p in enumerate(names)},
+            "n": len(Rng), "n_all": len(R), "gross_reps": gross,
+            "spearman_axle_damp_all": float(spearmanr(Xa[:, ia], ge)[0]),
+            "pearson_error_frac_vs_log_factor": {p: float(np.corrcoef(X[:, i], y)[0, 1]) for i, p in enumerate(names)},
             "r2_all_five": r2_all, "r2_axle_damp_only": r2_axle, "slope_axle_damp_per_log": float(b1[1]),
             "resid_rms_error_frac_after_axle_damp": float(np.sqrt(np.mean(res_axle ** 2))),
             "cb_lower_bound_n": len(cb_bound), "cb_lower_bound_reps": cb_bound,

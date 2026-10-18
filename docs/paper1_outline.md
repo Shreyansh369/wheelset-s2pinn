@@ -92,6 +92,14 @@ If the sensitivity SEs are not available for every singular replicate, the facto
 `inflation_for_90pct` and the text states that the singular replicates were excluded. The rule is also in
 the code (`p3_validation_mc.summarise`, `make_paper_numbers.conservative`).
 
+**Gross-failure rule (recorded 18 Oct 2026, after κ reached 40/40 and before its summary was run).** A
+κ replicate with |error_frac| > 1 (a change error larger than the change itself) is a gross failure. Coverage
+and the inflation factor still include it (it counts as a miss). The rms and mean change error
+(`\KapCoestRMS`, `\KapCoestMean`) and the attribution regression are reported on the non-gross replicates,
+with the gross ones listed (`\KapGrossN`, `\KapGrossReps`); the Spearman correlation of error_frac with log
+axle damping (`\KapAttrAxleSpearman`) and the median |error_frac| (`\KapCoestMedAbs`) use all replicates.
+Gross replicates keep their stored values in every pre-registered statistic.
+
 ## Section-by-section map
 
 | § | Content | Figure / table | Script → result |
