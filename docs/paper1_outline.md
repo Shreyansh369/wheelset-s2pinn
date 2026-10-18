@@ -129,6 +129,25 @@ The earlier inflation-factor result (0.94–1.03% for N = 50, empty band) is kep
 §4.5 (macros `…ConsInfl…`), with one sentence on why the factor's κ-dependence makes it ill-suited at the
 detection limit.
 
+**Two-start sensitivity and support-stiffness Monte Carlo (decided 18 Oct 2026, 20:40 UTC, before any of
+their results).**
+- *A1, two-start sensitivity on all 40 κ replicates* (now run unconditionally, replacing the conditional
+  follow-up above; `p3_validation_mc.py --kappa-two-start --band empty --tag _frozen`, rows in
+  `twostart_frozen.jsonl`): each period refitted from the other period's stored solution with k_B0 moved to
+  its own truth (start (a) of the restart diagnostic, reused where the diagnostic already made it, and vice
+  versa), the lower-NLL of {stored, refit} kept per period. Coverage (finite SE; singular counted as not
+  covered as a second line) and the inflation factor for 90% are reported from it in a block labelled
+  post-hoc sensitivity, with the number of replicates whose solution changed and the number with an NLL
+  drop > 10. It never replaces the pre-registered statistics.
+- *A2, support-stiffness Monte Carlo*: the frozen 10-seed headline design (10 seeds × 10 datasets × SNR 20
+  and 40 dB, N = 50, own-sub-band scoring, Kb = 120) at true k_B0 = 2.5 and 5 GN/m, run with
+  `WHEELSET_CONFIG_DIR=config/sensitivity/kB0_2p5` (or `kB0_5p0`) and `p3_headline_v2.py --kb0-from-config`.
+  The override configs differ from `config/params.yaml` only in bearing.kB0 (own hash; declared
+  `sensitivity` in `config/provenance.yaml`). The start is truth/0.85 (the frozen headline's start offset)
+  and the neighbouring wheelsets take the same nominal. Reported per SNR: bias, RMSE, RMSE/CRB and 90%
+  coverage, as in Table 3, labelled "sensitivity". If both values don't fit the compute deadline, the 2.5 GN/m
+  run drops to 5 seeds first.
+
 ## Section-by-section map
 
 | § | Content | Figure / table | Script → result |

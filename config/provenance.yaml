@@ -3,6 +3,8 @@
 #         pinned  = config/snapshots/headline_freight_v1 (frozen wagon, but k_H0 1.4 GN/m, c_p 10 kN s/m)
 #         earlier = an earlier configuration or a different setup; anything that uses it must say so
 #                   ("earlier configuration") in the caption or paragraph
+#         sensitivity = an override of the frozen config (config_dir, its own hash, checked); a sensitivity
+#                   study, labelled "sensitivity" in the caption or paragraph that uses it
 # Files written after the hash was introduced carry provenance.config_hash / estimator_version, which the
 # check compares with this declaration. Older files are classified here from their run date against the
 # last configuration change (2026-10-15 22:33 UTC) and the setup recorded in their "config" block.
@@ -10,6 +12,7 @@ frozen_estimator: "multipass-whittle-2 (debiased, Kb=120 default, own-sub-band s
 labels:
   earlier: "earlier configuration"
   pinned: "pinned headline configuration"
+  sensitivity: "sensitivity"
 files:
   config/params.yaml: {config: frozen}
   config/track.yaml: {config: frozen}
@@ -40,6 +43,9 @@ files:
   results/p3/robust_se.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
   results/p3/headline_v2_kb120_attr_freight.json: {config: pinned}
   results/p3/headline_v2_kb120_attr_frozen10.json: {config: frozen}
+  # A2 support-stiffness Monte Carlo: frozen headline design at true k_B0 = 2.5 and 5 GN/m (override configs)
+  results/p3/headline_v2_kb120_attr_kb0_2p5.json: {config: sensitivity, config_dir: config/sensitivity/kB0_2p5}
+  results/p3/headline_v2_kb120_attr_kb0_5p0.json: {config: sensitivity, config_dir: config/sensitivity/kB0_5p0}
   results/p4/gain_y25.json: {config: frozen, estimator: "pseudo-true, multipass-whittle-2"}
   results/p3/calibrated.json: {config: frozen, note: "calibration from the 10-seed headline at the frozen configuration; MDCs from results/p4/mdc_bounds.json"}
   # mixed file: kappa replicates (rows_frozen) and drift Monte Carlo (kf0.8_freight) at the frozen config; bias diagnosis (BD*) earlier

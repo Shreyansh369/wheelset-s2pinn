@@ -42,6 +42,21 @@ FIT_MAX = [12 * 60]   # updated to the slowest fit seen in this process
 
 
 LABEL = [""]   # appended to the run tag (e.g. "_freight" for the sourced-nominal rerun)
+SENS = {}      # --kb0-from-config: support-stiffness sensitivity (A2), truth and start k_B0 taken from the loaded config
+
+
+def kb0_from_config():
+    """Support-stiffness sensitivity (A2, declared "sensitivity" in config/provenance.yaml): the true k_B0 is the
+    nominal of the loaded configuration (WHEELSET_CONFIG_DIR, e.g. config/sensitivity/kB0_2p5), the start is
+    truth / 0.85 (the same start offset as the frozen headline: truth 0.85, start 1.0 GN/m), and the neighbouring
+    wheelsets take the same nominal (src.analysis.multiwheel.NEIGHBOUR reads the config). Everything else as the
+    frozen headline. Refuses to run on the frozen config directory."""
+    from src.reference.params import CONFIG_DIR, load_params
+    if Path(CONFIG_DIR).resolve() == (Path(__file__).resolve().parents[1] / "config").resolve():
+        raise SystemExit("--kb0-from-config needs WHEELSET_CONFIG_DIR set to a sensitivity config directory")
+    kb = float(load_params().v["bearing"]["kB0"])
+    TRUTH["kB0"], START["kB0"] = kb, kb / 0.85
+    SENS.update({"truth_kB0": kb, "start_kB0": kb / 0.85, "config_dir": os.environ["WHEELSET_CONFIG_DIR"]})
 
 
 def tag_of(kb, smooth, exact=True):
@@ -68,7 +83,8 @@ def run(j0, j1, kb, smooth, exact=True):
         r = est.fit(np.log([START["kB0"], START["cB"]]))
         crb = est.expected_fisher(np.log([TRUTH["kB0"], TRUTH["cB"]]), np.log(g), np.log(Ws))["crb_log"]
         row = {"seed_key": list(key), "snr_db": key[1], "seed": key[0], "err_log": [r["phi"][0] - lt, r["phi"][1] - math.log(TRUTH["cB"])],
-               "se_log": r["se_log"], "crb_log": crb, "converged": r["converged"], "wall_s": time.perf_counter() - t0}
+               "se_log": r["se_log"], "crb_log": crb, "converged": r["converged"], "wall_s": time.perf_counter() - t0,
+               **({"truth_kB0": TRUTH["kB0"]} if SENS else {})}
         RUN_DIR.mkdir(parents=True, exist_ok=True)
         with fp.open("a") as fh:
             fh.write(json.dumps(row) + "\n")
@@ -96,7 +112,8 @@ def aggregate(kb, smooth, exact=True):
                       "cB_pooled": summ([r["err_log"][1] for r in Rs], [r["se_log"][1] for r in Rs], [r["crb_log"][1] for r in Rs]),
                       "all_converged": all(r["converged"] for r in Rs), "fit_s_median": float(np.median([r["wall_s"] for r in Rs]))})
     save_result(f"p3/headline_v2_{tag}", {"cells": cells}, cfg={"kernel_half_width_bins": kb, "smooth_sigma_db": smooth,
-                                                                 "exact_subband": exact, "data": "keys (seed, snr, j), j < 10", "seeds": SEEDS_USED, "N": 50}, seed=SEEDS_USED[0])
+                                                                 "exact_subband": exact, "data": "keys (seed, snr, j), j < 10", "seeds": SEEDS_USED, "N": 50,
+                                                                 **({"sensitivity": SENS} if SENS else {})}, seed=SEEDS_USED[0])
     print(json.dumps(cells, indent=1)[:3000])
 
 
@@ -111,8 +128,13 @@ if __name__ == "__main__":
     ap.add_argument("--label", default="", help="suffix of the run tag, e.g. _freight")
     ap.add_argument("--seeds", type=int, nargs="+", default=None, help="seeds (default 42 123 456 789 1024); 'ten' set via --ten")
     ap.add_argument("--ten", action="store_true", help="10 seeds: the 5 defaults and 2048 3141 5772 8128 9973")
+    ap.add_argument("--kb0-from-config", action="store_true", help="sensitivity (A2): truth k_B0 = the loaded config's nominal")
     a = ap.parse_args()
     LABEL[0] = a.label
+    if a.kb0_from_config:
+        if not a.label:
+            raise SystemExit("--kb0-from-config needs --label (e.g. _kb0_2p5)")
+        kb0_from_config()
     if a.ten or a.seeds:
         SEEDS_USED[:] = list(SEEDS) + list(SEEDS_EXTRA) if a.ten else a.seeds
         KEYS[:] = [(seed, snr, j) for snr in (20, 40) for seed in SEEDS_USED for j in range(10)]

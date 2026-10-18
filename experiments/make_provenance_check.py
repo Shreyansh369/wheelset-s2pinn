@@ -75,6 +75,8 @@ def main():
             p = json.loads(fp.read_text()).get("provenance", {})
             rec_h, rec_e = p.get("config_hash") or "-", p.get("estimator_version") or "-"
             want = {"frozen": FROZEN, "pinned": PINNED}.get(e["config"])
+            if e["config"] == "sensitivity":       # an override config directory with its own hash
+                want = config_hash(ROOT / e["config_dir"])
             if rec_h != "-":
                 if want and rec_h != want:
                     fails.append(f"`{src}` declared {e['config']} but recorded config hash {rec_h}")
@@ -83,7 +85,7 @@ def main():
                     note = "declared earlier, hash is frozen (declaration conservative)"
                 else:
                     note = "hash verified"
-            if rec_e != "-" and e["config"] in ("frozen", "pinned") and rec_e != REG["frozen_estimator"] and "estimator" not in e:
+            if rec_e != "-" and e["config"] in ("frozen", "pinned", "sensitivity") and rec_e != REG["frozen_estimator"] and "estimator" not in e:
                 fails.append(f"`{src}` estimator version {rec_e!r} differs from the frozen estimator")
         fstat[src] = (e["config"], rec_h, note)
         if e["config"] == "earlier":
@@ -98,7 +100,7 @@ def main():
             fails.append(f"table {name} not in manifest")
             continue
         cfgs = {(declared(s) or {"config": "UNDECLARED"})["config"] for s in v["sources"]}
-        need = [c for c in ("earlier", "pinned") if c in cfgs]
+        need = [c for c in ("earlier", "pinned", "sensitivity") if c in cfgs]
         ok = all(has_label(v["caption"], c) for c in need)
         if not ok:
             fails.append(f"table {name}: sources {sorted(cfgs)} but caption lacks label(s) {need}")
@@ -112,7 +114,7 @@ def main():
         cap = env[env.find("\\caption"):]
         srcs = F.get(name, [])
         cfgs = {(declared(s) or {"config": "UNDECLARED"})["config"] for s in srcs}
-        need = [c for c in ("earlier", "pinned") if c in cfgs]
+        need = [c for c in ("earlier", "pinned", "sensitivity") if c in cfgs]
         ok = bool(srcs) and all(has_label(cap, c) for c in need)
         if not srcs:
             fails.append(f"figure {name} not in manifest")

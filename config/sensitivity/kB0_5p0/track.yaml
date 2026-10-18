@@ -1,0 +1,74 @@
+# Track and multi-wheel parameters for the rail-coupled model (src/reference/track.py).
+# CT23 = Carrigan T.D., Talbot J.P. (2023), A new method to derive rail roughness from axle-box vibration
+#        accounting for track stiffness variations and wheel-to-wheel coupling, MSSP 192, 110232,
+#        doi:10.1016/j.ymssp.2023.110232 (Table 1 and Section 5.1).
+# Every entry carries a source. "verify" marks values quoted from memory of a standard that must be
+# checked against the document before publication; "placeholder" marks values with no source yet.
+
+rail_BS113A:   # CT23 Table 1 (their ref [31], Newton & Clark 1979)
+  A:     {value: 7.17e-3, unit: m^2,   source: "CT23 Table 1"}
+  rho:   {value: 7850.0,  unit: kg/m^3, source: "CT23 Table 1"}
+  E:     {value: 207.0e9, unit: Pa,    source: "CT23 Table 1"}
+  I:     {value: 2.35e-5, unit: m^4,   source: "CT23 Table 1"}
+  G:     {value: 81.0e9,  unit: Pa,    source: "CT23 Table 1"}
+  kappa: {value: 0.34,    unit: "-",   source: "CT23 Table 1"}
+
+rail_60E1:     # 60E1 (UIC 60); E, G, rho as for BS113A. Nominal rail of the representative freight case.
+  A:     {value: 7.670e-3, unit: m^2, source: "[snippet] 76.70 cm^2, mass 60.21 kg/m (ArcelorMittal 60E1 datasheet, EN 13674-1; Valente; British Steel rail profiles datasheet)"}
+  I:     {value: 3.0383e-5, unit: m^4, source: "[snippet] I_xx 3038.3 cm^4 (British Steel and ArcelorMittal datasheets, EN 13674-1)"}
+  kappa: {value: 0.40, unit: "-", range: [0.34, 0.40], source: "[snippet] rail shear coefficient 0.4 (TU Delft thesis, rail close to UIC54); 0.393 for UIC60 (attribution weak); 0.34 BS113A (CT23 Table 1)"}
+
+foundation:    # continuous hysteretic foundation, beta = kf (1 + i eta_f)
+  standard_kf_lab:   {value: 154.0e6, unit: N/m^2, source: "CT23 Sec. 5.1.1: ~100 MN/m per fastener (lab, Thompson et al.) at 0.65 m spacing"}
+  standard_kf_insitu_A: {value: [375.0e6, 398.0e6], unit: N/m^2, source: "CT23 Table 2 (ABA-derived, section A, runs 1-4)"}
+  standard_kf_insitu_B: {value: [190.0e6, 257.0e6], unit: N/m^2, source: "CT23 Table 5 (section B, wheel roughness removed)"}
+  resilient_kf:      {value: 7.7e6, unit: N/m^2, source: "CT23 Sec. 5.1.1 (pass-by rail deflection, Cox & Wang)"}
+  resilient_kf_insitu: {value: [9.8e6, 10.1e6], unit: N/m^2, source: "CT23 Table 4 runs 1-2"}
+  eta_f:             {value: 0.2, unit: "-", source: "CT23 Table 1 / Sec. 5.1.1 (literature range 0.2-0.3)"}
+  fastener_spacing_measured: {value: 0.65, unit: m, source: "CT23 Table 1"}
+  fractional_nu_standard:  {value: 70.0e6, unit: N/m^2, source: "CT23 Table 1 (simulator: kf' = nu w^alpha, alpha = 1/8)"}
+  fractional_nu_resilient: {value: 3.9e6,  unit: N/m^2, source: "CT23 Table 1"}
+  fractional_alpha:        {value: 0.125,  unit: "-",   source: "CT23 Table 1"}
+
+ballasted_freight:   # nominal track of the representative freight case (single-layer continuous foundation)
+  pad_stiffness:   {value: 200.0e6, unit: N/m, range: [80.0e6, 800.0e6], source: "[snippet] typical UIC60 ballasted track, rail pad 200 MN/m per pad (Thompson, Jones, Waters & Farrington 2007, Appl. Acoust. 68(1) 43-57); 80 kN/mm (EUROBOLT optimal track, Nova chapter); 800/120 MN/m stiff/soft (Thompson et al., attribution weak)"}
+  sleeper_spacing: {value: 0.60, unit: m, range: [0.60, 0.65], source: "[snippet] 0.6 m (EUROBOLT optimal track); 0.65 m (CT23 Table 1; Thompson et al.)"}
+  kf:              {value: 333.3e6, unit: N/m^2, range: [123.0e6, 1333.0e6], source: "derived: pad stiffness / sleeper spacing (pad modulus, PWI Guide to Track Stiffness definition) from the sourced ranges above; ballast compliance in series not modelled"}
+  eta_f:           {value: 0.20, unit: "-", range: [0.10, 0.25], source: "[snippet] rail pad loss factor 0.16 (Thompson et al. 2007 table), 0.25 (rolling-noise models), about 0.1 (EVA) to 0.2 (natural rubber) pads"}
+
+vehicle_CT23:  # London Underground 2009-stock (metro) values, for the scope check (e)
+  kH:  {value: 9.0e8,  unit: N/m,   source: "CT23 Sec. 5.1.2: Eq. (27) with F0 = 27 kN, C_H = 89 GN m^-1.5 (Sanchis et al. 2018)"}
+  m_w: {value: 400.0,  unit: kg,    source: "CT23 Table 1 (unsprung mass per wheel)"}
+  k1:  {value: 1.59e6, unit: N/m,   source: "CT23 Table 1"}
+  c1:  {value: 3.0e3,  unit: N s/m, source: "CT23 Table 1"}
+
+contact_freight:
+  C_H: {value: 94.13e9, unit: N/m^1.5, source: "Hertz theory (Johnson 1985): S1002 wheel, rolling radius 0.46 m (Dusza et al. 2024, full text verified), on UIC60 rail, crown radius 0.30 m [snippet]; wheel transverse radius infinite (assumed); results/p4/contact_hertz.json"}
+  kH0: {value: 1.489e9, unit: N/m, range: [1.388e9, 2.3e9], source: "Hertz theory at W0 = 22.5 t (F0 = 110 kN), results/p4/contact_hertz.json; 1.388-1.576e9 for S1002 tread transverse radius +0.5 m to -1.0 m; cross-check: published spread 1.4-2.3e9 N/m [snippet] (Hasan 2020, ICTD, ASCE, 10.1061/9780784483176.010)"}
+
+layout_CT23:   # wheel positions along the rail (m), 2009 Victoria line stock; instrumented wheel = wheel 5
+  positions: {value: [0.0, 2.05, 6.52, 8.57, 16.62, 18.67, 23.14, 25.19, 33.24, 35.29, 39.76, 41.81], unit: m,
+              source: "CT23 Sec. 5.1.3 / Fig. 5: axle spacing 2.05, bogie centres 10.10 within a car, 6.52 across a coupling (positions derived from these)"}
+  instrumented_index: {value: 4, unit: "-", source: "CT23 Fig. 5 (wheel d5)"}
+  subsets: {value: {"2": [4, 5], "4": [4, 5, 6, 7], "8": [0, 1, 2, 3, 4, 5, 6, 7]}, unit: "-",
+            source: "CT23 Fig. 9 groupings (wheels 5-8 = 4, wheels 1-8 = 8); 2 = instrumented bogie"}
+
+layout_freight:   # two coupled 4-axle wagons with Y25 bogies; instrumented wheel = leading axle of the second wagon
+  positions: {value: [0.0, 1.8, 10.7, 12.5, 15.74, 17.54, 26.44, 28.24], unit: m,
+              source: "derived from [snippet] Y25 wheelbase 1800 mm (railway-technology.com; Tatravagonka Y25 data) and Eanos bogie pivot pitch 10.70 m, length over buffers 15.74 m (Rail Cargo Group; Wascosa datasheets): overhang (15.74 - 12.5)/2 per wagon end"}
+  instrumented_index: {value: 4, unit: "-", source: "choice"}
+  subsets: {value: {"2": [4, 5], "4": [4, 5, 6, 7], "8": [0, 1, 2, 3, 4, 5, 6, 7]}, unit: "-",
+            source: "2 = instrumented bogie, 4 = instrumented wagon, 8 = both wagons (as CT23 Fig. 9 groupings)"}
+
+nominal:   # what experiments use by default (representative freight case)
+  rail:   {value: rail_60E1, unit: "-", source: "representative freight case"}
+  track:  {value: ballasted_freight, unit: "-", source: "representative freight case"}
+  layout: {value: layout_freight, unit: "-", source: "representative freight case"}
+
+indian_track_differences:  # flags for (d); not used numerically
+  - "Rail: 60E1 (60 kg) vs BS113A: I is ~29% higher and A ~7% higher (verify values), so the bending wavenumber and point receptance change."
+  - "Foundation: IR main lines are ballasted (PSC sleepers, elastic clips, rubber pads); CT23's single-layer hysteretic foundation represents directly fastened track. Ballasted track needs a two-layer model (pad - sleeper mass - ballast), which adds a sleeper resonance; kf and eta_f for IR pads and ballast are not sourced yet (placeholder)."
+  - "Sleeper spacing: IR PSC sleeper density 1660/km, about 0.60 m (verify against the IR Permanent Way Manual) vs 0.65 m fastener spacing in CT23; affects the pinned-pinned frequency, which the continuous model omits."
+  - "Wheel load: 22.5-25 t freight axle (110-123 kN per wheel) vs 27 kN metro: kH rises by (F0 ratio)^(1/3) ~ 1.6, and pad stiffness under load differs (nonlinear pads)."
+  - "Unsprung mass and primary suspension: freight wheelset (this repo's FE model) vs 400 kg / 1.59 MN/m metro values; P2 frequency shifts accordingly."
+  - "Wheel layout: freight bogie wheelbase and bogie-centre distances for Indian wagons are not sourced yet (placeholder); the CT23 metro layout is used for the coupling test."
