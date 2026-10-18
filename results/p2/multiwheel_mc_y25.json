@@ -1,0 +1,145 @@
+{
+  "name": "p2/multiwheel_mc_y25",
+  "seed": 20261012,
+  "config": {
+    "truth": {
+      "kB0": 850000000.0,
+      "cB": 6000.0
+    },
+    "N": 50,
+    "snr_db": 40,
+    "wim_sigma": 0.03,
+    "config": "current (Y25/Eanos, 60E1)"
+  },
+  "payload": {
+    "cells": [
+      {
+        "file": "wheels2_uniform_60_110_y25.jsonl",
+        "wheels": 2,
+        "speeds": "uniform_60_110",
+        "n": 10,
+        "crb_rel_kB0": 0.0016517180314158824,
+        "correct": {
+          "bias_rel_kB0": 0.00107713263599698,
+          "bias_rel_kB0_se": 0.0004908713914599505,
+          "rmse_rel_kB0": 0.0018216259291398097,
+          "rmse_over_crb": 1.1028673747529893,
+          "coverage90_wald": 0.8,
+          "coverage90_wald_ci95": [
+            0.4439045376923585,
+            0.9747892736731666
+          ],
+          "all_converged": true,
+          "fit_s_median": 308.0512542055003,
+          "coverage90_profile": 0.8,
+          "coverage90_profile_ci95": [
+            0.4439045376923585,
+            0.9747892736731666
+          ]
+        },
+        "single_wheelset": {
+          "bias_rel_kB0": -0.05091681017221279,
+          "bias_rel_kB0_se": 0.0016098439390601052,
+          "rmse_rel_kB0": 0.052517570970387464,
+          "rmse_over_crb": 31.79572419232383,
+          "coverage90_wald": 0.0,
+          "coverage90_wald_ci95": [
+            0.0,
+            0.3084971078187607
+          ],
+          "all_converged": true,
+          "fit_s_median": 337.37265182699775
+        }
+      },
+      {
+        "file": "wheels4_uniform_60_110_y25.jsonl",
+        "wheels": 4,
+        "speeds": "uniform_60_110",
+        "n": 10,
+        "crb_rel_kB0": 0.0016781909591914786,
+        "correct": {
+          "bias_rel_kB0": 0.00022113218151565973,
+          "bias_rel_kB0_se": 0.0005940186299485249,
+          "rmse_rel_kB0": 0.0017936736731958259,
+          "rmse_over_crb": 1.0688138101160936,
+          "coverage90_wald": 0.9,
+          "coverage90_wald_ci95": [
+            0.5549838829718047,
+            0.9974714214555382
+          ],
+          "all_converged": true,
+          "fit_s_median": 327.4232765270003,
+          "coverage90_profile": 0.9,
+          "coverage90_profile_ci95": [
+            0.5549838829718047,
+            0.9974714214555382
+          ]
+        },
+        "single_wheelset": {
+          "bias_rel_kB0": -0.053762147795840876,
+          "bias_rel_kB0_se": 0.0021255220823766523,
+          "rmse_rel_kB0": 0.05569219415691389,
+          "rmse_over_crb": 33.185850425356456,
+          "coverage90_wald": 0.0,
+          "coverage90_wald_ci95": [
+            0.0,
+            0.3084971078187607
+          ],
+          "all_converged": true,
+          "fit_s_median": 345.5899207829999
+        }
+      },
+      {
+        "file": "wheels8_uniform_60_110_y25.jsonl",
+        "wheels": 8,
+        "speeds": "uniform_60_110",
+        "n": 10,
+        "crb_rel_kB0": 0.0016861808216060486,
+        "correct": {
+          "bias_rel_kB0": -0.00021124324280367147,
+          "bias_rel_kB0_se": 0.0006070552317401277,
+          "rmse_rel_kB0": 0.0018350202594569895,
+          "rmse_over_crb": 1.0882701522540001,
+          "coverage90_wald": 0.9,
+          "coverage90_wald_ci95": [
+            0.5549838829718047,
+            0.9974714214555382
+          ],
+          "all_converged": true,
+          "fit_s_median": 400.99551862350006,
+          "coverage90_profile": 0.9,
+          "coverage90_profile_ci95": [
+            0.5549838829718047,
+            0.9974714214555382
+          ]
+        },
+        "single_wheelset": {
+          "bias_rel_kB0": -0.027950676846165347,
+          "bias_rel_kB0_se": 0.0021699505406135864,
+          "rmse_rel_kB0": 0.02914679542249884,
+          "rmse_over_crb": 17.28568789836975,
+          "coverage90_wald": 0.0,
+          "coverage90_wald_ci95": [
+            0.0,
+            0.3084971078187607
+          ],
+          "all_converged": true,
+          "fit_s_median": 371.1663841239965
+        }
+      }
+    ]
+  },
+  "provenance": {
+    "git_commit": "bdc117704251f06677750a78d38cc66714767118",
+    "config_dir": "config",
+    "config_hash": "e0a22f267362",
+    "estimator_version": "multipass-whittle-2 (debiased, Kb=120 default, own-sub-band scoring, 0.5 Hz table)",
+    "timestamp_utc": "2026-10-18T19:37:59Z",
+    "wall_seconds": null,
+    "peak_cpu_memory_mb": 95.92578125,
+    "peak_gpu_memory_mb": null,
+    "host": "vm",
+    "python": "3.13.16",
+    "cpu_count": 4
+  }
+}
