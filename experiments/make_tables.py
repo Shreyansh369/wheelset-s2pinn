@@ -428,12 +428,13 @@ def table12():
                      f"{v['ct23_range_MN'][0]:.1f}–{v['ct23_range_MN'][1]:.0f}", f"{100 * v['ct23_nan_frac']:.0f}%",
                      f"{v['whittle_median_MN']:.2f}", f"{v['whittle_range_MN'][0]:.2f}–{v['whittle_range_MN'][1]:.2f}",
                      f"{v['whittle_profile_covers_truth']:.2f}"])
-    write("table12_p2", "Table 12. P2 track-stiffness validation against the CT23 per-pass failure mode (true k_f = 7.7 MN/m²)",
+    KF_TRUE = 7.7      # MN/m^2, the true foundation stiffness of the P2 study (Carrigan and Talbot setup)
+    write("table12_p2", f"Table 12. P2 track-stiffness validation against the CT23 per-pass failure mode (true k_f = {KF_TRUE:g} MN/m²)",
           md(["Roughness", "Per-pass median (MN/m²)", "Per-pass outside ×0.7–×1.43", "Per-pass range", "Per-pass no peak",
               "Multi-pass median", "Multi-pass range", "Multi-pass profile 90% covers truth"], rows),
           ["results/p2/scope_p2_hysteretic.json"],
           [f"With corrugation the multi-pass median stays within "
-           f"{100 * abs(s['corrugation']['whittle_median_MN'] / s['reference_kf_MN'] - 1):.0f}% of the truth, but its profile "
+           f"{100 * abs(s['corrugation']['whittle_median_MN'] / KF_TRUE - 1):.1f}% of the truth, but its profile "
            f"interval under-covers ({s['corrugation']['whittle_profile_covers_truth']:.2f} of 90%); the cause is not yet "
            "diagnosed (open item)."])
 
