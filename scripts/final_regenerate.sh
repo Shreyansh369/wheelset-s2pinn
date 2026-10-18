@@ -14,6 +14,11 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 echo "final_regenerate: clean tree at $(git rev-parse HEAD)"
 
+# rewritten so that they record the values-v2 config hash (no Monte Carlo, minutes): FE verification and
+# gate G1, and the Fig. 1 transfer functions (make_figures.py recomputes them when the file is absent)
+$PY experiments/p1_verify.py && $PY experiments/gate_report.py G1
+rm -f results/p2/fig1_transfer.json
+
 # summaries, in the dependency order of scripts/regenerate_all.sh
 $PY experiments/p4_sweep.py --summarise
 $PY experiments/p2_model_form_mw.py --summarise
