@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Commit and push new or changed Monte Carlo result rows (results/**/*.jsonl, *.json), never queue bookkeeping
-# and never the kappa sensitivity-SE rows (sing_se*), which are committed on their own.
+# and never the kappa sensitivity-SE or diagnostic rows (sing_se*, diag_*), which are committed on their own.
 cd "$(dirname "$0")/.."
-F=$(git status --porcelain --untracked-files=all | awk '{print $2}' | grep -E '^results/.*\.(jsonl|json)$' | grep -v '/logs/' | grep -v '/sing_se')
+F=$(git status --porcelain --untracked-files=all | awk '{print $2}' | grep -E '^results/.*\.(jsonl|json)$' | grep -v '/logs/' | grep -v '/sing_se' | grep -v '/diag_')
 [ -n "$F" ] && git add -f $F
 git diff --cached --quiet || git commit -qm "Run rows (in progress)
 
