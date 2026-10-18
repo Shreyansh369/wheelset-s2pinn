@@ -97,12 +97,18 @@ def kappa_draw(j):
 BAND = [None]      # --band empty: passes within the empty payload band (5.5-7 t, the band's primary values)
 
 
-def kappa(j0, j1, tag=""):
+def kappa(j0, j1, tag="", zero=False):
+    """kappa replicates; zero=True: the zero-change study (pre-registered 18 Oct 2026, docs/paper1_outline.md).
+
+    zero=True keeps the misspecification draw of replicate j (kappa_draw, same seeds) and the data seeds
+    (45, j, 0/1) but sets the true change to 0, so each zero-change replicate is the counterpart of kappa
+    replicate j with no change. Rows: results/p3/kappa_coest_runs/rows_zero<tag>.jsonl.
+    """
     if BAND[0]:
         from experiments.p4_banded import set_band
         set_band(BAND[0])
     sm, thb, rough, mw, fams, _ = setup_all()
-    fp = OUT / "kappa_coest_runs" / f"rows{tag}.jsonl"
+    fp = OUT / "kappa_coest_runs" / (f"rows_zero{tag}.jsonl" if zero else f"rows{tag}.jsonl")
     done = _done(fp, lambda r: r["rep"])
     for j in range(j0, j1):
         if j in done:
@@ -111,6 +117,8 @@ def kappa(j0, j1, tag=""):
             break
         t0 = time.perf_counter()
         mis, x = kappa_draw(j)
+        if zero:
+            x = 0.0
         res = {}
         for s, kt in (("base", TRUTH["kB0"]), ("later", TRUTH["kB0"] * (1 - x))):
             P, Wm, Ws, g = gen(sm, truth(thb, mis, kt), rough, mw, (45, j, 0 if s == "base" else 1))
@@ -122,6 +130,8 @@ def kappa(j0, j1, tag=""):
         _append(fp, {"rep": j, "band": BAND[0], "misspec": mis, "x": x, "D_hat": d, "D_true": dt, "se": se,
                      "abs_err_base": res["base"]["phi"][0] - math.log(TRUTH["kB0"]),
                      "phi_base": res["base"]["phi"], "phi_later": res["later"]["phi"],
+                     "se_log_base": res["base"]["se_log"], "se_log_later": res["later"]["se_log"],
+                     "nll_base": res["base"]["nll"], "nll_later": res["later"]["nll"],
                      "converged": res["base"]["converged"] and res["later"]["converged"],
                      "wall_s": time.perf_counter() - t0})
         REP_MAX_S[0] = max(REP_MAX_S[0], time.perf_counter() - t0)
@@ -533,6 +543,7 @@ def summarise():
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--kappa", action="store_true")
+    ap.add_argument("--zero", action="store_true", help="--kappa: zero-change study (true change 0, same draws and seeds)")
     ap.add_argument("--drift", action="store_true")
     ap.add_argument("--bias", action="store_true")
     ap.add_argument("--summarise", action="store_true")
@@ -554,7 +565,7 @@ if __name__ == "__main__":
     a = ap.parse_args()
     if a.kappa:
         BAND[0] = a.band
-        kappa(a.j0, a.j1, a.tag)
+        kappa(a.j0, a.j1, a.tag, zero=a.zero)
     if a.kappa_sing_se:
         BAND[0] = a.band
         kappa_sing_se(a.tag, a.reps)

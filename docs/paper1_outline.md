@@ -112,6 +112,23 @@ reported from it in a block labelled post-hoc sensitivity. A runtime estimate is
 fewer than 3, it is not run and the text reports the count (`\KapLocalOptN`). In either case the
 pre-registered coverage and inflation keep the stored replicates.
 
+**Conservative detection limit: zero-change study and gain shrinkage (pre-registered 18 Oct 2026, 19:45 UTC,
+before any result of the zero-change study).** The κ-replicate error is mostly gain error (∝ Δ; axle damping
+R² 0.70), so the factor of the inflation rule depends on κ and does not describe the detection limit, where
+the change is below 1%. The detection limit is therefore decomposed:
+- *False alarm (noise calibration at zero change):* 40 zero-change replicates, `p3_validation_mc.py --kappa
+  --zero --band empty --tag _frozen` (the misspecification draws and data seeds of κ replicates 0–39, true
+  change 0, frozen estimator), rows in `rows_zero_frozen.jsonl`. z = D̂/se; s0 = max(1, sd(z)); false-alarm
+  rate = fraction with D̂ < −1.645 se (one-sided, decrease), with a Clopper–Pearson interval. Singular
+  replicates (se = inf) get the expected-information SE at c_B fixed (`--kappa-sing-se`), and their count is
+  reported.
+- *Detection (gain shrinkage):* g90 = 90th percentile of error_frac over the 40 κ replicates (positive = change
+  underestimated).
+- *Conservative MDC* = nominal banded MDC × s0 / (1 − g90) (macros `\BandEmptyMDCFiftyConsMin/Max` etc.).
+The earlier inflation-factor result (0.94–1.03% for N = 50, empty band) is kept as a reported comparison in
+§4.5 (macros `…ConsInfl…`), with one sentence on why the factor's κ-dependence makes it ill-suited at the
+detection limit.
+
 ## Section-by-section map
 
 | § | Content | Figure / table | Script → result |
