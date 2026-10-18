@@ -7,8 +7,8 @@
       "cB": 6000.0
     },
     "W_t": 14.0,
-    "track": "BS113A, kf 154e6, eta 0.2",
-    "layout": "CT23 subsets",
+    "track": "config nominal (60E1, ballasted freight)",
+    "layout": "config nominal (Y25/Eanos wagon), subsets of 1/2/4/8 wheels",
     "quantity": "20 log10 |H|, left-axlebox accel per unit roughness"
   },
   "payload": {
@@ -23443,13 +23443,13 @@
     }
   },
   "provenance": {
-    "git_commit": "ba3bf49ec587cf143c40698de9159c4cbc67caa6-dirty",
+    "git_commit": "a63e872dac10234ad33f1ddb25f2822471834140",
     "config_dir": "config",
     "config_hash": "e0a22f267362",
     "estimator_version": "multipass-whittle-2 (debiased, Kb=120 default, own-sub-band scoring, 0.5 Hz table)",
-    "timestamp_utc": "2026-10-17T05:31:41Z",
+    "timestamp_utc": "2026-10-18T17:47:06Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 141.4921875,
+    "peak_cpu_memory_mb": 142.57421875,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",
