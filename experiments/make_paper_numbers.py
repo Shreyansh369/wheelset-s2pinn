@@ -349,6 +349,15 @@ def section4(m, miss):
             m["KapRepThirtyFiveRefitD"] = _f(dg["rep35"]["D_hat_refit"], 4)
             m["KapRepThirtyFiveTrueD"] = _f(dg["rep35"]["D_true"], 4)
             m["KapLocalOptN"] = str(dg["cbbound"]["n_local_optimum"]) if dg.get("cbbound", {}).get("complete") else "1"
+            ts = dg.get("two_start")
+            if ts and ts.get("complete"):          # A1, post-hoc sensitivity
+                m["KapTwoStartN"], m["KapTwoStartNFinite"] = str(ts["n"]), str(ts["n_finite_se"])
+                m["KapTwoStartChanged"], m["KapTwoStartLocalOpt"] = str(ts["n_changed"]), str(ts["n_local_optimum"])
+                m["KapTwoStartCBBound"] = str(ts["n_cb_bound_after"])
+                m["KapTwoStartCov"] = _f(ts["coverage"])
+                m["KapTwoStartCovLo"], m["KapTwoStartCovHi"] = _f(ts["coverage_ci95"][0]), _f(ts["coverage_ci95"][1])
+                m["KapTwoStartCovSingMiss"] = _f(ts["coverage_singular_as_not_covered"])
+                m["KapTwoStartInfl"] = _f(ts["inflation_for_90pct"])
         at = d.get("kappa_coest_attribution")
         if at and "spearman_axle_damp_all" in at:
             m["KapAttrAxleSpearman"] = _f(at["spearman_axle_damp_all"])
@@ -580,10 +589,27 @@ def section4(m, miss):
         r = kc.get("inflation_conservative", kc["inflation_for_90pct"])
         m["KapInflNinety"] = _f(r)
         m["KapInflIncludesSing"] = "1" if kc.get("inflation_conservative_includes_singular") else "0"
+        # pre-registered conservative MDC (zero-change study, docs/paper1_outline.md): nominal banded MDC x
+        # s0 / (1 - g90), once the 40 zero-change replicates are in and every singular one has its c_B-fixed SE;
+        # until then ...Cons... falls back to the inflation-factor result, which is always reported as ...ConsInfl...
+        zc = (load("p3/validation_mc.json") or {}).get("zero_change") or {}
+        zok = bool(zc.get("complete") and zc.get("all_singular_have_se") and zc.get("mdc_factor"))
+        m["ZeroChangeDone"] = "1" if zok else "0"
+        if zc:
+            m["ZeroN"], m["ZeroNUsed"], m["ZeroNSing"] = str(zc["n"]), str(zc["n_used"]), str(zc["n_singular"])
+            m["ZeroFA"], m["ZeroFARate"] = str(zc["false_alarms"]), _f(zc["false_alarm_rate"])
+            m["ZeroFALo"], m["ZeroFAHi"] = _f(zc["false_alarm_ci95"][0]), _f(zc["false_alarm_ci95"][1])
+            m["ZeroZsd"], m["ZeroSzero"], m["ZeroGNinety"] = _f(zc["z_sd"]), _f(zc["s0"]), _f(zc["g90"])
+            m["ZeroMDCFactor"] = _f(zc["mdc_factor"])
         for b, w in (("empty", "Empty"), ("laden", "Laden")):
             for N, n in ((50, "Fifty"), (200, "TwoHundred")):
-                v = [r * x["mdc_pct"] for x in bd["bounds"] if x["band"] == b and x["N"] == N]
+                nom = [x["mdc_pct"] for x in bd["bounds"] if x["band"] == b and x["N"] == N]
+                vi = [r * x for x in nom]
+                m[f"Band{w}MDC{n}ConsInflMin"], m[f"Band{w}MDC{n}ConsInflMax"] = _f(min(vi)), _f(max(vi))
+                v = [zc["mdc_factor"] * x for x in nom] if zok else vi
                 m[f"Band{w}MDC{n}ConsMin"], m[f"Band{w}MDC{n}ConsMax"] = _f(min(v)), _f(max(v))
+        if not zok:
+            print("make_paper_numbers: zero-change study incomplete; Band*MDC*Cons* = inflation-factor values (ConsInfl)")
     if load("p4/banded.json") and (load("p3/validation_mc.json") or {}).get("kappa_coest", {}).get("inflation_for_90pct"):
         conservative(None)
 
