@@ -114,6 +114,22 @@ within a record are not modelled and would have to be excluded or windowed out i
 Environmental effects on the support, for example the temperature dependence of elastomeric pads,
 would appear as changes of $k_B$ and must be separated by comparing like conditions.
 
+\paragraph{Realism of the synthetic data.} The simulated records contain the features that make the
+problem hard: an unmeasured roughness with an independent realisation on every pass and free levels per
+period, coupling of the instrumented wheelset to its neighbours through the rail, payload variation with
+a weigh-in-motion error, a speed spread, and broadband sensor noise. The uncertainty budget adds what a
+matched-model study leaves out: random simultaneous errors of the fixed parameters
+(Section~\ref{sec:res-budget}), nonlinear Hertzian contact from a time-domain generator
+(Section~\ref{sec:res-inverse-crime}), a payload-dependent primary suspension
+(Section~\ref{sec:res-primary}), foundation drift between periods (Section~\ref{sec:res-drift}) and wheel
+roughness at rotation orders (Section~\ref{sec:res-wheel}). The records do not contain bearing-order
+lines (Section~\ref{sec:requirements}), corrugation (Section~\ref{sec:res-p2}), joints, welds or other
+non-stationary features, lateral and curving dynamics, stick--slip of the friction damper at the support
+frequency, flexibility of the bogie frame or of the sensor mount, or environmental effects. The noise
+levels of 20 and 40~dB are design values and have not been calibrated against measured records. The
+accuracies reported here are therefore those of the stated simulation design and are best read as what
+the statistics allow; a real vehicle can only do worse by the error of whatever the model leaves out.
+
 \paragraph{No field data.} All results are from simulation. A field test with an axlebox whose
 support stiffness is changed in a controlled way is needed before the detection limits can be
 claimed for a real vehicle.
