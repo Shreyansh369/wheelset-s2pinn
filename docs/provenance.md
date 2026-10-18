@@ -35,7 +35,7 @@ Frozen configuration hash `b8adde501aa3` (config/params.yaml + config/track.yaml
 | `results/p2/debias_check.json` | earlier | - | declared |
 | `results/p2/drift_freight.json` | frozen | - | declared |
 | `results/p2/fig1_transfer.json` | frozen | e0a22f267362 | hash verified (byte hash, alias of b8adde501aa3) |
-| `results/p2/model_form_mw_sensitivity.json` | frozen | - | declared |
+| `results/p2/model_form_mw_sensitivity.json` | frozen | b8adde501aa3 | hash verified (values-v2) |
 | `results/p2/multiwheel_bound.json` | frozen | - | declared |
 | `results/p2/multiwheel_mc_y25.json` | frozen | e0a22f267362 | hash verified (byte hash, alias of b8adde501aa3) |
 | `results/p2/partial_coherence_bound.json` | earlier | - | declared |
