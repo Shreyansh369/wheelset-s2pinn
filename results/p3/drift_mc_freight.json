@@ -44,13 +44,13 @@
     ]
   },
   "provenance": {
-    "git_commit": "c561a5e8b6054a4c9b25742a11fbffd879b8df46",
+    "git_commit": "005403636cf5d8741adf004ee37426db38f7197b",
     "config_dir": "config",
     "config_hash": "e0a22f267362",
     "estimator_version": "multipass-whittle-2 (debiased, Kb=120 default, own-sub-band scoring, 0.5 Hz table)",
-    "timestamp_utc": "2026-10-18T17:38:59Z",
+    "timestamp_utc": "2026-10-18T17:40:03Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 98.8359375,
+    "peak_cpu_memory_mb": 98.94921875,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",
