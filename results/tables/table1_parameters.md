@@ -5,7 +5,7 @@
 | Material | E | 2.1e+11 | – | Pa | doc §16 (standard steel) |
 | Material | nu | 0.3 | – | - | doc §16 |
 | Material | rho | 7850 | – | kg/m^3 | doc §16 |
-| Axle | length | 2.18 | 2.18–2.188 | m | verified (fetch 19 Oct 2026): axle length 2180 mm (Interpipe, Railway axles, BA 002/BA 302, EN 13261); upper end 2187.6 mm: Type D axle, vendor listing (unverified search result) |
+| Axle | length | 2.18 | – | m | verified (fetch 19 Oct 2026): axle length 2180 mm (Interpipe, Railway axles, BA 002/BA 302, EN 13261) |
 | Axle | sections [outer ξ, d] | [[0.64,0.173],[0.86,0.2],[0.9,0.16],[1.09,0.13]] | – | m | diameters verified (fetch 19 Oct 2026): body 173 mm (Interpipe, Railway axles, BA 002/BA 302, EN 13261); wheel seat 200 mm = BA004 wheel hub bore (vendor listing, railwayspare-parts.com); journal 130 mm (Unirail, Wheelset type BA004, EN 13261 130x191 mm); dust-guard collar 160 mm and section boundaries assumed, swept |
 | Axle | wheel_xi | 0.75 | – | m | verified (fetch 19 Oct 2026): 2s = 1500 mm between nominal rolling circles (Bizic & Petrovic 2021, Mechanics Transport Communications 19(3), art. 2113; Bizic & Petrovic 2024, Acta Polytech. Hung. 21(1) 153-166) |
 | Axle | journal_xi | 1 | – | m | verified (fetch 19 Oct 2026): 2b = 2000 mm between axle-box cases (as defined in the source) (Bizic & Petrovic 2021; 2024) |
@@ -27,7 +27,7 @@
 | Axlebox | mass | 100 | 100–158.4 | kg | full text verified: axlebox 100 kg (Dusza et al. 2024, Table A1); indication: SKF Y25 axlebox housing 80 kg (SKF Evolution, 26 Sep 2022); upper sweep end 158.4 kg assumed (+58%) |
 | Primary | kp | 1.017e+06 | 1.017e+06–2.28e+06 | N/m | full text verified: Y25 primary vertical stiffness 1017 kN/m empty / 2280 kN/m loaded per axlebox (Dusza et al. 2024, Table A1; springs on each axle box, Dusza 2023); nominal = empty value |
 | Primary | cp | 7000 | 7000–1.233e+05 | N s/m | full text verified: Y25 primary equivalent vertical damping 7 kN s/m empty / 123.3 kN s/m laden (Dusza et al. 2024, Table A1); nominal = empty value, paired with kp |
-| Payload | W_min | 5.5 | 5.8–6.6 | t | design value 5.5 t; verified (fetch 19 Oct 2026): Eanos tare 23,100 kg +-2% (Wascosa, Eanos datasheet), 22.6-25.3 t (Rail Cargo Group, Eanos fact sheet), i.e. empty axle load 5.65-6.3 t; swept 5.6-6.6 t in results/p4/sweep.json (range field kept at 5.8-6.6 t: values-v2 hash) |
+| Payload | W_min | 5.5 | 5.6–6.6 | t | design value 5.5 t; verified (fetch 19 Oct 2026): Eanos tare 23,100 kg +-2% (Wascosa, Eanos datasheet), 22.6-25.3 t (Rail Cargo Group, Eanos fact sheet), i.e. empty axle load 5.65-6.3 t; swept 5.6-6.6 t in results/p4/sweep.json |
 | Payload | W_max | 22.5 | – | t | verified (fetch 19 Oct 2026): Y25 axle load 22.5 t (Tatravagonka, Y25Lssi(f)-D data page; Wascosa, Eanos datasheet) |
 | Payload | W0 | 22.5 | – | t | reference load for kB0 (loaded) |
 | Rail 60E1 | A | 0.00767 | – | m^2 | verified (fetch 19 Oct 2026): 76.70 cm^2 (TSTG Schienen Technik, rail profile catalogue, 60E1; Knuth et al. 2025, Table 1: 7.7e-3 m^2) |

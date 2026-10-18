@@ -37,7 +37,7 @@ as before (`scripts/check_config_values.py`; values-v2 config hash b8adde501aa3 
 | Unsprung-mass 1σ (Table 6) | 4% | SKF Evolution, "New axlebox concept for heavy loads", 8 Dec 2005 ("around 20 kg per axlebox … unsprung weight of the wheelset by around 4 %") |
 | Axlebox mass | 100 kg (Dusza et al. 2024, full text) | indication: SKF Y25 axlebox housing 80 kg ("the new housing weighs 80 kg", SKF Evolution, 26 Sep 2022); swept upper end 158.4 kg assumed (+58%) |
 | k_H0 | 1.489e9 N/m (Hertz) | 1.388–1.576 GN/m Hertz (S1002 transverse radius); upper sweep end 2.3 GN/m assumed |
-| Tapered (secondary) bearing geometry | z 21, D 23 mm, l 45 mm, d_m 180.5 mm, α 10° | Li et al. 2019, Table 3 (CHR380 EMU TRB; contact angle inner 7.75°, outer 10°); replaces Guan et al. 2023; range ends z 17/23 and D 21.4/26.5 mm unverified |
+| Tapered (secondary) bearing geometry | z 21, D 23 mm, l 45 mm, d_m 180.5 mm, α 10° | Li et al. 2019, Table 3 (CHR380 EMU TRB; contact angle inner 7.75°, outer 10°); replaces Guan et al. 2023; the unverified range ends of other units are dropped (19 Oct 2026) |
 
 **Deleted (not verified):** the k_B0 "indications" (US 9,580,087 has no vertical stiffness; J. Mech. Eng. 2023 not
 reachable); Bustos et al. 2025 158.42 kg (not in the paper; Y21 bogie); the Hasan 2020 k_H0 cross-check (also
@@ -45,8 +45,9 @@ removed from §2 and Table 6; the 2.3 GN/m sweep end stays, labelled assumed); M
 Thompson et al. 2007 as a value source (no longer cited).
 
 **Still open:** k_B0, wheel diametral inertia, WJ/WJP roller count, length and diameter, mounted clearance, the
-dust-guard collar and section boundaries, the 2187.6 mm upper end of the axle-length range field (not swept), the
-range ends of the tapered-unit geometry.
+dust-guard collar and section boundaries. (The axle-length range field and the tapered-unit range ends were dropped
+and the W_min range field set to 5.6–6.6 t on 19 Oct 2026; no computation reads them; range-only alias link
+b8adde501aa3 -> 601c1afdbb42 in `config/hash_aliases.yaml`.)
 
 ## Wheelset and axle
 

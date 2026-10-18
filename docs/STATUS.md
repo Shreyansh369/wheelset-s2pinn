@@ -1,4 +1,4 @@
-# Status (updated 18 Oct 2026, 22:15 UTC)
+# Status (updated 18 Oct 2026, 22:35 UTC)
 
 Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until the authors' review. Submission target
 24 Oct 2026 (25–30 Oct reserve); all compute to finish by 21 Oct 20:00 IST.
@@ -8,13 +8,14 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 - Config hash is **values-v2** from 19 Oct 2026 (`src/utils/results.py: config_hash`). It is the sha256 of the parsed
   `params.yaml` + `track.yaml` with every `source` field and comment removed. Every result written from now on records
   `config_hash_version: values-v2`.
-- Frozen config `config/`: values-v2 **b8adde501aa3**. The byte hash recorded in earlier results was e0a22f267362.
+- Frozen config `config/`: values-v2 **601c1afdbb42** (chain e0a22f267362 -> b8adde501aa3 -> 601c1afdbb42). The byte
+  hash recorded in earlier results was e0a22f267362.
   Pinned snapshot `config/snapshots/headline_freight_v1`: values-v2 **77c60818b705** (byte hash 10d9b91451c2).
 - `config/hash_aliases.yaml` maps the two byte hashes to their values-v2 hashes. `scripts/check_config_values.py`
   proves it: it compares the parsed values at f965b56, the commit with those byte hashes, against the current files
   and fails on any numeric or structural difference. It passes.
 - `experiments/make_provenance_check.py` accepts a recorded hash that is the values-v2 hash, or a byte hash aliased to
-  it, and says which. PASS, 0 failures; 12 result files are accepted through an alias. The 22 Oct final regeneration
+  it, and says which. PASS, 0 failures; 14 result files are accepted through an alias chain. The 22 Oct final regeneration
   (`scripts/final_regenerate.sh`, clean tree required) rewrites all of them under values-v2, including
   `p1/verification.json` and `p2/fig1_transfer.json`.
 
@@ -31,16 +32,19 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 - Range ends:
   - Axlebox mass 158.4 kg: assumed (+58%).
   - k_H0: Hertz 1.388–1.576 GN/m; the 2.3 GN/m sweep end is assumed.
-  - **Axle-length range field [2.180, 2.1876] m: not changed. No result sweeps it, but dropping it changes the
-    values-v2 hash, so `check_config_values.py` would fail. This needs the authors' decision.**
-- W_min: the bound sweep is extended to 5.6–6.6 t (new 5.6 t point; the stored 6.6 t point recomputed bit-identical).
-  The CRB at 5.6 t is 0.16616% (it was 0.16629% at 5.8 t); the macros are unchanged at two decimals. The config range
-  field stays 5.8–6.6 t, since changing it would change the hash; the text says 5.65–6.3 t, swept 5.6–6.6 t.
-- Open:
-  - k_B0, wheel diametral inertia, WJ/WJP internal geometry, mounted clearance, collar/section boundaries.
-  - Tapered-geometry range ends (z 17/23, D 21.4/26.5 mm; labelled unverified).
-  - Bibliography: the Unirail BA004 and railwayspare-parts URLs (not found by search); li2019axlebox volume/issue
-    11(4) to confirm.
+- Range fields (19 Oct 2026, commit d6ec9f1):
+  - The axle-length range is dropped, the unverified tapered range ends (z 17/23, D 21.4/26.5 mm) are dropped, and
+    W_min's range is now 5.6–6.6 t.
+  - No computation reads these fields; only the Table 1 display does.
+  - New values-v2 hash **601c1afdbb42**, chained b8adde501aa3 -> 601c1afdbb42 in `config/hash_aliases.yaml`. The link
+    is a range-only proof: `check_config_values.py --range-only` finds the four named range fields as the only
+    differences.
+- W_min: the bound sweep runs over 5.6–6.6 t (new 5.6 t point; the stored 6.6 t point was recomputed bit-identical).
+  CRB at the low end 0.16616% (it was 0.16629% at 5.8 t); the macros are unchanged at two decimals.
+- Bibliography: every Table 1 source has a URL or DOI; Bizic & Petrovic 2024 DOI restored; li2019axlebox 11(4),
+  April 2019 (DOAJ). guan2023 is cited only in §1 as related work (no number comes from it).
+- Open (no verified source): k_B0, wheel diametral inertia, WJ/WJP internal geometry, mounted clearance,
+  collar/section boundaries.
 
 ## Monte Carlo queue (detached workers, 4 cores)
 

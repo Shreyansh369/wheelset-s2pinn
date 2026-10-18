@@ -30,7 +30,7 @@ range changed (`scripts/check_config_values.py` passes).
 | W_min empty axle load | Wascosa, Eanos datasheet; Rail Cargo Group, Eanos fact sheet | Wascosa: "Tare weight 23,100 kg +/- 2%"; Rail Cargo: "Tare weight 22,6 – 25,30 t" → empty axle load 5.65–6.3 t; design value 5.5 t unchanged; sweep 5.6–6.6 t | as above | – | VERIFIED-FETCH | Claude (fetch), 19 Oct 2026 | | |
 | Table 6 unsprung 1σ 4% | SKF Evolution, "New axlebox concept for heavy loads", 8 Dec 2005 | "around 20 kg per axlebox … This reduces the unsprung weight of the wheelset by around 4 %" | https://evolution.skf.com/new-axlebox-concept-for-heavy-loads-3 | – | VERIFIED-FETCH | Claude (fetch), 19 Oct 2026 | | |
 | Axlebox mass indication | SKF Evolution, 26 Sep 2022 | "the new housing weighs 80 kg" (indication; replaces Bustos et al. 2025); swept upper end 158.4 kg assumed (+58%) | https://evolution.skf.com/new-axlebox-design-for-the-railway-freight-market | – | VERIFIED-FETCH | Claude (fetch), 19 Oct 2026 | | |
-| Tapered (secondary) bearing geometry: z, roller diameter and length, pitch diameter, contact angle | Li, Sun, Meng, Huo, Dong, Wang 2019, Adv. Mech. Eng., Table 3 (CHR380 EMU TRB) | "Number of rollers (single-row) &#124; 21"; "Mean diameter of rollers &#124; 23 mm"; "Effective contact length of rollers &#124; 45 mm"; "Pitch diameter &#124; 180.5 mm"; "Contact angle of the inner ring 7.75°; outer ring 10°". Replaces Guan et al. 2023 as the geometry source; range ends from other units unverified | https://journals.sagepub.com/doi/full/10.1177/1687814019840503 | 10.1177/1687814019840503 | VERIFIED-FETCH | Claude (fetch), 19 Oct 2026 | | |
+| Tapered (secondary) bearing geometry: z, roller diameter and length, pitch diameter, contact angle | Li, Sun, Meng, Huo, Dong, Wang 2019, Adv. Mech. Eng., Table 3 (CHR380 EMU TRB) | "Number of rollers (single-row) &#124; 21"; "Mean diameter of rollers &#124; 23 mm"; "Effective contact length of rollers &#124; 45 mm"; "Pitch diameter &#124; 180.5 mm"; "Contact angle of the inner ring 7.75°; outer ring 10°". Replaces Guan et al. 2023 as the geometry source; the range ends of other units are dropped | https://journals.sagepub.com/doi/full/10.1177/1687814019840503 | 10.1177/1687814019840503 | VERIFIED-FETCH | Claude (fetch), 19 Oct 2026 | | |
 
 ## Rejected (not verified; removed from Table 1, the config and the paper)
 
@@ -47,8 +47,8 @@ range changed (`scripts/check_config_values.py` passes).
 ## Still open (no verified source)
 
 k_B0; wheel diametral inertia; WJ/WJP roller count, length and diameter; mounted/operating clearance; dust-guard collar
-160 mm and the section boundaries; the 2187.6 mm upper end of the axle-length range field (not swept by any result);
-the range ends of the tapered-unit geometry (z 17/23, roller diameter 21.4/26.5 mm), labelled unverified. Assumed:
+160 mm and the section boundaries. Dropped on 19 Oct 2026 (no computation reads them): the 2187.6 mm axle-length
+range end and the unverified tapered-unit range ends. Assumed:
 axlebox mass upper sweep end 158.4 kg (+58%); k_H0 upper sweep end 2.3 GN/m.
 
 ## Original search-based candidate list (18 Oct 2026), with the status after the check

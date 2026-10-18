@@ -27,8 +27,8 @@ def clean(s):
 
 
 UNVERIFIED_NEW = {  # entries added after the search-based status check; to be verified by hand
-    "li2019axlebox": "c_B 6740 N s/m and the TRB geometry in Table 3 verified by full-text fetch 19 Oct 2026; VOLUME/ISSUE 11(4) TO CONFIRM (not seen in the fetch)",
-    "bizic2024": "Table 1 source, content verified by full-text fetch 19 Oct 2026; title per the authors' check; DOI 10.12700/APH.21.1.2024.1.10 seen only in a search URL, not used",
+    "li2019axlebox": "c_B 6740 N s/m and the TRB geometry in Table 3 verified by full-text fetch 19 Oct 2026; volume/issue 11(4), April 2019 (DOAJ)",
+    "bizic2024": "Table 1 source, content verified by full-text fetch 19 Oct 2026; title per the authors' check; DOI 10.12700/APH.21.1.2024.1.10 confirmed in the scidar.kg.ac.rs repository metadata",
     "jin2016": "Table 1 source, content verified by full-text fetch 19 Oct 2026 (via Ahmedov & Mirsaidov 2023); title and authors per the authors' check",
     "ahmedov2023": "Table 1 source, content verified by full-text fetch 19 Oct 2026; title and pages from a search result: check",
     "han2025": "Table 1 source, content verified by full-text fetch 19 Oct 2026; authors per the authors' check",
@@ -37,9 +37,9 @@ UNVERIFIED_NEW = {  # entries added after the search-based status check; to be v
     "thompson_eprint436918": "Table 1 source, content verified by full-text fetch 19 Oct 2026; accepted manuscript, journal version and year not known: check",
     "jones1996": "Table 1 source, content verified by full-text fetch 19 Oct 2026; title from the IOA proceedings file name: check",
     "sanudo2022": "Table 1 source, content verified by full-text fetch 19 Oct 2026; title and authors per the authors' check",
-    "unirail_ba004": "Table 1 source, content verified by full-text fetch 19 Oct 2026; vendor datasheet: URL TO BE ADDED (not found by search)",
+    "unirail_ba004": "Table 1 source, content verified by full-text fetch 19 Oct 2026; vendor datasheet",
     "interpipe_axles": "Table 1 source, content verified by full-text fetch 19 Oct 2026",
-    "railwayspares_ba004": "Table 1 source, content verified by full-text fetch 19 Oct 2026; vendor listing: URL TO BE ADDED (not found by search)",
+    "railwayspares_ba004": "Table 1 source, content verified by full-text fetch 19 Oct 2026; vendor listing",
     "skf_rth2012": "Table 1 source, content verified by full-text fetch 19 Oct 2026; extract of ch. 4, p. 89 (c) SKF 2012; full title from a search result: check",
     "schaeffler_wl07519": "Table 1 source, content verified by full-text fetch 19 Oct 2026; add year",
     "skf_evol2005": "Table 1 source, content verified by full-text fetch 19 Oct 2026",
