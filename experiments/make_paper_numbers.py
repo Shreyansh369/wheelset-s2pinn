@@ -192,7 +192,8 @@ def section4(m, miss):
         m["HLRMSEMin"], m["HLRMSEMax"] = _f(min(100 * p["rmse_rel"] for p in P)), _f(max(100 * p["rmse_rel"] for p in P))
         m["HLCRBMin"], m["HLCRBMax"] = _f(min(100 * p["crb_rel"] for p in P)), _f(max(100 * p["crb_rel"] for p in P))
         m["HLRatioCRBMax"] = _f(max(p["rmse_over_crb"] for p in P))
-    hl_src = "p3/headline_v2_kb120_attr_freight.json" if load("p3/headline_v2_kb120_attr_freight.json") else "p3/headline_v2_kb120_attr.json"
+    hl_src = next(f for f in ("p3/headline_v2_kb120_attr_frozen10.json", "p3/headline_v2_kb120_attr_freight.json",
+                           "p3/headline_v2_kb120_attr.json") if load(f))
     block(hl_src, headline, [f"HL{w}{k}" for w in ("Twenty", "Forty") for k in
           ("Bias", "BiasSE", "RMSE", "CRB", "RatioCRB", "RatioSE", "Cov", "CovLo", "CovHi", "cBBias")] + ["HLN"])
 

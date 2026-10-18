@@ -39,9 +39,11 @@ files:
   results/p3/bias_regression.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
   results/p3/robust_se.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
   results/p3/headline_v2_kb120_attr_freight.json: {config: pinned}
-  results/p3/calibrated.json: {config: pinned, note: "calibration from the pinned headline; MDCs from results/p4/mdc_bounds.json (frozen)"}
-  # mixed file: drift Monte Carlo at the frozen config (kf0.8_freight), kappa replicates and bias diagnosis earlier
-  results/p3/validation_mc.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", macro_overrides: {DriftMC: frozen}}
+  results/p3/headline_v2_kb120_attr_frozen10.json: {config: frozen}
+  results/p4/gain_y25.json: {config: frozen, estimator: "pseudo-true, multipass-whittle-2"}
+  results/p3/calibrated.json: {config: frozen, note: "calibration from the 10-seed headline at the frozen configuration; MDCs from results/p4/mdc_bounds.json"}
+  # mixed file: kappa replicates (rows_frozen) and drift Monte Carlo (kf0.8_freight) at the frozen config; bias diagnosis (BD*) earlier
+  results/p3/validation_mc.json: {config: frozen, macro_overrides: {BD: earlier}}
   results/p4/banded.json: {config: frozen}
   results/p4/contact_hertz.json: {config: frozen, estimator: none}
   results/p4/generator_check.json: {config: frozen, estimator: none}

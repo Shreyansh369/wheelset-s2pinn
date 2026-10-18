@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Full regeneration of every result at the frozen (or pinned headline) configuration, from scratch.
+# Full regeneration of every result at the frozen configuration, from scratch.
 # Long: see docs/compute_cost.md for the recorded cost of each study. Every Monte Carlo script is
 # resumable (rows are appended to a .jsonl file and skipped if present) and stops itself after about
 # 110 minutes, so each command below can be re-run until its rows are complete and run in parallel
@@ -25,17 +25,27 @@ rep $PY experiments/p4_sweep.py --run && $PY experiments/p4_sweep.py --summarise
 rep $PY experiments/p2_model_form_mw.py --sensitivity && $PY experiments/p2_model_form_mw.py --summarise
 rep $PY experiments/p2_relative_coest_drift.py --drift && $PY experiments/p2_relative_coest_drift.py --summarise-freight
 
-# headline Monte Carlo (pinned headline configuration) and its simulation calibration
-for j in 0 10 20 30 40 50 60 70 80 90; do
-  WHEELSET_CONFIG_DIR=config/snapshots/headline_freight_v1 rep $PY experiments/p3_headline_v2.py --kb 120 --attributed --label _freight --j0 $j --j1 $((j + 10))
+# headline Monte Carlo at the frozen configuration (10 seeds x 10 datasets x 2 SNR) and its simulation calibration
+for j in $(seq 0 10 190); do
+  rep $PY experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --j0 $j --j1 $((j + 10))
 done
-WHEELSET_CONFIG_DIR=config/snapshots/headline_freight_v1 $PY experiments/p3_headline_v2.py --kb 120 --attributed --label _freight --aggregate
-$PY experiments/p3_calibrated.py
+$PY experiments/p3_headline_v2.py --kb 120 --attributed --label _frozen10 --ten --aggregate
 rep $PY experiments/p4_ignore_coupling.py && $PY experiments/p4_ignore_coupling.py --summarise
 
-# drift Monte Carlo, 20 pairs per estimator
+# gain study (pseudo-true fits; kappa of the co-estimating fit), read by p3_validation_mc and p3_calibrated
+rep $PY experiments/p4_gain_y25.py --run --estimators nominal && rep $PY experiments/p4_gain_y25.py --run --estimators coest
+$PY experiments/p4_gain_y25.py --summarise
+
+# kappa replicates (40, empty band, simultaneous model errors), sensitivity SE for the singular ones, drift Monte
+# Carlo (20 pairs per estimator), then the summaries and the simulation calibration
+for j in $(seq 0 39); do $PY experiments/p3_validation_mc.py --kappa --band empty --tag _frozen --j0 $j --j1 $((j + 1)); done
+$PY experiments/p3_validation_mc.py --kappa-sing-se --band empty --tag _frozen
+$PY experiments/p3_validation_mc.py --kappa-sing-se --band empty --tag _frozen --reps 0 13 18
+$PY experiments/p3_validation_mc.py --kappa-diag 35 --band empty --tag _frozen
+$PY experiments/p3_validation_mc.py --kappa-diag-cb --band empty --tag _frozen
 for j in $(seq 0 19); do rep $PY experiments/p3_validation_mc.py --drift --tag _freight --j0 $j --j1 $((j + 1)); done
 $PY experiments/p3_validation_mc.py --summarise
+$PY experiments/p3_calibrated.py
 
 # nonlinear contact and generator check
 for m in nl lin; do rep $PY experiments/p4_inverse_crime.py --mode $m --j0 0 --j1 20; done
@@ -46,7 +56,7 @@ $PY experiments/p4_generator_check.py && $PY experiments/p4_generator_expper.py
 $PY experiments/p4_inverse_crime.py --summarise
 
 # payload-dependent primary suspension and payload bands
-$PY experiments/p4_primary_damping.py --pseudo && rep $PY experiments/p4_primary_damping.py --pairs --j0 0 --j1 3
+$PY experiments/p4_primary_damping.py --pseudo && for j in $(seq 0 9); do rep $PY experiments/p4_primary_damping.py --pairs --j0 $j --j1 $((j + 1)); done
 $PY experiments/p4_primary_damping.py --summarise
 $PY experiments/p4_banded.py --bounds
 for b in empty laden; do $PY experiments/p4_banded.py --pseudo --band $b; done

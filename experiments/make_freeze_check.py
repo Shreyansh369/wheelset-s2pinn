@@ -17,7 +17,7 @@ OLD = "EARLIER (metro layout, BS113A, +-30-bin kernel)"
 SRC = [  # (macro prefix, source file, configuration)
     ("Band", "results/p4/banded.json", CUR + "; payload bands"),
     ("PD", "results/p4/primary_damping.json", CUR + "; payload-dependent primary suspension (stress test)"),
-    ("HL", "results/p3/headline_v2_kb120_attr_freight.json", HL),
+    ("HL", "results/p3/headline_v2_kb120_attr_frozen10.json", CUR),
     ("IgnoreCoupling", "results/p4/ignore_coupling.json", CUR),
     ("IC", "results/p4/inverse_crime.json", CUR),
     ("Budget", "results/p2/model_form_mw_sensitivity.json", CUR),
