@@ -61,14 +61,50 @@ def input_hashes() -> dict[str, str]:
             for q in sorted(_INPUTS) if q.exists()}
 
 
-def config_hash(config_dir: Path | None = None) -> str:
-    """sha256 (12 hex) of the vehicle and track configuration actually loaded (params.yaml + track.yaml)."""
+CONFIG_HASH_VERSION = "values-v2"
+
+
+def config_values(text: str) -> Any:
+    """Parsed YAML with every `source` field and all comments removed and YAML 1.1 numeric strings ('1.0e9')
+    read as floats: what the configuration says, not how its sources are cited."""
+    import yaml
+    from src.reference.params import _num
+
+    def strip(node):
+        if isinstance(node, dict):
+            return {str(k): strip(v) for k, v in node.items() if k != "source"}
+        if isinstance(node, list):
+            return [strip(v) for v in node]
+        return _num(node)
+    return strip(yaml.safe_load(text))
+
+
+def canonical_json(obj: Any) -> str:
+    """Sorted keys, no whitespace, floats in Python's shortest round-trip repr."""
+    return json.dumps(obj, sort_keys=True, separators=(",", ":"), ensure_ascii=True, allow_nan=False)
+
+
+def config_hash_from_texts(texts: dict[str, str | None]) -> str:
     import hashlib
+    doc = {f: (config_values(t) if t is not None else None) for f, t in sorted(texts.items())}
+    return hashlib.sha256(canonical_json(doc).encode()).hexdigest()[:12]
+
+
+def config_hash(config_dir: Path | None = None) -> str:
+    """values-v2 config hash: sha256 (12 hex) of the canonical JSON of params.yaml + track.yaml as parsed, with
+    source fields and comments removed, so that correcting a citation does not change the configuration's
+    identity. Byte hashes recorded before 19 Oct 2026 map to it through config/hash_aliases.yaml, proven by
+    scripts/check_config_values.py."""
     d = Path(os.environ.get("WHEELSET_CONFIG_DIR", REPO_ROOT / "config")) if config_dir is None else Path(config_dir)
+    return config_hash_from_texts({f: ((d / f).read_text() if (d / f).exists() else None) for f in ("params.yaml", "track.yaml")})
+
+
+def config_hash_bytes(texts: dict[str, bytes | None]) -> str:
+    """The byte hash used before values-v2 (sha256 of the raw files), for the alias proof only."""
+    import hashlib
     h = hashlib.sha256()
     for f in ("params.yaml", "track.yaml"):
-        fp = d / f
-        h.update(fp.read_bytes() if fp.exists() else b"")
+        h.update(texts.get(f) or b"")
     return h.hexdigest()[:12]
 
 
@@ -157,6 +193,7 @@ def save_result(
             "git_commit": _git_commit(),
             "config_dir": os.environ.get("WHEELSET_CONFIG_DIR", "config"),
             "config_hash": config_hash(),
+            "config_hash_version": CONFIG_HASH_VERSION,
             "estimator_version": _estimator_version(),
             "input_hashes": input_hashes(),
             "timestamp_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
