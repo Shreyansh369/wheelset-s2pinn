@@ -127,20 +127,28 @@ def kappa(j0, j1, tag=""):
         REP_MAX_S[0] = max(REP_MAX_S[0], time.perf_counter() - t0)
 
 
-def kappa_sing_se(tag=""):
+def kappa_sing_se(tag="", reps=None):
     """Sensitivity SE for the kappa replicates with singular information (se = inf, c_B run to its bound).
 
     Expected-information SE of D with c_B fixed at its stored estimate in each period: the Fisher matrix of the
     co-estimating fit at the stored global estimates, the replicate's own pass design (seeds (45, j, 0/1) as
     kappa()) and the generating sub-band levels and payloads, with the c_B row and column removed. No refit.
-    Rows: results/p3/kappa_coest_runs/sing_se<tag>.jsonl.
+    Rows: results/p3/kappa_coest_runs/sing_se<tag>.jsonl. With reps given (check of the approximation on
+    finite-SE replicates): those replicates, rows in sing_se_check<tag>.jsonl, which summarise() does not read.
     """
+    from src.utils.results import _git_commit
     if BAND[0]:
         from experiments.p4_banded import set_band
         set_band(BAND[0])
     sm, thb, rough, mw, fams, _ = setup_all()
-    R = [r for r in _rows(OUT / "kappa_coest_runs" / f"rows{tag}.jsonl") if r["rep"] < N_KAPPA and not math.isfinite(r["se"])]
-    fp = OUT / "kappa_coest_runs" / f"sing_se{tag}.jsonl"
+    allr = [r for r in _rows(OUT / "kappa_coest_runs" / f"rows{tag}.jsonl") if r["rep"] < N_KAPPA]
+    if reps is None:
+        R = [r for r in allr if not math.isfinite(r["se"])]
+        fp = OUT / "kappa_coest_runs" / f"sing_se{tag}.jsonl"
+    else:
+        R = [r for r in allr if r["rep"] in set(reps)]
+        fp = OUT / "kappa_coest_runs" / f"sing_se_check{tag}.jsonl"
+    commit = _git_commit()
     done = _done(fp, lambda r: r["rep"])
     ic = EST["coest"].index("cB")
     for r in R:
@@ -159,6 +167,7 @@ def kappa_sing_se(tag=""):
             se2[s] = float(np.linalg.inv(Jk * np.outer(sc, sc))[0, 0] * sc[0] ** 2)
         _append(fp, {"rep": j, "se_cb_fixed": math.sqrt(se2["base"] + se2["later"]),
                      "se_base_cb_fixed": math.sqrt(se2["base"]), "se_later_cb_fixed": math.sqrt(se2["later"]),
+                     "se_stored": r["se"], "band": BAND[0], "tag": tag, "git_commit": commit,
                      "wall_s": time.perf_counter() - t0})
 
 
@@ -369,6 +378,7 @@ if __name__ == "__main__":
     ap.add_argument("--bias", action="store_true")
     ap.add_argument("--summarise", action="store_true")
     ap.add_argument("--kappa-sing-se", action="store_true", help="sensitivity SE (c_B fixed) for the singular kappa replicates")
+    ap.add_argument("--reps", type=int, nargs="+", default=None, help="--kappa-sing-se on these replicates (check file)")
     ap.add_argument("--j0", type=int, default=0)
     ap.add_argument("--j1", type=int, default=1)
     ap.add_argument("--f", type=float, default=0.8)
@@ -386,7 +396,7 @@ if __name__ == "__main__":
         kappa(a.j0, a.j1, a.tag)
     if a.kappa_sing_se:
         BAND[0] = a.band
-        kappa_sing_se(a.tag)
+        kappa_sing_se(a.tag, a.reps)
     if a.drift:
         drift(a.j0, a.j1, a.f, a.tag)
     if a.bias:

@@ -324,7 +324,11 @@ def section4(m, miss):
         sm = k.get("coverage_singular_as_not_covered_ci95", k["coverage_ci95"])
         m["KapCoestCovSingMiss"] = _f(k.get("coverage_singular_as_not_covered", k["coverage"]))
         m["KapCoestCovSingMissLo"], m["KapCoestCovSingMissHi"] = _f(sm[0]), _f(sm[1])
-        m["KapInflRank"], m["KapInflOf"] = str(math.ceil(0.9 * k["n"])), str(k["n"])
+        # rank and count of the factor actually used (pre-registered rule: all replicates when that factor is larger)
+        if k.get("inflation_for_90pct_all") is not None and k.get("inflation_conservative") == k["inflation_for_90pct_all"]:
+            m["KapInflRank"], m["KapInflOf"] = str(k["inflation_rank_all"]), str(k["n_all"])
+        else:
+            m["KapInflRank"], m["KapInflOf"] = str(k.get("inflation_rank", math.ceil(0.9 * k["n"]))), str(k["n"])
         at = d.get("kappa_coest_attribution")
         if at:
             m["KapAttrAxleCorr"] = _f(at["pearson_error_frac_vs_log_factor"]["axle_damp_scale"])
