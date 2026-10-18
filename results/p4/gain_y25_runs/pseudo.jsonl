@@ -33,3 +33,5 @@
 {"case": "unsprung_x0.95", "estimator": "nominal", "x": 0.05, "log_k_hat": 20.601595247001576, "converged": true, "wall_s": 543.8375251839898}
 {"case": "kH0_x1.15", "estimator": "nominal", "x": 0.1, "log_k_hat": 20.44811027658633, "converged": true, "wall_s": 483.73974978300976}
 {"case": "unsprung_x1.05", "estimator": "nominal", "x": 0.1, "log_k_hat": 20.377472017826687, "converged": true, "wall_s": 436.1798915429972}
+{"case": "unsprung_x0.95", "estimator": "nominal", "x": 0.1, "log_k_hat": 20.54580246445051, "converged": true, "wall_s": 386.0680923769978}
+{"case": "axle_damp_x0.5", "estimator": "nominal", "x": 0.0, "log_k_hat": 20.544793824543156, "converged": true, "wall_s": 827.0135417870042}
