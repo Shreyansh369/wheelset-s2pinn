@@ -43,3 +43,5 @@
 {"case": "kf_x0.8", "estimator": "coest", "x": 0.0, "log_k_hat": 20.56074546784233, "converged": true, "wall_s": 1283.4117135850101}
 {"case": "axle_damp_x2", "estimator": "nominal", "x": 0.1, "log_k_hat": 20.484414604504703, "converged": true, "wall_s": 447.9427094190032}
 {"case": "axle_damp_x0.5", "estimator": "nominal", "x": 0.05, "log_k_hat": 20.498266807804875, "converged": true, "wall_s": 592.3666873019974}
+{"case": "control", "estimator": "coest", "x": 0.02, "log_k_hat": 20.54054658158429, "converged": true, "wall_s": 1214.1102398829971}
+{"case": "axle_damp_x0.5", "estimator": "nominal", "x": 0.1, "log_k_hat": 20.448332892502798, "converged": true, "wall_s": 623.3805560820037}
