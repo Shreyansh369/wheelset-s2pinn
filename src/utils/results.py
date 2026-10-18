@@ -21,6 +21,45 @@ import numpy as np
 REPO_ROOT = Path(__file__).resolve().parents[2]
 RESULTS_DIR = REPO_ROOT / "results"
 
+# Input tracking: every results/**/*.jsonl rows file this process reads (through open, Path.open or
+# Path.read_text) is recorded, and save_result writes its SHA-256 into provenance.input_hashes. The git commit
+# says which code produced a result; the hashes say exactly which rows it was computed from.
+_INPUTS: set[Path] = set()
+
+
+def _note_input(f) -> None:
+    try:
+        q = Path(f).resolve()
+    except (TypeError, ValueError):
+        return
+    if q.suffix == ".jsonl" and RESULTS_DIR in q.parents:
+        _INPUTS.add(q)
+
+
+def _track(fn):
+    def wrapped(file, *a, **k):
+        mode = a[0] if a else k.get("mode", "r")
+        if "r" in mode and "+" not in mode:
+            _note_input(file)
+        return fn(file, *a, **k)
+    return wrapped
+
+
+if not getattr(Path, "_inputs_tracked", False):
+    import builtins
+    builtins.open = _track(builtins.open)
+    _path_open, _path_read_text = Path.open, Path.read_text
+    Path.open = lambda self, *a, **k: (_note_input(self) if not a or ("r" in a[0] and "+" not in a[0]) else None,
+                                       _path_open(self, *a, **k))[1]
+    Path.read_text = lambda self, *a, **k: (_note_input(self), _path_read_text(self, *a, **k))[1]
+    Path._inputs_tracked = True
+
+
+def input_hashes() -> dict[str, str]:
+    import hashlib
+    return {str(q.relative_to(REPO_ROOT)): hashlib.sha256(q.read_bytes()).hexdigest()
+            for q in sorted(_INPUTS) if q.exists()}
+
 
 def config_hash(config_dir: Path | None = None) -> str:
     """sha256 (12 hex) of the vehicle and track configuration actually loaded (params.yaml + track.yaml)."""
@@ -119,6 +158,7 @@ def save_result(
             "config_dir": os.environ.get("WHEELSET_CONFIG_DIR", "config"),
             "config_hash": config_hash(),
             "estimator_version": _estimator_version(),
+            "input_hashes": input_hashes(),
             "timestamp_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
             "wall_seconds": wall_seconds,
             "peak_cpu_memory_mb": peak_cpu_memory_mb(),
