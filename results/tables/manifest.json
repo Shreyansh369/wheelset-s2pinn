@@ -78,9 +78,9 @@
  "table5_multiwheel": {
   "sources": [
    "results/p2/multiwheel_bound.json",
-   "results/p2/multiwheel_mc.json"
+   "results/p2/multiwheel_mc_y25.json"
   ],
-  "caption": "Multi-wheel coupling through the rail (k_B0) (partly earlier configuration: metro wheel layout, BS113A rail, +-30-bin kernel)"
+  "caption": "Multi-wheel coupling through the rail (k_B0)"
  },
  "table6_budget": {
   "sources": [
