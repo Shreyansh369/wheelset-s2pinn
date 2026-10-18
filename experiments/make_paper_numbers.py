@@ -329,6 +329,8 @@ def section4(m, miss):
             m["KapInflRank"], m["KapInflOf"] = str(k["inflation_rank_all"]), str(k["n_all"])
         else:
             m["KapInflRank"], m["KapInflOf"] = str(k.get("inflation_rank", math.ceil(0.9 * k["n"]))), str(k["n"])
+        if k.get("sing_se_check"):
+            m["KapSingSECheckMaxDev"] = _f(max(abs(x["ratio"] - 1) for x in k["sing_se_check"]), 3)
         at = d.get("kappa_coest_attribution")
         if at:
             m["KapAttrAxleCorr"] = _f(at["pearson_error_frac_vs_log_factor"]["axle_damp_scale"])
@@ -355,7 +357,8 @@ def section4(m, miss):
                                          "KapCoestKfMax", "KapCoestNAll", "KapCoestNSing", "KapCoestCovSingMiss", "KapCoestCovSingMissLo",
                                          "KapCoestCovSingMissHi", "KapInflRank", "KapInflOf"]
           + [f"DriftMC{w}{k}" for w in ("Nom", "Coest") for k in ("FA", "N", "Lo", "Hi", "Mean")])
-    for k in ("KapAttrAxleCorr", "KapAttrAxleRsq", "KapAttrAllRsq", "KapAttrAxleSlope", "KapAttrResidRMS", "KapCBBoundN"):
+    for k in ("KapAttrAxleCorr", "KapAttrAxleRsq", "KapAttrAllRsq", "KapAttrAxleSlope", "KapAttrResidRMS", "KapCBBoundN",
+              "KapSingSECheckMaxDev"):
         if k not in m:
             m[k] = miss("p3/validation_mc.json (kappa_coest_attribution)")
 

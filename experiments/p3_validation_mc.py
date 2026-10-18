@@ -289,6 +289,9 @@ def summarise():
             "inflation_for_90pct_all": r90_all, "inflation_rank_all": math.ceil(0.9 * len(R)),
             "singular_se_cb_fixed": {str(j): ss.get(j) for j in sing},
             "inflation_conservative": r90_cons, "inflation_conservative_includes_singular": r90_all is not None,
+            # check of the c_B-fixed approximation on finite-SE replicates with c_B away from its bound
+            "sing_se_check": [{"rep": x["rep"], "ratio": x["se_cb_fixed"] / x["se_stored"]}
+                              for x in _rows(OUT / "kappa_coest_runs" / KR.name.replace("rows", "sing_se_check"))] if KR.exists() else [],
             "ratio_sorted": [float(x) for x in ratio], "coverage": ks / n, "coverage_ci95": cp_interval(ks, n),
             "coverage_statistical_only": k0 / n, "coverage_statistical_only_ci95": cp_interval(k0, n),
             "coverage_singular_as_not_covered": ks / len(R), "coverage_singular_as_not_covered_ci95": cp_interval(ks, len(R)),
