@@ -34,10 +34,11 @@ corrugation (Section~\ref{sec:res-p2}); its intervals then under-cover, so on th
 screen per-pass estimates but does not yet give calibrated intervals.
 
 \subsection{Limitations}\label{sec:limitations}
-\paragraph{Residual bias and simulation-calibrated intervals.} For the representative wagon (pinned
-headline configuration) the frozen estimator has a bias of at most \HLBiasAbsMax\% (Table~\ref{tab:table3_headline}) and a scatter up to
+\paragraph{Residual bias and simulation-calibrated intervals.} For the representative wagon at the
+frozen configuration the estimator has a bias of at most \HLBiasAbsMax\% (Table~\ref{tab:table3_headline}) and a scatter up to
 \HLRatioCRBMax{} times the Cram\'er--Rao bound, but the 40~dB Wald intervals still cover the truth
-slightly less often than nominal (\HLFortyCov). Section~\ref{sec:res-bias} ruled out the obvious causes on the headline datasets: sensor
+slightly less often than nominal (\HLFortyCov). Section~\ref{sec:res-bias} ruled out the obvious causes on the headline datasets of the pinned headline
+configuration: sensor
 noise does not change the error, exact sub-band scoring and a finer table change it by at most
 \ScoreExactMaxDiff{} percentage points, a narrower debiasing kernel by at most \BDYKbMax, robust
 (sandwich) standard errors do not restore coverage, fewer roughness levels do not remove it, and the pass
@@ -47,10 +48,12 @@ payload range, number of passes, roughness model and noise level), and must be r
 other design. The calibration was checked on held-out seeds (Section~\ref{sec:res-headline}); at
 20~dB, where no calibration is applied, the held-out coverage differed between the two splits, so the
 nominal 90\% should be read as approximate.
-For relative changes under random model errors (earlier configuration), the calibrated interval still
-under-covers
-(\KapCalCovered/\KapCalN): the gain uncertainty $\kappa$ derived from one-at-a-time model errors is too
-small, and an interval for the change that holds under realistic model errors remains open.
+For relative changes under simultaneous random model errors, the calibrated interval with the gain-study
+$\kappa$ still under-covers (\KapCalCovered/\KapCalN{} of the replicates with finite information): the
+gain uncertainty derived from one-at-a-time model errors is too small. The conservative detection limit
+allows for this with the factor \KapInflNinety, but an interval for the size of a change that holds under
+realistic model errors remains open; its dominant term is the wheelset modal damping
+(Section~\ref{sec:res-budget}).
 
 \paragraph{Load exponent as a clearance indicator.} Clearance growth changes not only the level of the
 effective support stiffness but also its dependence on axle load, because a larger clearance shrinks

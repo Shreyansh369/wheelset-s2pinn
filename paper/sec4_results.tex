@@ -29,8 +29,8 @@ used for their qualitative conclusions only; \texttt{docs/provenance.md} in the 
 configuration behind every table, figure and number.
 
 \subsection{Matched-model simulation accuracy}\label{sec:res-headline}
-Table~\ref{tab:table3_headline} summarises \HLN{} datasets per noise level (five seeds of ten, pinned
-headline configuration), generated and fitted with the same model. At
+Table~\ref{tab:table3_headline} summarises \HLN{} datasets per noise level (ten seeds of ten datasets each, frozen
+configuration), generated and fitted with the same model. At
 20~dB the estimate of $k_{B0}$ has a bias of \HLTwentyBias\,$\pm$\,\HLTwentyBiasSE\% and an RMSE of
 \HLTwentyRMSE\%, \HLTwentyRatioCRB{} times the Cram\'er--Rao bound; Wald 90\% intervals cover the truth
 in \HLTwentyCov{} of datasets [\HLTwentyCovLo, \HLTwentyCovHi]. At 40~dB the bias is
@@ -40,10 +40,10 @@ determined and biased by \HLTwentycBBias\% and \HLFortycBBias\%. Section~\ref{se
 what was done to explain the residual bias and excess scatter.
 
 \paragraph{Simulation-calibrated intervals.} Because the 40~dB intervals under-cover, they are
-calibrated by simulation for this design (pinned headline configuration): the mean bias of $\log\hat k_{B0}$ is subtracted
+calibrated by simulation for this design: the mean bias of $\log\hat k_{B0}$ is subtracted
 (\CalBiasForty\%) and the Wald standard error is multiplied by the measured ratio of RMSE to standard
 error (\CalInflForty). At 20~dB the uncalibrated coverage is \CalTwentyRawCov{} and no calibration is
-applied. Calibrating on three seeds and testing on the other two, the held-out coverage is
+applied. Calibrating on five whole seeds and testing on the other five, the held-out coverage is
 \CalSplitACov{} (\CalSplitAk/\CalSplitAn; [\CalSplitALo, \CalSplitAHi]) with the inflation estimated
 as \CalSplitAInfl, and \CalSplitBCov{} (\CalSplitBk/\CalSplitBn; [\CalSplitBLo, \CalSplitBHi]) for the
 reverse split (inflation \CalSplitBInfl). At 20~dB the held-out coverage without calibration is
@@ -126,24 +126,52 @@ With the frozen estimator the bias on these datasets is \BDYHeadBias\,$\pm$\,\BD
 \subsection{Uncertainty budget}\label{sec:res-budget}
 A detected change carries four kinds of uncertainty: statistical error, error in the values of the model
 parameters, error in the structure of the model, and the conditions of measurement and operation. The
-most demanding single test combines the first two. In \KapCoestN{} replicates of a relative-change
-Monte Carlo study in the earlier configuration, with all five uncertain model parameters drawn at random
-from their $1\sigma$ ranges at once and $k_f$, $k_{H0}$ re-estimated in each period, the interval
-\eqref{eq:interval} covered the true change in only \KapCoestCovered/\KapCoestN{} replicates
-[\KapCoestLo, \KapCoestHi], against the nominal 90\%. Covering 90\% of these replicates requires an
-interval \KapInflNinety{} times wider (the 18th of the 20 ordered ratios of error to half-width).
+most demanding single test combines the first two. In \KapCoestNAll{} replicates of a relative-change
+Monte Carlo study in the empty band, with all five uncertain model parameters drawn at random from their
+$1\sigma$ ranges at once ($k_f$ from $\times$\KapCoestKfMin{} to $\times$\KapCoestKfMax{}, so that the
+lowest draws fall below the sourced range, which starts at 123~MN/m$^2$) and $k_f$, $k_{H0}$ re-estimated
+in each period, the interval \eqref{eq:interval}, with $\kappa=\KapGainCoest$ from the gain study,
+covered the true change in only \KapCoestCovered/\KapCoestN{} of the replicates with finite information
+[\KapCoestLo, \KapCoestHi], against the nominal 90\%. In \KapCoestNSing{} replicates the information was
+singular (infinite standard error); counting them as not covered gives \KapCoestCovSingMiss{}
+[\KapCoestCovSingMissLo, \KapCoestCovSingMissHi]. Covering 90\% of the replicates requires an interval
+\KapInflNinety{} times wider (rank \KapInflRank{} of the \KapInflOf{} ordered ratios of error to
+half-width). This is the larger of the factor over the replicates with finite information and the factor
+over all replicates, with the singular ones given the expected-information standard error at $c_B$ fixed
+(an approximation that agrees within \KapSingSECheckMaxDev{} with the reported standard error on three
+regular replicates).
+
+The change error under simultaneous model errors is dominated by the wheelset modal damping: its rank
+correlation with the logarithm of the axle-damping factor is \KapAttrAxleSpearman{} over all replicates,
+and without the gross failure discussed below the linear correlation is \KapAttrAxleCorr{}
+($R^2=\KapAttrAxleRsq$, against \KapAttrAllRsq{} with all five factors). The damping $c_B$ absorbs part
+of a damping mismatch and reaches its lower bound in \KapCBBoundN{} of the \KapCoestNAll{} replicates,
+not only where the true damping is low, against \HLCBBoundN{} of the \HLCBBoundOf{} matched-model fits
+of Section~\ref{sec:res-headline}; \KapCoestNSing{} of these have singular information. With the damping
+known, the change error left is \KapAttrResidRMS{} of $\Delta$. The gain study gives the same picture:
+of $\kappa=\KapGainCoest$, the axle damping alone contributes \KapGainAxle. The wheelset modal damping
+should therefore be measured rather than assumed (Section~\ref{sec:requirements}).
+
+One replicate (\KapGrossReps) is a gross failure, with a change error larger than the change. It is an
+optimizer failure: the fit of its baseline period stopped at a local optimum of the profile likelihood,
+whose negative log-likelihood is \KapRepThirtyFiveNLLGap{} higher than that of the solution reached when
+the fit is restarted from the later period's estimate. The restarted fit gives
+$\hat D=\KapRepThirtyFiveRefitD$ against the true \KapRepThirtyFiveTrueD. The pre-registered statistics
+keep the stored value. In practice each period should be refitted from the other period's estimate and
+the solution with the lower negative log-likelihood kept; a jump of the contact stiffness $k_{H0}$ between
+the two periods flags such cases.
 Applying the same factor to the standard error of the change gives conservative detection limits,
 allowing for simultaneous model errors, of \BandEmptyMDCFiftyConsMin--\BandEmptyMDCFiftyConsMax\% for
 $N=50$ and \BandEmptyMDCTwoHundredConsMin--\BandEmptyMDCTwoHundredConsMax\% for $N=200$ in the empty band,
 beside the nominal \BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\% and
 \BandEmptyMDCTwoHundredMin--\BandEmptyMDCTwoHundredMax\% (Section~\ref{sec:res-relative}). The factor is
 conservative for detection, because the replicates have true changes of 2--10\%, where the error of the
-gain dominates, while at the detection limit the change is below 1\%. With 20 replicates in the earlier
-configuration it is also coarse. The four sources are reported in turn below.
+gain dominates, while at the detection limit the change is below 1\%. With \KapCoestNAll{} replicates
+it is also coarse. The four sources are reported in turn below.
 
 \subsubsection{Statistical error}\label{sec:res-budget-stat}
 The statistical error is set by the number of passes, the speed spread and the noise level. In the
-matched-model simulations of the pinned headline configuration it is close to the Cram\'er--Rao bound
+matched-model simulations at the frozen configuration it is close to the Cram\'er--Rao bound
 (RMSE within \HLRatioCRBMax{} times the bound, Section~\ref{sec:res-headline}); the residual bias is small
 against the detection limit, and the under-coverage of the 40~dB intervals is corrected by simulation
 calibration for the stated design. For a change between periods, the standard error of $D$ combines the

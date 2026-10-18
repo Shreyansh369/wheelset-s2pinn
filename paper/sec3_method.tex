@@ -152,12 +152,15 @@ records with braking, traction transients or speed changes of more than a few pe
 excluded. \emph{Record alignment:} each record covers a fixed distance (\NumRevs{} wheel revolutions,
 \RecordLength~m), so it must be cut on a distance or wheel-angle reference (tachometer or odometry), not
 on a fixed duration. \emph{Bearing orders:} varying-compliance vibration of the roller bearing puts
-lines at the outer-race roller-pass order, about 7.7 times the rotation frequency for the assumed bearing
-geometry (18 rollers of 27.5~mm on a 185~mm pitch circle; a non-integer order), and at its harmonics,
-inside the analysis band~\citep{zheng2025}. Like roughness, these lines are tied to the wheel angle, so
-they sit at fixed bins of the angle-synchronous record; they are therefore confounded with the sub-band
-roughness levels, not with the support resonance, and can be notched at the known bearing orders if
-needed. \emph{Payload:} an axle load per pass from weigh-in-motion or from the suspension
+lines at the outer-race roller-pass order, about \BearingOrderOR{} times the rotation frequency
+(\BearingOrderORLo--\BearingOrderORHi{} over the assumed roller count; a non-integer order), and at its
+harmonics, inside the analysis band~\citep{zheng2025}. Like roughness, these lines are tied to the wheel
+angle, so they sit at fixed bins of the angle-synchronous record (only approximately, since cage slip
+smears them by a few per cent); they are therefore confounded with the sub-band roughness levels, not
+with the support resonance, and can be notched at the known bearing orders if needed. \emph{Wheelset
+damping:} the modal damping of the wheelset dominates the error of the change under model errors
+(Section~\ref{sec:res-budget}), so it should be measured, for example by an impact-hammer test on the
+wheelset, rather than assumed. \emph{Payload:} an axle load per pass from weigh-in-motion or from the suspension
 deflection, with an error of about \WIMsigmaPct\%, both for the likelihood and to assign each pass to
 its payload band. \emph{Record selection:} records over plain line with no joints, welds,
 switches, crossings or bridges, which the stationary roughness model does not represent, and passes

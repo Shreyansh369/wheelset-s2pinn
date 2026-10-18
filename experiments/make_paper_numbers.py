@@ -46,6 +46,11 @@ def main():
     P = Params(load_raw())
     v = P.v
     m["NumRevs"] = f"{int(v['sensor']['n_revs'])}"
+    # outer-race roller-pass order of the main-case bearing, Z/2 (1 - d/d_p cos(alpha)), and over the swept roller count
+    bg, bgr = v["bearing_geometry"], load_raw()["bearing_geometry"]
+    bpo = lambda z: z / 2 * (1 - bg["roller_diameter"] / bg["pitch_diameter"] * math.cos(math.radians(bg["contact_angle"])))  # noqa: E731
+    m["BearingOrderOR"] = _f(bpo(bg["rollers_per_row"]), 1)
+    m["BearingOrderORLo"], m["BearingOrderORHi"] = (_f(bpo(z), 1) for z in bgr["rollers_per_row"]["range"])
     m["WIMsigmaPct"] = miss("experiments/p1_fe_direct.py: WIM")
     try:
         from experiments.p1_fe_direct import W_RANGE, WIM
@@ -551,6 +556,19 @@ def section4(m, miss):
     for k in ("ScoreExactMaxDiff", "ScoreExactMeanDiff", "ScoreExactSERatio"):
         if k not in m:
             m[k] = miss("p4/bias_diag_y25.json (exact variant)")
+
+    def gain(d):                          # gain study at the frozen configuration (pseudo-true fits)
+        c = d["estimators"]["coest"]
+        m["KapGainCoest"] = _f(c["kappa"], 3)
+        m["KapGainAxle"] = _f(c["kappa_terms"]["axle_damp_scale"], 3)
+    block("p4/gain_y25.json", gain, ["KapGainCoest", "KapGainAxle"])
+
+    def hl_cb(d):                         # c_B at its lower bound in the correct-model headline fits
+        fp = RESULTS_DIR / "p3/headline_v2_runs/kb120_attr_frozen10.jsonl"
+        R = [json.loads(l) for l in fp.read_text().splitlines() if l.strip()]
+        lcb = math.log(6.0e3)           # TRUTH c_B of the headline (experiments/p1_fe_direct.py)
+        m["HLCBBoundN"], m["HLCBBoundOf"] = str(sum(r["err_log"][1] + lcb < 0 for r in R)), str(len(R))
+    block("p3/headline_v2_kb120_attr_frozen10.json", hl_cb, ["HLCBBoundN", "HLCBBoundOf"])
 
     def conservative(v):                  # detection limits allowing for simultaneous model errors
         bd = load("p4/banded.json")

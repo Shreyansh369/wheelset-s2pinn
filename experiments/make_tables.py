@@ -193,6 +193,7 @@ def table2():
 def table3():
     d, c, ic = (load("p3/headline_v2_kb120_attr_frozen10.json") or load("p3/headline_v2_kb120_attr_freight.json")
                 or load("p3/headline_v2_kb120_attr.json")), load("p3/calibrated.json"), load("p4/ignore_coupling.json")
+    _sa = {x["snr_db"]: x for x in c["headline"]}[40]["split_A"] if c else {"calibrate_on": [], "test_on": []}
     if d is None:
         return missing("table3_headline", "Table 3. Headline Monte Carlo (frozen estimator)", "results/p3/headline_v2_kb120_attr.json")
     cal = {x["snr_db"]: x for x in c["headline"]} if c else {}
@@ -214,8 +215,10 @@ def table3():
           md(["SNR (dB)", "n", "Bias (%) ± SE", "RMSE (%)", "CRB (%)", "RMSE/CRB", "RMSE/SE", "Wald 90% coverage [95% CI]",
               "Simulation calibration: bias b, inflation r; held-out coverage", "Ignore coupling (seed 42, 10 datasets): bias (%) ± SE"], rows),
           ["results/p3/headline_v2_kb120_attr_frozen10.json", "results/p3/calibrated.json", "results/p4/ignore_coupling.json"],
-          ["N = 50 passes, 60–110 km/h, 5 seeds × 10 datasets. Frozen estimator: debiased Whittle, kernel ±120 bins, own-sub-band "
-           "scoring, K = 16, load exponent fixed. Split A calibrates on seeds 42/123/456 and tests on 789/1024; split B the reverse."])
+          [f"N = 50 passes, 60–110 km/h, {len(_sa['calibrate_on']) + len(_sa['test_on'])} seeds × 10 datasets per SNR. "
+           "Frozen estimator: debiased Whittle, kernel ±120 bins, own-sub-band scoring, K = 16, load exponent fixed. "
+           f"Split A calibrates on seeds {'/'.join(map(str, _sa['calibrate_on']))} and tests on "
+           f"{'/'.join(map(str, _sa['test_on']))} (whole seeds); split B the reverse."])
 
 
 # ----------------------------------------------------------------------------- Table 4
@@ -429,8 +432,10 @@ def table12():
           md(["Roughness", "Per-pass median (MN/m²)", "Per-pass outside ×0.7–×1.43", "Per-pass range", "Per-pass no peak",
               "Multi-pass median", "Multi-pass range", "Multi-pass profile 90% covers truth"], rows),
           ["results/p2/scope_p2_hysteretic.json"],
-          ["With corrugation the multi-pass point estimate stays within 2% of the truth, but its profile "
-           "interval under-covers (0.45 of 90%); the cause is not yet diagnosed (open item)."])
+          [f"With corrugation the multi-pass median stays within "
+           f"{100 * abs(s['corrugation']['whittle_median_MN'] / s['reference_kf_MN'] - 1):.0f}% of the truth, but its profile "
+           f"interval under-covers ({s['corrugation']['whittle_profile_covers_truth']:.2f} of 90%); the cause is not yet "
+           "diagnosed (open item)."])
 
 
 # ----------------------------------------------------------------------------- Table 13
@@ -525,7 +530,7 @@ def table16():
     if rs and rs.get("kappa"):
         kc = rs["kappa"]
         names = [("model", "expected information"), ("bin", "sandwich, bin clusters"), ("block8", "sandwich, 8-bin blocks"), ("block61", "sandwich, 61-bin blocks")]
-        body += "\n**(b) Coverage of the change by standard error (κ = 0.044; slope correction {:.5f})**\n\n".format(kc["slope_correction"]) + md(
+        body += "\n**(b) Coverage of the change by standard error (earlier configuration; κ = {:g}; slope correction {:.5f})**\n\n".format(kc["kappa"], kc["slope_correction"]) + md(
             ["SE of the change", "Median SE (%)", "Statistical only", "With κ", "With κ and slope correction"],
             [[lab, f"{kc[k2 + '_se_D_median_pct']:.3f}", f"{kc[k2 + '_kappa0.0']['covered']}/{kc['n']}", f"{kc[k2 + '_kappa0.044']['covered']}/{kc['n']} {ci(kc[k2 + '_kappa0.044']['ci95'])}",
               f"{kc[k2 + '_slopecorr_kappa0.044']['covered']}/{kc['n']}"] for k2, lab in [("stored", "stored (fit)")] + names])
@@ -592,7 +597,7 @@ def table14():
             [[lab, *[f"{c[k]['coverage90']:.2f} {ci(c[k]['ci95'])}" for c in rs["headline"]], *[f"{c[k]['se_median_pct']:.3f}" for c in rs["headline"]],
               *[f"{c[k]['rmse_over_median_se']:.2f}" for c in rs["headline"]]] for k, lab in names])
         kc = rs["kappa"]
-        body += "\n**(f) κ replicates (n = {}): coverage of the change, κ = 0.044, slope correction {:.5f}**\n\n".format(kc["n"], kc["slope_correction"]) + md(
+        body += "\n**(f) κ replicates, earlier configuration (n = {}): coverage of the change, κ = {:g}, slope correction {:.5f}**\n\n".format(kc["n"], kc["kappa"], kc["slope_correction"]) + md(
             ["SE of the change", "Median SE (%)", "Statistical only", "With κ", "With κ and slope correction"],
             [[lab, f"{kc[k + '_se_D_median_pct']:.3f}", f"{kc[k + '_kappa0.0']['covered']}/{kc['n']}", f"{kc[k + '_kappa0.044']['covered']}/{kc['n']} {ci(kc[k + '_kappa0.044']['ci95'])}",
               f"{kc[k + '_slopecorr_kappa0.044']['covered']}/{kc['n']}"] for k, lab in [("stored", "stored (fit)")] + names[1:]])
