@@ -203,6 +203,80 @@ def kappa_diag(j, tag=""):
         "band": BAND[0], "tag": tag, "git_commit": commit, "wall_s": time.perf_counter() - t0})
 
 
+def _code_commit() -> str:
+    """HEAD, with -dirty only if code, config or docs differ from it (result rows landing meanwhile are ignored)."""
+    import subprocess
+    root = str(Path(__file__).resolve().parents[1])
+    head = subprocess.run(["git", "-C", root, "rev-parse", "HEAD"], capture_output=True, text=True).stdout.strip()
+    dirty = subprocess.run(["git", "-C", root, "status", "--porcelain", "--untracked-files=no", "--", ".", ":!results"],
+                           capture_output=True, text=True).stdout.strip()
+    return head + ("-dirty" if dirty else "")
+
+
+LOG_CB_NOMINAL = math.log(6.74e3)    # config/params.yaml bearing cB nominal (6740 N s/m)
+
+
+def kappa_diag_cb(tag="", reps=None):
+    """Restart diagnostic for the kappa replicates with c_B at its lower bound (log c_B < 0) in either period.
+
+    For each period at the bound (data regenerated with the seeds of kappa()), the profile NLL at the stored
+    solution and two refits: (a) from the other period's solution moved to this period's k_B0 truth, when the
+    other period's c_B is interior; (b) from the stored solution with log c_B reset to the nominal value.
+    For each period not at the bound, the SE at the stored solution (Hessian, as in fit) so that the change can
+    be re-formed from the lower-NLL solutions. Same estimator settings as _fit; the stored replicates are not
+    changed (post-hoc sensitivity only). For replicate 35, start (a) of the base period is taken from
+    diag_rep35<tag>.jsonl. Rows: results/p3/kappa_coest_runs/diag_cbbound<tag>.jsonl.
+    """
+    commit = _code_commit()
+    if BAND[0]:
+        from experiments.p4_banded import set_band
+        set_band(BAND[0])
+    sm, thb, rough, mw, fams, _ = setup_all()
+    R = [r for r in _rows(OUT / "kappa_coest_runs" / f"rows{tag}.jsonl")
+         if r["rep"] < N_KAPPA and (r["phi_base"][1] < 0 or r["phi_later"][1] < 0)]
+    if reps is not None:
+        R = [r for r in R if r["rep"] in set(reps)]
+    fp = OUT / "kappa_coest_runs" / f"diag_cbbound{tag}.jsonl"
+    done = _done(fp, lambda r: r["rep"])
+    d35 = {x["rep"]: x for x in _rows(OUT / "kappa_coest_runs" / f"diag_rep35{tag}.jsonl")}
+    for r in R:
+        j = r["rep"]
+        if j in done:
+            continue
+        t0 = time.perf_counter()
+        sh = math.log(1 - r["x"])             # log k_B0 truth, later minus base
+        out = {}
+        for s, kt, ph, oth, shift in (("base", TRUTH["kB0"], r["phi_base"], r["phi_later"], -sh),
+                                      ("later", TRUTH["kB0"] * (1 - r["x"]), r["phi_later"], r["phi_base"], sh)):
+            P, Wm, Ws, g = gen(sm, truth(thb, r["misspec"], kt), rough, mw, (45, j, 0 if s == "base" else 1))
+            est = MultiPassWhittle([dict(q) for q in P], Wm, WIM, rough, fams["coest"], debias=True)
+            phs = np.asarray(ph, float)
+            f0 = float(est.profile_nll(phs))
+            rec = {"at_bound": ph[1] < 0, "nll_stored": f0, "phi_stored": list(ph), "starts": {}}
+            if ph[1] < 0:
+                if oth[1] >= 0:
+                    if j in d35 and s == "base":
+                        x = d35[j]
+                        rec["starts"]["other_period"] = {"nll": x["nll_refit"], "phi": x["phi_refit"], "se_log": x["se_refit"],
+                                                         "converged": x["converged_refit"], "from": f"diag_rep{j}{tag}.jsonl"}
+                    else:
+                        st = np.asarray(oth, float).copy()
+                        st[0] += shift
+                        q = est.fit(st)
+                        rec["starts"]["other_period"] = {"nll": q["nll"], "phi": q["phi"], "se_log": q["se_log"], "converged": q["converged"]}
+                st = phs.copy()
+                st[1] = LOG_CB_NOMINAL
+                q = est.fit(st)
+                rec["starts"]["cb_nominal"] = {"nll": q["nll"], "phi": q["phi"], "se_log": q["se_log"], "converged": q["converged"]}
+            Hs = est._hessian(phs, f0)
+            ev = np.linalg.eigvalsh(Hs)
+            rec["se_stored"] = (np.sqrt(np.diag(np.linalg.inv(Hs))) if ev.min() > 0 else np.full(phs.size, np.inf)).tolist()
+            out[s] = rec
+        _append(fp, {"rep": j, "x": r["x"], "misspec": r["misspec"], "D_true": r["D_true"], "D_hat_stored": r["D_hat"],
+                     "base": out["base"], "later": out["later"], "band": BAND[0], "tag": tag, "git_commit": commit,
+                     "wall_s": time.perf_counter() - t0})
+
+
 # ----------------------------------------------------------------------------- (3) drift MC
 def drift(j0, j1, f, tag=""):
     sm, thb, rough, mw, fams, _ = setup_all()
@@ -374,6 +448,42 @@ def summarise():
             "resid_rms_error_frac_after_axle_damp": float(np.sqrt(np.mean(res_axle ** 2))),
             "cb_lower_bound_n": len(cb_bound), "cb_lower_bound_reps": cb_bound,
             "note": "c_B at its lower bound: log c_B < 0 in either period"}
+        # optimizer diagnostics (post-hoc; the pre-registered statistics above keep the stored replicates)
+        tg = KR.name[len("rows"):-len(".jsonl")] if KR.exists() else ""
+        d35 = _rows(OUT / "kappa_coest_runs" / f"diag_rep35{tg}.jsonl")
+        dg = {}
+        if d35:
+            x = d35[0]
+            dg["rep35"] = {"nll_gap": x["nll_stored"] - x["nll_refit"], "D_hat_refit": x["D_hat_refit"],
+                           "D_hat_stored": x["D_hat_stored"], "D_true": x["D_true"]}
+        dc = {x["rep"]: x for x in _rows(OUT / "kappa_coest_runs" / f"diag_cbbound{tg}.jsonl")}
+        if dc:
+            def best(p):          # lowest-NLL solution of one period: stored or a refit
+                cand = [(p["nll_stored"], p["phi_stored"], p["se_stored"], "stored")] + \
+                       [(v["nll"], v["phi"], v["se_log"], k) for k, v in p["starts"].items()]
+                return min(cand, key=lambda c: c[0])
+            per = []
+            for j, x in sorted(dc.items()):
+                b, l = best(x["base"]), best(x["later"])
+                gap = max(x["base"]["nll_stored"] - b[0], x["later"]["nll_stored"] - l[0])
+                per.append({"rep": j, "nll_gap_max": gap, "local_optimum": gap > 10, "best_base": b[3], "best_later": l[3],
+                            "D_hat_best": l[1][0] - b[1][0], "se_best": math.hypot(b[2][0], l[2][0])})
+            lo = [p["rep"] for p in per if p["local_optimum"]]
+            alt = {p["rep"]: p for p in per}
+            # post-hoc sensitivity only: the lower-NLL solution in place of the stored one, same interval and rule
+            Ra = [dict(r, D_hat=alt[r["rep"]]["D_hat_best"], se=alt[r["rep"]]["se_best"]) if r["rep"] in alt else r for r in R]
+            Raf = [r for r in Ra if math.isfinite(r["se"])]
+            ka = sum(_covered(r, KAPPA_COEST) for r in Raf)
+            rat = sorted(abs(r["D_hat"] - r["D_true"]) / (1.645 * math.sqrt(r["se"] ** 2 + (KAPPA_COEST * r["D_hat"]) ** 2)) for r in Raf)
+            dg["cbbound"] = {"n_diagnosed": len(dc), "n_cb_bound": len(cb_bound), "complete": set(dc) >= set(cb_bound),
+                             "local_optimum_reps": lo, "n_local_optimum": len(lo), "threshold_nll": 10, "per_rep": per,
+                             "posthoc_lower_nll": {"label": "post-hoc sensitivity; does not replace the pre-registered statistics",
+                                                   "n_finite_se": len(Raf), "n_all": len(Ra), "coverage": ka / len(Raf),
+                                                   "coverage_ci95": cp_interval(ka, len(Raf)),
+                                                   "coverage_singular_as_not_covered": ka / len(Ra),
+                                                   "inflation_for_90pct": float(rat[math.ceil(0.9 * len(Raf)) - 1])}}
+        if dg:
+            out["kappa_coest_optimizer_diag"] = dg
     for fp in sorted((OUT / "drift_mc_runs").glob("kf*.jsonl")):
         R = list({(r["estimator"], r["rep"]): r for r in reversed(_rows(fp))}.values())   # one row per replicate (first kept)
         for e in EST:
@@ -429,6 +539,7 @@ if __name__ == "__main__":
     ap.add_argument("--kappa-sing-se", action="store_true", help="sensitivity SE (c_B fixed) for the singular kappa replicates")
     ap.add_argument("--reps", type=int, nargs="+", default=None, help="--kappa-sing-se on these replicates (check file)")
     ap.add_argument("--kappa-diag", type=int, default=None, help="likelihood diagnostic for one kappa replicate (rep number)")
+    ap.add_argument("--kappa-diag-cb", action="store_true", help="restart diagnostic for the kappa replicates with c_B at its bound (--reps to select)")
     ap.add_argument("--j0", type=int, default=0)
     ap.add_argument("--j1", type=int, default=1)
     ap.add_argument("--f", type=float, default=0.8)
@@ -450,6 +561,9 @@ if __name__ == "__main__":
     if a.kappa_diag is not None:
         BAND[0] = a.band
         kappa_diag(a.kappa_diag, a.tag)
+    if a.kappa_diag_cb:
+        BAND[0] = a.band
+        kappa_diag_cb(a.tag, a.reps)
     if a.drift:
         drift(a.j0, a.j1, a.f, a.tag)
     if a.bias:

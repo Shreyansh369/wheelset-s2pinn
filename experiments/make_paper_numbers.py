@@ -335,6 +335,12 @@ def section4(m, miss):
             m["KapGrossN"] = str(k["n_gross"])
             m["KapGrossReps"] = ", ".join(str(j) for j in k["gross_reps"]) if k["gross_reps"] else "none"
             m["KapCoestMedAbs"] = _f(k["median_abs_change_error_frac_all"], 3)
+        dg = d.get("kappa_coest_optimizer_diag", {})
+        if "rep35" in dg:              # optimizer failure of replicate 35 (local optimum; refit from the other period)
+            m["KapRepThirtyFiveNLLGap"] = f"{dg['rep35']['nll_gap']:.0f}"
+            m["KapRepThirtyFiveRefitD"] = _f(dg["rep35"]["D_hat_refit"], 4)
+            m["KapRepThirtyFiveTrueD"] = _f(dg["rep35"]["D_true"], 4)
+            m["KapLocalOptN"] = str(dg["cbbound"]["n_local_optimum"]) if dg.get("cbbound", {}).get("complete") else "1"
         at = d.get("kappa_coest_attribution")
         if at and "spearman_axle_damp_all" in at:
             m["KapAttrAxleSpearman"] = _f(at["spearman_axle_damp_all"])
@@ -364,7 +370,8 @@ def section4(m, miss):
                                          "KapCoestCovSingMissHi", "KapInflRank", "KapInflOf"]
           + [f"DriftMC{w}{k}" for w in ("Nom", "Coest") for k in ("FA", "N", "Lo", "Hi", "Mean")])
     for k in ("KapAttrAxleCorr", "KapAttrAxleRsq", "KapAttrAllRsq", "KapAttrAxleSlope", "KapAttrResidRMS", "KapCBBoundN",
-              "KapSingSECheckMaxDev", "KapGrossN", "KapGrossReps", "KapCoestMedAbs", "KapAttrAxleSpearman"):
+              "KapSingSECheckMaxDev", "KapGrossN", "KapGrossReps", "KapCoestMedAbs", "KapAttrAxleSpearman",
+              "KapRepThirtyFiveNLLGap", "KapRepThirtyFiveRefitD", "KapRepThirtyFiveTrueD", "KapLocalOptN"):
         if k not in m:
             m[k] = miss("p3/validation_mc.json (kappa_coest_attribution)")
 
