@@ -131,6 +131,7 @@
 "BearingOrderORHi": "config/params.yaml",
 "BearingOrderORLo": "config/params.yaml",
 "BudgetCoest": "results/p2/model_form_mw_sensitivity.json",
+"BudgetCoestInt": "results/p2/model_form_mw_sensitivity.json",
 "BudgetCoestMassOne": "results/p2/model_form_mw_sensitivity.json",
 "BudgetMassSigmaPct": "results/p2/model_form_mw_sensitivity.json",
 "BudgetNominal": "results/p2/model_form_mw_sensitivity.json",

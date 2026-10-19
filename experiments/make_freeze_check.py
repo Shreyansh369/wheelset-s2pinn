@@ -46,6 +46,7 @@ def source(name):
 
 def main():
     m = dict(re.findall(r"\\newcommand\{\\(\w+)\}\{([^}]*)\}", (ROOT / "paper/generated/numbers.tex").read_text()))
+    m = {k: v.replace("\\minus ", "\u2212") for k, v in m.items()}
     out = ["# Freeze cross-check", "",
            "Every number in the abstract, highlights, conclusions and cover letter, with the generated value, the result "
            "file it comes from and the configuration it was computed with. Regenerate with "
@@ -68,7 +69,7 @@ def main():
     for f, lit, mac in TYPED:
         present = lit in (ROOT / f).read_text()
         val = m.get(mac, "?")
-        match = present and lit.replace("\\", "").rstrip("%") == val.lstrip("-")
+        match = present and lit.replace("\\", "").rstrip("%") == val.lstrip("-\u2212")
         out.append(f"| {f} | {lit if present else '(not found)'} | `\\{mac}` | {val} | {'yes' if match else 'NO'} |")
     out += ["", "## Numbers from an older configuration", ""]
     out += [f"- {x}" for x in older] or ["- none in the abstract or conclusions"]

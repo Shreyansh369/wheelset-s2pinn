@@ -10,16 +10,16 @@ Every number in the abstract, highlights, conclusions and cover letter, with the
 | `\HLRMSEMin` | 0.18 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
 | `\HLRMSEMax` | 0.21 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
 | `\HLRatioCRBMax` | 1.13 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
-| `\IgnoreCouplingForty` | -5.6 | results/p4/ignore_coupling.json | current (representative wagon, Table 1) |
+| `\IgnoreCouplingForty` | −5.6 | results/p4/ignore_coupling.json | current (representative wagon, Table 1) |
 | `\ICDiffMean` | 0.059 | results/p4/inverse_crime.json | current (representative wagon, Table 1) |
-| `\BudgetCoest` | 10.0 | results/p2/model_form_mw_sensitivity.json | current (representative wagon, Table 1) |
+| `\BudgetCoestInt` | 10 | results/p2/model_form_mw_sensitivity.json | current (representative wagon, Table 1) |
 | `\BandEmptyMDCFiftyMin` | 0.75 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCFiftyMax` | 0.83 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCFiftyConsMin` | 1.04 | results/p4/banded.json x results/p3/validation_mc.json (zero-change study) | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCFiftyConsMax` | 1.13 | results/p4/banded.json x results/p3/validation_mc.json (zero-change study) | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCTwoHundredMin` | 0.35 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCTwoHundredMax` | 0.39 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
-| `\EffPctTenEmpty` | -0.74 | results/p3/bearing_clearance.json | current (representative wagon, Table 1) |
+| `\EffPctTenEmpty` | −0.74 | results/p3/bearing_clearance.json | current (representative wagon, Table 1) |
 
 ## paper/sec6_conclusions.tex
 
@@ -29,9 +29,9 @@ Every number in the abstract, highlights, conclusions and cover letter, with the
 | `\HLRMSEMin` | 0.18 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
 | `\HLRMSEMax` | 0.21 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
 | `\HLRatioCRBMax` | 1.13 | results/p3/headline_v2_kb120_attr_frozen10.json | current (representative wagon, Table 1) |
-| `\IgnoreCouplingForty` | -5.6 | results/p4/ignore_coupling.json | current (representative wagon, Table 1) |
+| `\IgnoreCouplingForty` | −5.6 | results/p4/ignore_coupling.json | current (representative wagon, Table 1) |
 | `\ICDiffMean` | 0.059 | results/p4/inverse_crime.json | current (representative wagon, Table 1) |
-| `\BudgetCoest` | 10.0 | results/p2/model_form_mw_sensitivity.json | current (representative wagon, Table 1) |
+| `\BudgetCoestInt` | 10 | results/p2/model_form_mw_sensitivity.json | current (representative wagon, Table 1) |
 | `\BandEmptyMDCFiftyMin` | 0.75 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCFiftyMax` | 0.83 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCFiftyConsMin` | 1.04 | results/p4/banded.json x results/p3/validation_mc.json (zero-change study) | current (representative wagon, Table 1); payload bands |
@@ -41,8 +41,8 @@ Every number in the abstract, highlights, conclusions and cover letter, with the
 
 | File | Typed | Macro | Macro value | Match |
 |---|---|---|---|---|
-| paper/submission/highlights.txt | 5.6% | `\IgnoreCouplingForty` | -5.6 | yes |
-| paper/submission/cover_letter.tex | 5.6\% | `\IgnoreCouplingForty` | -5.6 | yes |
+| paper/submission/highlights.txt | 5.6% | `\IgnoreCouplingForty` | −5.6 | yes |
+| paper/submission/cover_letter.tex | 5.6\% | `\IgnoreCouplingForty` | −5.6 | yes |
 
 ## Numbers from an older configuration
 
