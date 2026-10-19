@@ -9,23 +9,23 @@
       "ranges": {
         "kf": [
           0.5957507412015728,
-          "rail pad 80-800 MN/m per pad at 0.60-0.65 m spacing -> 123-1333 MN/m^2 (Thompson et al. 2007; EUROBOLT; snippets)"
+          "rail pad swept 80-800 MN/m per pad (published 105-800: Knuth et al. 2025; Thompson et al., Southampton eprint 436918) at 0.60-0.65 m spacing (Sanudo et al. 2022; Thompson et al.) -> 123-1333 MN/m^2"
         ],
         "eta_f": [
           0.22907268296853878,
-          "rail pad loss factor 0.1-0.25 (snippets)"
+          "rail pad loss factor 0.1-0.25 (Jones & Edwards 1996: 0.1-0.3; Knuth et al. 2025: 0.15; Thompson et al., eprint 436918: 0.2/0.25)"
         ],
         "kH0": [
           0.12626131521262282,
-          "linearised contact stiffness 1.388 GN/m (Hertz, S1002 transverse radius +0.5 m) to 2.3 GN/m (published spread, Hasan 2020)"
+          "linearised contact stiffness 1.388-1.576 GN/m Hertz (S1002 transverse radius); upper sweep end 2.3 GN/m assumed"
         ],
         "unsprung_scale": [
           0.04,
-          "about 20 kg per axlebox, 4% of the wheelset unsprung mass, between axlebox designs (SKF Evolution, snippet)"
+          "about 20 kg per axlebox, around 4% of the wheelset unsprung weight, between axlebox designs (SKF Evolution, New axlebox concept for heavy loads, 8 Dec 2005)"
         ],
         "axle_damp_scale": [
           0.7489330683884977,
-          "wheelset modal damping 0.1-2% (Chaar 2007: measured below 2%; IPME paper 0.1-1%; snippets)"
+          "wheelset modal damping 0.1-2% (Chaar 2007: measured less than 2%; Jin 2016 via Ahmedov & Mirsaidov 2023: 0.1-1%)"
         ]
       },
       "kf_sampling": "stratified log-normal sigma 0.35",
@@ -272,7 +272,155 @@
         "D_hat_refit": -0.03955113621784889,
         "D_hat_stored": -0.6580809440848903,
         "D_true": -0.03903358671763632
+      },
+      "cbbound": {
+        "n_diagnosed": 2,
+        "n_cb_bound": 16,
+        "complete": false,
+        "local_optimum_reps": [],
+        "n_local_optimum": 0,
+        "threshold_nll": 10,
+        "per_rep": [
+          {
+            "rep": 2,
+            "nll_gap_max": 1.241220161318779e-06,
+            "local_optimum": false,
+            "best_base": "cb_nominal",
+            "best_later": "cb_nominal",
+            "D_hat_best": -0.017788741321325574,
+            "se_best": "inf"
+          },
+          {
+            "rep": 8,
+            "nll_gap_max": 9.849027264863253e-07,
+            "local_optimum": false,
+            "best_base": "cb_nominal",
+            "best_later": "cb_nominal",
+            "D_hat_best": -0.05149665712160356,
+            "se_best": "inf"
+          }
+        ],
+        "posthoc_lower_nll": {
+          "label": "post-hoc sensitivity; does not replace the pre-registered statistics",
+          "n_finite_se": 34,
+          "n_all": 40,
+          "coverage": 0.8235294117647058,
+          "coverage_ci95": [
+            0.6546848689318661,
+            0.9323593473172429
+          ],
+          "coverage_singular_as_not_covered": 0.7,
+          "inflation_for_90pct": 1.2484048784723576
+        }
+      },
+      "two_start": {
+        "label": "post-hoc sensitivity; does not replace the pre-registered statistics",
+        "rule": "each period refitted from the other period's solution (k_B0 moved to its own truth); lower NLL kept",
+        "n": 3,
+        "complete": false,
+        "n_finite_se": 2,
+        "n_changed": 3,
+        "n_local_optimum": 0,
+        "n_cb_bound_after": 1,
+        "coverage": 0.5,
+        "coverage_ci95": [
+          0.01257911709342505,
+          0.9874208829065749
+        ],
+        "coverage_singular_as_not_covered": 0.3333333333333333,
+        "inflation_for_90pct": 1.0442471832284397,
+        "inflation_rank": 2,
+        "per_rep": [
+          {
+            "rep": 0,
+            "kept_base": "refit",
+            "kept_later": "refit",
+            "nll_gap_max": 6.3338084146380424e-06,
+            "D_hat": -0.08010189024252412,
+            "se": 0.0021528469948898852,
+            "D_hat_stored": -0.08009787871501217,
+            "cb_bound_after": false
+          },
+          {
+            "rep": 1,
+            "kept_base": "stored",
+            "kept_later": "refit",
+            "nll_gap_max": 5.895417416468263e-06,
+            "D_hat": -0.056384687297047265,
+            "se": 0.00394582090406947,
+            "D_hat_stored": -0.05638017840995957,
+            "cb_bound_after": false
+          },
+          {
+            "rep": 2,
+            "kept_base": "refit",
+            "kept_later": "stored",
+            "nll_gap_max": 1.5834229998290539e-06,
+            "D_hat": -0.017789527048041265,
+            "se": "inf",
+            "D_hat_stored": -0.017789882035025073,
+            "cb_bound_after": true
+          }
+        ],
+        "files_reused": [
+          "computed"
+        ]
       }
+    },
+    "zero_change": {
+      "rows": "rows_zero_frozen.jsonl",
+      "n": 40,
+      "n_used": 40,
+      "complete": true,
+      "singular_reps": [
+        2,
+        8,
+        14,
+        17,
+        20,
+        21,
+        34,
+        36,
+        38
+      ],
+      "n_singular": 9,
+      "singular_with_sensitivity_se": [
+        2,
+        8,
+        14,
+        17,
+        20,
+        21,
+        34,
+        36,
+        38
+      ],
+      "all_singular_have_se": true,
+      "z_sd": 1.1653898293954537,
+      "z_mean": 0.1408680349151774,
+      "s0": 1.1653898293954537,
+      "false_alarms": 1,
+      "false_alarm_rate": 0.025,
+      "false_alarm_ci95": [
+        0.0006327449320494191,
+        0.13158585848276572
+      ],
+      "D_hat_sd_pct": 0.33875789983897314,
+      "se_median_pct": 0.22573321711187702,
+      "g90": 0.15103754055044544,
+      "g90_n": 40,
+      "finite_only": {
+        "n": 31,
+        "z_sd": 1.1306672834602836,
+        "z_mean": 0.26794175057608033,
+        "false_alarms": 0
+      },
+      "false_alarm_reps": [
+        8
+      ],
+      "all_converged": true,
+      "wall_s_median": 5041.6549015805,
+      "mdc_factor": 1.3727224524757695
     },
     "drift_mc": [
       {
@@ -594,13 +742,36 @@
     ]
   },
   "provenance": {
-    "git_commit": "005403636cf5d8741adf004ee37426db38f7197b",
+    "git_commit": "ddafb426be63c1f99f1b74cdc8da8f4e93aaac8c",
     "config_dir": "config",
-    "config_hash": "e0a22f267362",
+    "config_hash": "601c1afdbb42",
+    "config_hash_version": "values-v2",
     "estimator_version": "multipass-whittle-2 (debiased, Kb=120 default, own-sub-band scoring, 0.5 Hz table)",
-    "timestamp_utc": "2026-10-18T17:40:03Z",
+    "input_hashes": {
+      "results/p2/headline_mw_runs/snr40_seed123.jsonl": "a60605135b0661857a72403d8c1043e6d862c0bfd25359634b9281fa79be2e9b",
+      "results/p2/headline_mw_runs/snr40_seed42.jsonl": "9c23d652ba2b44a21290b64a5a0769c28e884ff389234a13922d979106ee4b1b",
+      "results/p3/bias_diag_runs/base_snr20.jsonl": "08a8870e9582969b79456b405ae5b888a3f02fc0675f5d5a21988ff0658b5f44",
+      "results/p3/bias_diag_runs/base_snr60.jsonl": "5ded2091975f8dda4a6df75ade0fee040ce8e21fa4dd013afe73fd3375223046",
+      "results/p3/bias_diag_runs/base_snr60_seed123.jsonl": "90ed0342da3b6474b4c6824ea1c018b7c49ba4dd2e8659a497a622205e59159a",
+      "results/p3/bias_diag_runs/kb120_K1_snr40_seed123.jsonl": "55646f8573cb9574dab037dfc230152e0e55bd4660050277f92187a1a9fbd76e",
+      "results/p3/bias_diag_runs/kb120_K4_snr40_seed123.jsonl": "5f53b3ca55083205f4aeae690698a0ffed352a4b1bf30abec8379bbd6e23e489",
+      "results/p3/bias_diag_runs/kb120_snr40_seed123.jsonl": "6a1425180014d49918364e0fc96006dd521c2c7cb41e152e6684c59f91b5d0a4",
+      "results/p3/bias_diag_runs/refined_snr40.jsonl": "8974d181b2a9fd02274c9d352b6f8cbb401a4b407a345134d63eed31bc033297",
+      "results/p3/bias_diag_runs/refined_snr40_seed123.jsonl": "142949af8b4abd05b1dce157156c6ba45e1668e541b6ba4690f3bdc18e659223",
+      "results/p3/drift_mc_runs/kf0.8.jsonl": "aa579683791d12f676f91e0e16390abca5bbcfa54000c27b66ef9367cbd71c3b",
+      "results/p3/drift_mc_runs/kf0.8_freight.jsonl": "603104122e9ce956b53f6fda61e9c513d7f2c96f96c686f4b681e6e56bf2c8e6",
+      "results/p3/kappa_coest_runs/diag_cbbound_frozen.jsonl": "8ef7fd6d00cc4ddf35e05fa5685aa42fc5d84283b7a8cfffac9ca87eb376a8b0",
+      "results/p3/kappa_coest_runs/diag_rep35_frozen.jsonl": "74d174ddbce7c4ebcfdbc410c14d0a5bdd57f3b9c73799f52d89aa15c312b788",
+      "results/p3/kappa_coest_runs/rows_frozen.jsonl": "a5ed6fe67c78e803d983ebc1132228092cff884da3ac56d917ab56d03fc2f09d",
+      "results/p3/kappa_coest_runs/rows_zero_frozen.jsonl": "ea4a8f0fd4ccb076e775e3d31e0696d62132eb1373c9263d6793cdfada45fb2a",
+      "results/p3/kappa_coest_runs/sing_se_check_frozen.jsonl": "759edf6f09c4ff3241392d7a33b68ba236de363cd925a82703b52ce6ddd6bf2c",
+      "results/p3/kappa_coest_runs/sing_se_frozen.jsonl": "27be758d75e1813a37f9a872c8e2e725bab39313075cbc2820c58de46f2352b4",
+      "results/p3/kappa_coest_runs/sing_se_zero_frozen.jsonl": "4629f6296a40497284f2a2ab0fe9d81a5e0d700673d8bfbed04608e43e34f15f",
+      "results/p3/kappa_coest_runs/twostart_frozen.jsonl": "c4ff4d11efe128681d52883f8fd19b8747f7e90511eaca799eff629f02fb01e4"
+    },
+    "timestamp_utc": "2026-10-19T16:08:54Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 98.94921875,
+    "peak_cpu_memory_mb": 100.62890625,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

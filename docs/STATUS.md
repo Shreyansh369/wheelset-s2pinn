@@ -1,4 +1,4 @@
-# Status (updated 19 Oct 2026, 15:25 UTC)
+# Status (updated 19 Oct 2026, 15:45 UTC)
 
 Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until the authors' review. Submission target
 24 Oct 2026 (25–30 Oct reserve); all compute to finish by 21 Oct 20:00 IST.
@@ -58,7 +58,7 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 - refs.bib: stoura2023 and keenahan2020 added. The an2024 author list is incomplete (middle authors to confirm) and
   is flagged in `reference_check.md`.
 
-## Zero-change study: complete, waiting for the authors' decision (19 Oct 15:10 UTC)
+## Zero-change study: complete and applied (approved 19 Oct; commits ddafb42 and the next one)
 
 - 40 of 40 replicates, all converged. 9 have singular information (reps 2, 8, 14, 17, 20, 21, 34, 36, 38); they use the
   c_B-fixed sensitivity SE (0.0016–0.0024).
@@ -77,9 +77,14 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
   | Inflation-factor comparison (ConsInfl, factor 1.248) | 0.94–1.03% (N = 50) |
 
 - Finite-SE replicates only (n = 31): sd(z) 1.131, mean z 0.268, no false alarms.
-- **Not applied.** `validation_mc.json`, the macros and the freeze check are kept at the committed versions. The new
-  outputs are in the session scratchpad. The authors' approval conditions (s0 1.0–1.2; no false alarms; MDC about
-  1.0–1.1%) are met for s0 only, so the authors decide.
+- **Applied.** `validation_mc.json` is regenerated at clean commit ddafb42 (values-v2 601c1afdbb42, 20 input hashes);
+  ZeroChangeDone = 1.
+- **Conservative limit:** `\BandEmpty/LadenMDC*Cons*` hold the pre-registered value. `…ConsInfl…` (inflation factor,
+  0.94–1.03%) and `…ConsGain…` (gain study, 1.282κ = 0.164 in place of g90: 1.05–1.15%) are agreement checks.
+- **§4.5:** new paragraph "Detection limit allowing for simultaneous model errors".
+- **Abstract, highlights, conclusions, cover letter:** no text change needed (the approved wording is already there
+  through the macros); the rendered abstract is 244 words.
+- **Lean sentence in §4:** unchanged until the fit-order diagnostic reports.
 
 ## Fit-order diagnostic (item 3, started 19 Oct 14:55 UTC)
 

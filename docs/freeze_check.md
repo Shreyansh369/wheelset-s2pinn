@@ -15,8 +15,8 @@ Every number in the abstract, highlights, conclusions and cover letter, with the
 | `\BudgetCoest` | 10.0 | results/p2/model_form_mw_sensitivity.json | current (representative wagon, Table 1) |
 | `\BandEmptyMDCFiftyMin` | 0.75 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCFiftyMax` | 0.83 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
-| `\BandEmptyMDCFiftyConsMin` | 0.94 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
-| `\BandEmptyMDCFiftyConsMax` | 1.03 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
+| `\BandEmptyMDCFiftyConsMin` | 1.04 | results/p4/banded.json x results/p3/validation_mc.json (zero-change study) | current (representative wagon, Table 1); payload bands |
+| `\BandEmptyMDCFiftyConsMax` | 1.13 | results/p4/banded.json x results/p3/validation_mc.json (zero-change study) | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCTwoHundredMin` | 0.35 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCTwoHundredMax` | 0.39 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\EffPctTenEmpty` | -0.74 | results/p3/bearing_clearance.json | current (representative wagon, Table 1) |
@@ -34,8 +34,8 @@ Every number in the abstract, highlights, conclusions and cover letter, with the
 | `\BudgetCoest` | 10.0 | results/p2/model_form_mw_sensitivity.json | current (representative wagon, Table 1) |
 | `\BandEmptyMDCFiftyMin` | 0.75 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
 | `\BandEmptyMDCFiftyMax` | 0.83 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
-| `\BandEmptyMDCFiftyConsMin` | 0.94 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
-| `\BandEmptyMDCFiftyConsMax` | 1.03 | results/p4/banded.json | current (representative wagon, Table 1); payload bands |
+| `\BandEmptyMDCFiftyConsMin` | 1.04 | results/p4/banded.json x results/p3/validation_mc.json (zero-change study) | current (representative wagon, Table 1); payload bands |
+| `\BandEmptyMDCFiftyConsMax` | 1.13 | results/p4/banded.json x results/p3/validation_mc.json (zero-change study) | current (representative wagon, Table 1); payload bands |
 
 ## Numbers typed by hand (highlights, cover letter)
 

@@ -51,11 +51,11 @@ Frozen configuration hash `601c1afdbb42` (config/params.yaml + config/track.yaml
 | `results/p3/bias_regression.json` | earlier | - | declared |
 | `results/p3/calibrated.json` | frozen | e0a22f267362 | hash verified (alias chain to 601c1afdbb42) |
 | `results/p3/calibration.json` | earlier | - | declared |
-| `results/p3/drift_mc_freight.json` | frozen | e0a22f267362 | hash verified (alias chain to 601c1afdbb42) |
+| `results/p3/drift_mc_freight.json` | frozen | 601c1afdbb42 | hash verified (values-v2) |
 | `results/p3/exponent_bound.json` | frozen | - | declared |
 | `results/p3/headline_v2_kb120_attr_frozen10.json` | frozen | e0a22f267362 | hash verified (alias chain to 601c1afdbb42) |
 | `results/p3/robust_se.json` | earlier | - | declared |
-| `results/p3/validation_mc.json` | frozen | e0a22f267362 | hash verified (alias chain to 601c1afdbb42) |
+| `results/p3/validation_mc.json` | frozen | 601c1afdbb42 | hash verified (values-v2) |
 | `results/p4/banded.json` | frozen | e0a22f267362 | hash verified (alias chain to 601c1afdbb42) |
 | `results/p4/bias_diag_y25.json` | pinned | 10d9b91451c2 | hash verified (alias chain to 77c60818b705) |
 | `results/p4/contact_hertz.json` | frozen | - | declared |
@@ -116,6 +116,10 @@ Frozen configuration hash `601c1afdbb42` (config/params.yaml + config/track.yaml
 | `\BRegYN` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
 | `\BRegYP` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
 | `\BRegYRsq` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
+| `\BandEmptyMDCFiftyConsGainMax` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\BandEmptyMDCFiftyConsGainMin` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\BandEmptyMDCFiftyConsInflMax` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\BandEmptyMDCFiftyConsInflMin` | results/p3/validation_mc.json | frozen | sec4_results | ok |
 | `\BandEmptyMDCFiftyConsMax` | results/p3/validation_mc.json | frozen | sec6_conclusions | ok |
 | `\BandEmptyMDCFiftyConsMin` | results/p3/validation_mc.json | frozen | sec6_conclusions | ok |
 | `\BandEmptyMDCFiftyMax` | results/p4/banded.json | frozen | sec6_conclusions | ok |
@@ -141,8 +145,12 @@ Frozen configuration hash `601c1afdbb42` (config/params.yaml + config/track.yaml
 | `\BandLadenFixSE` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandLadenFixZMax` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandLadenFixZMin` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\BandLadenMDCFiftyConsMax` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\BandLadenMDCFiftyConsMin` | results/p3/validation_mc.json | frozen | sec4_results | ok |
 | `\BandLadenMDCFiftyMax` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandLadenMDCFiftyMin` | results/p4/banded.json | frozen | sec4_results | ok |
+| `\BandLadenMDCTwoHundredConsMax` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\BandLadenMDCTwoHundredConsMin` | results/p3/validation_mc.json | frozen | sec4_results | ok |
 | `\BandLadenMDCTwoHundredMax` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandLadenMDCTwoHundredMin` | results/p4/banded.json | frozen | sec4_results | ok |
 | `\BandLadenNSingular` | results/p4/banded.json | frozen | sec4_results | ok |
@@ -467,4 +475,18 @@ Frozen configuration hash `601c1afdbb42` (config/params.yaml + config/track.yaml
 | `\WLNotchCost` | results/p2/wheel_lines_bound.json | earlier | sec4_results | labelled |
 | `\WLTachoTen` | results/p2/wheel_lines_bound.json | earlier | sec4_results | labelled |
 | `\WLTachoZero` | results/p2/wheel_lines_bound.json | earlier | sec4_results | labelled |
+| `\ZeroFA` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\ZeroFAHiPct` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\ZeroFALoPct` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\ZeroFAPct` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\ZeroFAReps` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\ZeroFiniteN` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\ZeroFiniteZsd` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\ZeroGNinety` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\ZeroGainStudyGNinety` | results/p4/gain_y25.json | frozen | sec4_results | ok |
+| `\ZeroMDCFactor` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\ZeroN` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\ZeroNSing` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\ZeroSzero` | results/p3/validation_mc.json | frozen | sec4_results | ok |
+| `\ZeroZsd` | results/p3/validation_mc.json | frozen | sec4_results | ok |
 | `\kBnom` | config/params.yaml | frozen | sec2_model | ok |
