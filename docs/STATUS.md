@@ -58,6 +58,18 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 - refs.bib: stoura2023 and keenahan2020 added. The an2024 author list is incomplete (middle authors to confirm) and
   is flagged in `reference_check.md`.
 
+## Fit-order diagnostic (item 3, started 19 Oct 14:55 UTC)
+
+- **Purpose:** the zero-change mean z is +0.27 ± 0.20 (n = 31). The diagnostic checks whether fitting both periods in
+  one process could share state.
+- **Design:** zero-change reps 0, 1, 3, 4 and 6. Each period is refitted alone in a fresh process, and the pair once in
+  reversed order (later first) in one process. Rows go to `diag_order_zero_frozen.jsonl`. It runs on its own queue
+  (`queue_diag.txt`, one worker, about 0.8 core) beside the main queue, about 20 fits in all.
+- **Pass mark:** expected |Δphi| and |ΔD̂| < 1e-6. STOP if any |ΔD̂| > 1e-4.
+- **What the paper's period-symmetry check is:** the §4 sentence "exchanging the period labels gives exactly −D" is
+  an argument from the construction (each period fitted separately from the same start, no warm start). It is
+  not a reversed-order refit; no reversed-order refit was run before this diagnostic.
+
 ## Monte Carlo queue (detached workers, 4 cores)
 
 Order: zero-change κ study (40, **complete 19 Oct 14:35 UTC**) → zero-change singular-SE (9 reps; moved to the front,
@@ -73,8 +85,8 @@ running) → A1 two-start sensitivity (40; reps 0 and 2 in) → A2 support stiff
   every 6 h. **Next status line: 19 Oct 20:50 UTC.**
 - **Container restarts so far:** 18 Oct 17:36, about 20:20 and 21:35 UTC; 19 Oct about 01:50 UTC. Each one loses the
   in-flight jobs (at most 4 × about 1–3 h); the lost jobs are requeued at the front.
-- **Estimated end:** about 8:00 UTC on 20 Oct plus restart losses, against the deadline of 21 Oct 14:30 UTC
-  (20:00 IST).
+- **Estimated end:** main queue about 83 core-h left, so about 14:00 UTC on 20 Oct with the diagnostic on the
+  fifth slot, plus restart losses. The deadline is 21 Oct 14:30 UTC (20:00 IST).
 
 ## Step-8 STOP
 
