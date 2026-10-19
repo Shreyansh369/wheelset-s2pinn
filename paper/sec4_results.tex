@@ -206,10 +206,10 @@ unsprung mass known to $\pm1$\%; re-estimating $k_f$ and $k_{H0}$ with $k_{B0}$ 
 \BudgetCoest\% and \BudgetCoestMassOne\%. The absolute level of $k_{B0}$ is therefore reported only
 with this budget; the monitoring output is the relative change.
 The model's unsprung mass (bare wheelset 1005~kg plus two 100~kg axleboxes) leaves out the bearings and
-attached journal parts, about 150~kg per wheelset (bearings and journal-mounted parts, estimated), i.e.\
-about 11\% of the unsprung mass. At the measured sensitivity (\SensUnsprung\% per $+10$\%) this alone
-would shift the absolute $k_{B0}$ by about \UnsprungOmitShift\%. This is one reason only relative changes
-within a payload band are claimed.
+attached journal parts, about 150~kg per wheelset (estimated), i.e.\ the true unsprung mass is about 12\% larger than the
+model's. On its own this would make the estimated $k_{B0}$ about \UnsprungOmitShift\% lower than the true
+value (pseudo-true fit at that mass; Table~\ref{tab:table6_budget} gives \SensUnsprung\% per $+10$\%).
+This is one reason only relative changes within a payload band are claimed.
 
 \begin{figure}[tbp]\centering
 \includegraphics[width=\textwidth]{fig5_model_form_tornado}
@@ -335,7 +335,8 @@ are biased by \PDLevelMin{} to \PDLevelMax\%, depending on the payload mix of th
 errors do not cancel between periods: in \PDPairsN{} pairs of periods with no change the apparent change
 reached $|z| = \PDPairsAbsZMin$--$\PDPairsAbsZMax$, and \PDPairsFA{} pairs raised a false alarm. The
 standard error of the change also grew to \PDPairsSE\%. Mixed-payload pooling with a fixed primary
-suspension is therefore not used.
+suspension is therefore not used; pooling over the whole payload range would need a payload-dependent
+model of the primary suspension (Section~\ref{sec:discussion}).
 
 \emph{Payload bands.} With the comparison restricted to one payload band and the estimator using that
 band's fixed values (Section~\ref{sec:relative}), the same stress truth gives a large-sample bias of
