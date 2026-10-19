@@ -1,4 +1,4 @@
-# Status (updated 18 Oct 2026, 22:35 UTC)
+# Status (updated 19 Oct 2026, 01:55 UTC)
 
 Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until the authors' review. Submission target
 24 Oct 2026 (25–30 Oct reserve); all compute to finish by 21 Oct 20:00 IST.
@@ -49,9 +49,15 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 ## Monte Carlo queue (detached workers, 4 cores)
 
 Order: zero-change κ study (40) → A1 two-start sensitivity (40) → zero-change singular-SE → A2 support stiffness at
-k_B0 = 2.5 and 5 GN/m (40 chunks) → c_B restart diagnostic (14 reps left). Zero-change reps 0–3 are running (restarted
-21:36 UTC after the third container restart). Estimated end about 13:00 UTC on 20 Oct. A tracked keepalive watcher
-and an hourly check-in guard against idle reclamation of the container.
+k_B0 = 2.5 and 5 GN/m (40 chunks) → c_B restart diagnostic (14 reps left).
+
+- Zero-change: 13 of 40 rows in (reps 0–12). Reps 2 and 8 are singular and get the c_B-fixed SE later in the queue.
+- Container restarts so far: 18 Oct 17:36, about 20:20 and 21:35 UTC; 19 Oct about 01:50 UTC. Each one loses the
+  in-flight jobs (at most 4 × about 1 h); the lost jobs were requeued at the front each time.
+- A tracked watcher does not prevent the restarts (the 01:50 one came while a watcher was running). It and an hourly
+  check-in mean the workers are restarted within about an hour.
+- Remaining compute: about 134 core-h, so about 34 h on 4 cores. The estimated end is about 12:00 UTC on 20 Oct
+  plus restart losses, against the deadline of 21 Oct 14:30 UTC (20:00 IST).
 
 ## Step-8 STOP
 
