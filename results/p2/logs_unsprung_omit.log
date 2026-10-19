@@ -1,0 +1,1 @@
+{'estimator': 'nominal', 'param': 'unsprung_scale', 'factor': 1.1244813278008299, 'bias_pct': -18.297170062742406, 'phi_hat': [20.35866536088154, 9.317524670202669], 'converged': True, 'wall_fit_s': 565.2488199979998}
