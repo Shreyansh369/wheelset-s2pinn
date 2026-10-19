@@ -293,6 +293,9 @@ def section4(m, miss):
     def sens(d):
         t = {(x["estimator"], x["param"]): x for x in d["table"]}
         m["SensUnsprung"] = _f(t[("nominal", "unsprung_scale")]["sens_pct_per_10pct"], 1)
+        # the model omits about 11% of the unsprung mass (bearings and journal-mounted parts, estimated): shift of the
+        # absolute k_B0 at the measured sensitivity, 1.1 x the bias per +10% mass error
+        m["UnsprungOmitShift"] = _f(1.1 * t[("nominal", "unsprung_scale")]["sens_pct_per_10pct"], 0)
         m["SensKf"] = _f(t[("nominal", "kf")]["sens_pct_per_10pct"], 2)
     block("p2/model_form_mw_sensitivity.json", sens, ["SensUnsprung", "SensKf"])
 

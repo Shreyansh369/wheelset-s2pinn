@@ -1,4 +1,4 @@
-# Status (updated 19 Oct 2026, 16:30 UTC)
+# Status (updated 19 Oct 2026, 21:05 UTC)
 
 Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until the authors' review. Submission target
 24 Oct 2026 (25–30 Oct reserve); all compute to finish by 21 Oct 20:00 IST.
@@ -91,11 +91,12 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 - The abstract and conclusions now read "about 10%" via `\BudgetCoestInt`; the tables keep one decimal.
 - Negative macro values are typeset with a true minus: `\minus`, which is `\ensuremath{-}`, works in text and math.
   This covers −5.6% and −0.74% in the abstract and conclusions, and every other negative macro.
-- **Unsprung-mass sentence (§4.5) not added; the authors decide.** "About 150 kg, 11%" is 1355 kg (RIVAS D5.5,
-  unverified) minus the model's 1205 kg. The model's own build-up cannot give it: bare wheelset 1005 kg + 2 × 100 kg
-  axleboxes = 1205 kg, and the only quantified omission is four bearings at about 15 kg each (about 60 kg, supplier
-  snippet). At the measured sensitivity (−16.6% per +10% mass), an 11% shortfall would shift the absolute k_B0 by
-  about 18%, more than the 10% model-form budget.
+- **Unsprung-mass sentence (§4.5) added**, built from the model's own mass build-up (bare wheelset 1005 kg + 2 × 100 kg
+  axleboxes), no RIVAS citation. The omitted bearings and journal-mounted parts are written as "about 150 kg
+  (estimated)", about 11% of the unsprung mass: the 15 kg-per-bearing figure is a supplier snippet only
+  (`parameter_sources.md`), so it is not quoted. Shift = `\UnsprungOmitShift` = 1.1 × SensUnsprung (−16.6) = −18%.
+- Checks: freeze OK; provenance PASS, 0 failures; abstract 245 words (`make_submission.py` count); highlights max
+  84 characters.
 
 ## Fit-order diagnostic (item 3, started 19 Oct 14:55 UTC)
 
