@@ -66,6 +66,9 @@ RANGES = {
     "axle_damp_scale": (math.log(0.02 / 0.001) / 4, "wheelset modal damping 0.1-2% (Chaar 2007: measured less than 2%; Jin 2016 via Ahmedov & Mirsaidov 2023: 0.1-1%)"),
 }
 FIT_N, SPEEDS = 50, (60.0, 110.0)
+# unsprung mass the model leaves out: model 1005 kg bare wheelset + 2 x 100 kg axleboxes = 1205 kg; bearings and
+# journal-mounted parts about 150 kg per wheelset (estimated) -> truth/model = 1355/1205 (run with --factors)
+UNSPRUNG_OMIT = 1355.0 / 1205.0
 
 
 def designs(sm, thb, rough, mw, n=3):
@@ -140,10 +143,14 @@ def summarise_sensitivity(wall=None):
         if terms:
             budget[ename] = {"terms_pct_1sigma_worst_side": terms, "rss_pct": float(math.sqrt(sum(t**2 for t in terms.values()))),
                              "sum_abs_pct": float(sum(terms.values()))}
+    omit = {r["estimator"]: r["bias_pct"] for r in rows
+            if r["param"] == "unsprung_scale" and round(r["factor"], 6) == round(UNSPRUNG_OMIT, 6)}
+    omitted = {"factor": UNSPRUNG_OMIT, "basis": "truth 1355 kg vs model 1205 kg per wheelset (omitted bearings and "
+               "journal-mounted parts about 150 kg, estimated)", "bias_pct": omit} if omit else None
     for t in table:
         print(t, flush=True)
     print(budget, flush=True)
-    save_result("p2/model_form_mw_sensitivity", {"table": table, "budget": budget, "ranges": RANGES}, cfg={
+    save_result("p2/model_form_mw_sensitivity", {"table": table, "budget": budget, "ranges": RANGES, "unsprung_omitted": omitted}, cfg={
         "model": "4 wheels (freight wagon layout), nominal track of config/track.yaml (60E1, ballasted)", "N": FIT_N,
         "speeds_kmh": SPEEDS, "snr_db": 40, "method": "pseudo-true fit to expected periodograms (large-sample bias)",
         "likelihood": "debiased Whittle", "nominal": NOM, "truth": TRUTH}, seed=31, wall_seconds=wall)
