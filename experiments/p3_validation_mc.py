@@ -292,6 +292,35 @@ def kappa_diag_cb(tag="", reps=None):
                      "wall_s": time.perf_counter() - t0})
 
 
+def kappa_diag_order(j, mode, tag=""):
+    """Fit-order diagnostic for zero-change replicate j (19 Oct 2026; no estimator change).
+
+    Refits the zero-change replicate exactly as kappa(zero=True) does (same draws, data seeds (45, j, 0/1), same
+    estimator and start), but either one period alone in this fresh process (mode "base" or "later"; run each
+    in its own process) or both periods in reversed order, later first (mode "reversed"). Compared against the
+    stored rows by summarise() (max |delta phi| and |delta D_hat|); any difference would point to state shared
+    between the two fits of one process. Rows: results/p3/kappa_coest_runs/diag_order_zero<tag>.jsonl.
+    """
+    commit = _code_commit()
+    if BAND[0]:
+        from experiments.p4_banded import set_band
+        set_band(BAND[0])
+    sm, thb, rough, mw, fams, _ = setup_all()
+    fp = OUT / "kappa_coest_runs" / f"diag_order_zero{tag}.jsonl"
+    if (j, mode) in _done(fp, lambda r: (r["rep"], r["mode"])):
+        return
+    mis, _ = kappa_draw(j)
+    order = {"base": ["base"], "later": ["later"], "reversed": ["later", "base"]}[mode]
+    t0 = time.perf_counter()
+    res = {}
+    for s in order:
+        P, Wm, Ws, g = gen(sm, truth(thb, mis, TRUTH["kB0"]), rough, mw, (45, j, 0 if s == "base" else 1))
+        r, _ = _fit(P, Wm, rough, fams["coest"], EST["coest"])
+        res[s] = {"phi": r["phi"], "se_log": r["se_log"], "nll": r["nll"], "converged": r["converged"]}
+    _append(fp, {"rep": j, "mode": mode, "order": order, "fits": res, "band": BAND[0], "tag": tag,
+                 "git_commit": commit, "wall_s": time.perf_counter() - t0})
+
+
 def kappa_two_start(tag="", reps=None):
     """Two-start sensitivity on all kappa replicates (A1; rule decided 18 Oct 2026 before its results,
     docs/paper1_outline.md). Each period is refitted from the other period's stored solution with k_B0 moved to
@@ -619,6 +648,34 @@ def summarise():
                 "wall_s_median": float(np.median([r["wall_s"] for r in Z]))}
             zc = out["zero_change"]
             zc["mdc_factor"] = zc["s0"] / (1 - zc["g90"]) if zc["s0"] is not None else None
+        do = _rows(OUT / "kappa_coest_runs" / f"diag_order_zero{tg}.jsonl")
+        if do and Z:
+            # fit-order diagnostic: each period alone in a fresh process, and both in reversed order, against
+            # the stored zero-change rows (fitted base then later in one process)
+            zs = {r["rep"]: r for r in Z}
+            dphi, dD, per = 0.0, 0.0, []
+            for x in do:
+                r = zs.get(x["rep"])
+                if r is None:
+                    continue
+                st = {"base": r["phi_base"], "later": r["phi_later"]}
+                dp = max(max(abs(a - b) for a, b in zip(x["fits"][s]["phi"], st[s])) for s in x["fits"])
+                dphi = max(dphi, dp)
+                q = {"rep": x["rep"], "mode": x["mode"], "max_abs_dphi": dp}
+                if set(x["fits"]) == {"base", "later"}:
+                    d = x["fits"]["later"]["phi"][0] - x["fits"]["base"]["phi"][0]
+                    q["abs_dD"] = abs(d - r["D_hat"])
+                    dD = max(dD, q["abs_dD"])
+                per.append(q)
+            # D from the two single-period processes of the same replicate
+            for j in sorted({x["rep"] for x in do}):
+                m = {x["mode"]: x for x in do if x["rep"] == j}
+                if "base" in m and "later" in m and j in zs:
+                    d = m["later"]["fits"]["later"]["phi"][0] - m["base"]["fits"]["base"]["phi"][0]
+                    per.append({"rep": j, "mode": "separate processes", "abs_dD": abs(d - zs[j]["D_hat"])})
+                    dD = max(dD, abs(d - zs[j]["D_hat"]))
+            out["zero_change_fit_order"] = {"n_rows": len(do), "reps": sorted({x["rep"] for x in do}),
+                                            "max_abs_dphi": dphi, "max_abs_dD": dD, "per": per}
     for fp in sorted((OUT / "drift_mc_runs").glob("kf*.jsonl")):
         R = list({(r["estimator"], r["rep"]): r for r in reversed(_rows(fp))}.values())   # one row per replicate (first kept)
         for e in EST:
@@ -676,6 +733,9 @@ if __name__ == "__main__":
     ap.add_argument("--reps", type=int, nargs="+", default=None, help="--kappa-sing-se on these replicates (check file)")
     ap.add_argument("--kappa-diag", type=int, default=None, help="likelihood diagnostic for one kappa replicate (rep number)")
     ap.add_argument("--kappa-diag-cb", action="store_true", help="restart diagnostic for the kappa replicates with c_B at its bound (--reps to select)")
+    ap.add_argument("--diag-order", type=int, default=None, help="fit-order diagnostic for this zero-change replicate")
+    ap.add_argument("--order-mode", choices=("base", "later", "reversed"), default="base",
+                    help="--diag-order: one period alone in this process, or both in reversed order")
     ap.add_argument("--kappa-two-start", action="store_true", help="two-start sensitivity on all kappa replicates (--reps to select)")
     ap.add_argument("--j0", type=int, default=0)
     ap.add_argument("--j1", type=int, default=1)
@@ -704,6 +764,9 @@ if __name__ == "__main__":
     if a.kappa_two_start:
         BAND[0] = a.band
         kappa_two_start(a.tag, a.reps)
+    if a.diag_order is not None:
+        BAND[0] = a.band
+        kappa_diag_order(a.diag_order, a.order_mode, a.tag)
     if a.drift:
         drift(a.j0, a.j1, a.f, a.tag)
     if a.bias:
