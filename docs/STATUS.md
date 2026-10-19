@@ -1,4 +1,4 @@
-# Status (updated 19 Oct 2026, 14:50 UTC)
+# Status (updated 19 Oct 2026, 15:00 UTC)
 
 Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until the authors' review. Submission target
 24 Oct 2026 (25–30 Oct reserve); all compute to finish by 21 Oct 20:00 IST.
@@ -45,6 +45,18 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
   April 2019 (DOAJ). guan2023 is cited only in §1 as related work (no number comes from it).
 - Open (no verified source): k_B0, wheel diametral inertia, WJ/WJP internal geometry, mounted clearance,
   collar/section boundaries.
+
+## Literature (19 Oct 2026, verified by full-text fetch)
+
+- Novelty table: the Shen et al. 2023 row now covers six track parameters, a PSD with a level parameter, speeds
+  7/10/13 km/h compared separately, ring-track rig validation and GP regression with 95% intervals.
+- New rows: Stoura et al. 2023 and An et al. 2024. Cells not read in full text are n.r.
+- §1: one sentence placing multi-pass drive-by (Keenahan et al. 2020) and joint input–state rail estimation (Stoura
+  et al. 2023) relative to this paper.
+- The "only relative vehicle properties" claim in `docs/lit_review_fe_direct.md` is re-attributed to Ren (2022, UCD
+  PhD thesis). It isn't in the paper, so the thesis is not cited.
+- refs.bib: stoura2023 and keenahan2020 added. The an2024 author list is incomplete (middle authors to confirm) and
+  is flagged in `reference_check.md`.
 
 ## Monte Carlo queue (detached workers, 4 cores)
 

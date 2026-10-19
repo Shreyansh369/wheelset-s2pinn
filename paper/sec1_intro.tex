@@ -28,7 +28,12 @@ near the resonance used~\citep{carrigan2023}.
 \emph{Joint identification of vehicle parameters with unknown excitation} has been developed for road
 vehicles, where the excitation is separated from the vehicle by the time lag between axles in a Kalman
 filter with unknown input~\citep{liu2024}, by a Bayesian formulation in the frequency
-domain~\citep{an2024}, or by modelling the road as a Gaussian random field~\citep{guo2026}. Railway
+domain~\citep{an2024}, or by modelling the road as a Gaussian random field~\citep{guo2026}.
+Closest in approach are multi-pass drive-by methods, which pool several passing vehicles to obtain the road
+profile without prior knowledge of the vehicle properties~\citep{keenahan2020}, and joint input--state
+estimation of the rail roughness profile from on-board accelerations with prior-updated vehicle
+parameters~\citep{stoura2023}; both target the excitation, whereas this paper pools passes to identify a
+vehicle parameter, the support stiffness, and treats the roughness only through nuisance spectrum levels. Railway
 suspension parameters have been identified as a statistical inverse problem with a surrogate model,
 using measured track irregularities as input~\citep{lebel2019,lebelhal}. These methods need either the
 measured excitation or a model of its structure (time lag between axles, random field), and they have
@@ -63,7 +68,9 @@ Measurements needed & Validation type & Uncertainty calibration \\
 \midrule
 Pieringer and Kropp~\citep{pieringer2022} & Rail roughness & Contact force recovered from ABA; track dynamics known & No (single pass) & Estimated output, via a Hertzian contact model & n.r. & ABA, known track parameters & Simulation & Sensitivity to rail-pad stiffness; no intervals \\
 Carrigan and Talbot~\citep{carrigan2023} & Track stiffness, then rail roughness & Unknown roughness, removed after the stiffness fit & No (per pass, along the track) & Deconvolution after a P2 peak fit & Several wheels on one rail & ABA, speed, wheel angle (comb filter) & Simulation and metro field trials & Per-pass scatter; no intervals \\
-Shen et al.~\citep{shen2023} & Rail-pad and ballast stiffness, irregularity level & Irregularity as a single level parameter & No (three speeds estimated separately) & One level parameter & n.r. & ABA & n.r. & n.r. \\
+Shen et al.~\citep{shen2023} & Six track parameters incl.\ rail-pad and ballast stiffness and damping, sleeper bending stiffness, irregularity level & Irregularity as a single level parameter & No (7, 10, 13~km/h compared separately) & PSD with a level parameter & n.r. & ABA & Laboratory ring-track rig; hammer-test comparison & Gaussian-process regression, 95\% intervals \\
+Stoura et al.~\citep{stoura2023} & Rail roughness profile (vehicle parameters prior-updated with a UKF) & Roughness as an unknown input; joint input--state Bayesian estimation & No & Estimated input & n.r. & On-board accelerations & Diagnostic-vehicle field data (Swiss Federal Railways) & n.r. \\
+An et al.~\citep{an2024} & Road-vehicle parameters & Unknown road excitation; Bayesian, FRF-based & n.r. & n.r. & n.r. & n.r. & Simulation and a van field test & n.r. \\
 Li et al.~\citep{li2019axlebox} & None (forward model of bearing loads) & Prescribed track irregularity & -- & Prescribed input & Vehicle model & -- & Wheelset test rig & -- \\
 Guan et al.~\citep{guan2023} & None (forward model of bearing response) & Prescribed wheel polygon and irregularity & -- & Prescribed input & Flexible wheelset & -- & Simulation & -- \\
 This paper & Bearing support stiffness $k_{B0}$ (and $c_B$) and its change & Unknown roughness, spectrum with free sub-band levels & Yes, many passes in one likelihood & Nuisance levels shared by a period, profiled & Neighbouring wheels via an infinite Timoshenko rail & ABA, speed, WIM payload, distance-aligned records & Matched-model simulation, with model-error and nonlinear-contact checks & CRB, Wald and profile intervals, simulation calibration, inflation for simultaneous model errors \\

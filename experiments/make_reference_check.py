@@ -27,6 +27,9 @@ def clean(s):
 
 
 UNVERIFIED_NEW = {  # entries added after the search-based status check; to be verified by hand
+    "an2024": "author list incomplete: middle authors between Zhang Q. and Duan Z. TO CONFIRM; content verified by full-text fetch 19 Oct 2026 (novelty table row)",
+    "stoura2023": "added 19 Oct 2026 (novelty table, sec1); verified by full-text fetch 19 Oct 2026; author list from the earlier literature review: check",
+    "keenahan2020": "added 19 Oct 2026 (sec1); verified by full-text fetch 19 Oct 2026; no DOI recorded: add",
     "li2019axlebox": "c_B 6740 N s/m and the TRB geometry in Table 3 verified by full-text fetch 19 Oct 2026; volume/issue 11(4), April 2019 (DOAJ)",
     "bizic2024": "Table 1 source, content verified by full-text fetch 19 Oct 2026; title per the authors' check; DOI 10.12700/APH.21.1.2024.1.10 confirmed in the scidar.kg.ac.rs repository metadata",
     "jin2016": "Table 1 source, content verified by full-text fetch 19 Oct 2026 (via Ahmedov & Mirsaidov 2023); title and authors per the authors' check",
