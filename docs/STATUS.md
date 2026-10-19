@@ -1,4 +1,4 @@
-# Status (updated 19 Oct 2026, 15:00 UTC)
+# Status (updated 19 Oct 2026, 15:10 UTC)
 
 Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until the authors' review. Submission target
 24 Oct 2026 (25–30 Oct reserve); all compute to finish by 21 Oct 20:00 IST.
@@ -57,6 +57,29 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
   PhD thesis). It isn't in the paper, so the thesis is not cited.
 - refs.bib: stoura2023 and keenahan2020 added. The an2024 author list is incomplete (middle authors to confirm) and
   is flagged in `reference_check.md`.
+
+## Zero-change study: complete, waiting for the authors' decision (19 Oct 15:10 UTC)
+
+- 40 of 40 replicates, all converged. 9 have singular information (reps 2, 8, 14, 17, 20, 21, 34, 36, 38); they use the
+  c_B-fixed sensitivity SE (0.0016–0.0024).
+- Pre-registered result:
+
+  | Statistic | Value |
+  |---|---|
+  | sd(z) | 1.165 |
+  | s0 | 1.165 |
+  | False alarms | 1/40 = 2.5%, Clopper–Pearson 0.06–13.2% (rep 8, a singular rep with the sensitivity SE, z = −2.22) |
+  | g90 | 0.151 |
+  | MDC factor s0/(1 − g90) | 1.373 |
+  | Conservative MDC, empty band, N = 50 | 1.04–1.13% |
+  | Conservative MDC, empty band, N = 200 | 0.48–0.53% |
+  | Laden band | 2.81–2.93% (N = 50), 1.29–1.34% (N = 200) |
+  | Inflation-factor comparison (ConsInfl, factor 1.248) | 0.94–1.03% (N = 50) |
+
+- Finite-SE replicates only (n = 31): sd(z) 1.131, mean z 0.268, no false alarms.
+- **Not applied.** `validation_mc.json`, the macros and the freeze check are kept at the committed versions. The new
+  outputs are in the session scratchpad. The authors' approval conditions (s0 1.0–1.2; no false alarms; MDC about
+  1.0–1.1%) are met for s0 only, so the authors decide.
 
 ## Fit-order diagnostic (item 3, started 19 Oct 14:55 UTC)
 
