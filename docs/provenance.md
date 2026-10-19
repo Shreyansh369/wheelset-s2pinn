@@ -35,7 +35,7 @@ Frozen configuration hash `601c1afdbb42` (config/params.yaml + config/track.yaml
 | `results/p2/debias_check.json` | earlier | - | declared |
 | `results/p2/drift_freight.json` | frozen | - | declared |
 | `results/p2/fig1_transfer.json` | frozen | e0a22f267362 | hash verified (alias chain to 601c1afdbb42) |
-| `results/p2/model_form_mw_sensitivity.json` | frozen | b8adde501aa3 | hash verified (alias chain to 601c1afdbb42) |
+| `results/p2/model_form_mw_sensitivity.json` | frozen | 601c1afdbb42 | hash verified (values-v2) |
 | `results/p2/multiwheel_bound.json` | frozen | - | declared |
 | `results/p2/multiwheel_mc_y25.json` | frozen | e0a22f267362 | hash verified (alias chain to 601c1afdbb42) |
 | `results/p2/partial_coherence_bound.json` | earlier | - | declared |

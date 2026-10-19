@@ -161,12 +161,20 @@
         0.7489330683884977,
         "wheelset modal damping 0.1-2% (Chaar 2007: measured less than 2%; Jin 2016 via Ahmedov & Mirsaidov 2023: 0.1-1%)"
       ]
+    },
+    "unsprung_omitted": {
+      "factor": 1.1244813278008299,
+      "basis": "truth 1355 kg vs model 1205 kg per wheelset (omitted bearings and journal-mounted parts about 150 kg, estimated)",
+      "bias_pct": {
+        "coest": -18.160462543645806,
+        "nominal": -18.297170062742406
+      }
     }
   },
   "provenance": {
-    "git_commit": "0504224b5088743212b27d2e82c8074b19edde8e-dirty",
+    "git_commit": "7f9e47c566819b969d35e063478deb7721c62e67",
     "config_dir": "config",
-    "config_hash": "b8adde501aa3",
+    "config_hash": "601c1afdbb42",
     "config_hash_version": "values-v2",
     "estimator_version": "multipass-whittle-2 (debiased, Kb=120 default, own-sub-band scoring, 0.5 Hz table)",
     "input_hashes": {
@@ -174,16 +182,16 @@
       "results/p2/model_form_mw_runs_freight/coest__eta_f.jsonl": "81afb315237c38bc47ea8637d4a24b47e2d3b051fa3ec0404aef8fc7d4a27931",
       "results/p2/model_form_mw_runs_freight/coest__kH0.jsonl": "933dc5c77e2302d53c2ebf42294810bfc0f20c8f96e993eb414918b321674a20",
       "results/p2/model_form_mw_runs_freight/coest__kf.jsonl": "0810282bdbc3cddd3c237cef9c0a00f595a27c9d4d56bf1933dced9380e49ec3",
-      "results/p2/model_form_mw_runs_freight/coest__unsprung_scale.jsonl": "7bbfc99c6ce9e0966eb620a9da8a010d90263d2bf2ee203d1dea56e51953c1a9",
+      "results/p2/model_form_mw_runs_freight/coest__unsprung_scale.jsonl": "5359ba111a29d2d3ac49f16e94a22f86277ed3ab107db398aca8f74012b1fcc8",
       "results/p2/model_form_mw_runs_freight/nominal__axle_damp_scale.jsonl": "9f92fc9e911e60660eb15821b5eaa469050637175e2ce6a97d61da56510a0c8c",
       "results/p2/model_form_mw_runs_freight/nominal__eta_f.jsonl": "9c8860efd6d3b0a8626e64de3574930780bb7e4954694e14688f835f86f54262",
       "results/p2/model_form_mw_runs_freight/nominal__kH0.jsonl": "7be31ccc83f6e3f659d25729cdca3859ac459ca67514dccf1ec07c6738758032",
       "results/p2/model_form_mw_runs_freight/nominal__kf.jsonl": "f06cc20546545fa951c377f670ff38b781f6d348bca05bd308bccb803b548ee6",
-      "results/p2/model_form_mw_runs_freight/nominal__unsprung_scale.jsonl": "be0f4683d888a05258e3c9214616b99ddc5c005b0deb609b239494e18804186e"
+      "results/p2/model_form_mw_runs_freight/nominal__unsprung_scale.jsonl": "ada342ab460894b13d069bcdf5e7e7f0b10480c2190e2d23f3504033945f3e97"
     },
-    "timestamp_utc": "2026-10-18T22:13:35Z",
-    "wall_seconds": null,
-    "peak_cpu_memory_mb": 95.21484375,
+    "timestamp_utc": "2026-10-19T22:03:42Z",
+    "wall_seconds": 2555.8047340859994,
+    "peak_cpu_memory_mb": 2157.1875,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",
