@@ -1,4 +1,4 @@
-# Status (updated 19 Oct 2026, 01:55 UTC)
+# Status (updated 19 Oct 2026, 14:50 UTC)
 
 Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until the authors' review. Submission target
 24 Oct 2026 (25–30 Oct reserve); all compute to finish by 21 Oct 20:00 IST.
@@ -48,16 +48,21 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 
 ## Monte Carlo queue (detached workers, 4 cores)
 
-Order: zero-change κ study (40) → A1 two-start sensitivity (40) → zero-change singular-SE → A2 support stiffness at
-k_B0 = 2.5 and 5 GN/m (40 chunks) → c_B restart diagnostic (14 reps left).
+Order: zero-change κ study (40, **complete 19 Oct 14:35 UTC**) → zero-change singular-SE (9 reps; moved to the front,
+running) → A1 two-start sensitivity (40; reps 0 and 2 in) → A2 support stiffness at k_B0 = 2.5 and 5 GN/m (40 chunks)
+→ c_B restart diagnostic (14 reps left).
 
-- Zero-change: 13 of 40 rows in (reps 0–12). Reps 2 and 8 are singular and get the c_B-fixed SE later in the queue.
-- Container restarts so far: 18 Oct 17:36, about 20:20 and 21:35 UTC; 19 Oct about 01:50 UTC. Each one loses the
-  in-flight jobs (at most 4 × about 1 h); the lost jobs were requeued at the front each time.
-- A tracked watcher does not prevent the restarts (the 01:50 one came while a watcher was running). It and an hourly
-  check-in mean the workers are restarted within about an hour.
-- Remaining compute: about 134 core-h, so about 34 h on 4 cores. The estimated end is about 12:00 UTC on 20 Oct
-  plus restart losses, against the deadline of 21 Oct 14:30 UTC (20:00 IST).
+- **Persistence:** after every job the worker runs `scripts/persist_rows.sh`. It commits `results/**/*.jsonl`
+  (diag_* rows on their own) under `.git/rows.lock` and pushes to this branch, with 3 tries and backoff.
+  - Non-zero exits go to `results/p4/logs/queue_live.txt.errors`; the push log is `results/p4/logs/persist.log`.
+  - Manual commits take the same lock.
+- **Reporting:** a silent check-in about every hour restarts the workers after a container restart. Messages go out
+  only when a study completes, a job errors, a push or check fails, or a decision is needed, plus one status line
+  every 6 h. **Next status line: 19 Oct 20:50 UTC.**
+- **Container restarts so far:** 18 Oct 17:36, about 20:20 and 21:35 UTC; 19 Oct about 01:50 UTC. Each one loses the
+  in-flight jobs (at most 4 × about 1–3 h); the lost jobs are requeued at the front.
+- **Estimated end:** about 8:00 UTC on 20 Oct plus restart losses, against the deadline of 21 Oct 14:30 UTC
+  (20:00 IST).
 
 ## Step-8 STOP
 
