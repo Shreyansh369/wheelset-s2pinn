@@ -15,6 +15,9 @@ CUR = "current (representative wagon, Table 1)"
 HL = "current wagon, but k_H0 1.4 GN/m and c_p 10 kN s/m (pinned headline config)"
 OLD = "EARLIER (metro layout, BS113A, +-30-bin kernel)"
 SRC = [  # (macro prefix, source file, configuration)
+    # conservative limits: nominal banded MDC x s0/(1 - g90) from the zero-change study (checked before "Band")
+    ("BandEmptyMDCFiftyCons", "results/p4/banded.json x results/p3/validation_mc.json (zero-change study)", CUR + "; payload bands"),
+    ("BandEmptyMDCTwoHundredCons", "results/p4/banded.json x results/p3/validation_mc.json (zero-change study)", CUR + "; payload bands"),
     ("Band", "results/p4/banded.json", CUR + "; payload bands"),
     ("PD", "results/p4/primary_damping.json", CUR + "; payload-dependent primary suspension (stress test)"),
     ("HL", "results/p3/headline_v2_kb120_attr_frozen10.json", CUR),

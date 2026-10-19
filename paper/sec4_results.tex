@@ -160,14 +160,32 @@ $\hat D=\KapRepThirtyFiveRefitD$ against the true \KapRepThirtyFiveTrueD. The pr
 keep the stored value. In practice each period should be refitted from the other period's estimate and
 the solution with the lower negative log-likelihood kept; a jump of the contact stiffness $k_{H0}$ between
 the two periods flags such cases.
-Applying the same factor to the standard error of the change gives conservative detection limits,
-allowing for simultaneous model errors, of \BandEmptyMDCFiftyConsMin--\BandEmptyMDCFiftyConsMax\% for
-$N=50$ and \BandEmptyMDCTwoHundredConsMin--\BandEmptyMDCTwoHundredConsMax\% for $N=200$ in the empty band,
-beside the nominal \BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\% and
-\BandEmptyMDCTwoHundredMin--\BandEmptyMDCTwoHundredMax\% (Section~\ref{sec:res-relative}). The factor is
-conservative for detection, because the replicates have true changes of 2--10\%, where the error of the
-gain dominates, while at the detection limit the change is below 1\%. With \KapCoestNAll{} replicates
-it is also coarse. The four sources are reported in turn below.
+\paragraph{Detection limit allowing for simultaneous model errors}\label{sec:res-cons-mdc}
+The inflation factor is ill-suited at the detection limit. It is computed for an interval that already
+contains the gain term $\kappa|\hat D|$, so it changes with $\kappa$, and it is driven by the gain error
+of 2--10\% changes, which is proportional to the change and nearly vanishes at a change below 1\%. The
+pre-registered conservative limit therefore treats the two sides of detection separately. The false-alarm
+side is calibrated by a zero-change study: \ZeroN{} replicates with the same misspecification draws and
+data seeds as the replicates above, but zero true change, fitted in the same way. In \ZeroNSing{}
+replicates the information was singular; they are scored with the expected-information standard error at
+$c_B$ fixed. Over all \ZeroN, $z=\hat D/\mathrm{se}$ has standard deviation \ZeroZsd{}, so
+$s_0=\max(1,\mathrm{sd}\,z)=\ZeroSzero$, and \ZeroFA{} replicate gives a false alarm, $\hat D<-1.645\,\mathrm{se}$
+(\ZeroFAPct\%, 95\% interval \ZeroFALoPct--\ZeroFAHiPct\%). That replicate (\ZeroFAReps) is a singular
+replicate scored with the smaller fixed-$c_B$ standard error. Over the \ZeroFiniteN{} replicates with
+finite information, $\mathrm{sd}\,z=\ZeroFiniteZsd$ and there is no false alarm. The detection side is the
+shrinkage of the estimated change: $g_{90}=\ZeroGNinety$ is the 90th percentile of the relative change
+error over the replicates above (positive when the change is underestimated). The conservative limit is
+the nominal one times $s_0/(1-g_{90})=\ZeroMDCFactor$: \BandEmptyMDCFiftyConsMin--\BandEmptyMDCFiftyConsMax\%
+for $N=50$ and \BandEmptyMDCTwoHundredConsMin--\BandEmptyMDCTwoHundredConsMax\% for $N=200$ in the empty
+band, beside the nominal \BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\% and
+\BandEmptyMDCTwoHundredMin--\BandEmptyMDCTwoHundredMax\% (Section~\ref{sec:res-relative}), and
+\BandLadenMDCFiftyConsMin--\BandLadenMDCFiftyConsMax\% and
+\BandLadenMDCTwoHundredConsMin--\BandLadenMDCTwoHundredConsMax\% in the laden band. Two other routes
+agree. The inflation factor applied to the standard error gives
+\BandEmptyMDCFiftyConsInflMin--\BandEmptyMDCFiftyConsInflMax\% for $N=50$ in the empty band. The gain
+shrinkage implied by the gain study, $1.282\,\kappa=\ZeroGainStudyGNinety$ in place of $g_{90}$, gives
+\BandEmptyMDCFiftyConsGainMin--\BandEmptyMDCFiftyConsGainMax\%. With \ZeroN{} replicates each estimate is
+coarse. The four sources are reported in turn below.
 
 \subsubsection{Statistical error}\label{sec:res-budget-stat}
 The statistical error is set by the number of passes, the speed spread and the noise level. In the

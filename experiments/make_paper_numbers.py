@@ -601,8 +601,23 @@ def section4(m, miss):
             m["ZeroN"], m["ZeroNUsed"], m["ZeroNSing"] = str(zc["n"]), str(zc["n_used"]), str(zc["n_singular"])
             m["ZeroFA"], m["ZeroFARate"] = str(zc["false_alarms"]), _f(zc["false_alarm_rate"])
             m["ZeroFALo"], m["ZeroFAHi"] = _f(zc["false_alarm_ci95"][0]), _f(zc["false_alarm_ci95"][1])
-            m["ZeroZsd"], m["ZeroSzero"], m["ZeroGNinety"] = _f(zc["z_sd"]), _f(zc["s0"]), _f(zc["g90"])
-            m["ZeroMDCFactor"] = _f(zc["mdc_factor"])
+            m["ZeroMDCFactor"] = _f(zc["mdc_factor"], 3)
+            m["ZeroZsd"], m["ZeroSzero"], m["ZeroGNinety"] = _f(zc["z_sd"], 3), _f(zc["s0"], 3), _f(zc["g90"], 3)
+            m["ZeroFAPct"] = _f(100 * zc["false_alarm_rate"], 1)
+            m["ZeroFALoPct"], m["ZeroFAHiPct"] = _f(100 * zc["false_alarm_ci95"][0], 2), _f(100 * zc["false_alarm_ci95"][1], 1)
+            if zc.get("false_alarm_reps"):
+                m["ZeroFAReps"] = ", ".join(str(j) for j in zc["false_alarm_reps"])
+            fo = zc.get("finite_only")
+            if fo:
+                m["ZeroFiniteN"], m["ZeroFiniteZsd"], m["ZeroFiniteFA"] = str(fo["n"]), _f(fo["z_sd"], 3), str(fo["false_alarms"])
+            # agreement check: the gain shrinkage implied by the gain study (90th percentile 1.2816 kappa) in place of g90
+            gs = load("p4/gain_y25.json")
+            if gs and zok:
+                kg = gs["estimators"]["coest"]["kappa"]
+                if kg:
+                    g90g = 1.2815515655446004 * kg
+                    m["ZeroGainStudyGNinety"], m["ZeroGainStudyFactor"] = _f(g90g, 3), _f(zc["s0"] / (1 - g90g), 3)
+            load("p3/validation_mc.json")         # macro sources below: the zero-change result
         for b, w in (("empty", "Empty"), ("laden", "Laden")):
             for N, n in ((50, "Fifty"), (200, "TwoHundred")):
                 nom = [x["mdc_pct"] for x in bd["bounds"] if x["band"] == b and x["N"] == N]
@@ -610,6 +625,9 @@ def section4(m, miss):
                 m[f"Band{w}MDC{n}ConsInflMin"], m[f"Band{w}MDC{n}ConsInflMax"] = _f(min(vi)), _f(max(vi))
                 v = [zc["mdc_factor"] * x for x in nom] if zok else vi
                 m[f"Band{w}MDC{n}ConsMin"], m[f"Band{w}MDC{n}ConsMax"] = _f(min(v)), _f(max(v))
+                if zok and "ZeroGainStudyFactor" in m:
+                    vg = [float(m["ZeroGainStudyFactor"]) * x for x in nom]
+                    m[f"Band{w}MDC{n}ConsGainMin"], m[f"Band{w}MDC{n}ConsGainMax"] = _f(min(vg)), _f(max(vg))
         if not zok:
             print("make_paper_numbers: zero-change study incomplete; Band*MDC*Cons* = inflation-factor values (ConsInfl)")
     if load("p4/banded.json") and (load("p3/validation_mc.json") or {}).get("kappa_coest", {}).get("inflation_for_90pct"):

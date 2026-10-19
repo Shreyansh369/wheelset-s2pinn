@@ -644,6 +644,12 @@ def summarise():
                 "D_hat_sd_pct": float(np.std([r["D_hat"] for r in Zu], ddof=1) * 100),
                 "se_median_pct": float(np.median([r["se"] for r in Zu]) * 100),
                 "g90": float(np.percentile(ge, 90)), "g90_n": len(ge),
+                # the replicates with finite information only (no sensitivity SE), reported beside the rule
+                "finite_only": {"n": len([r for r in Z if math.isfinite(r["se"])]),
+                                "z_sd": float(np.std([r["D_hat"] / r["se"] for r in Z if math.isfinite(r["se"])], ddof=1)),
+                                "z_mean": float(np.mean([r["D_hat"] / r["se"] for r in Z if math.isfinite(r["se"])])),
+                                "false_alarms": int(sum(r["D_hat"] < -1.645 * r["se"] for r in Z if math.isfinite(r["se"])))},
+                "false_alarm_reps": sorted(r["rep"] for r in Zu if r["D_hat"] < -1.645 * r["se"]),
                 "all_converged": all(r["converged"] for r in Z),
                 "wall_s_median": float(np.median([r["wall_s"] for r in Z]))}
             zc = out["zero_change"]
