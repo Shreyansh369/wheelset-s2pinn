@@ -1,4 +1,4 @@
-# Status (updated 19 Oct 2026, 15:10 UTC)
+# Status (updated 19 Oct 2026, 15:25 UTC)
 
 Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until the authors' review. Submission target
 24 Oct 2026 (25–30 Oct reserve); all compute to finish by 21 Oct 20:00 IST.
@@ -96,7 +96,7 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 ## Monte Carlo queue (detached workers, 4 cores)
 
 Order: zero-change κ study (40, **complete 19 Oct 14:35 UTC**) → zero-change singular-SE (9 reps; moved to the front,
-running) → A1 two-start sensitivity (40; reps 0 and 2 in) → A2 support stiffness at k_B0 = 2.5 and 5 GN/m (40 chunks)
+done) → A1 two-start sensitivity (40; reps 0–2 in) → A2 support stiffness at k_B0 = 2.5 and 5 GN/m (40 chunks)
 → c_B restart diagnostic (14 reps left).
 
 - **Persistence:** after every job the worker runs `scripts/persist_rows.sh`. It commits `results/**/*.jsonl`
@@ -106,7 +106,7 @@ running) → A1 two-start sensitivity (40; reps 0 and 2 in) → A2 support stiff
 - **Reporting:** a silent check-in about every hour restarts the workers after a container restart. Messages go out
   only when a study completes, a job errors, a push or check fails, or a decision is needed, plus one status line
   every 6 h. **Next status line: 19 Oct 20:50 UTC.**
-- **Container restarts so far:** 18 Oct 17:36, about 20:20 and 21:35 UTC; 19 Oct about 01:50 UTC. Each one loses the
+- **Container restarts so far:** 18 Oct 17:36, about 20:20 and 21:35 UTC; 19 Oct about 01:50 and 15:15 UTC. Each one loses the
   in-flight jobs (at most 4 × about 1–3 h); the lost jobs are requeued at the front.
 - **Estimated end:** main queue about 83 core-h left, so about 14:00 UTC on 20 Oct with the diagnostic on the
   fifth slot, plus restart losses. The deadline is 21 Oct 14:30 UTC (20:00 IST).
