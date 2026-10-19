@@ -1,4 +1,4 @@
-# Status (updated 19 Oct 2026, 21:05 UTC)
+# Status (updated 19 Oct 2026, 21:40 UTC)
 
 Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until the authors' review. Submission target
 24 Oct 2026 (25–30 Oct reserve); all compute to finish by 21 Oct 20:00 IST.
@@ -95,6 +95,12 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
   axleboxes), no RIVAS citation. The omitted bearings and journal-mounted parts are written as "about 150 kg
   (estimated)", about 11% of the unsprung mass: the 15 kg-per-bearing figure is a supplier snippet only
   (`parameter_sources.md`), so it is not quoted. Shift = `\UnsprungOmitShift` = 1.1 × SensUnsprung (−16.6) = −18%.
+- Abstract (19 Oct, 21:40 UTC): "mixed-payload pooling would need a payload-dependent suspension model and is not
+  supported" -> "mixed-payload pooling is not supported"; 238 words (`make_submission.py`). The reason stays in §4
+  ("Payload-dependent primary suspension": errors do not cancel with a fixed primary suspension) and §5 (pooling
+  over the payload range requires a payload-dependent primary model).
+- **Pending decision:** wording and factor of the unsprung-shift sentence (sign check reported to the authors).
+- Gain-decomposition agreement route confirmed by the authors: the gain-study one (ConsGain 1.05–1.15%).
 - Checks: freeze OK; provenance PASS, 0 failures; abstract 245 words (`make_submission.py` count); highlights max
   84 characters.
 
