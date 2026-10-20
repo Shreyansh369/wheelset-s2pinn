@@ -105,8 +105,13 @@ Frozen configuration hash `601c1afdbb42` (config/params.yaml + config/track.yaml
 |---|---|---|---|---|
 | `\AStiffCRBFiveMax` | results/p3/headline_v2_kb120_attr_kb0_5p0.json | sensitivity | sec4_results | labelled |
 | `\AStiffCRBFiveMin` | results/p3/headline_v2_kb120_attr_kb0_5p0.json | sensitivity | sec4_results | labelled |
+| `\AStiffFiveFortyCov` | results/p3/headline_v2_kb120_attr_kb0_5p0.json | sensitivity | sec4_results | labelled |
+| `\AStiffFiveSingN` | results/p3/headline_v2_kb120_attr_kb0_5p0.json | sensitivity | sec4_results | labelled |
 | `\AStiffRatioMax` | results/p3/headline_v2_kb120_attr_kb0_5p0.json | sensitivity | sec4_results | labelled |
-| `\AStiffRatioMin` | results/p3/headline_v2_kb120_attr_kb0_5p0.json | sensitivity | sec4_results | labelled |
+| `\AStiffTwoFiveCovMax` | results/p3/headline_v2_kb120_attr_kb0_2p5.json | sensitivity | sec4_results | labelled |
+| `\AStiffTwoFiveCovMin` | results/p3/headline_v2_kb120_attr_kb0_2p5.json | sensitivity | sec4_results | labelled |
+| `\AStiffTwoFiveRatioMax` | results/p3/headline_v2_kb120_attr_kb0_2p5.json | sensitivity | sec4_results | labelled |
+| `\AStiffTwoFiveRatioMin` | results/p3/headline_v2_kb120_attr_kb0_2p5.json | sensitivity | sec4_results | labelled |
 | `\AxleboxMass` | config/params.yaml | frozen | sec2_model | ok |
 | `\AxleboxModeContactHz` | results/p3/bearing_clearance.json | frozen | sec2_model | ok |
 | `\BDYHeadBias` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |

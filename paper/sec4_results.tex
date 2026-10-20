@@ -251,12 +251,13 @@ band edge (\SweepKBExtModeHi~Hz) and the MDC rises to \SweepKBExtMDCHi\%. A soft
 
 \paragraph{Support stiffness (sensitivity)}\label{sec:res-astiff}
 The headline design was repeated with the true $k_{B0}$ at 2.5 and 5~GN/m (sensitivity configurations,
-same relative start offset). At stiffer supports the estimator still attains the bound (RMSE/CRB
-\AStiffRatioMin--\AStiffRatioMax{} at 2.5 and 5~GN/m), but the bound grows as the support mode
-approaches the upper end of the analysis band (CRB \AStiffCRBFiveMin--\AStiffCRBFiveMax\% at 5~GN/m
-against \HLCRBMin--\HLCRBMax\% in the matched-model headline, Section~\ref{sec:res-headline}). The
-detection limit therefore depends on the actual support stiffness, which must be measured or bounded for
-a given vehicle (Section~\ref{sec:requirements}).
+same relative start offset). At 2.5~GN/m the estimator attains the bound (RMSE/CRB
+\AStiffTwoFiveRatioMin--\AStiffTwoFiveRatioMax, Wald coverage \AStiffTwoFiveCovMin--\AStiffTwoFiveCovMax). At
+5~GN/m, where the support mode approaches the upper end of the analysis band, it degrades: RMSE/CRB up to
+\AStiffRatioMax{} and Wald coverage \AStiffFiveFortyCov{} at 40~dB, with \AStiffFiveSingN{} singular fits.
+The bound itself grows (CRB \AStiffCRBFiveMin--\AStiffCRBFiveMax\% at 5~GN/m against
+\HLCRBMin--\HLCRBMax\% in the matched-model headline). The detection limit therefore depends on the
+actual support stiffness, which must be measured or bounded for a given vehicle.
 
 The empty axle load of Eanos wagons, 5.65--6.3~t (Table~\ref{tab:table1_parameters}), swept over
 \SweepWminLo--\SweepWminHi~t instead of the 5.5~t of the design, leaves the bound unchanged (\SweepWminCRBLo--\SweepWminCRBHi\% against \SweepNomCRB\%). For the

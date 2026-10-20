@@ -183,8 +183,10 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
   | 5 GN/m | 40 dB | 0.07 ± 0.16 | 1.61 | 1.26 | 1.28 | 0.78 [0.68, 0.86] | 6 |
 
 - Applied: §4 "Support stiffness (sensitivity)" paragraph (label sec:res-astiff) and the §5 clause, as drafted.
-- Flag for the authors: 5 GN/m at 40 dB has RMSE/CRB 1.28 and Wald coverage 0.78; "still attains the bound" is
-  the approved wording but this cell is above the headline's 1.13.
+- Revised 20 Oct on the authors' wording, split by stiffness: at 2.5 GN/m the estimator attains the bound
+  (RMSE/CRB 1.07–1.08, coverage 0.84–0.89); at 5 GN/m it degrades (RMSE/CRB up to 1.28, coverage 0.78 at 40 dB,
+  11 singular fits); the bound grows. §5 clause: "its accuracy follows a larger bound up to 2.5 GN/m and degrades
+  at 5 GN/m". New macros `\AStiff{TwoFive,Five}{RatioMin,RatioMax,CovMin,CovMax,SingN}`.
 
 ## Monte Carlo queue (detached workers, 4 cores)
 
