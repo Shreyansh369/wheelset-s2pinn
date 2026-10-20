@@ -138,6 +138,30 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
   "exchanging the period labels gives exactly −D" sentence is now backed by the reversed-order refit.
 - `validation_mc.json` regenerated at clean commit a9b1a43 with the complete `zero_change_fit_order` block.
 
+## A2 support stiffness: text to apply on completion (authors' instruction 20 Oct; no abstract change)
+
+- Prepared (commit 503e91d): `p3_headline_v2.py --aggregate` adds `n_singular`, `n_finite_se` and Wald coverage on
+  finite SE; `make_paper_numbers.py` emits `\AStiff{TwoFive,Five}{Twenty,Forty}{Bias,BiasSE,RMSE,CRB,Ratio,Cov,
+  CovLo,CovHi,NSing,N}`, `\AStiffRatioMin/Max`, `\AStiffCRB{TwoFive,Five}Min/Max` once both runs have 100 fits per
+  SNR. Provenance class "sensitivity" is already declared in `config/provenance.yaml`.
+- On completion: `WHEELSET_CONFIG_DIR=config/sensitivity/kB0_X python3 experiments/p3_headline_v2.py --kb 120
+  --attributed --ten --label _kb0_X --kb0-from-config --aggregate` for X = 2p5, 5p0 (clean tree), then
+  make_paper_numbers, make_tables, freeze, provenance, LaTeX, abstract 238, highlights <= 85.
+- §4 "Parameter error", after "A softer support (0.5~GN/m) lowers the MDC to \SweepKBMDCLo\%.":
+  "\paragraph{Support stiffness (sensitivity)}\label{sec:res-astiff} The headline design was repeated with the
+  true $k_{B0}$ at 2.5 and 5~GN/m (sensitivity configurations, same relative start offset). At stiffer supports
+  the estimator still attains the bound (RMSE/CRB \AStiffRatioMin--\AStiffRatioMax{} at 2.5 and 5~GN/m), but the
+  bound grows as the support mode approaches the upper end of the analysis band (CRB
+  \AStiffCRBFiveMin--\AStiffCRBFiveMax\% at 5~GN/m against \HLCRBMin--\HLCRBMax\% in the matched-model headline,
+  Section~\ref{sec:res-headline}). The detection limit therefore depends on the actual support stiffness, which
+  must be measured or bounded for a given vehicle (Section~\ref{sec:requirements})."
+  (The authors wrote "\HLCRB\% at 1 GN/m": no \HLCRB macro exists, and the headline truth is 0.85 GN/m, so the
+  headline range is cited instead.)
+- §5 "Representative parameter values", after "(Table~\ref{tab:table15_sweep})": "; for the support stiffness
+  the full estimator was also run at 2.5 and 5~GN/m, where it attains a larger bound
+  (Section~\ref{sec:res-astiff})".
+- Interim (5 GN/m, 161 of 200 fits, 10:30 UTC): RMSE/CRB 1.03 (20 dB), 1.18 (40 dB); CRB 1.45% / 1.26%; 7 singular.
+
 ## Monte Carlo queue (detached workers, 4 cores)
 
 Order: zero-change κ study (40, **complete 19 Oct 14:35 UTC**) → zero-change singular-SE (9 reps; moved to the front,
