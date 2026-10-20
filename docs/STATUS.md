@@ -105,6 +105,18 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 - Checks (19 Oct 22:10 UTC): freeze OK; provenance PASS, 0 failures; abstract 238 words (`make_submission.py`);
   highlights max 84 characters.
 
+## A1 two-start sensitivity: complete (20 Oct 06:53 UTC; post-hoc, does not replace the pre-registered statistics)
+
+- 40 of 40 kappa replicates. Rule: each period refitted from the other period's solution (k_B0 moved to its own
+  truth), lower NLL kept.
+- The refit was kept in 33 replicates, but D̂ moved by more than 1e-3 in only one: rep 35 (a local optimum, NLL gap
+  about 37 800; |ΔD̂| = 0.62). Elsewhere the NLL gap is 0 to rounding and D̂ is unchanged.
+- Coverage 0.87 (27/31 finite SE; CP 0.70–0.96), against 0.82 (0.65–0.93) pre-registered; singular counted as not
+  covered 0.68 (pre-registered 0.70). Inflation factor for 90%: 1.04 (pre-registered 1.248). c_B at its lower bound
+  after the refit in 15 replicates.
+- `validation_mc.json` regenerated at 022e987; only the `two_start` block and the (partial) `zero_change_fit_order`
+  block changed. New macros `\KapTwoStart*` (not used in the text yet). No existing macro changed.
+
 ## Fit-order diagnostic (item 3, started 19 Oct 14:55 UTC)
 
 - **Purpose:** the zero-change mean z is +0.27 ± 0.20 (n = 31). The diagnostic checks whether fitting both periods in
@@ -120,7 +132,7 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 ## Monte Carlo queue (detached workers, 4 cores)
 
 Order: zero-change κ study (40, **complete 19 Oct 14:35 UTC**) → zero-change singular-SE (9 reps; moved to the front,
-done) → A1 two-start sensitivity (40; 35 in at 20 Oct 03:40) → A2 support stiffness at k_B0 = 2.5 and 5 GN/m (40 chunks)
+done) → A1 two-start sensitivity (40, **complete 20 Oct 06:53 UTC**) → A2 support stiffness at k_B0 = 2.5 and 5 GN/m (40 chunks)
 → c_B restart diagnostic (14 reps left).
 
 - **Persistence:** after every job the worker runs `scripts/persist_rows.sh`. It commits `results/**/*.jsonl`
