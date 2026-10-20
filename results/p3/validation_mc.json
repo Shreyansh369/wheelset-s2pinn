@@ -794,7 +794,7 @@
       "mdc_factor": 1.3727224524757695
     },
     "zero_change_fit_order": {
-      "n_rows": 14,
+      "n_rows": 15,
       "reps": [
         0,
         1,
@@ -878,6 +878,12 @@
           "rep": 6,
           "mode": "later",
           "max_abs_dphi": 0.0
+        },
+        {
+          "rep": 6,
+          "mode": "reversed",
+          "max_abs_dphi": 0.0,
+          "abs_dD": 0.0
         },
         {
           "rep": 0,
@@ -1226,7 +1232,7 @@
     ]
   },
   "provenance": {
-    "git_commit": "022e9877b75b6f2c11106f2df60c3a26aa6021c7",
+    "git_commit": "a9b1a438dfc6fa54c2b6fea2e3c6eccf1640695c",
     "config_dir": "config",
     "config_hash": "601c1afdbb42",
     "config_hash_version": "values-v2",
@@ -1245,7 +1251,7 @@
       "results/p3/drift_mc_runs/kf0.8.jsonl": "aa579683791d12f676f91e0e16390abca5bbcfa54000c27b66ef9367cbd71c3b",
       "results/p3/drift_mc_runs/kf0.8_freight.jsonl": "603104122e9ce956b53f6fda61e9c513d7f2c96f96c686f4b681e6e56bf2c8e6",
       "results/p3/kappa_coest_runs/diag_cbbound_frozen.jsonl": "8ef7fd6d00cc4ddf35e05fa5685aa42fc5d84283b7a8cfffac9ca87eb376a8b0",
-      "results/p3/kappa_coest_runs/diag_order_zero_frozen.jsonl": "947308a7c1607397cbdadd1dc29051269eb4d584aac4988b47900eb76ac56872",
+      "results/p3/kappa_coest_runs/diag_order_zero_frozen.jsonl": "dfba821644204a72543cb19cd773f005295a0cd28c4477c8268d8df9cfc6a8ae",
       "results/p3/kappa_coest_runs/diag_rep35_frozen.jsonl": "74d174ddbce7c4ebcfdbc410c14d0a5bdd57f3b9c73799f52d89aa15c312b788",
       "results/p3/kappa_coest_runs/rows_frozen.jsonl": "a5ed6fe67c78e803d983ebc1132228092cff884da3ac56d917ab56d03fc2f09d",
       "results/p3/kappa_coest_runs/rows_zero_frozen.jsonl": "ea4a8f0fd4ccb076e775e3d31e0696d62132eb1373c9263d6793cdfada45fb2a",
@@ -1254,9 +1260,9 @@
       "results/p3/kappa_coest_runs/sing_se_zero_frozen.jsonl": "4629f6296a40497284f2a2ab0fe9d81a5e0d700673d8bfbed04608e43e34f15f",
       "results/p3/kappa_coest_runs/twostart_frozen.jsonl": "5aac4e243d18995c8e6bdae6f22ba9ed155905aac5d8629a30be303f3eb2748e"
     },
-    "timestamp_utc": "2026-10-20T06:53:54Z",
+    "timestamp_utc": "2026-10-20T08:59:57Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 100.765625,
+    "peak_cpu_memory_mb": 100.58984375,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",

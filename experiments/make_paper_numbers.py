@@ -619,6 +619,23 @@ def section4(m, miss):
             fo = zc.get("finite_only")
             if fo:
                 m["ZeroFiniteN"], m["ZeroFiniteZsd"], m["ZeroFiniteFA"] = str(fo["n"]), _f(fo["z_sd"], 3), str(fo["false_alarms"])
+                # lean: z of the finite-SE zero-change replicates pooled with the empty-band zero-change pairs
+                # (combined mean and SD from each set's n, mean, SD); t interval
+                le = (load("p4/banded.json") or {}).get("lean_empty")
+                if le:
+                    from scipy.stats import t as _t
+                    g = [(le["n"], le["z_mean"], le["z_sd"]), (fo["n"], fo["z_mean"], fo["z_sd"])]
+                    n = sum(k for k, _, _ in g)
+                    zm = sum(k * u for k, u, _ in g) / n
+                    se = math.sqrt(sum((k - 1) * s ** 2 + k * (u - zm) ** 2 for k, u, s in g) / (n - 1) / n)
+                    q = _t.ppf(0.975, n - 1)
+                    m["LeanPoolN"], m["LeanPoolZ"] = str(n), _f(zm, 2)
+                    m["LeanPoolZLo"], m["LeanPoolZHi"] = _f(zm - q * se, 2), _f(zm + q * se, 2)
+                    load("p3/validation_mc.json")
+            fd = (load("p3/validation_mc.json") or {}).get("zero_change_fit_order")
+            if fd:
+                m["FitOrderReps"], m["FitOrderRows"] = str(len(fd["reps"])), str(fd["n_rows"])
+                m["FitOrderExact"] = "1" if fd["max_abs_dphi"] == 0 and fd["max_abs_dD"] == 0 else "0"
             # agreement check: the gain shrinkage implied by the gain study (90th percentile 1.2816 kappa) in place of g90
             gs = load("p4/gain_y25.json")
             if gs and zok:

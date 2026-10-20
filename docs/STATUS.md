@@ -84,7 +84,7 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 - **§4.5:** new paragraph "Detection limit allowing for simultaneous model errors".
 - **Abstract, highlights, conclusions, cover letter:** no text change needed (the approved wording is already there
   through the macros); the rendered abstract is 244 words.
-- **Lean sentence in §4:** unchanged until the fit-order diagnostic reports.
+- **Lean sentence in §4:** applied 20 Oct (pooled lean, fit-order diagnostic passed).
 
 ## Typesetting fixes (19 Oct 2026)
 
@@ -117,17 +117,18 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 - `validation_mc.json` regenerated at 022e987; only the `two_start` block and the (partial) `zero_change_fit_order`
   block changed. New macros `\KapTwoStart*` (not used in the text yet). No existing macro changed.
 
-## Fit-order diagnostic (item 3, started 19 Oct 14:55 UTC)
+## Fit-order diagnostic: complete and passed (20 Oct 08:58 UTC)
 
-- **Purpose:** the zero-change mean z is +0.27 ± 0.20 (n = 31). The diagnostic checks whether fitting both periods in
-  one process could share state.
-- **Design:** zero-change reps 0, 1, 3, 4 and 6. Each period is refitted alone in a fresh process, and the pair once in
-  reversed order (later first) in one process. Rows go to `diag_order_zero_frozen.jsonl`. It runs on its own queue
-  (`queue_diag.txt`, one worker, about 0.8 core) beside the main queue, about 20 fits in all.
-- **Pass mark:** expected |Δphi| and |ΔD̂| < 1e-6. STOP if any |ΔD̂| > 1e-4.
-- **What the paper's period-symmetry check is:** the §4 sentence "exchanging the period labels gives exactly −D" is
-  an argument from the construction (each period fitted separately from the same start, no warm start). It is
-  not a reversed-order refit; no reversed-order refit was run before this diagnostic.
+- 15 of 15 rows: zero-change reps 0, 1, 3, 4, 6; each period refitted alone in a fresh process (base, later), and
+  the pair in reversed order (later first) in one process. All converged.
+- Against the stored rows: max |Δphi| = 0 and max |ΔD̂| = 0 exactly (also for D̂ formed from the two separate
+  processes). No shared state between the fits.
+- Pooled lean: the 31 finite-information zero-change replicates (mean z 0.268, sd 1.131) with the 20 empty-band
+  zero-change pairs (mean z 0.497, sd 0.936): n = 51, mean z = +0.36, 95% t interval 0.06–0.65 (p = 0.02).
+- §4 (empty-band pairs): "the replication does not confirm the lean of the first run" is replaced by the pooled
+  lean with its interval and the fit-order result (macros `\LeanPool*`, `\FitOrder*`), as approved. The
+  "exchanging the period labels gives exactly −D" sentence is now backed by the reversed-order refit.
+- `validation_mc.json` regenerated at clean commit a9b1a43 with the complete `zero_change_fit_order` block.
 
 ## Monte Carlo queue (detached workers, 4 cores)
 

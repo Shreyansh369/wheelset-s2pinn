@@ -356,8 +356,13 @@ separately from the same starting values, with no warm start or setting carried 
 exchanging the period labels gives exactly $-D$. The two periods are drawn by the same procedure from
 independent seeds (speeds, payloads within the band, roughness levels and realisations, with the same
 stress truth), so the expected apparent change is zero; the apparent changes do not follow the differences
-between the periods' mean payload, mean speed or mean roughness level ($|r| \le \LeanCorrMax$), and the
-replication does not confirm the lean of the first run. In the laden band, $c_B$ is not
+between the periods' mean payload, mean speed or mean roughness level ($|r| \le \LeanCorrMax$). Pooled with the
+\ZeroFiniteN{} replicates of the zero-change study that have finite information
+(Section~\ref{sec:res-cons-mdc}), the \LeanPoolN{} zero-change comparisons give mean $z = \LeanPoolZ$
+(95\% interval \LeanPoolZLo--\LeanPoolZHi): a small lean towards an apparent increase remains. It does
+not come from the order of the fits: refitting \FitOrderReps{} zero-change replicates with each period
+in a fresh process, and with the later period fitted first, reproduced every estimate exactly. In the
+laden band, $c_B$ is not
 identified: with it free, the observed information was singular in \BandLadenNSingular{} of
 \BandLadenPairsN{} pairs. With $c_B$ fixed at its nominal value (and $k_f$, $k_{H0}$ still re-estimated
 in each period), \BandLadenFixPairsN{} zero-change pairs gave \BandLadenFixPairsFA{} false alarms, $z$
