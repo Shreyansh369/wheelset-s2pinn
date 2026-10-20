@@ -105,7 +105,7 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 - Checks (19 Oct 22:10 UTC): freeze OK; provenance PASS, 0 failures; abstract 238 words (`make_submission.py`);
   highlights max 84 characters.
 
-## A1 two-start sensitivity: complete (20 Oct 06:53 UTC; post-hoc, does not replace the pre-registered statistics)
+## A1 two-start sensitivity: complete (20 Oct 06:53 UTC; post-hoc, does not replace the pre-registered statistics; in §4.5)
 
 - 40 of 40 kappa replicates. Rule: each period refitted from the other period's solution (k_B0 moved to its own
   truth), lower NLL kept.
@@ -114,8 +114,13 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 - Coverage 0.87 (27/31 finite SE; CP 0.70–0.96), against 0.82 (0.65–0.93) pre-registered; singular counted as not
   covered 0.68 (pre-registered 0.70). Inflation factor for 90%: 1.04 (pre-registered 1.248). c_B at its lower bound
   after the refit in 15 replicates.
-- `validation_mc.json` regenerated at 022e987; only the `two_start` block and the (partial) `zero_change_fit_order`
-  block changed. New macros `\KapTwoStart*` (not used in the text yet). No existing macro changed.
+- Refit better by > 10 in NLL: 1 replicate (rep 35); refit gain < 0.01: 39 (same solution to rounding; in the JSON
+  only). `\KapTwoStartChanged` now counts the first (1); the 33 "kept refit" ties stay in the JSON as `n_changed`.
+- Finite SE 31 (not 34): 9 singular replicates (2, 8, 9, 14, 19, 29, 36, 38, 39) against 6 pre-registered (2, 8, 17,
+  20, 21, 36). All 15 are at the c_B lower bound, where the information is near-singular: the Hessian re-evaluated
+  at the same solution flips (e.g. rep 19 keeps both stored solutions, yet its base-period SE is now singular).
+- §4.5 (after the rep-35 passage): post-hoc two-start sentence, with that clause; "the pre-registered values
+  above stand". `validation_mc.json` regenerated at clean commit 5363254.
 
 ## Fit-order diagnostic: complete and passed (20 Oct 08:58 UTC)
 
@@ -125,8 +130,11 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
   processes). No shared state between the fits.
 - Pooled lean: the 31 finite-information zero-change replicates (mean z 0.268, sd 1.131) with the 20 empty-band
   zero-change pairs (mean z 0.497, sd 0.936): n = 51, mean z = +0.36, 95% t interval 0.06–0.65 (p = 0.02).
-- §4 (empty-band pairs): "the replication does not confirm the lean of the first run" is replaced by the pooled
-  lean with its interval and the fit-order result (macros `\LeanPool*`, `\FitOrder*`), as approved. The
+- §4 (empty-band pairs), revised 20 Oct on the authors' wording: pooled lean with its interval; the two periods are
+  exchangeable and the fit-order refits reproduce every estimate, so the distribution is symmetric by
+  construction and the pooled mean is sampling variation; the lean was noticed first in the empty-band pairs, so
+  the pooled interval overstates the evidence; the zero-change study alone gives mean z = 0.27 ± 0.20
+  (`\ZeroMeanZ`, `\ZeroMeanZSE`). The
   "exchanging the period labels gives exactly −D" sentence is now backed by the reversed-order refit.
 - `validation_mc.json` regenerated at clean commit a9b1a43 with the complete `zero_change_fit_order` block.
 

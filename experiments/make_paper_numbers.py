@@ -361,7 +361,11 @@ def section4(m, miss):
             ts = dg.get("two_start")
             if ts and ts.get("complete"):          # A1, post-hoc sensitivity
                 m["KapTwoStartN"], m["KapTwoStartNFinite"] = str(ts["n"]), str(ts["n_finite_se"])
-                m["KapTwoStartChanged"], m["KapTwoStartLocalOpt"] = str(ts["n_changed"]), str(ts["n_local_optimum"])
+                # replicates where the refit found a better solution (NLL lower by > 10); the refit is "kept" in
+                # many more (n_changed) only because it reaches the same solution to rounding (gain < 0.01)
+                m["KapTwoStartChanged"] = str(ts.get("n_refit_better_gt10", ts["n_local_optimum"]))
+                m["KapTwoStartLocalOpt"] = str(ts["n_local_optimum"])
+                m["KapTwoStartNSing"] = str(ts["n"] - ts["n_finite_se"])
                 m["KapTwoStartCBBound"] = str(ts["n_cb_bound_after"])
                 m["KapTwoStartCov"] = _f(ts["coverage"])
                 m["KapTwoStartCovLo"], m["KapTwoStartCovHi"] = _f(ts["coverage_ci95"][0]), _f(ts["coverage_ci95"][1])
@@ -619,6 +623,7 @@ def section4(m, miss):
             fo = zc.get("finite_only")
             if fo:
                 m["ZeroFiniteN"], m["ZeroFiniteZsd"], m["ZeroFiniteFA"] = str(fo["n"]), _f(fo["z_sd"], 3), str(fo["false_alarms"])
+                m["ZeroMeanZ"], m["ZeroMeanZSE"] = _f(fo["z_mean"], 2), _f(fo["z_sd"] / math.sqrt(fo["n"]), 2)
                 # lean: z of the finite-SE zero-change replicates pooled with the empty-band zero-change pairs
                 # (combined mean and SD from each set's n, mean, SD); t interval
                 le = (load("p4/banded.json") or {}).get("lean_empty")

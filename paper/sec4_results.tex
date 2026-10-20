@@ -160,6 +160,13 @@ $\hat D=\KapRepThirtyFiveRefitD$ against the true \KapRepThirtyFiveTrueD. The pr
 keep the stored value. In practice each period should be refitted from the other period's estimate and
 the solution with the lower negative log-likelihood kept; a jump of the contact stiffness $k_{H0}$ between
 the two periods flags such cases.
+As a post-hoc sensitivity, every period of the \KapTwoStartN{} replicates was refitted from the other
+period's estimate. Only one replicate (rep~35) moved to a better solution; with the lower-NLL solutions
+the coverage is \KapTwoStartCov{} [\KapTwoStartCovLo, \KapTwoStartCovHi] on the \KapTwoStartNFinite{}
+replicates with finite information (\KapTwoStartNSing{} rather than \KapCoestNSing{} are singular, all
+with $c_B$ at its lower bound, where the information is close to singular and the Hessian re-evaluated
+at the same solution can turn singular; \KapTwoStartCovSingMiss{} counting singular ones as misses), and
+the inflation factor \KapTwoStartInfl{}. The pre-registered values above stand.
 \paragraph{Detection limit allowing for simultaneous model errors}\label{sec:res-cons-mdc}
 The inflation factor is ill-suited at the detection limit. It is computed for an interval that already
 contains the gain term $\kappa|\hat D|$, so it changes with $\kappa$, and it is driven by the gain error
@@ -359,9 +366,12 @@ stress truth), so the expected apparent change is zero; the apparent changes do 
 between the periods' mean payload, mean speed or mean roughness level ($|r| \le \LeanCorrMax$). Pooled with the
 \ZeroFiniteN{} replicates of the zero-change study that have finite information
 (Section~\ref{sec:res-cons-mdc}), the \LeanPoolN{} zero-change comparisons give mean $z = \LeanPoolZ$
-(95\% interval \LeanPoolZLo--\LeanPoolZHi): a small lean towards an apparent increase remains. It does
-not come from the order of the fits: refitting \FitOrderReps{} zero-change replicates with each period
-in a fresh process, and with the later period fitted first, reproduced every estimate exactly. In the
+(95\% interval \LeanPoolZLo--\LeanPoolZHi). In both studies the two periods are exchangeable: same
+truth, independent data from the same generator. Refitting \FitOrderReps{} replicates with each period
+in a fresh process, and with the later period fitted first, reproduced every estimate exactly. The
+distribution of the apparent change is therefore symmetric about zero by construction, and the pooled
+mean is sampling variation. The lean was first noticed in the empty-band pairs, so the pooled interval
+overstates the evidence; the zero-change study alone gives mean $z = \ZeroMeanZ \pm \ZeroMeanZSE$. In the
 laden band, $c_B$ is not
 identified: with it free, the observed information was singular in \BandLadenNSingular{} of
 \BandLadenPairsN{} pairs. With $c_B$ fixed at its nominal value (and $k_f$, $k_{H0}$ still re-estimated

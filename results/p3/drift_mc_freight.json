@@ -44,7 +44,7 @@
     ]
   },
   "provenance": {
-    "git_commit": "a9b1a438dfc6fa54c2b6fea2e3c6eccf1640695c",
+    "git_commit": "53632540a8793c98c8bd52718b4413f44446d465",
     "config_dir": "config",
     "config_hash": "601c1afdbb42",
     "config_hash_version": "values-v2",
@@ -72,9 +72,9 @@
       "results/p3/kappa_coest_runs/sing_se_zero_frozen.jsonl": "4629f6296a40497284f2a2ab0fe9d81a5e0d700673d8bfbed04608e43e34f15f",
       "results/p3/kappa_coest_runs/twostart_frozen.jsonl": "5aac4e243d18995c8e6bdae6f22ba9ed155905aac5d8629a30be303f3eb2748e"
     },
-    "timestamp_utc": "2026-10-20T08:59:57Z",
+    "timestamp_utc": "2026-10-20T09:31:23Z",
     "wall_seconds": null,
-    "peak_cpu_memory_mb": 100.58984375,
+    "peak_cpu_memory_mb": 100.86328125,
     "peak_gpu_memory_mb": null,
     "host": "vm",
     "python": "3.13.16",
