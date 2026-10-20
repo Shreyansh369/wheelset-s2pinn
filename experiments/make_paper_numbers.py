@@ -596,6 +596,30 @@ def section4(m, miss):
         m["HLCBBoundN"], m["HLCBBoundOf"] = str(sum(r["err_log"][1] + lcb < 0 for r in R)), str(len(R))
     block("p3/headline_v2_kb120_attr_frozen10.json", hl_cb, ["HLCBBoundN", "HLCBBoundOf"])
 
+    # A2, support-stiffness sensitivity (config/sensitivity/kB0_*): the headline design at truth k_B0 = 2.5 and
+    # 5 GN/m; coverage on the fits with finite SE, singular fits counted; macros only once both are complete
+    A2 = {"TwoFive": "p3/headline_v2_kb120_attr_kb0_2p5.json", "Five": "p3/headline_v2_kb120_attr_kb0_5p0.json"}
+    a2 = {w: load(f) for w, f in A2.items()}
+    n_need = int(m["HLN"]) if str(m.get("HLN", "")).isdigit() else None    # same design as the headline
+    a2ok = all(d and len(d["cells"]) == 2 and all(c["kB0_pooled"]["n"] == n_need for c in d["cells"]) for d in a2.values())
+    if a2ok:
+        ratios = []
+        for w, d in a2.items():
+            load(A2[w])
+            c = {x["snr_db"]: x["kB0_pooled"] for x in d["cells"]}
+            for snr, s in ((20, "Twenty"), (40, "Forty")):
+                p = c[snr]
+                k = f"AStiff{w}{s}"
+                m[f"{k}Bias"], m[f"{k}BiasSE"] = _f(100 * p["bias_rel"], 2), _f(100 * p["bias_rel_se"], 2)
+                m[f"{k}RMSE"], m[f"{k}CRB"], m[f"{k}Ratio"] = _f(100 * p["rmse_rel"]), _f(100 * p["crb_rel"]), _f(p["rmse_over_crb"])
+                m[f"{k}Cov"] = _f(p["coverage90_wald_finite"])
+                m[f"{k}CovLo"], m[f"{k}CovHi"] = _f(p["coverage90_wald_finite_ci95"][0]), _f(p["coverage90_wald_finite_ci95"][1])
+                m[f"{k}NSing"], m[f"{k}N"] = str(p["n_singular"]), str(p["n"])
+                ratios.append(p["rmse_over_crb"])
+            m[f"AStiffCRB{w}Min"] = _f(min(100 * c[x]["crb_rel"] for x in (20, 40)))
+            m[f"AStiffCRB{w}Max"] = _f(max(100 * c[x]["crb_rel"] for x in (20, 40)))
+        m["AStiffRatioMin"], m["AStiffRatioMax"] = _f(min(ratios)), _f(max(ratios))
+
     def conservative(v):                  # detection limits allowing for simultaneous model errors
         bd = load("p4/banded.json")
         kc = load("p3/validation_mc.json")["kappa_coest"]                           # attribution: kappa replicates

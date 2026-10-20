@@ -27,7 +27,7 @@ import numpy as np  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from experiments.p2_common import SEEDS, START, TRUTH, WIM, setup, summarise as summ  # noqa: E402
+from experiments.p2_common import SEEDS, START, TRUTH, WIM, Z90, cp_interval, setup, summarise as summ  # noqa: E402
 from experiments.p2_multiwheel import dataset, models  # noqa: E402
 from src.analysis.multiwheel import MultiWheelFamily  # noqa: E402
 from src.inverse.multipass import MultiPassWhittle  # noqa: E402
@@ -104,7 +104,14 @@ def aggregate(kb, smooth, exact=True):
         per_seed = [{"seed": s, **summ([r["err_log"][0] for r in Rs if r["seed"] == s], [r["se_log"][0] for r in Rs if r["seed"] == s],
                                        [r["crb_log"][0] for r in Rs if r["seed"] == s])} for s in SEEDS_USED if any(r["seed"] == s for r in Rs)]
         e = np.array([r["err_log"][0] for r in Rs])
-        se = np.array([r["se_log"][0] for r in Rs])
+        se = np.array([r["se_log"][0] if r["se_log"][0] is not None else np.inf for r in Rs], float)
+        # singular information (no finite SE): bias, RMSE and CRB use every fit; Wald coverage only the finite ones
+        fin = np.isfinite(se)
+        kf = int(np.sum(np.abs(e[fin]) <= Z90 * se[fin]))
+        pooled.update({"n_singular": int((~fin).sum()), "n_finite_se": int(fin.sum()),
+                       "coverage90_wald_finite": kf / int(fin.sum()) if fin.any() else None,
+                       "coverage90_wald_finite_ci95": cp_interval(kf, int(fin.sum())) if fin.any() else None})
+        se = se[fin]
         cells.append({"snr_db": snr, "kB0_pooled": pooled, "kB0_per_seed": per_seed,
                       "rmse_over_median_se": float(np.sqrt(np.mean(e**2)) / np.median(se)),
                       "sd_over_median_se": float(np.std(e, ddof=1) / np.median(se)),
