@@ -150,7 +150,7 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 - Grep of abstract, highlights, cover letter, captions and §1–§6: no other statement that the headline or the MDC
   refers to 1 GN/m.
 
-## A2 support stiffness: text to apply on completion (authors' instruction 20 Oct; no abstract change)
+## A2 support stiffness: complete and applied (20 Oct 19:05 UTC; authors' instruction 20 Oct; no abstract change)
 
 - Prepared (commit 503e91d): `p3_headline_v2.py --aggregate` adds `n_singular`, `n_finite_se` and Wald coverage on
   finite SE; `make_paper_numbers.py` emits `\AStiff{TwoFive,Five}{Twenty,Forty}{Bias,BiasSE,RMSE,CRB,Ratio,Cov,
@@ -172,7 +172,19 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 - §5 "Representative parameter values", after "(Table~\ref{tab:table15_sweep})": "; for the support stiffness
   the full estimator was also run at 2.5 and 5~GN/m, where it attains a larger bound
   (Section~\ref{sec:res-astiff})".
-- Interim (5 GN/m, 161 of 200 fits, 10:30 UTC): RMSE/CRB 1.03 (20 dB), 1.18 (40 dB); CRB 1.45% / 1.26%; 7 singular.
+- Result (200 fits each, all converged; aggregated at clean commit 8ee64c3; provenance "sensitivity", hashes
+  5788f82f9abb / bd6ab51ba953 verified):
+
+  | k_B0 | SNR | bias ± SE (%) | RMSE (%) | CRB (%) | RMSE/CRB | Wald cov. (finite SE) | singular |
+  |---|---|---|---|---|---|---|---|
+  | 2.5 GN/m | 20 dB | −0.04 ± 0.04 | 0.36 | 0.33 | 1.08 | 0.84 [0.75, 0.91] | 0 |
+  | 2.5 GN/m | 40 dB | −0.05 ± 0.03 | 0.33 | 0.31 | 1.07 | 0.89 [0.81, 0.94] | 0 |
+  | 5 GN/m | 20 dB | 0.34 ± 0.15 | 1.49 | 1.45 | 1.03 | 0.85 [0.77, 0.92] | 5 |
+  | 5 GN/m | 40 dB | 0.07 ± 0.16 | 1.61 | 1.26 | 1.28 | 0.78 [0.68, 0.86] | 6 |
+
+- Applied: §4 "Support stiffness (sensitivity)" paragraph (label sec:res-astiff) and the §5 clause, as drafted.
+- Flag for the authors: 5 GN/m at 40 dB has RMSE/CRB 1.28 and Wald coverage 0.78; "still attains the bound" is
+  the approved wording but this cell is above the headline's 1.13.
 
 ## Monte Carlo queue (detached workers, 4 cores)
 

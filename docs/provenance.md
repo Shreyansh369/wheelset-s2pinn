@@ -55,6 +55,8 @@ Frozen configuration hash `601c1afdbb42` (config/params.yaml + config/track.yaml
 | `results/p3/drift_mc_freight.json` | frozen | 601c1afdbb42 | hash verified (values-v2) |
 | `results/p3/exponent_bound.json` | frozen | - | declared |
 | `results/p3/headline_v2_kb120_attr_frozen10.json` | frozen | e0a22f267362 | hash verified (alias chain to 601c1afdbb42) |
+| `results/p3/headline_v2_kb120_attr_kb0_2p5.json` | sensitivity | 5788f82f9abb | hash verified (values-v2) |
+| `results/p3/headline_v2_kb120_attr_kb0_5p0.json` | sensitivity | bd6ab51ba953 | hash verified (values-v2) |
 | `results/p3/robust_se.json` | earlier | - | declared |
 | `results/p3/validation_mc.json` | frozen | 601c1afdbb42 | hash verified (values-v2) |
 | `results/p4/banded.json` | frozen | e0a22f267362 | hash verified (alias chain to 601c1afdbb42) |
@@ -101,6 +103,10 @@ Frozen configuration hash `601c1afdbb42` (config/params.yaml + config/track.yaml
 
 | Macro | Source | Config | First use | Status |
 |---|---|---|---|---|
+| `\AStiffCRBFiveMax` | results/p3/headline_v2_kb120_attr_kb0_5p0.json | sensitivity | sec4_results | labelled |
+| `\AStiffCRBFiveMin` | results/p3/headline_v2_kb120_attr_kb0_5p0.json | sensitivity | sec4_results | labelled |
+| `\AStiffRatioMax` | results/p3/headline_v2_kb120_attr_kb0_5p0.json | sensitivity | sec4_results | labelled |
+| `\AStiffRatioMin` | results/p3/headline_v2_kb120_attr_kb0_5p0.json | sensitivity | sec4_results | labelled |
 | `\AxleboxMass` | config/params.yaml | frozen | sec2_model | ok |
 | `\AxleboxModeContactHz` | results/p3/bearing_clearance.json | frozen | sec2_model | ok |
 | `\BDYHeadBias` | results/p4/bias_diag_y25.json | pinned | sec4_results | labelled |
@@ -255,6 +261,8 @@ Frozen configuration hash `601c1afdbb42` (config/params.yaml + config/track.yaml
 | `\HLBiasAbsMax` | results/p3/headline_v2_kb120_attr_frozen10.json | frozen | sec6_conclusions | ok |
 | `\HLCBBoundN` | results/p3/headline_v2_kb120_attr_frozen10.json | frozen | sec4_results | ok |
 | `\HLCBBoundOf` | results/p3/headline_v2_kb120_attr_frozen10.json | frozen | sec4_results | ok |
+| `\HLCRBMax` | results/p3/headline_v2_kb120_attr_frozen10.json | frozen | sec4_results | ok |
+| `\HLCRBMin` | results/p3/headline_v2_kb120_attr_frozen10.json | frozen | sec4_results | ok |
 | `\HLFortyBias` | results/p3/headline_v2_kb120_attr_frozen10.json | frozen | sec4_results | ok |
 | `\HLFortyBiasSE` | results/p3/headline_v2_kb120_attr_frozen10.json | frozen | sec4_results | ok |
 | `\HLFortyCov` | results/p3/headline_v2_kb120_attr_frozen10.json | frozen | sec5_discussion | ok |
