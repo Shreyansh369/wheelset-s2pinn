@@ -188,11 +188,22 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
   11 singular fits); the bound grows. §5 clause: "its accuracy follows a larger bound up to 2.5 GN/m and degrades
   at 5 GN/m". New macros `\AStiff{TwoFive,Five}{RatioMin,RatioMax,CovMin,CovMax,SingN}`.
 
+## c_B restart diagnostic: complete (20 Oct ~22:00 UTC; summary only, no text change pending the authors)
+
+- All 16 replicates with c_B at its lower bound (2, 8, 9, 14, 17, 19–22, 29, 30, 34–36, 38, 39) refitted from
+  three starts (stored, c_B nominal, other period's estimate); per period the lowest NLL kept.
+- Only rep 35 is a local optimum (NLL gap 37 767 > threshold 10); all other gaps are 0 to rounding, so the restarts
+  reach the same solution. `n_local_optimum` = 1 (`\KapLocalOptN` unchanged at 1).
+- Post-hoc lower-NLL statistics (labelled, do not replace the pre-registered ones): coverage 0.87 [0.70, 0.96] on
+  31 finite-SE replicates (0.675 counting singular as misses), inflation for 90% 1.044, the same as the A1
+  two-start result.
+- `validation_mc.json` regenerated at clean commit ea170a2; no macro changed.
+
 ## Monte Carlo queue (detached workers, 4 cores)
 
 Order: zero-change κ study (40, **complete 19 Oct 14:35 UTC**) → zero-change singular-SE (9 reps; moved to the front,
 done) → A1 two-start sensitivity (40, **complete 20 Oct 06:53 UTC**) → A2 support stiffness at k_B0 = 2.5 and 5 GN/m (40 chunks)
-→ c_B restart diagnostic (14 reps left).
+→ c_B restart diagnostic (**complete 20 Oct ~22:00 UTC**). All queued compute is done.
 
 - **Persistence:** after every job the worker runs `scripts/persist_rows.sh`. It commits `results/**/*.jsonl`
   (diag_* rows on their own) under `.git/rows.lock` and pushes to this branch, with 3 tries and backoff.
