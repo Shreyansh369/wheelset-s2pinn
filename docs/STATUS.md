@@ -150,7 +150,7 @@ done) → A1 two-start sensitivity (40, **complete 20 Oct 06:53 UTC**) → A2 su
   - Manual commits take the same lock.
 - **Reporting:** a silent check-in about every hour restarts the workers after a container restart. Messages go out
   only when a study completes, a job errors, a push or check fails, or a decision is needed, plus one status line
-  every 6 h. **Next status line: 20 Oct 09:40 UTC** (last one 20 Oct 03:40).
+  every 6 h. **Next status line: 20 Oct 16:05 UTC** (last one 20 Oct 10:05).
 - **Container restarts so far:** 18 Oct 17:36, about 20:20 and 21:35 UTC; 19 Oct about 01:50, 15:15 and 16:10 UTC; 20 Oct 03:36 UTC (A1 reps 33, 36–38 and diag rep 4 reversed requeued).
   The container held for 13 h (01:51–15:15) while a tracked watcher was running, and was reclaimed within minutes of
   idle twice once it was stopped (14:47). A tracked keepalive (110-min sleep, no per-row wake-ups) now runs. Each one loses the
