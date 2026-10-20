@@ -612,6 +612,11 @@ def summarise():
                                "n": len(Rt), "complete": len(Rt) == len(R), "n_finite_se": len(Rtf),
                                "n_changed": sum(p["kept_base"] == "refit" or p["kept_later"] == "refit" for p in per),
                                "n_local_optimum": sum(p["nll_gap_max"] > 10 for p in per),
+                               # refit better by > 10 in NLL (a real local optimum) vs. < 0.01 (same solution)
+                               "n_refit_better_gt10": sum(p["nll_gap_max"] > 10 for p in per),
+                               "n_refit_gain_lt_0p01": sum(p["nll_gap_max"] < 0.01 for p in per),
+                               "singular_reps": sorted(p["rep"] for p, r in zip(per, Rt) if not math.isfinite(r["se"])),
+                               "singular_at_cb_bound": all(p["cb_bound_after"] for p, r in zip(per, Rt) if not math.isfinite(r["se"])),
                                "n_cb_bound_after": sum(p["cb_bound_after"] for p in per),
                                "coverage": kt / len(Rtf) if Rtf else None,
                                "coverage_ci95": cp_interval(kt, len(Rtf)) if Rtf else None,
