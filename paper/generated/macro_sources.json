@@ -600,5 +600,10 @@
 "ZeroNUsed": "results/p3/validation_mc.json",
 "ZeroSzero": "results/p3/validation_mc.json",
 "ZeroZsd": "results/p3/validation_mc.json",
-"kBnom": "config/params.yaml"
+"cBstart": "experiments/p1_fe_direct.py",
+"cBtruth": "experiments/p1_fe_direct.py",
+"kBnom": "config/params.yaml",
+"kBstart": "experiments/p1_fe_direct.py",
+"kBtruth": "experiments/p1_fe_direct.py",
+"kBtruthBelowPct": "experiments/p1_fe_direct.py"
 }

@@ -16,6 +16,7 @@ labels:
 files:
   config/params.yaml: {config: frozen}
   config/track.yaml: {config: frozen}
+  experiments/p1_fe_direct.py: {config: frozen, estimator: none, setup: "simulation truth and start (TRUTH, START), WIM, payload range"}
   results/p1/verification.json: {config: frozen, estimator: none}
   results/gates/G1.json: {config: frozen, estimator: none}
   results/p2/fig1_transfer.json: {config: frozen, estimator: none}

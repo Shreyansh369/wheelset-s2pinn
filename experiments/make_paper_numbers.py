@@ -54,8 +54,15 @@ def main():
     m["BearingOrderORLo"], m["BearingOrderORHi"] = (_f(bpo(z), 1) for z in bgr["rollers_per_row"]["range"])
     m["WIMsigmaPct"] = miss("experiments/p1_fe_direct.py: WIM")
     try:
-        from experiments.p1_fe_direct import W_RANGE, WIM
+        from experiments.p1_fe_direct import START, TRUTH, W_RANGE, WIM
         m["WIMsigmaPct"] = f"{100 * WIM:.0f}"
+        # simulation truth and start of every fit (k_B0 in GN/m, c_B in kN s/m); the k_B0 start is the config nominal
+        LAST[0] = "experiments/p1_fe_direct.py"
+        m["kBtruth"], m["kBstart"] = f"{TRUTH['kB0'] / 1e9:.2f}", f"{START['kB0'] / 1e9:.1f}"
+        m["cBtruth"], m["cBstart"] = f"{TRUTH['cB'] / 1e3:.1f}", f"{START['cB'] / 1e3:.1f}"
+        m["kBtruthBelowPct"] = (f"{100 * (1 - TRUTH['kB0'] / v['bearing']['kB0']):.0f}" if START["kB0"] == v["bearing"]["kB0"]
+                                else miss("p1_fe_direct.START kB0 differs from the config nominal"))
+        LAST[0] = "config/params.yaml"
         m["PayloadMin"], m["PayloadMax"] = f"{W_RANGE[0]:g}", f"{W_RANGE[1]:g}"
     except Exception:  # noqa: BLE001
         pass

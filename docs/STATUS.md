@@ -138,6 +138,18 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
   "exchanging the period labels gives exactly −D" sentence is now backed by the reversed-order refit.
 - `validation_mc.json` regenerated at clean commit a9b1a43 with the complete `zero_change_fit_order` block.
 
+## Simulation truth stated (20 Oct, approved)
+
+- The simulation truth is hard-coded in `experiments/p1_fe_direct.py` (TRUTH k_B0 = 0.85 GN/m, c_B = 6.0 kN s/m;
+  START 1.0 GN/m = the config nominal, 5.0 kN s/m) and used by every simulation study (headline, sweep nominal,
+  banded MDC, kappa / zero-change). Macros `\kBtruth`, `\kBstart`, `\cBtruth`, `\cBstart`, `\kBtruthBelowPct` (15,
+  computed from TRUTH and the config nominal; `\missing` if START differs from the nominal); source
+  `experiments/p1_fe_direct.py`, declared frozen in `config/provenance.yaml` (not part of the config hash).
+- §4.1: clause stating the truth and start; §2: "used throughout" -> "of the model"; §4 health paragraph: the
+  effective-stiffness change is "(at the nominal \kBnom~GN/m)" (`p3_bearing_clearance.py` uses the config nominal).
+- Grep of abstract, highlights, cover letter, captions and §1–§6: no other statement that the headline or the MDC
+  refers to 1 GN/m.
+
 ## A2 support stiffness: text to apply on completion (authors' instruction 20 Oct; no abstract change)
 
 - Prepared (commit 503e91d): `p3_headline_v2.py --aggregate` adds `n_singular`, `n_finite_se` and Wald coverage on

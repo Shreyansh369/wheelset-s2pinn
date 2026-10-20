@@ -28,6 +28,7 @@ Frozen configuration hash `601c1afdbb42` (config/params.yaml + config/track.yaml
 |---|---|---|---|
 | `config/params.yaml` | frozen | - | declared |
 | `config/track.yaml` | frozen | - | declared |
+| `experiments/p1_fe_direct.py` | frozen | - | declared |
 | `results/gates/G1.json` | frozen | - | declared |
 | `results/p1/bound_speed_subband.json` | earlier | - | declared |
 | `results/p1/fe_direct.json` | earlier | - | declared |
@@ -506,4 +507,8 @@ Frozen configuration hash `601c1afdbb42` (config/params.yaml + config/track.yaml
 | `\ZeroNSing` | results/p3/validation_mc.json | frozen | sec4_results | ok |
 | `\ZeroSzero` | results/p3/validation_mc.json | frozen | sec4_results | ok |
 | `\ZeroZsd` | results/p3/validation_mc.json | frozen | sec4_results | ok |
-| `\kBnom` | config/params.yaml | frozen | sec2_model | ok |
+| `\cBstart` | experiments/p1_fe_direct.py | frozen | sec4_results | ok |
+| `\cBtruth` | experiments/p1_fe_direct.py | frozen | sec4_results | ok |
+| `\kBnom` | config/params.yaml | frozen | sec4_results | ok |
+| `\kBtruth` | experiments/p1_fe_direct.py | frozen | sec4_results | ok |
+| `\kBtruthBelowPct` | experiments/p1_fe_direct.py | frozen | sec4_results | ok |

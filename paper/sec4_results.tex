@@ -30,7 +30,10 @@ configuration behind every table, figure and number.
 
 \subsection{Matched-model simulation accuracy}\label{sec:res-headline}
 Table~\ref{tab:table3_headline} summarises \HLN{} datasets per noise level (ten seeds of ten datasets each, frozen
-configuration), generated and fitted with the same model. At
+configuration), generated and fitted with the same model (true $k_{B0} = \kBtruth$~GN/m, \kBtruthBelowPct\%
+below the nominal \kBnom~GN/m from which every fit starts, and true $c_B = \cBtruth$~kN\,s/m with start
+\cBstart~kN\,s/m, so that no fit starts at the truth; all simulation studies use this truth unless stated
+otherwise). At
 20~dB the estimate of $k_{B0}$ has a bias of \HLTwentyBias\,$\pm$\,\HLTwentyBiasSE\% and an RMSE of
 \HLTwentyRMSE\%, \HLTwentyRatioCRB{} times the Cram\'er--Rao bound; Wald 90\% intervals cover the truth
 in \HLTwentyCov{} of datasets [\HLTwentyCovLo, \HLTwentyCovHi]. At 40~dB the bias is
@@ -436,7 +439,7 @@ the MDC with $k_f$ and $k_{H0}$ re-estimated is \MDCFiftyForty\% for $N=50$ pass
 For the Y25 cylindrical roller bearings under the series reading~\eqref{eq:series} (initial clearance
 \ClearanceZero~\textmu m), a 10~\textmu m growth of the diametral clearance lowers the contact stiffness
 by \ContactPctTenEmpty\% (empty) and \ContactPctTenLoaded\% (loaded), and the effective support
-stiffness by \EffPctTenEmpty\% and \EffPctTenLoaded\% (Table~\ref{tab:table13_health}). The effective
+stiffness (at the nominal \kBnom~GN/m) by \EffPctTenEmpty\% and \EffPctTenLoaded\% (Table~\ref{tab:table13_health}). The effective
 change reaches the detection limit of \HealthMDC\% ($N=50$, 40~dB, co-estimating fit) after
 \CylGrowthMDCEmptyNom~\textmu m of growth at empty load and \CylGrowthMDCLoadedNom~\textmu m at full
 load. Over the swept initial clearance (0--180~\textmu m), roller count and roller length, the change
