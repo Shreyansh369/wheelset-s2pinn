@@ -120,7 +120,7 @@ Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until th
 ## Monte Carlo queue (detached workers, 4 cores)
 
 Order: zero-change κ study (40, **complete 19 Oct 14:35 UTC**) → zero-change singular-SE (9 reps; moved to the front,
-done) → A1 two-start sensitivity (40; reps 0–2 in; 3–6 requeued twice) → A2 support stiffness at k_B0 = 2.5 and 5 GN/m (40 chunks)
+done) → A1 two-start sensitivity (40; 35 in at 20 Oct 03:40) → A2 support stiffness at k_B0 = 2.5 and 5 GN/m (40 chunks)
 → c_B restart diagnostic (14 reps left).
 
 - **Persistence:** after every job the worker runs `scripts/persist_rows.sh`. It commits `results/**/*.jsonl`
@@ -129,8 +129,8 @@ done) → A1 two-start sensitivity (40; reps 0–2 in; 3–6 requeued twice) →
   - Manual commits take the same lock.
 - **Reporting:** a silent check-in about every hour restarts the workers after a container restart. Messages go out
   only when a study completes, a job errors, a push or check fails, or a decision is needed, plus one status line
-  every 6 h. **Next status line: 20 Oct 03:15 UTC** (last one 19 Oct 21:15).
-- **Container restarts so far:** 18 Oct 17:36, about 20:20 and 21:35 UTC; 19 Oct about 01:50, 15:15 and 16:10 UTC.
+  every 6 h. **Next status line: 20 Oct 09:40 UTC** (last one 20 Oct 03:40).
+- **Container restarts so far:** 18 Oct 17:36, about 20:20 and 21:35 UTC; 19 Oct about 01:50, 15:15 and 16:10 UTC; 20 Oct 03:36 UTC (A1 reps 33, 36–38 and diag rep 4 reversed requeued).
   The container held for 13 h (01:51–15:15) while a tracked watcher was running, and was reclaimed within minutes of
   idle twice once it was stopped (14:47). A tracked keepalive (110-min sleep, no per-row wake-ups) now runs. Each one loses the
   in-flight jobs (at most 4 × about 1–3 h); the lost jobs are requeued at the front.
