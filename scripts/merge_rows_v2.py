@@ -34,6 +34,7 @@ STUDIES = {
     "p5/runs/simerr_v2_fits.jsonl": ("p5/runs/simerr_v2_s{s}_fits.jsonl", lambda r: (r["rep"], r["period"], r["start"])),
     "p5/runs/zero_v2_fits.jsonl": ("p5/runs/zero_v2_s{s}_fits.jsonl", lambda r: (r["rep"], r["period"], r["start"])),
     "p4/sweep_runs_v2.jsonl": ("p4/sweep_runs_v2_s{s}.jsonl", lambda r: (r["param"], r["point"], r["value"])),
+    "p4/ignore_coupling_runs_v2.jsonl": ("p4/ignore_coupling_runs_v2_s{s}.jsonl", lambda r: tuple(r["key"])),
     **{f"p4/inverse_crime_runs/{m}_v2.jsonl": (f"p4/inverse_crime_runs/{m}_v2_s{{s}}.jsonl", lambda r: tuple(r["key"]))
        for m in ("nl", "lin", "pairs", "pairsx")},
     **{f"p2/model_form_mw_runs_v2/{e}__{p}.jsonl": (f"p2/model_form_mw_runs_v2_s{{s}}/{e}__{p}.jsonl", lambda r: round(r["factor"], 6))

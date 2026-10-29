@@ -34,7 +34,7 @@ from src.analysis.multiwheel import MultiWheelFamily  # noqa: E402
 from src.inverse.multipass import MultiPassWhittle  # noqa: E402
 from src.utils.results import RESULTS_DIR, save_result  # noqa: E402
 
-FP = RESULTS_DIR / "p4" / "ignore_coupling_runs.jsonl"
+FP = RESULTS_DIR / "p4" / "ignore_coupling_runs.jsonl"   # --tag _v2: ignore_coupling_runs_v2.jsonl (preregistration v2)
 KEYS = [(42, 40, j) for j in range(10)]
 T0, BUDGET = time.perf_counter(), 110 * 60
 
@@ -78,5 +78,7 @@ def summarise():
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--summarise", action="store_true")
+    ap.add_argument("--tag", default="", help="run-file suffix (preregistration v2: _v2)")
     a = ap.parse_args()
+    FP = FP.with_name(f"ignore_coupling_runs{a.tag}.jsonl")
     summarise() if a.summarise else run()

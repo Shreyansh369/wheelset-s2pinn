@@ -8,7 +8,8 @@ Result files that record provenance.config_hash and estimator_version are checke
 
 Fails (exit 1) when
   - a source file is not declared;
-  - a recorded config hash or estimator version contradicts the declaration;
+  - a recorded config hash or estimator version contradicts the declaration, or a file declared frozen,
+    pinned or sensitivity records no hash (preregistration v2: rerun it or declare it earlier and label it);
   - a table or figure with a non-frozen source lacks the label ("earlier configuration" or "pinned
     headline configuration") in its caption;
   - a macro with a non-frozen source is used in a paragraph that lacks the label, or at all in the abstract
@@ -94,6 +95,12 @@ def main():
             want = {"frozen": FROZEN, "pinned": PINNED}.get(e["config"])
             if e["config"] == "sensitivity":       # an override config directory with its own hash
                 want = config_hash(ROOT / e["config_dir"])
+            if rec_h == "-" and e["config"] in ("frozen", "sensitivity", "pinned"):
+                # no recorded hash (predates hashing): it cannot be shown to come from the current configuration.
+                # Preregistration v2: such a file is either rerun in v2 or declared earlier and labelled.
+                fails.append(f"`{src}` declared {e['config']} but records no config hash: rerun it in v2 or declare it earlier"
+                             + (f" ({e['v2']})" if e.get("v2") else ""))
+                note = "NO HASH"
             if rec_h != "-":
                 how = hash_match(rec_h, want) if want else None
                 if want and how is None:

@@ -17,9 +17,9 @@ files:
   config/params.yaml: {config: frozen}
   config/track.yaml: {config: frozen}
   experiments/p1_fe_direct.py: {config: frozen, estimator: none, setup: "simulation truth and start (TRUTH, START), WIM, payload range"}
-  results/p1/verification.json: {config: frozen, estimator: none}
-  results/gates/G1.json: {config: frozen, estimator: none}
-  results/p2/fig1_transfer.json: {config: frozen, estimator: none}
+  results/p1/verification.json: {config: frozen, estimator: none, v2: "rerun at the final regeneration (FE verification, minutes)"}
+  results/gates/G1.json: {config: frozen, estimator: none, v2: "rerun at the final regeneration (gate report)"}
+  results/p2/fig1_transfer.json: {config: frozen, estimator: none, v2: "rerun at the final regeneration (make_figures.py)"}
   results/p1/bound_speed_subband.json: {config: earlier, setup: "single wheelset on a rail oscillator", estimator: "bound only"}
   results/p1/fe_direct.json: {config: earlier, setup: "single wheelset on a rail oscillator", estimator: "whittle-1 (single wheelset)"}
   results/p2/debias_check.json: {config: earlier, setup: "CT23 12-wheel lumped vehicle, resilient track", estimator: "periodogram check"}
@@ -29,37 +29,36 @@ files:
   results/p2/partial_coherence_mc.json: {config: earlier, setup: "single wheelset on a rail oscillator", estimator: "whittle-1 (single wheelset)"}
   results/p2/partial_indep.json: {config: earlier, setup: "single wheelset on a rail oscillator", estimator: "whittle-1 (single wheelset)"}
   results/p2/scope_p2_hysteretic.json: {config: earlier, setup: "Carrigan and Talbot (2023) vehicle and track", estimator: "multipass-whittle-1"}
-  results/p2/multiwheel_bound.json: {config: frozen, estimator: "bound only"}
+  results/p2/multiwheel_bound.json: {config: frozen, estimator: "bound only", v2: "rerun at the final regeneration (bound, minutes)"}
   results/p2/multiwheel_mc.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
-  results/p2/multiwheel_mc_y25.json: {config: frozen}
-  results/p2/model_form_mw_sensitivity.json: {config: frozen, estimator: "pseudo-true, multipass-whittle-2"}
-  results/p2/drift_freight.json: {config: frozen, estimator: "pseudo-true, multipass-whittle-2"}
+  results/p2/multiwheel_mc_y25.json: {config: earlier, setup: "frozen configuration before the v2 re-freeze (hash 601c1afdbb42; unsprung 1205 kg)", v2: "earlier: Section 4.3 Multi-wheel coupling, the Fig. 4 and Table 6 captions"}
+  results/p2/model_form_mw_sensitivity.json: {config: frozen, estimator: "pseudo-true, multipass-whittle-2", v2: "rerun Q4 (model-form, s0-s3) -> results/p2/model_form_mw_sensitivity_v2.json"}
+  results/p2/drift_freight.json: {config: earlier, setup: "frozen configuration before the v2 re-freeze (hash 601c1afdbb42; unsprung 1205 kg)", estimator: "pseudo-true, multipass-whittle-2", v2: "earlier: Section 4.5.4 Foundation drift and the Table 12 caption"}
   results/p2/relative_change.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
   results/p2/relative_intervals.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
   results/p2/relative_coest_drift.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
-  results/p3/bearing_clearance.json: {config: frozen, estimator: none}
-  results/p3/exponent_bound.json: {config: frozen, estimator: "bound only"}
+  results/p3/bearing_clearance.json: {config: frozen, estimator: none, v2: "rerun at the final regeneration (analytic, minutes)"}
+  results/p3/exponent_bound.json: {config: frozen, estimator: "bound only", v2: "rerun at the final regeneration (bound, minutes)"}
   results/p3/calibration.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "pseudo-true, multipass-whittle-1"}
   results/p3/bias_regression.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
   results/p3/robust_se.json: {config: earlier, setup: "metro wheel layout, BS113A rail, +-30-bin kernel", estimator: "multipass-whittle-1 (Kb=30)"}
   results/p3/headline_v2_kb120_attr_freight.json: {config: pinned}
-  results/p3/headline_v2_kb120_attr_frozen10.json: {config: frozen}
+  results/p3/headline_v2_kb120_attr_frozen10.json: {config: frozen, v2: "rerun Q1 (headline, s0-s3) -> results/p3/headline_v2_kb120_attr_v2.json"}
   # A2 support-stiffness Monte Carlo: frozen headline design at true k_B0 = 2.5 and 5 GN/m (override configs)
-  results/p3/headline_v2_kb120_attr_kb0_2p5.json: {config: sensitivity, config_dir: config/sensitivity/kB0_2p5}
-  results/p3/headline_v2_kb120_attr_kb0_5p0.json: {config: sensitivity, config_dir: config/sensitivity/kB0_5p0}
+  results/p3/headline_v2_kb120_attr_kb0_2p5.json: {config: sensitivity, config_dir: config/sensitivity/kB0_2p5, v2: "rerun Q6 (A2, s0-s3) -> results/p3/headline_v2_kb120_attr_kb0_2p5_v2.json"}
+  results/p3/headline_v2_kb120_attr_kb0_5p0.json: {config: sensitivity, config_dir: config/sensitivity/kB0_5p0, v2: "rerun Q6 (A2, s0-s3) -> results/p3/headline_v2_kb120_attr_kb0_5p0_v2.json"}
   # preregistration_v2: corrected unsprung mass (Dusza et al. 2024, wheelset 1400 kg); Route B robustness configuration
-  results/p4/gain_y25.json: {config: frozen, estimator: "pseudo-true, multipass-whittle-2"}
-  results/p3/calibrated.json: {config: frozen, note: "calibration from the 10-seed headline at the frozen configuration; MDCs from results/p4/mdc_bounds.json"}
-  # mixed file: kappa replicates (rows_frozen) and drift Monte Carlo (kf0.8_freight) at the frozen config; bias diagnosis (BD*) earlier
-  results/p3/validation_mc.json: {config: frozen, macro_overrides: {BD: earlier}}
-  results/p4/banded.json: {config: frozen}
-  results/p4/contact_hertz.json: {config: frozen, estimator: none}
-  results/p4/generator_check.json: {config: frozen, estimator: none}
-  results/p4/generator_expper.json: {config: frozen, estimator: none}
-  results/p4/ignore_coupling.json: {config: frozen}
-  results/p4/inverse_crime.json: {config: frozen}
-  results/p4/primary_damping.json: {config: frozen}
-  results/p4/sweep.json: {config: frozen, estimator: "bound only"}
-  results/p4/mdc_bounds.json: {config: frozen, estimator: "bound only"}
-  results/p3/drift_mc_freight.json: {config: frozen}
+  results/p4/gain_y25.json: {config: earlier, setup: "frozen configuration before the v2 re-freeze (hash 601c1afdbb42; unsprung 1205 kg)", estimator: "pseudo-true, multipass-whittle-2", v2: "earlier: Appendix A (Earlier-configuration exploratory results)"}
+  results/p3/calibrated.json: {config: frozen, v2: "rerun: recomputed from the Q1 headline rows and the v2 MDC bounds at the final regeneration"}
+  results/p3/validation_mc.json: {config: earlier, setup: "frozen configuration before the v2 re-freeze (hash 601c1afdbb42; unsprung 1205 kg)", v2: "earlier: v1 preregistered studies (kappa, zero change, A1 two-start, fit order, c_B restart) in the v1 column of Section 4.5.1 and Appendix A; drift Monte Carlo (DriftMC*) in Section 4.5.4 Foundation drift; the conservative MDC macros (*Cons*) are replaced by the Q3 v2 summary (results/p5/v2_summary_v2.json)"}
+  results/p4/banded.json: {config: earlier, setup: "frozen configuration before the v2 re-freeze (hash 601c1afdbb42; unsprung 1205 kg)", v2: "earlier: payload-band stress test (pairs, pseudo-true, lean, laden c_B fixed) in Section 4.5.3 Payload bands; the MDC bounds (BandEmptyMDC*, BandLadenMDC*) are replaced by Q2 (results/p4/banded_v2.json)"}
+  results/p4/contact_hertz.json: {config: frozen, estimator: none, v2: "rerun at the final regeneration (analytic, seconds)"}
+  results/p4/generator_check.json: {config: frozen, estimator: none, v2: "rerun Q7 (s0), rewrites this file"}
+  results/p4/generator_expper.json: {config: frozen, estimator: none, v2: "rerun Q7 (s0), rewrites this file"}
+  results/p4/ignore_coupling.json: {config: frozen, v2: "rerun Q7 (s0) -> results/p4/ignore_coupling_v2.json"}
+  results/p4/inverse_crime.json: {config: frozen, v2: "rerun Q5 (nonlinear contact, s0-s3) -> results/p4/inverse_crime_v2.json"}
+  results/p4/primary_damping.json: {config: earlier, setup: "frozen configuration before the v2 re-freeze (hash 601c1afdbb42; unsprung 1205 kg)", v2: "earlier: Section 4.5.3 Mixed payloads"}
+  results/p4/sweep.json: {config: frozen, estimator: "bound only", v2: "rerun Q7 (bound sweep, s3) -> results/p4/sweep_v2.json"}
+  results/p4/mdc_bounds.json: {config: frozen, estimator: "bound only", v2: "rerun at the final regeneration (bound, minutes)"}
+  results/p3/drift_mc_freight.json: {config: earlier, setup: "frozen configuration before the v2 re-freeze (hash 601c1afdbb42; unsprung 1205 kg)", v2: "earlier: Section 4.5.4 Foundation drift and the Table 12 caption"}
   results/p4/bias_diag_y25.json: {config: pinned, note: "bias diagnosis on the headline datasets (pinned headline configuration)"}

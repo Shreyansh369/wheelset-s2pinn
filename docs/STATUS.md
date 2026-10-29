@@ -1,3 +1,15 @@
+## v2 (Route A) state at 29 Oct 17:58 UTC — work saved before a usage limit
+
+- Preregistration v2 pushed (06b5a09); addendum draft docs/preregistration_v2_addendum.md (§6 cost table and §8
+  pinned commit still to fill; §9 inventory = docs/v2_inventory.md).
+- config/ re-frozen at the corrected mass (hash e7e594eacc87); provenance.yaml carries v2 dispositions;
+  make_provenance_check now fails on stale frozen results (expected until the 4 Nov regeneration).
+- Queues docs/queues_v2/s0-s3.txt: minimum set first (pairs 0-99, 25 per session), then 100-199; sized at
+  50 min per fit (1.5 x v1). Siblings NOT launched yet. Timing replicates (simerr/zero rep 0, tag _timing)
+  were still on their first fit.
+- Next: fill addendum §6/§8, pin, push, create sessions s1-s3 (docs/queues_v2/README.md), start s0 queue,
+  confirm first rows on claude/rows-s1..s3, 12-hourly progress reports.
+
 # Status (updated 19 Oct 2026, 22:10 UTC)
 
 Branch `claude/inspiring-cori-690nu3`. `main` is untouched at `bae360d` until the authors' review. Submission target

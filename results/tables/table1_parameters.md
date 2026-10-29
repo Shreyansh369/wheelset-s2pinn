@@ -44,4 +44,6 @@
 
 9 of 38 entries were not found in the literature (marked 'assumed, swept'); their effect is in Table 15. 'Verified (fetch 19 Oct 2026)' = checked against the source document; quotes, URLs and the status of each source are in docs/table1_sources_candidates.md and docs/parameter_sources.md.
 
+Rail roughness reference spectrum (Section 3): ISO 3095:2013, Clause 6.2.5, Fig. 2; digital transcription of the 22 one-third-octave values: J. M. Requena-Plens, phonometry, https://github.com/jmrplens/phonometry, commit af9d770.
+
 Source: `config/params.yaml`, `config/track.yaml`
