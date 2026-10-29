@@ -1,0 +1,107 @@
+# Sensitivity override (corrected unsprung mass, preregistration_v2 Step 1; declared "sensitivity" in
+# config/provenance.yaml): identical to config/params.yaml except axle.journal_mass.
+# L1-lin reference model parameters: a representative 22.5 t-axle-load freight wagon (Y25 bogie, 920 mm
+# wheels) on ballasted 60E1 track. Every entry: value, unit, source; "range" where sources differ.
+# Source labels: "verified (fetch 19 Oct 2026)" = checked against the source document by a full-text fetch
+# (quotes and URLs in docs/table1_sources_candidates.md); "full text verified" = read in full in an earlier
+# round; "unverified search result" = seen in a search result only, not checked; "assumed, swept" = not found
+# in the literature, varied over the stated range in results/p4/sweep.json. Full citations:
+# docs/parameter_sources.md.
+
+material:
+  E:      {value: 2.10e11, unit: Pa,      source: "doc §16 (standard steel)"}
+  nu:     {value: 0.30,    unit: "-",     source: "doc §16"}
+  rho:    {value: 7850.0,  unit: kg/m^3,  source: "doc §16"}
+  kappa:  {value: null,    unit: "-",     source: "Cowper circular section 6(1+nu)/(7+6nu), computed"}
+
+axle:   # symmetric about xi = 0; sections listed outward from the centre (half axle)
+  length:       {value: 2.180, unit: m, source: "verified (fetch 19 Oct 2026): axle length 2180 mm (Interpipe, Railway axles, BA 002/BA 302, EN 13261)"}
+  sections:     # [outer |xi| end, diameter]
+    value: [[0.640, 0.173], [0.860, 0.200], [0.900, 0.160], [1.090, 0.130]]
+    unit: [m, m]
+    source: "diameters verified (fetch 19 Oct 2026): body 173 mm (Interpipe, Railway axles, BA 002/BA 302, EN 13261); wheel seat 200 mm = BA004 wheel hub bore (vendor listing, railwayspare-parts.com); journal 130 mm (Unirail, Wheelset type BA004, EN 13261 130x191 mm); dust-guard collar 160 mm and section boundaries assumed, swept"
+  wheel_xi:     {value: 0.750, unit: m, source: "verified (fetch 19 Oct 2026): 2s = 1500 mm between nominal rolling circles (Bizic & Petrovic 2021, Mechanics Transport Communications 19(3), art. 2113; Bizic & Petrovic 2024, Acta Polytech. Hung. 21(1) 153-166)"}
+  journal_xi:   {value: 1.000, unit: m, source: "verified (fetch 19 Oct 2026): 2b = 2000 mm between axle-box cases (as defined in the source) (Bizic & Petrovic 2021; 2024)"}
+  journal_mass: {value: 197.5, unit: kg, source: "Dusza, Golofit-Stawinska & Zboinski (2024), Appl. Sci. 14(11) 4545, Table A1 (full text verified): wheelset 1400 kg and axlebox 100 kg in a Y25 multibody model; the model bare wheelset (FE axle 397 kg + 2 x 304 kg wheels = 1005 kg) is raised to 1400 kg by lumping (1400 - 1005)/2 = 197.5 kg on each journal; axleboxes stay 2 x 100 kg (unsprung 1600 kg per wheelset)"}
+  n_elements:   {value: 32,    unit: "-", source: "brief: 20-40 elements; convergence checked at 20/30/40"}
+  damping_zeta: {value: 0.01,  unit: "-", range: [0.001, 0.02], source: "verified (fetch 19 Oct 2026): measured damping ratios of the first torsion and first and second bending modes less than 2% (Chaar 2007, KTH doctoral thesis TRITA AVE 2007:17, section 2.1, p. 8); 0.1-1.0% (Jin 2016, Proc. IMechE F 230(3) 643-661, doi 10.1177/0954409714554964, as reported by Ahmedov & Mirsaidov 2023, Mater. Phys. Mech. 51(2), doi 10.18149/MPM.5122023_4); swept"}
+  damping_fref: {value: 96.0,  unit: Hz,  range: [96.0, 115.0], source: "verified (fetch 19 Oct 2026): first wheelset bending mode 96 Hz (Han, Li, Zhang & Zhang 2025, Sci. Rep. 15, 33484, doi 10.1038/s41598-025-15781-4; C70 wagon, K6 bogies); 96 Hz; swept 96-115"}
+
+wheel:
+  mass:              {value: 304.0, unit: kg,     source: "verified (fetch 19 Oct 2026): ER7 wheel 920 mm (840 mm worn), 304 kg; axle 130x191 mm EN 13261, axle 390 kg, wheelset 998 kg (Unirail, Wheelset type BA004 datasheet, unirail.bg)"}
+  diametral_inertia: {value: 20.0,  unit: kg m^2, range: [10.0, 30.0], source: "assumed, swept (single-wheel inertia not found; disc estimate m r^2/4)"}
+  r0:                {value: 0.46, unit: m, range: [0.42, 0.46], source: "full text verified: rolling radius 0.46 m, S1002 wheels on UIC60 rail (Dusza, Golofit-Stawinska & Zboinski 2024, Appl. Sci. 14(11) 4545, Table A1); worn limit 840 mm diameter, verified (fetch 19 Oct 2026) (Unirail, Wheelset type BA004 datasheet)"}
+
+bearing:   # journal -> axlebox spring-damper; health parameters theta
+  kB0:       {value: 1.0e9, unit: N/m, range: [0.5e9, 5.0e9], source: "assumed, swept (effective support stiffness of a freight axlebox not found)"}
+  cB:        {value: 6.74e3, unit: N s/m, range: [3.0e3, 1.2e4], source: "verified (fetch 19 Oct 2026): vertical damping of the axlebox bearing 6740 N s/m (Li, Sun, Meng, Huo, Dong & Wang 2019, Adv. Mech. Eng. 11(4), doi 10.1177/1687814019840503, Table 3; CHR380 EMU axlebox bearing, no freight value found); swept"}
+  prior_log_halfwidth: {value: 0.6931471805599453, unit: "-", source: "placeholder: factor-2 prior on kB0 and cB (log-uniform)"}
+  load_exponent: {value: 0.1, unit: "-", source: "doc Eq. (12): Q ~ delta^(10/9) gives k ~ Q^(1/10)"}
+  stiffness_law: {value: power, unit: "-", source: "switch: power = kB0 (W/W0)^load_exponent (default; all results to date) | series = roller contacts (bearing_geometry) in series with housing/adapter, k_housing set so the total at W0 and c_d0 equals kB0 (placeholder)"}
+  support_law:   {value: linear, unit: "-", source: "switch: linear | clearance | roller_contact (non-smooth laws: time domain only, not yet implemented)"}
+
+bearing_geometry:   # main health case (roller-contact model, wheelset doc Eqs. 10-14): Y25 cylindrical roller bearings
+  # Y25 axleboxes carry two single-row cylindrical roller bearings WJ + WJP 130x240 per journal
+  # (Schaeffler WL 07519, verified by fetch 19 Oct 2026).
+  # Internal geometry (roller count, length) not found: assumed from the 130x240x80 envelope with standard
+  # proportions (pitch diameter (d + D)/2, roller diameter ~ (D - d)/4, roller length ~ 0.6 B) and swept.
+  rollers_per_row:   {value: 18,    unit: "-", range: [15, 21], source: "assumed from the envelope (pitch circle pi x 185 mm / ~1.15 x 27.5 mm roller pitch), swept"}
+  roller_length:     {value: 48.0,  unit: mm,  range: [40.0, 56.0], source: "assumed, ~0.6 x 80 mm bearing width, swept"}
+  roller_diameter:   {value: 27.5,  unit: mm,  source: "assumed, (240 - 130)/4 mm; does not enter the line-contact law"}
+  pitch_diameter:    {value: 185.0, unit: mm,  source: "envelope: (130 + 240)/2 mm of the WJ/WJP 130x240 bearings on Y25 (Schaeffler WL 07519, verified (fetch 19 Oct 2026))"}
+  contact_angle:     {value: 0.0,   unit: deg, source: "cylindrical roller bearing"}
+  clearance_d0:      {value: 130.0, unit: um,  range: [0.0, 180.0], source: "verified (fetch 19 Oct 2026): radial clearance of WJ/WJP 130x240 P before mounting 130-180 um (SKF Railway Technical Handbook Vol. 1, ch. 4, p. 89, extract, (c) SKF 2012); mounted/operating clearance not found: nominal = lower unmounted value, swept 0-180 um"}
+  K_contact_coeff:   {value: 8.06e4, unit: "N mm^-10/9 per mm^(8/9)", source: "doc Eq. (13): K_i,o ~ 8.06e4 l^(8/9) (steel line contact)"}
+
+bearing_geometry_tapered:   # secondary health case: double-row tapered roller unit (proxy, high-speed sources)
+  rollers_per_row:   {value: 21,    unit: "-", source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): number of rollers (single row) 21; proxy, freight 130 mm unit not found"}
+  roller_length:     {value: 45.0,  unit: mm,   source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): effective contact length of rollers 45 mm; proxy"}
+  roller_diameter:   {value: 23.0,  unit: mm,   source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): mean diameter of rollers 23 mm"}
+  pitch_diameter:    {value: 180.5, unit: mm,   source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): pitch diameter 180.5 mm; proxy"}
+  contact_angle:     {value: 10.0,  unit: deg,  source: "verified full text: Li et al. 2019 Table 3 (CHR380 EMU TRB): contact angle of the inner ring 7.75 deg, outer ring 10 deg (outer used)"}
+  clearance_d0:      {value: 20.0,  unit: um, range: [0.0, 50.0], source: "assumed, swept (mounted axial endplay 0.025-0.381 mm in the Timken AP manual, unverified; conversion to radial clearance not sourced)"}
+  K_contact_coeff:   {value: 8.06e4, unit: "N mm^-10/9 per mm^(8/9)", source: "doc Eq. (13): K_i,o ~ 8.06e4 l^(8/9) (steel line contact)"}
+
+axlebox:
+  mass: {value: 100.0, unit: kg, range: [100.0, 158.4], source: "full text verified: axlebox 100 kg (Dusza et al. 2024, Table A1); indication: SKF Y25 axlebox housing 80 kg (SKF Evolution, 26 Sep 2022); upper sweep end 158.4 kg assumed (+58%)"}
+
+primary:   # axlebox -> fixed bogie frame (Zener element dropped)
+  kp: {value: 1.017e6, unit: N/m, range: [1.017e6, 2.28e6], source: "full text verified: Y25 primary vertical stiffness 1017 kN/m empty / 2280 kN/m loaded per axlebox (Dusza et al. 2024, Table A1; springs on each axle box, Dusza 2023); nominal = empty value"}
+  cp: {value: 7.0e3, unit: N s/m, range: [7.0e3, 1.233e5], source: "full text verified: Y25 primary equivalent vertical damping 7 kN s/m empty / 123.3 kN s/m laden (Dusza et al. 2024, Table A1); nominal = empty value, paired with kp"}
+
+payload:   # axle load W, uniform per pass; enters only through kB = kB0 (W/W0)^(1/10)
+  W_min: {value: 5.5,  unit: t, range: [5.6, 6.6], source: "design value 5.5 t; verified (fetch 19 Oct 2026): Eanos tare 23,100 kg +-2% (Wascosa, Eanos datasheet), 22.6-25.3 t (Rail Cargo Group, Eanos fact sheet), i.e. empty axle load 5.65-6.3 t; swept 5.6-6.6 t in results/p4/sweep.json"}
+  W_max: {value: 22.5, unit: t, source: "verified (fetch 19 Oct 2026): Y25 axle load 22.5 t (Tatravagonka, Y25Lssi(f)-D data page; Wascosa, Eanos datasheet)"}
+  W0:    {value: 22.5, unit: t, source: "reference load for kB0 (loaded)"}
+
+operation:
+  V: {value: 27.7777777778, unit: m/s, source: "doc §13: 100 km/h, constant and known for all passes (assumption A5)"}
+
+forcing:
+  oor_orders:    {value: [1, 2, 3], unit: "-", source: "brief: wheel out-of-roundness orders 1-3 (doc Eq. 7)"}
+  oor_std:       {value: [1.0e-4, 5.0e-5, 3.0e-5], unit: m, source: "placeholder: std of a_n, b_n (eccentricity ~0.1 mm)"}
+  oor_same_both_wheels: {value: true, unit: "-", source: "decision D9: one shared set, same phase"}
+  track_spectrum:   # German spectrum S_v = A_v Omega_c^2 / ((Omega^2+Omega_r^2)(Omega^2+Omega_c^2)), doc Eq. (26)
+    A_v:     {value: 4.032e-7, unit: m rad,  source: "published German low-irregularity coefficients (e.g. Zhai 2020, doc ref 9); verify; route fit recommended"}
+    Omega_c: {value: 0.8246,   unit: rad/m, source: "as A_v"}
+    Omega_r: {value: 0.0206,   unit: rad/m, source: "as A_v"}
+  track_wavelengths: {value: [25.0, 10.0, 4.0, 1.5], unit: m, source: "placeholder: 4 wavelengths in band, away from wheel orders at 100 km/h"}
+  track_form: {value: gaussian, unit: "-", source: "brief: sqrt(S dOmega)(A cos + B sin), A,B ~ N(0,1); dOmega = log-bin width"}
+  same_profile_both_rails: {value: true, unit: "-", source: "assumption A8: no cross-level"}
+
+rail_sdof:   # optional: one oscillator per wheel under quasi-static rigid contact
+  enabled: {value: false, unit: "-", source: "brief: rigid track default"}
+  m_r: {value: 150.0, unit: kg,    source: "placeholder: effective rail+sleeper mass per wheel"}
+  k_r: {value: 1.0e8, unit: N/m,   source: "placeholder: track support stiffness per wheel"}
+  c_r: {value: 1.0e5, unit: N s/m, source: "placeholder"}
+
+sensor:
+  location:  {value: axlebox_left, unit: "-", source: "assumption A10"}
+  h_s:       {value: identity, unit: "-", source: "brief"}
+  snr_db:    {value: [20, 40], unit: dB, source: "brief"}
+  n_revs:    {value: 20, unit: "-", source: "placeholder: record length in wheel revolutions"}
+  fs:        {value: 1000.0, unit: Hz, source: "placeholder: sampling rate (band <= 150 Hz)"}
+  band_max:  {value: 150.0, unit: Hz, source: "brief"}
+
+inverse:
+  targets: {value: [log_kB0, log_cB], unit: "-", source: "brief; configurable (Child A hook)"}

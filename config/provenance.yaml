@@ -47,6 +47,7 @@ files:
   # A2 support-stiffness Monte Carlo: frozen headline design at true k_B0 = 2.5 and 5 GN/m (override configs)
   results/p3/headline_v2_kb120_attr_kb0_2p5.json: {config: sensitivity, config_dir: config/sensitivity/kB0_2p5}
   results/p3/headline_v2_kb120_attr_kb0_5p0.json: {config: sensitivity, config_dir: config/sensitivity/kB0_5p0}
+  # preregistration_v2: corrected unsprung mass (Dusza et al. 2024, wheelset 1400 kg); Route B robustness configuration
   results/p4/gain_y25.json: {config: frozen, estimator: "pseudo-true, multipass-whittle-2"}
   results/p3/calibrated.json: {config: frozen, note: "calibration from the 10-seed headline at the frozen configuration; MDCs from results/p4/mdc_bounds.json"}
   # mixed file: kappa replicates (rows_frozen) and drift Monte Carlo (kf0.8_freight) at the frozen config; bias diagnosis (BD*) earlier
