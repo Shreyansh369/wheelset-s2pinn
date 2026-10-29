@@ -193,3 +193,13 @@ It fails now, by design, and must pass at the final regeneration.
 | `results/p4/mdc_bounds.json` | table8_mdc | – | 4: MDCFiftyForty, MDCFiftyTwenty, MDCTwoHundredForty, MDCTwoHundredTwenty | rerun in v2: at the final regeneration (bound, minutes) |
 | `results/p4/primary_damping.json` | – | – | 8: PDCoestBias, PDLevelMax, PDLevelMin, PDPairsAbsZMax, PDPairsAbsZMin, PDPairsFA, PDPairsN, PDPairsSE | kept as labelled earlier-configuration result: Section 4.5.3 Mixed payloads |
 | `results/p4/sweep.json` | table15_sweep | – | 25: SweepCRBMax, SweepCRBMin, SweepCpMDCHi, SweepCpMDCLo, SweepKBExtMDCHi, SweepKBExtModeHi, SweepKBMDCHi, SweepKBMDCLo, SweepKBModeHi, SweepMDCMax, SweepMDCMin, SweepModeMax, SweepModeMin, SweepNomCRB, SweepNomMDC, SweepNomMode, SweepWminCRBHi, SweepWminCRBLo, SweepWminHi, SweepWminLo, SweepWsJournalsCRBHi, SweepWsJournalsCRBLo, SweepWsJournalsModeLo, SweepWsWheelsCRBHi, SweepWsWheelsCRBLo | rerun in v2: Q7 (bound sweep, s3) -> results/p4/sweep_v2.json |
+
+## 10. Deviations after launch
+
+- **29 Oct 22:45 UTC, banded MDC bounds (priority 2).** The bound job was killed by the out-of-memory killer
+  at 21:48 UTC (exit 137): a 200-pass cell needs about 7.6 GB, with 4 × 2 GB of other jobs on the 15 GB
+  machine. Three of the eight cells were written (empty band: N = 50 at 20 and 40 dB, N = 200 at 20 dB).
+  - The remaining five cells run at the final regeneration on an idle machine, with the same code and seeds;
+    they take minutes.
+  - Requeueing now would risk the OOM killer stopping a change-study fit instead.
+  - No result changes, only when the cells are computed.
