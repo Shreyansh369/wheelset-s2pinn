@@ -23,3 +23,4 @@ legacy/results/p0/ckpt/
 # live queue of the running Monte Carlo (changes as jobs are taken)
 results/p4/logs/queue_*.txt*
 results/p4/logs/*.log
+results/p5/logs/*.log

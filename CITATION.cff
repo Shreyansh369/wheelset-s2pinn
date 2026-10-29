@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use this code or the stored results, please cite the paper and this repository."
+title: "Wheelset bearing support stiffness from multi-pass axle-box acceleration: code, results and paper source"
+type: software
+authors:
+  - family-names: Kandpal
+    given-names: Shreyansh
+    email: shreyanshkandpal@gmail.com
+    affiliation: "Department of Mechanical Engineering, Gati Shakti Vishwavidyalaya, Vadodara, Gujarat, India"
+    orcid: "https://orcid.org/0009-0000-4694-5622"
+  - family-names: Chanderia
+    given-names: Shristi
+    affiliation: "Gati Shakti Vishwavidyalaya, Vadodara, Gujarat, India"
+    orcid: "https://orcid.org/0009-0001-3801-9087"
+repository-code: "https://github.com/Shreyansh369/wheelset-s2pinn"
+version: "1.0.1-paper"
+preferred-citation:
+  type: article
+  title: "Tracking the support stiffness of railway wheelset bearings from multi-speed axle-box acceleration without measuring rail roughness: a multi-pass debiased Whittle likelihood"
+  authors:
+    - family-names: Kandpal
+      given-names: Shreyansh
+      orcid: "https://orcid.org/0009-0000-4694-5622"
+    - family-names: Chanderia
+      given-names: Shristi
+      orcid: "https://orcid.org/0009-0001-3801-9087"
+  journal: "Mechanical Systems and Signal Processing"
+  status: submitted

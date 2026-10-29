@@ -10,6 +10,16 @@ vertical support stiffness of the wheelset bearing and its change between monito
 results are from simulation with a finite-element wheelset coupled to neighbouring wheels through an
 infinite Timoshenko rail, for a representative Y25-bogie freight wagon on ballasted 60E1 track.
 
+## Authors
+
+- Shreyansh Kandpal, Department of Mechanical Engineering, Gati Shakti Vishwavidyalaya, Vadodara, Gujarat,
+  India (corresponding author, shreyanshkandpal@gmail.com), ORCID
+  [0009-0000-4694-5622](https://orcid.org/0009-0000-4694-5622)
+- Shristi Chanderia, Gati Shakti Vishwavidyalaya, Vadodara, Gujarat, India, ORCID
+  [0009-0001-3801-9087](https://orcid.org/0009-0001-3801-9087)
+
+How to cite: `CITATION.cff`.
+
 ## What this repository reproduces
 
 Every table, figure and number quoted in the paper. Numbers are LaTeX macros written by
