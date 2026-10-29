@@ -67,9 +67,41 @@ def dataset(gen, rough, r0, key, contact):
     return passes, Wm, Ws, g, stats
 
 
-def fit(passes, Wm, rough, fam):
+def fit(passes, Wm, rough, fam, phi0=None):
     est = MultiPassWhittle([dict(q) for q in passes], Wm, WIM, rough, fam, debias=True)
-    return est.fit(np.log([START["kB0"], START["cB"]]))
+    return est.fit(np.log([START["kB0"], START["cB"]]) if phi0 is None else np.asarray(phi0, float))
+
+
+def run_pairsx(j0, j1):
+    """Cross-period restart (preregistration v2, xpr-1) of the zero-change pairs: each period refitted from the
+    other period's standard-start estimate (rows of pairs<tag>.jsonl); rows pairsx<tag>.jsonl, one per period."""
+    sm, thb, rough, _ = setup()
+    mw = models(sm)[0]["4"]
+    gen = NonlinearContactGenerator(mw, dict(thb, **TRUTH), pad=PAD[0])
+    fam = MultiWheelFamily(mw, thb)
+    need = {(61, j, per) for j in range(j0, j1) for per in (0, 1)}
+    t_wait = time.perf_counter()
+    while True:          # the standard-start rows of these pairs come from a pairs job of the same session
+        fs = OUT / f"pairs{TAG[0]}.jsonl"
+        std = {tuple(json.loads(l)["key"]): json.loads(l) for l in fs.read_text().splitlines() if l.strip()} if fs.exists() else {}
+        if need <= set(std) or time.perf_counter() - t_wait > 8 * 3600:
+            break
+        time.sleep(120)
+    fp = OUT / f"pairsx{TAG[0]}.jsonl"
+    done = {tuple(json.loads(l)["key"]) for l in fp.read_text().splitlines()} if fp.exists() else set()
+    for j in range(j0, j1):
+        for per in (0, 1):
+            key, other = (61, j, per), (61, j, 1 - per)
+            if key in done or key not in std or other not in std:
+                continue
+            t1 = time.perf_counter()
+            P, Wm, Ws, g, st = dataset(gen, rough, thb["r0"], key, "hertz")
+            r = fit(P, Wm, rough, fam, std[other]["phi"])
+            row = {"key": list(key), "mode": "pairsx", "start_from": list(other), "phi": r["phi"], "se_log": r["se_log"][0],
+                   "nll": r["nll"], "converged": r["converged"], "wall_s": time.perf_counter() - t1}
+            with fp.open("a") as fh:
+                fh.write(json.dumps(row) + "\n")
+            print(row, flush=True)
 
 
 def run(mode, j0, j1):
@@ -100,7 +132,7 @@ def run(mode, j0, j1):
         t_gen = time.perf_counter() - t1
         r = fit(P, Wm, rough, fam)
         row = {"key": list(key), "mode": mode, "err_log": r["phi"][0] - lt, "se_log": r["se_log"][0],
-               "err_log_cB": r["phi"][1] - math.log(TRUTH["cB"]), "phi": r["phi"], "converged": r["converged"],
+               "err_log_cB": r["phi"][1] - math.log(TRUTH["cB"]), "phi": r["phi"], "nll": r["nll"], "converged": r["converged"],
                "gen_converged_all": all(s.get("converged", True) for s in st),
                "contact_loss_max": max(s.get("contact_loss_fraction", 0.0) for s in st),
                "delta_min_ratio_min": min(s["delta_min_ratio"] for s in st),
@@ -177,7 +209,7 @@ def summarise():
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--mode", choices=("nl", "lin", "pairs", "fd"))
+    ap.add_argument("--mode", choices=("nl", "lin", "pairs", "pairsx", "fd"))
     ap.add_argument("--fam-df", type=float, default=None, help="estimator frequency-table spacing (diagnostic)")
     ap.add_argument("--tag", default="", help="run-file suffix (e.g. _v2 after the roughness-grid fix)")
     ap.add_argument("--pad", type=float, default=0.8, help="time-domain warm-up discarded at each end (s)")
@@ -190,5 +222,7 @@ if __name__ == "__main__":
     PAD[0] = a.pad
     if a.summarise:
         summarise()
+    elif a.mode == "pairsx":
+        run_pairsx(a.j0, a.j1)
     else:
         run(a.mode, a.j0, a.j1)

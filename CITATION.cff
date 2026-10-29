@@ -13,6 +13,10 @@ authors:
     affiliation: "Gati Shakti Vishwavidyalaya, Vadodara, Gujarat, India"
     orcid: "https://orcid.org/0009-0001-3801-9087"
 repository-code: "https://github.com/Shreyansh369/wheelset-s2pinn"
+# Code: MIT (LICENSE). Results (results/), figures (figures/) and generated tables (results/tables/): CC BY 4.0.
+license:
+  - MIT
+  - CC-BY-4.0
 version: "1.0.1-paper"
 preferred-citation:
   type: article

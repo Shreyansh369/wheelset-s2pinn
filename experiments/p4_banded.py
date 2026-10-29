@@ -45,6 +45,7 @@ from src.inverse.multipass import MultiPassWhittle  # noqa: E402
 from src.utils.results import RESULTS_DIR, save_result  # noqa: E402
 
 OUT = RESULTS_DIR / "p4" / "banded_runs"
+TAG = [""]     # --tag: suffix of the bound rows (preregistration v2: _v2_sN)
 BANDS = {"empty": ((5.5, 7.0), 1.017e6, 7.0e3), "laden": ((20.0, 22.5), 2.28e6, 1.233e5)}
 T0, BUDGET = time.perf_counter(), 110 * 60
 Z = 1.6448536269514722
@@ -76,7 +77,7 @@ def _base(b):
 
 
 def bounds():
-    fp = OUT / "bounds.jsonl"
+    fp = OUT / f"bounds{TAG[0]}.jsonl"
     done = _done(fp, lambda r: (r["band"], r["N"], r["snr_db"]))
     for b in BANDS:
         sm, thb_b, rough, mw, fams = _base(b)
@@ -244,7 +245,9 @@ if __name__ == "__main__":
     ap.add_argument("--j0", type=int, default=0)
     ap.add_argument("--j1", type=int, default=10)
     ap.add_argument("--cb-fixed", type=float, default=None)
+    ap.add_argument("--tag", default="", help="suffix of the bound rows (preregistration v2: _v2_sN)")
     a = ap.parse_args()
+    TAG[0] = a.tag
     if a.bounds:
         bounds()
     if a.pseudo:

@@ -5,7 +5,7 @@
 # paths (git commit --only), so anything else staged or modified in the tree is left alone. Diagnostic rows
 # (diag_*) go in their own commit. Push: 3 tries with backoff. Never pushes any branch but the work branch.
 cd "$(dirname "$0")/.." || exit 1
-BR=claude/inspiring-cori-690nu3
+BR=${ROWS_BRANCH:-claude/inspiring-cori-690nu3}   # sibling row sessions set ROWS_BRANCH=claude/rows-sN
 exec 9>"$(git rev-parse --git-dir)/rows.lock"
 flock -w 600 9 || { echo "$(date -u +%FT%TZ) lock timeout"; exit 1; }
 [ "$(git rev-parse --abbrev-ref HEAD)" = "$BR" ] || { echo "$(date -u +%FT%TZ) not on $BR; nothing committed"; exit 1; }

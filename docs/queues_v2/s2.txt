@@ -1,0 +1,73 @@
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _v2_s2 --j0 20 --j1 30 > results/p5/logs/hl_2.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _v2_s2 --j0 60 --j1 70 > results/p5/logs/hl_6.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _v2_s2 --j0 100 --j1 110 > results/p5/logs/hl_10.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _v2_s2 --j0 140 --j1 150 > results/p5/logs/hl_14.log 2>&1
+python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _v2_s2 --j0 180 --j1 190 > results/p5/logs/hl_18.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 78 --j1 79 --tag _v2_s2 > results/p5/logs/se_78.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 78 --j1 79 --tag _v2_s2 > results/p5/logs/zc_78.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 79 --j1 80 --tag _v2_s2 > results/p5/logs/se_79.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 79 --j1 80 --tag _v2_s2 > results/p5/logs/zc_79.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 80 --j1 81 --tag _v2_s2 > results/p5/logs/se_80.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 80 --j1 81 --tag _v2_s2 > results/p5/logs/zc_80.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 81 --j1 82 --tag _v2_s2 > results/p5/logs/se_81.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 81 --j1 82 --tag _v2_s2 > results/p5/logs/zc_81.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 82 --j1 83 --tag _v2_s2 > results/p5/logs/se_82.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 82 --j1 83 --tag _v2_s2 > results/p5/logs/zc_82.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 83 --j1 84 --tag _v2_s2 > results/p5/logs/se_83.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 83 --j1 84 --tag _v2_s2 > results/p5/logs/zc_83.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 84 --j1 85 --tag _v2_s2 > results/p5/logs/se_84.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 84 --j1 85 --tag _v2_s2 > results/p5/logs/zc_84.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 85 --j1 86 --tag _v2_s2 > results/p5/logs/se_85.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 85 --j1 86 --tag _v2_s2 > results/p5/logs/zc_85.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 86 --j1 87 --tag _v2_s2 > results/p5/logs/se_86.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 86 --j1 87 --tag _v2_s2 > results/p5/logs/zc_86.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 87 --j1 88 --tag _v2_s2 > results/p5/logs/se_87.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 87 --j1 88 --tag _v2_s2 > results/p5/logs/zc_87.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 88 --j1 89 --tag _v2_s2 > results/p5/logs/se_88.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 88 --j1 89 --tag _v2_s2 > results/p5/logs/zc_88.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 89 --j1 90 --tag _v2_s2 > results/p5/logs/se_89.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 89 --j1 90 --tag _v2_s2 > results/p5/logs/zc_89.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 90 --j1 91 --tag _v2_s2 > results/p5/logs/se_90.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 90 --j1 91 --tag _v2_s2 > results/p5/logs/zc_90.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 91 --j1 92 --tag _v2_s2 > results/p5/logs/se_91.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 91 --j1 92 --tag _v2_s2 > results/p5/logs/zc_91.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 92 --j1 93 --tag _v2_s2 > results/p5/logs/se_92.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 92 --j1 93 --tag _v2_s2 > results/p5/logs/zc_92.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 93 --j1 94 --tag _v2_s2 > results/p5/logs/se_93.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 93 --j1 94 --tag _v2_s2 > results/p5/logs/zc_93.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 94 --j1 95 --tag _v2_s2 > results/p5/logs/se_94.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 94 --j1 95 --tag _v2_s2 > results/p5/logs/zc_94.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 95 --j1 96 --tag _v2_s2 > results/p5/logs/se_95.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 95 --j1 96 --tag _v2_s2 > results/p5/logs/zc_95.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 96 --j1 97 --tag _v2_s2 > results/p5/logs/se_96.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 96 --j1 97 --tag _v2_s2 > results/p5/logs/zc_96.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 97 --j1 98 --tag _v2_s2 > results/p5/logs/se_97.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 97 --j1 98 --tag _v2_s2 > results/p5/logs/zc_97.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 98 --j1 99 --tag _v2_s2 > results/p5/logs/se_98.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 98 --j1 99 --tag _v2_s2 > results/p5/logs/zc_98.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 99 --j1 100 --tag _v2_s2 > results/p5/logs/se_99.log 2>&1 && python3 experiments/p5_v2.py --kind zero --n 200 --j0 99 --j1 100 --tag _v2_s2 > results/p5/logs/zc_99.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 100 --j1 101 --tag _v2_s2 > results/p5/logs/se_100.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 101 --j1 102 --tag _v2_s2 > results/p5/logs/se_101.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 102 --j1 103 --tag _v2_s2 > results/p5/logs/se_102.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 103 --j1 104 --tag _v2_s2 > results/p5/logs/se_103.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 104 --j1 105 --tag _v2_s2 > results/p5/logs/se_104.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 105 --j1 106 --tag _v2_s2 > results/p5/logs/se_105.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 106 --j1 107 --tag _v2_s2 > results/p5/logs/se_106.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 107 --j1 108 --tag _v2_s2 > results/p5/logs/se_107.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 108 --j1 109 --tag _v2_s2 > results/p5/logs/se_108.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 109 --j1 110 --tag _v2_s2 > results/p5/logs/se_109.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 110 --j1 111 --tag _v2_s2 > results/p5/logs/se_110.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 111 --j1 112 --tag _v2_s2 > results/p5/logs/se_111.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 112 --j1 113 --tag _v2_s2 > results/p5/logs/se_112.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 113 --j1 114 --tag _v2_s2 > results/p5/logs/se_113.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 114 --j1 115 --tag _v2_s2 > results/p5/logs/se_114.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 115 --j1 116 --tag _v2_s2 > results/p5/logs/se_115.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 116 --j1 117 --tag _v2_s2 > results/p5/logs/se_116.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 117 --j1 118 --tag _v2_s2 > results/p5/logs/se_117.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 118 --j1 119 --tag _v2_s2 > results/p5/logs/se_118.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 119 --j1 120 --tag _v2_s2 > results/p5/logs/se_119.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 120 --j1 121 --tag _v2_s2 > results/p5/logs/se_120.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 121 --j1 122 --tag _v2_s2 > results/p5/logs/se_121.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 122 --j1 123 --tag _v2_s2 > results/p5/logs/se_122.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 123 --j1 124 --tag _v2_s2 > results/p5/logs/se_123.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 124 --j1 125 --tag _v2_s2 > results/p5/logs/se_124.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 125 --j1 126 --tag _v2_s2 > results/p5/logs/se_125.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 126 --j1 127 --tag _v2_s2 > results/p5/logs/se_126.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 127 --j1 128 --tag _v2_s2 > results/p5/logs/se_127.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 128 --j1 129 --tag _v2_s2 > results/p5/logs/se_128.log 2>&1
+python3 experiments/p5_v2.py --kind simerr --n 200 --j0 129 --j1 130 --tag _v2_s2 > results/p5/logs/se_129.log 2>&1
+python3 experiments/p2_model_form_mw.py --sensitivity --estimators nominal --params kH0 --label _v2_s2 > results/p5/logs/mf_nominal_kH0.log 2>&1
+python3 experiments/p2_model_form_mw.py --sensitivity --estimators coest --params eta_f --label _v2_s2 > results/p5/logs/mf_coest_eta_f.log 2>&1
+python3 experiments/p4_inverse_crime.py --mode nl --j0 10 --j1 15 --tag _v2_s2 > results/p5/logs/ic_nl_10.log 2>&1
+python3 experiments/p4_inverse_crime.py --mode lin --j0 10 --j1 15 --tag _v2_s2 > results/p5/logs/ic_lin_10.log 2>&1
+python3 experiments/p4_inverse_crime.py --mode pairs --j0 10 --j1 15 --tag _v2_s2 > results/p5/logs/ic_pairs_10.log 2>&1
+python3 experiments/p4_inverse_crime.py --mode pairsx --j0 10 --j1 15 --tag _v2_s2 > results/p5/logs/ic_pairsx_10.log 2>&1
+WHEELSET_CONFIG_DIR=config/sensitivity/kB0_2p5 python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _kb0_2p5_v2_s2 --kb0-from-config --j0 20 --j1 30 > results/p5/logs/a2_2p5_2.log 2>&1
+WHEELSET_CONFIG_DIR=config/sensitivity/kB0_2p5 python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _kb0_2p5_v2_s2 --kb0-from-config --j0 60 --j1 70 > results/p5/logs/a2_2p5_6.log 2>&1
+WHEELSET_CONFIG_DIR=config/sensitivity/kB0_2p5 python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _kb0_2p5_v2_s2 --kb0-from-config --j0 100 --j1 110 > results/p5/logs/a2_2p5_10.log 2>&1
+WHEELSET_CONFIG_DIR=config/sensitivity/kB0_2p5 python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _kb0_2p5_v2_s2 --kb0-from-config --j0 140 --j1 150 > results/p5/logs/a2_2p5_14.log 2>&1
+WHEELSET_CONFIG_DIR=config/sensitivity/kB0_2p5 python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _kb0_2p5_v2_s2 --kb0-from-config --j0 180 --j1 190 > results/p5/logs/a2_2p5_18.log 2>&1
+WHEELSET_CONFIG_DIR=config/sensitivity/kB0_5p0 python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _kb0_5p0_v2_s2 --kb0-from-config --j0 20 --j1 30 > results/p5/logs/a2_5p0_2.log 2>&1
+WHEELSET_CONFIG_DIR=config/sensitivity/kB0_5p0 python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _kb0_5p0_v2_s2 --kb0-from-config --j0 60 --j1 70 > results/p5/logs/a2_5p0_6.log 2>&1
+WHEELSET_CONFIG_DIR=config/sensitivity/kB0_5p0 python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _kb0_5p0_v2_s2 --kb0-from-config --j0 100 --j1 110 > results/p5/logs/a2_5p0_10.log 2>&1
+WHEELSET_CONFIG_DIR=config/sensitivity/kB0_5p0 python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _kb0_5p0_v2_s2 --kb0-from-config --j0 140 --j1 150 > results/p5/logs/a2_5p0_14.log 2>&1
+WHEELSET_CONFIG_DIR=config/sensitivity/kB0_5p0 python3 experiments/p3_headline_v2.py --kb 120 --attributed --ten --label _kb0_5p0_v2_s2 --kb0-from-config --j0 180 --j1 190 > results/p5/logs/a2_5p0_18.log 2>&1

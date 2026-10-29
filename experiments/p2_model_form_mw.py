@@ -119,7 +119,8 @@ def sensitivity(args):
                         fh.write(json.dumps(row) + "\n")
                     print(row, flush=True)
                     FIT_MAX[0] = max(FIT_MAX[0], 1.3 * r["wall_fit_s"])
-    summarise_sensitivity(tm.seconds)
+    if RUN_LABEL == "_freight":           # labelled runs (preregistration v2 sessions) write rows only; summarised after merging
+        summarise_sensitivity(tm.seconds)
 
 
 def summarise_sensitivity(wall=None):
@@ -247,7 +248,10 @@ if __name__ == "__main__":
     ap.add_argument("--summarise", action="store_true")
     ap.add_argument("--validate-pseudo", action="store_true")
     ap.add_argument("--factors", type=float, nargs="+", default=None, help="override the perturbation factors")
+    ap.add_argument("--label", default=None, help="run-file suffix (default _freight; preregistration v2: _v2_sN)")
     a = ap.parse_args()
+    if a.label is not None:
+        RUN_LABEL = a.label
     if a.validate_osc:
         validate_osc(a)
     if a.sensitivity:

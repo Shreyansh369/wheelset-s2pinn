@@ -87,6 +87,10 @@ legacy/            exploratory code from an earlier phase (S²-PINN surrogate, g
 
 ## Licence and third-party code
 
+The code is released under the MIT licence (`LICENSE`). The stored results (`results/`), the figures
+(`figures/`) and the generated tables (`results/tables/`) are released under Creative Commons Attribution 4.0
+International (CC BY 4.0, https://creativecommons.org/licenses/by/4.0/).
+
 No third-party research code is included. The `legacy/` folder documents an earlier phase that used the
 S²-PINN code of Li and Onwunta as an external dependency; that code is not part of this repository.
 

@@ -38,6 +38,7 @@ from src.reference.params import Params, load_raw  # noqa: E402
 from src.utils.results import RESULTS_DIR, save_result  # noqa: E402
 
 OUT = RESULTS_DIR / "p4"
+TAG = [""]     # --tag: suffix of the sweep rows (preregistration v2: _v2_sN)
 M_AXLE = 396.9        # axle mass from the FE geometry (kg); bare wheelset = M_AXLE + 2 x 304 kg wheels
 Z = 1.6448536269514722 + 1.2815515655446004
 
@@ -63,11 +64,11 @@ SWEEP = [
 
 def build(override=None):
     raw = load_raw()
-    if override:
+    for path, val in ([override] if override and isinstance(override[0], tuple) and isinstance(override[0][0], str) else (override or [])):
         node = raw
-        for k in override[0][:-1]:
+        for k in path[:-1]:
             node = node[k]
-        node[override[0][-1]]["value"] = override[1]
+        node[path[-1]]["value"] = val
     p = Params(raw)
     from src.reference.track import load_track_config
     kH0 = load_track_config()["contact_freight"]["kH0"]
@@ -83,7 +84,8 @@ def evaluate(name, kind, key, value):
     fd.W_RANGE = (value, 22.5) if kind == "design" else (5.5, 22.5)
     if kind == "wsmass":
         bare = 2 * 304.0 + M_AXLE
-        ov = (("wheel", "mass"), (value - M_AXLE) / 2) if key == "wheel" else (("axle", "journal_mass"), (value - bare) / 2)
+        ov = ([(("wheel", "mass"), (value - M_AXLE) / 2), (("axle", "journal_mass"), 0.0)] if key == "wheel"
+              else [(("axle", "journal_mass"), (value - bare) / 2)])
         p, sm, thb = build(ov)
     else:
         p, sm, thb = build((key, value) if kind == "param" else None)
@@ -112,7 +114,7 @@ def evaluate(name, kind, key, value):
 
 def run(names):
     OUT.mkdir(parents=True, exist_ok=True)
-    fp = OUT / "sweep_runs.jsonl"
+    fp = OUT / f"sweep_runs{TAG[0]}.jsonl"
     done = {(r["param"], r["point"], r["value"]) for r in (json.loads(l) for l in fp.read_text().splitlines())} if fp.exists() else set()
     t0, tmax = time.perf_counter(), 10 * 60
     jobs = [("nominal", "none", None, None, "nominal")] if ("nominal", "nominal", None) not in done else []
@@ -154,7 +156,9 @@ if __name__ == "__main__":
     ap.add_argument("--run", action="store_true")
     ap.add_argument("--summarise", action="store_true")
     ap.add_argument("--names", nargs="*", default=None)
+    ap.add_argument("--tag", default="")
     a = ap.parse_args()
+    TAG[0] = a.tag
     if a.run:
         run(a.names)
     if a.summarise:
