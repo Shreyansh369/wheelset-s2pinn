@@ -49,4 +49,6 @@
 
 Main case: Y25 cylindrical roller bearings (two rows per journal); roller count and length assumed from the 130×240×80 envelope and swept; initial clearance 130 µm = lower unmounted value (operating clearance not found). Secondary case: proxy double-row tapered unit. k_housing is set so that the effective stiffness equals k_B0 at W0. MDC = 0.75% (N = 50, 40 dB, co-estimating fit). z = Δp / CRB of a single period; detection between two periods needs Δp ≥ 2.93·√2·CRB.
 
+Growth at MDC: the clearance growth at which the stiffness named in the column has fallen by the MDC. "Contact" refers to the roller-contact stiffness k_contact alone; "Effective k_B" to the effective support stiffness k_B identified by the method, i.e. k_contact in series with the housing path (reading B). The series compliance attenuates the effective change: a contact change reaches k_B scaled by k_B/k_contact, so the effective change is smaller and the growth needed to reach the MDC larger than for the contact alone.
+
 Source: `results/p3/bearing_clearance.json`, `results/p3/exponent_bound.json`

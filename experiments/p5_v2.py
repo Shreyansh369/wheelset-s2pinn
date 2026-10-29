@@ -102,6 +102,12 @@ def replicate(kind, j, n, tag, ctx):
         x = 0.0
     ff = OUT / "runs" / f"{kind}{tag}_fits.jsonl"
     have = {(r["rep"], r["period"], r["start"]): r for r in _rows(ff) if r["n"] == n}
+    # the baseline period of zero-change replicate j is the baseline of simultaneous-error replicate j (same
+    # draw, data key and truth), so its standard-start fit is the same deterministic computation: reuse it
+    twin = OUT / "runs" / f"{'simerr' if kind == 'zero' else 'zero'}{tag}_fits.jsonl"
+    for r in _rows(twin):
+        if r["n"] == n and r["rep"] == j and r["period"] == "base" and r["start"] == "std" and (j, "base", "std") not in have:
+            have[(j, "base", "std")] = dict(r, reused_from=twin.name)
     data, ests, fits = {}, {}, {}
     for s, kt in (("base", TRUTH["kB0"]), ("later", TRUTH["kB0"] * (1 - x))):
         data[s] = gen(sm, truth(thb, mis, kt), rough, mw, (SEED, j, 0 if s == "base" else 1))
@@ -151,7 +157,8 @@ def replicate(kind, j, n, tag, ctx):
             "D_hat_frozen": d_std, "se_frozen": math.hypot(per["base"]["se_std"], per["later"]["se_std"]),
             "periods": per, "estimator": ESTIMATOR, "band": "empty",
             "config_dir": os.environ.get("WHEELSET_CONFIG_DIR", "config"), "git_commit": commit,
-            "wall_s": sum(fits[k]["wall_s"] for k in fits)}
+            "wall_s": sum(fits[k]["wall_s"] for k in fits if not fits[k].get("reused_from")),
+            "reused_base_fit": bool(fits[("base", "std")].get("reused_from"))}
 
 
 def run(kind, j0, j1, n, tag):

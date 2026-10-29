@@ -351,15 +351,6 @@ The primary stiffness and damping of the Y25 bogie differ strongly between the e
 were generated with both varying linearly with axle load between the empty and laden values, and fitted
 with fixed values.
 
-\emph{Mixed payloads.} With passes over the whole payload range and the empty values in the fit, the
-large-sample bias of $k_{B0}$ is \PDCoestBias\% ($k_f$, $k_{H0}$ re-estimated), but individual periods
-are biased by \PDLevelMin{} to \PDLevelMax\%, depending on the payload mix of the period, and the
-errors do not cancel between periods: in \PDPairsN{} pairs of periods with no change the apparent change
-reached $|z| = \PDPairsAbsZMin$--$\PDPairsAbsZMax$, and \PDPairsFA{} pairs raised a false alarm. The
-standard error of the change also grew to \PDPairsSE\%. Mixed-payload pooling with a fixed primary
-suspension is therefore not used; pooling over the whole payload range would need a payload-dependent
-model of the primary suspension (Section~\ref{sec:discussion}).
-
 \emph{Payload bands.} With the comparison restricted to one payload band and the estimator using that
 band's fixed values (Section~\ref{sec:relative}), the same stress truth gives a large-sample bias of
 \BandEmptyPseudo\% (empty band) and \BandLadenPseudo\% (laden band). In \BandEmptyPairsN{} zero-change
@@ -404,6 +395,15 @@ for the laden band, where the strongly damped laden suspension widens the suppor
 diversity therefore remains a lever only within a band, and the empty band is the preferred operating
 mode.
 
+\emph{Mixed payloads.} With passes over the whole payload range and the empty values in the fit, the
+large-sample bias of $k_{B0}$ is \PDCoestBias\% ($k_f$, $k_{H0}$ re-estimated), but individual periods
+are biased by \PDLevelMin{} to \PDLevelMax\%, depending on the payload mix of the period, and the
+errors do not cancel between periods: in \PDPairsN{} pairs of periods with no change the apparent change
+reached $|z| = \PDPairsAbsZMin$--$\PDPairsAbsZMax$, and \PDPairsFA{} pairs raised a false alarm. The
+standard error of the change also grew to \PDPairsSE\%. Mixed-payload pooling with a fixed primary
+suspension is therefore not used; pooling over the whole payload range would need a payload-dependent
+model of the primary suspension (Section~\ref{sec:discussion}).
+
 \subsubsection{Measurement and operating conditions}\label{sec:res-budget-meas}
 Measurement noise enters through the signal-to-noise ratio: at 20~dB instead of 40~dB the detection limit
 with $k_f$ and $k_{H0}$ re-estimated rises from \MDCFiftyForty\% to \MDCFiftyTwenty\% ($N=50$,
@@ -437,12 +437,18 @@ they are 10~dB above it, because the lines then carry information about $|H|$ at
 \inputtable{table9_wheel_lines}
 
 \subsection{Detection of changes and health relevance}\label{sec:res-relative}
-For a one-sided test at 5\% false alarm and 90\% detection,
-the MDC with $k_f$ and $k_{H0}$ re-estimated is \MDCFiftyForty\% for $N=50$ passes per period at
-40~dB and \MDCFiftyTwenty\% at 20~dB; with $N=200$ it is \MDCTwoHundredForty\% and
-\MDCTwoHundredTwenty\%. With the simulation calibration (40~dB only; calibration factor from the pinned headline configuration) these become
-\MDCCalFiftyForty\% ($N=50$) and \MDCCalTwoHundredForty\% ($N=200$); 20~dB is unchanged
-(Table~\ref{tab:table8_mdc}).
+Change detection is supported within one payload band (Section~\ref{sec:res-primary}). For a one-sided
+test at 5\% false alarm and 90\% detection, with $k_f$ and $k_{H0}$ re-estimated, the detection limits are
+\BandEmptyMDCFiftyMin--\BandEmptyMDCFiftyMax\% ($N=50$) and
+\BandEmptyMDCTwoHundredMin--\BandEmptyMDCTwoHundredMax\% ($N=200$) in the empty band, and
+\BandLadenMDCFiftyMin--\BandLadenMDCFiftyMax\% and \BandLadenMDCTwoHundredMin--\BandLadenMDCTwoHundredMax\%
+in the laden band; Section~\ref{sec:res-cons-mdc} gives the conservative limits allowing for simultaneous
+model errors. For reference only, the matched-model MDC for passes over the whole payload range, which is
+not a supported operating mode (Section~\ref{sec:res-primary}), is \MDCFiftyForty\% for $N=50$ passes per
+period at 40~dB and \MDCFiftyTwenty\% at 20~dB; with $N=200$ it is \MDCTwoHundredForty\% and
+\MDCTwoHundredTwenty\%. With the simulation calibration (40~dB only; calibration factor from the pinned
+headline configuration) these become \MDCCalFiftyForty\% ($N=50$) and \MDCCalTwoHundredForty\% ($N=200$);
+20~dB is unchanged (Table~\ref{tab:table8_mdc}).
 
 
 \inputtable{table8_mdc}

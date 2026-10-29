@@ -1,4 +1,4 @@
-# Table 8. Minimum detectable decrease of k_B0 (5% false alarm, 90% detection), mixed payloads
+# Table 8. Nominal mixed-payload reference (matched model; not a supported operating mode): minimum detectable decrease of k_B0 (5% false alarm, 90% detection)
 
 | N per period | SNR (dB) | Estimated globals | CRB of k_B0 (%) | MDC from CRB (%) |
 |---|---|---|---|---|

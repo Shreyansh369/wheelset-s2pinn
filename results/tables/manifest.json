@@ -100,7 +100,7 @@
    "results/p4/mdc_bounds.json",
    "results/p3/calibrated.json"
   ],
-  "caption": "Minimum detectable decrease of k_B0 (5% false alarm, 90% detection), mixed payloads"
+  "caption": "Nominal mixed-payload reference (matched model; not a supported operating mode): minimum detectable decrease of k_B0 (5% false alarm, 90% detection)"
  },
  "table9_wheel_lines": {
   "sources": [

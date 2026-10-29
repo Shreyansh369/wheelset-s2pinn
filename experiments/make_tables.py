@@ -347,7 +347,7 @@ def table8():
             ["N per period", "SNR (dB)", "MDC (%)", "SE inflation", "Calibrated MDC (%)"],
             [[x["N"], f"{x['snr_db']:.0f}", f"{x['mdc_pct']:.2f}", f"{x['inflation']:.2f}", f"{x['mdc_calibrated_pct']:.2f}"] for x in c["mdc"]])
         src.append("results/p3/calibrated.json")
-    write("table8_mdc", "Table 8. Minimum detectable decrease of k_B0 (5% false alarm, 90% detection), mixed payloads", body, src,
+    write("table8_mdc", "Table 8. Nominal mixed-payload reference (matched model; not a supported operating mode): minimum detectable decrease of k_B0 (5% false alarm, 90% detection)", body, src,
           ["MDC = (1.645 + 1.282) √2 · CRB for two periods of N passes, 60–110 km/h, payload 5.5–22.5 t. Payload-band limits: "
            "Section 4 (results/p4/banded.json)."])
 
@@ -484,7 +484,12 @@ def table13():
            "130×240×80 envelope and swept; initial clearance 130 µm = lower unmounted value (operating clearance not found). "
            "Secondary case: proxy double-row tapered unit. k_housing is set so that the effective stiffness equals k_B0 at W0. "
            f"MDC = {b['mdc_pct']:.2f}% (N = 50, 40 dB, co-estimating fit). z = Δp / CRB of a single period; detection between two "
-           "periods needs Δp ≥ 2.93·√2·CRB."])
+           "periods needs Δp ≥ 2.93·√2·CRB.",
+           "Growth at MDC: the clearance growth at which the stiffness named in the column has fallen by the MDC. "
+           "\"Contact\" refers to the roller-contact stiffness k_contact alone; \"Effective k_B\" to the effective support "
+           "stiffness k_B identified by the method, i.e. k_contact in series with the housing path (reading B). The series "
+           "compliance attenuates the effective change: a contact change reaches k_B scaled by k_B/k_contact, so the effective "
+           "change is smaller and the growth needed to reach the MDC larger than for the contact alone."])
 
 
 # ----------------------------------------------------------------------------- Table 14
