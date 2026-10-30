@@ -203,3 +203,7 @@ It fails now, by design, and must pass at the final regeneration.
     they take minutes.
   - Requeueing now would risk the OOM killer stopping a change-study fit instead.
   - No result changes, only when the cells are computed.
+- **30 Oct 11:55 UTC, pause.** All sessions were paused on the authors' instruction, with every finished row saved
+  and pushed. The jobs running at that moment lose only their unfinished fit. On resume the queues are replayed
+  (completed rows are skipped). The time stop and the minimum N stay as above unless a later deviation says
+  otherwise.

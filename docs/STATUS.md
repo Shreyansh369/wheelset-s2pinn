@@ -1,14 +1,37 @@
-## v2 (Route A) state at 29 Oct 17:58 UTC — work saved before a usage limit
+## v2 (Route A): PAUSED on 30 Oct 2026, 11:55 UTC (authors' instruction)
 
-- Preregistration v2 pushed (06b5a09); addendum draft docs/preregistration_v2_addendum.md (§6 cost table and §8
-  pinned commit still to fill; §9 inventory = docs/v2_inventory.md).
-- config/ re-frozen at the corrected mass (hash e7e594eacc87); provenance.yaml carries v2 dispositions;
-  make_provenance_check now fails on stale frozen results (expected until the 4 Nov regeneration).
-- Queues docs/queues_v2/s0-s3.txt: minimum set first (pairs 0-99, 25 per session), then 100-199; sized at
-  50 min per fit (1.5 x v1). Siblings NOT launched yet. Timing replicates (simerr/zero rep 0, tag _timing)
-  were still on their first fit.
-- Next: fill addendum §6/§8, pin, push, create sessions s1-s3 (docs/queues_v2/README.md), start s0 queue,
-  confirm first rows on claude/rows-s1..s3, 12-hourly progress reports.
+All result rows are saved and pushed: s0 on `claude/inspiring-cori-690nu3` (last `d83beef`), s1-s3 on
+`claude/rows-s1/-s2/-s3`. Workers stopped in every session; scheduled check-ins, the 12-hour report and the
+keepalive are cancelled. Jobs running at the pause lose only their unfinished fit (every finished fit is a row).
+
+Rows saved at the pause:
+
+| Rows | s0 | s1 | s2 | s3 | Total |
+|---|---|---|---|---|---|
+| headline datasets | 48 | 50 | 47 | 41 | 186 |
+| bound cells | 3 | 0 | 0 | 0 | 3 |
+| simultaneous-error replicates | 13 | 12 | 12 | 11 | 48 |
+| zero-change replicates | 12 | 12 | 11 | 11 | 46 |
+| simultaneous-error fits | 54 | 52 | 51 | 47 | 204 |
+| zero-change fits | 36 | 36 | 34 | 33 | 139 |
+
+Pinned code `1ee4e3d`; preregistration `docs/preregistration_v2.md`, addendum `docs/preregistration_v2_addendum.md`
+(§10: banded bound cells deferred to the final regeneration). Measured change-study fit time: mean 36 min, median
+28 min (30 Oct 00:40).
+
+### To resume
+
+1. s0 (this branch): `cp docs/queues_v2/s0.txt results/p4/logs/queue_v2_s0.txt`, delete the
+   `p4_banded.py --bounds` line from that copy (addendum §10), then start the 4 loops:
+   `for i in 1 2 3 4; do setsid nohup bash -c 'while out=$(scripts/next_job.sh results/p4/logs/queue_v2_s0.txt); echo "$out"; ! echo "$out" | grep -q "queue empty"; do :; done' > results/p4/logs/loop_v2_$i.log 2>&1 < /dev/null & sleep 2; done`
+   Every job skips what its row files already hold, so the whole queue can be replayed.
+2. Siblings: send each session (s1 session_017DbCmZg5ajBa1GDH9KjhJH, s2 session_017DbCmbmZJRNwWBWqzNesBV, s3
+   session_017DbCmbwt9r6hYA3uGkFp91) a RESUME message: rebuild results/p4/logs/queue_v2_sN.txt from
+   docs/queues_v2/sN.txt, restart the 4 loops, keepalive and hourly check-ins as in docs/queues_v2/README.md. If a
+   sibling's container was reclaimed, it re-clones; its branch claude/rows-sN keeps the rows.
+3. Re-arm this session's hourly check-in and the 12-hour progress report; keepalive.
+4. The time stop (3 Nov 06:00 UTC) and the minimum of 100 replicates per study stay as pre-registered; if the
+   pause makes them unreachable, record a deviation in the addendum before changing either.
 
 # Status (updated 19 Oct 2026, 22:10 UTC)
 
